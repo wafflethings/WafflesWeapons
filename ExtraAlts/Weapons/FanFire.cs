@@ -281,7 +281,6 @@ namespace ExtraAlts.Weapons
                     {
                         Damage = ((i + 1) * 0.25f) + 0.25f;
                         Invoke("ShootFan", i * 0.15f);
-                        Charge--;
                     }
                 }
             }
@@ -336,6 +335,7 @@ namespace ExtraAlts.Weapons
             public void ShootFan()
             {
                 cc.StopShake();
+                Charge--;
                 shootReady = false;
                 shootCharge = 0f;
                 if (rev.altVersion)
