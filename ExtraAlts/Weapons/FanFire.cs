@@ -101,12 +101,12 @@ namespace ExtraAlts.Weapons
                 {
                     if (__instance.sourceWeapon.TryGetComponent(out ffb))
                     {
-                        if (__instance.gunVariation == 4 && ffb.Charge < 6 &&
+                        if (__instance.beamType == BeamType.Revolver && FanFireBehaviour.Charge < 6 &&
                         currentHit.collider.gameObject.GetComponent<EnemyIdentifierIdentifier>() != null &&
                         !currentHit.collider.gameObject.GetComponent<EnemyIdentifierIdentifier>().eid.dead &&
                         !__instance.gameObject.name.Contains("FanShot"))
                         {
-                            ffb.Charge += 1f;
+                            FanFireBehaviour.Charge += 0.5f;
                         }
                     }
                 }
@@ -138,6 +138,83 @@ namespace ExtraAlts.Weapons
             }
         }
 
+        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.Charge))]
+        [HarmonyPostfix]
+        public static void DoCharge(float amount)
+        {
+
+        }
+
+        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.MaxCharges))]
+        [HarmonyPostfix]
+        public static void MaxCharge()
+        {
+            FanFireBehaviour.Charge = 6;
+        }
+
+        [HarmonyPatch(typeof(Coin), nameof(Coin.DelayedReflectRevolver))]
+        [HarmonyPrefix]
+        public static bool BounceIfFan(Coin __instance, GameObject beam)
+        {
+            if (beam != null)
+            {
+                Debug.LogWarning($"beam hit named {beam.name}");
+            } else
+            {
+                Debug.LogWarning("beam null!");
+            }
+            if(beam != null && beam.name.Contains("FanShot"))
+            {
+                __instance.CancelInvoke("ReflectRevolver");
+                beam.GetComponent<RevolverBeam>().hitAmount++;
+                beam.GetComponent<RevolverBeam>().maxHitsPerTarget++;
+                MyCoolBounce(__instance);
+                __instance.Invoke("ReflectRevolver", 1f);
+                return false;
+            }
+
+            return true;
+        }
+
+        public static void MyCoolBounce(Coin coin)
+        {
+            GameObject NewCoin = GameObject.Instantiate(coin.gameObject, coin.transform.position, Quaternion.identity);
+            NewCoin.name = "NewCoin+" + (coin.power - 2f);
+            NewCoin.SetActive(false);
+
+            NewCoin.transform.position = coin.transform.position;
+            NewCoin.SetActive(true);
+            coin.GetComponent<SphereCollider>().enabled = false;
+            coin.shot = true;
+
+            Coin NewCoinCoin = NewCoin.GetComponent<Coin>();
+            if (NewCoinCoin)
+            {
+                NewCoinCoin.shot = false;
+            }
+            Rigidbody NewCoinRb = NewCoin.GetComponent<Rigidbody>();
+            if (NewCoinRb)
+            {
+                NewCoinRb.isKinematic = false;
+                NewCoinRb.velocity = Vector3.zero;
+
+                // if the player is looking up, make it go forwards so it isnt too ez
+                float mult = 0;
+                float rot = CameraController.Instance.transform.localRotation.eulerAngles.x;
+                Debug.Log($"{rot} is silly");
+                if (rot <= 280 && rot >= 270)
+                {
+                    mult = 7.5f;
+                }
+
+                NewCoinRb.AddForce((Vector3.up * 15f) + (NewMovement.Instance.transform.forward * mult), ForceMode.VelocityChange);
+            }
+
+            coin.gameObject.SetActive(false);
+            new GameObject().AddComponent<CoinCollector>().coin = coin.gameObject;
+            coin.CancelInvoke("GetDeleted");
+        }
+
         public class FanFireBehaviour : MonoBehaviour
         {
             private CameraController cc;
@@ -152,7 +229,7 @@ namespace ExtraAlts.Weapons
             private int currentGunShot;
 
             private Revolver rev;
-            public float Charge = 0;
+            public static float Charge = 0;
             public float Damage = 0;
 
             public void Start()
@@ -198,13 +275,20 @@ namespace ExtraAlts.Weapons
                 if (OnAltFire())
                 {
                     Damage = 0;
-                    for (int i = 0; i < (int)Charge; i++)
+                    Charge = (int)Charge;
+                    int tempCharge = (int)Charge;
+                    for (int i = 0; i < tempCharge; i++)
                     {
-                        Damage = ((i + 1) * 0.25f) + 1;
+                        Damage = ((i + 1) * 0.25f) + 0.25f;
                         Invoke("ShootFan", i * 0.15f);
+                        Charge--;
                     }
-                    Charge = 0;
                 }
+            }
+
+            public void OnDisable()
+            {
+                CancelInvoke("ShootFan");
             }
 
             public void Shoot()
@@ -223,8 +307,6 @@ namespace ExtraAlts.Weapons
                     gameObject.transform.LookAt(targeter.CurrentTarget.bounds.center);
                 }
                 RevolverBeam component = gameObject.GetComponent<RevolverBeam>();
-                component.damage = 0.5f;
-                component.critDamageOverride = 1;
                 component.sourceWeapon = gc.currentWeapon;
                 component.alternateStartPoint = rev.gunBarrel.transform.position;
                 component.gunVariation = rev.gunVariation;

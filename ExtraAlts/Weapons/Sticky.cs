@@ -88,6 +88,20 @@ namespace ExtraAlts.Weapons
             return true;
         }
 
+        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.Charge))]
+        [HarmonyPostfix]
+        public static void DoCharge(float amount)
+        {
+
+        }
+
+        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.MaxCharges))]
+        [HarmonyPostfix]
+        public static void MaxCharge()
+        {
+            StickyBehaviour.Charges = 0;
+        }
+
         public class StickyBehaviour : MonoBehaviour
         {
             private GunControl gc;

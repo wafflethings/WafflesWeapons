@@ -55,8 +55,8 @@ namespace ExtraAlts
             Sticky.LoadAssets();
             GunRegistry.Register(typeof(Sticky));
 
-            Rocket.LoadAssets();
-            GunRegistry.Register(typeof(Rocket));
+            TacticalNuke.LoadAssets();
+            GunRegistry.Register(typeof(TacticalNuke));
 
             //Thermo.LoadAssets();
             //GunRegistry.Register(typeof(Thermo));

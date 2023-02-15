@@ -91,6 +91,40 @@ namespace ExtraAlts.Weapons
             return "nai3";
         }
 
+        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.Charge))]
+        [HarmonyPostfix]
+        public static void DoCharge(float amount)
+        {
+            if (AirblastBehaviour.gcc != null)
+            {
+                bool Touching = AirblastBehaviour.gcc.touchingGround;
+                float TimeMult = 0.05f;
+                float ShootMult = 0.25f;
+                if (Touching)
+                {
+                    TimeMult = 0.1f;
+                    ShootMult = 0.4f;
+                }
+
+                AirblastBehaviour.Charge += Time.deltaTime * TimeMult;
+                if (OnFireHeld())
+                {
+                    AirblastBehaviour.Charge += Time.deltaTime * ShootMult;
+                }
+                if (AirblastBehaviour.Charge > 1)
+                {
+                    AirblastBehaviour.Charge = 1;
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.MaxCharges))]
+        [HarmonyPostfix]
+        public static void MaxCharge()
+        {
+            AirblastBehaviour.Charge = 1;
+        }
+
         public class AirblastBehaviour : MonoBehaviour
         {
             private GameObject MyBlast;
@@ -99,9 +133,9 @@ namespace ExtraAlts.Weapons
             private CameraController cc;
             private Nailgun nai;
             private Slider heatSlider;
-            private float Charge;
+            public static float Charge;
             public Image sliderBg;
-            public GroundCheck gcc;
+            public static GroundCheck gcc;
 
             public void Start()
             {
@@ -162,23 +196,6 @@ namespace ExtraAlts.Weapons
                 if (gc.activated)
                 {
                     bool Touching = gcc.touchingGround;
-                    float TimeMult = 0.05f;
-                    float ShootMult = 0.25f;
-                    if(Touching)
-                    {
-                        TimeMult = 0.1f;
-                        ShootMult = 0.4f;
-                    }
-
-                    Charge += Time.deltaTime * TimeMult;
-                    if(OnFireHeld())
-                    {
-                        Charge += Time.deltaTime * ShootMult;
-                    }
-                    if (Charge > 1)
-                    {
-                        Charge = 1;
-                    }
                     heatSlider.value = Charge;
 
                     if (Charge == 1 && OnAltFire()) 

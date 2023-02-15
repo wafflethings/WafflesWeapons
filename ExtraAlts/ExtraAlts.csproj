@@ -36,7 +36,7 @@
     <Compile Include="Pages\CustomsPage.cs" />
     <Compile Include="Weapons\Behaviours\VirtueCannonBeam.cs" />
     <Compile Include="Weapons\Airblast.cs" />
-    <Compile Include="Weapons\Rocket.cs" />
+    <Compile Include="Weapons\TacticalNuke.cs" />
     <Compile Include="Weapons\Sticky.cs" />
     <Compile Include="Weapons\Virtuous.cs" />
     <Compile Include="Weapons\LoaderGauntlet.cs" />

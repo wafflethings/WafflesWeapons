@@ -61,6 +61,7 @@ namespace ExtraAlts.Weapons
         [HarmonyPostfix]
         public static void AddLoaderCheck(NewMovement __instance)
         {
+            Debug.LogWarning("Adding loader?");
             __instance.gameObject.AddComponent<LoaderArmCollisionHandler>();
         }
 
@@ -168,7 +169,7 @@ namespace ExtraAlts.Weapons
                 CeSrc.pitch = CoolCharge * 0.005f;
 
                 //Debug.Log(Charge);
-                if (OnPunchHeld() && !LoaderArmCollisionHandler.Instance.MidCharge)
+                if (OnPunchHeld() && LoaderArmCollisionHandler.Instance.CanCharge)
                 {
                     if(!pu.anim.GetCurrentAnimatorStateInfo(0).IsName("Jab"))
                     {
@@ -228,18 +229,18 @@ namespace ExtraAlts.Weapons
                     }
                 }
 
-                if (!LoaderArmCollisionHandler.Instance.MidCharge && Charge <= 2f && OnPunchReleased())
+                if (LoaderArmCollisionHandler.Instance.CanCharge && Charge <= 2f && OnPunchReleased())
                 {
                     CancelInvoke("Guh");
                     pu.anim.speed = 1;
                 }
 
-                if(OnPunchReleased() && Charge <= 2f && !LoaderArmCollisionHandler.Instance.MidCharge)
+                if(OnPunchReleased() && Charge <= 2f && LoaderArmCollisionHandler.Instance.CanCharge)
                 {
                     Charge = 0;
                 }
 
-                if (!LoaderArmCollisionHandler.Instance.MidCharge && Charge >= 2f && OnPunchReleased())
+                if (LoaderArmCollisionHandler.Instance.CanCharge && Charge >= 2f && OnPunchReleased())
                 {
                     pu.anim.speed = 1;
                     LoaderArmCollisionHandler.Instance.Charge = Charge;
@@ -268,6 +269,8 @@ namespace ExtraAlts.Weapons
                     Debug.Log($"{Charge} / {AddTo + ((LoaderArmCollisionHandler.Instance.Dashes + 1) / Mult)} = {CalcCharge} => {cc.transform.forward * nm.walkSpeed * CalcCharge * Time.deltaTime}");
 
                     LoaderArmCollisionHandler.Instance.MidCharge = true;
+                    LoaderArmCollisionHandler.Instance.CanCharge = false;
+                    LoaderArmCollisionHandler.Instance.BadCoins.Clear();
                     nm.rb.velocity = cc.transform.forward * nm.walkSpeed * CalcCharge * Time.deltaTime;
                     Charge = 0;
                 }

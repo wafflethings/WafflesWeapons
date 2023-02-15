@@ -36,6 +36,7 @@ namespace ExtraAlts.Weapons
         {
             base.Create();
 
+            Guns.Clear();
             GameObject thing;
              
             if (Enabled() == 2) 
@@ -70,8 +71,7 @@ namespace ExtraAlts.Weapons
                 ico.weaponIcon = Icon;
             }
 
-            thing.AddComponent<MalevolentBehaviour>();
-
+            Guns.Add(thing.AddComponent<MalevolentBehaviour>());
             return thing;
         }
 
@@ -118,6 +118,28 @@ namespace ExtraAlts.Weapons
             }
         }
 
+        public static List<MalevolentBehaviour> Guns = new List<MalevolentBehaviour>();
+
+        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.Charge))]
+        [HarmonyPostfix]
+        public static void DoCharge(float amount)
+        {
+            foreach(MalevolentBehaviour gun in Guns)
+            {
+                gun.DoCharge();
+            }
+        }
+
+        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.MaxCharges))]
+        [HarmonyPostfix]
+        public static void MaxCharge()
+        {
+            foreach (MalevolentBehaviour gun in Guns)
+            {
+                gun.MaxCharge();
+            }
+        }
+
         public class MalevolentBehaviour : MonoBehaviour
         {
             private CameraController cc;
@@ -138,6 +160,51 @@ namespace ExtraAlts.Weapons
             private WeaponPos wpos;
 
             private Revolver rev;
+
+            public void OnDestroy()
+            {
+                Guns.Remove(this);
+            }
+
+            public void DoCharge()
+            {
+                if (rev != null)
+                {
+                    float num = 1f;
+                    if (rev.altVersion)
+                    {
+                        num = 0.5f;
+                    }
+
+                    if (rev.pierceCharge + 30f * Time.deltaTime < 100f)
+                    {
+                        rev.pierceCharge += 30f * Time.deltaTime * num;
+                    }
+                    else
+                    {
+                        if (!pierceReady)
+                        {
+                            screenAud.clip = rev.chargedSound;
+                            screenAud.loop = false;
+                            screenAud.volume = 0.35f;
+                            screenAud.pitch = UnityEngine.Random.Range(1f, 1.1f);
+                            screenAud.Play();
+                        }
+
+                        rev.pierceCharge = 100f;
+                        pierceReady = true;
+                    }
+                }
+            }
+
+            public void MaxCharge()
+            {
+                if (rev != null)
+                {
+                    rev.pierceCharge = 100;
+                    pierceReady = true;
+                }
+            }
 
             public void Start()
             {
@@ -256,32 +323,6 @@ namespace ExtraAlts.Weapons
                         {
                             rev.pierceShotCharge = 0f;
                         }
-                    }
-
-
-                    float num = 1f;
-                    if (rev.altVersion)
-                    {
-                        num = 0.5f;
-                    }
-
-                    if (rev.pierceCharge + 30f * Time.deltaTime < 100f)
-                    {
-                        rev.pierceCharge += 30f * Time.deltaTime * num;
-                    }
-                    else
-                    {
-                        if (!pierceReady)
-                        {
-                            screenAud.clip = rev.chargedSound;
-                            screenAud.loop = false;
-                            screenAud.volume = 0.35f;
-                            screenAud.pitch = UnityEngine.Random.Range(1f, 1.1f);
-                            screenAud.Play();
-                        }
-
-                        rev.pierceCharge = 100f;
-                        pierceReady = true;
                     }
                 }
 

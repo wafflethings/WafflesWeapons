@@ -12,6 +12,7 @@ namespace ExtraAlts
     {
 		public static GameObject NotifyGrounded;
 
+		public bool CanCharge = true;
 		public bool MidCharge = false;
 		public GroundCheck gc;
 		public float Charge;
@@ -22,7 +23,6 @@ namespace ExtraAlts
 		private void Start()
         {
 			gc = FindObjectOfType<GroundCheck>();
-
 		}
 
 		//FromGround = the reset came from touching ground (not from coin)
@@ -31,15 +31,15 @@ namespace ExtraAlts
 			if (FromGround)
 			{
 				Dashes = 0;
+				MidCharge = false;
 			} else
             {
 				Dashes += 1;
             }
 
 			Instantiate(NotifyGrounded);
-			MidCharge = false;
+			CanCharge = true;
 			AlrHit.Clear();
-			BadCoins.Clear();
 		}
 
 		private void OnTriggerEnter(Collider other)
