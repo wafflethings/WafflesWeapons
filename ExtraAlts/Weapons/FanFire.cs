@@ -156,13 +156,6 @@ namespace ExtraAlts.Weapons
         [HarmonyPrefix]
         public static bool BounceIfFan(Coin __instance, GameObject beam)
         {
-            if (beam != null)
-            {
-                Debug.LogWarning($"beam hit named {beam.name}");
-            } else
-            {
-                Debug.LogWarning("beam null!");
-            }
             if(beam != null && beam.name.Contains("FanShot"))
             {
                 __instance.CancelInvoke("ReflectRevolver");
@@ -201,7 +194,6 @@ namespace ExtraAlts.Weapons
                 // if the player is looking up, make it go forwards so it isnt too ez
                 float mult = 0;
                 float rot = CameraController.Instance.transform.localRotation.eulerAngles.x;
-                Debug.Log($"{rot} is silly");
                 if (rot <= 280 && rot >= 270)
                 {
                     mult = 7.5f;
@@ -335,7 +327,10 @@ namespace ExtraAlts.Weapons
             public void ShootFan()
             {
                 cc.StopShake();
-                Charge--;
+                if (this.gameObject.GetComponentInParent<DualWield>() == null)
+                {
+                    Charge--;
+                }
                 shootReady = false;
                 shootCharge = 0f;
                 if (rev.altVersion)
