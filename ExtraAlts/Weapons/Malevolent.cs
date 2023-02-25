@@ -255,17 +255,19 @@ namespace ExtraAlts.Weapons
                 {
                     if ((rev.altVersion && MonoSingleton<WeaponCharges>.Instance.revaltpickupcharge == 0) || !rev.altVersion)
                     {
+                        float delay = GetComponent<WeaponIdentifier>().delay;
                         if (!rev.altVersion)
                         {
-                            Invoke("Shoot", 0);
-                            Invoke("Shoot", 0.1f);
-                            Invoke("Shoot", 0.2f);
+                            
+                            Invoke("Shoot", 0 + delay);
+                            Invoke("Shoot", 0.1f + delay);
+                            Invoke("Shoot", 0.2f + delay);
                         }
                         else
                         {
-                            Invoke("Shoot", 0);
-                            Invoke("Shoot", 0.25f);
-                            Invoke("Shoot", 0.5f);
+                            Invoke("Shoot", 0 + delay);
+                            Invoke("Shoot", 0.25f + delay);
+                            Invoke("Shoot", 0.5f + delay);
                         }
                     }
                 }

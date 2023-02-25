@@ -99,15 +99,18 @@ namespace ExtraAlts.Weapons
 
                 if (currentHit.collider != null)
                 {
+                    float amount = 0.5f;
                     if (__instance.sourceWeapon.TryGetComponent(out ffb))
                     {
-                        if (__instance.beamType == BeamType.Revolver && FanFireBehaviour.Charge < 6 &&
+                        amount = 0.25f;
+                    }
+
+                    if (__instance.beamType == BeamType.Revolver && FanFireBehaviour.Charge < 6 &&
                         currentHit.collider.gameObject.GetComponent<EnemyIdentifierIdentifier>() != null &&
                         !currentHit.collider.gameObject.GetComponent<EnemyIdentifierIdentifier>().eid.dead &&
                         !__instance.gameObject.name.Contains("FanShot"))
-                        {
-                            FanFireBehaviour.Charge += 0.5f;
-                        }
+                    {
+                        FanFireBehaviour.Charge += amount;
                     }
                 }
             } catch { }
@@ -223,6 +226,7 @@ namespace ExtraAlts.Weapons
             private Revolver rev;
             public static float Charge = 0;
             public float Damage = 0;
+            private bool CanFan = true;
 
             public void Start()
             {
@@ -264,17 +268,25 @@ namespace ExtraAlts.Weapons
                     }
                 }
 
-                if (OnAltFire())
+                if (OnAltFire() && CanFan)
                 {
                     Damage = 0;
                     Charge = (int)Charge;
                     int tempCharge = (int)Charge;
+                    CanFan = false;
+                    float delay = GetComponent<WeaponIdentifier>().delay;
+                    Invoke("ResetFan", ((tempCharge-1) * 0.15f) + 1 + delay);
                     for (int i = 0; i < tempCharge; i++)
                     {
                         Damage = ((i + 1) * 0.25f) + 0.25f;
-                        Invoke("ShootFan", i * 0.15f);
+                        Invoke("ShootFan", (i * 0.15f) + delay);
                     }
                 }
+            }
+
+            public void ResetFan()
+            {
+                CanFan = true;
             }
 
             public void OnDisable()
@@ -335,7 +347,7 @@ namespace ExtraAlts.Weapons
                 shootCharge = 0f;
                 if (rev.altVersion)
                 {
-                    MonoSingleton<WeaponCharges>.Instance.revaltpickupcharge = 2f;
+                    WeaponCharges.Instance.revaltpickupcharge = 2f;
                 }
 
                 GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(rev.revolverBeamSuper, cc.transform.position, cc.transform.rotation);
