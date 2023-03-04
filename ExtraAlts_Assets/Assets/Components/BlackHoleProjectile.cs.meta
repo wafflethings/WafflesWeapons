@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 05f909b556fe868408bb2ba81d9db646
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - lightningBolt: {instanceID: 0}
+  - lightningBolt2: {instanceID: 0}
+  - additive: {instanceID: 0}
+  - spawnEffect: {fileID: 229097793173782760, guid: c61e345ec7e783244ae4658eb2fc8cd8,
+      type: 3}
+  - explosionEffect: {fileID: 229097793173782760, guid: 79301dcd0ee189548a908a3148b7681b,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

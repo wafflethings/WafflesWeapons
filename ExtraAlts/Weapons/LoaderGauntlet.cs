@@ -16,7 +16,6 @@ namespace ExtraAlts.Weapons
         public static GameObject Click;
         public static GameObject ChargeSound;
         public static GameObject Release;
-        public static GameObject ChargeParticle;
 
         public static void LoadAssets()
         {
@@ -24,7 +23,6 @@ namespace ExtraAlts.Weapons
             Arm.GetComponentInChildren<SkinnedMeshRenderer>().material.shader = Shader.Find("psx/vertexlit/vertexlit");
             Click = Core.Assets.LoadAsset<GameObject>("LoaderReady.prefab");
             ChargeSound = Core.Assets.LoadAsset<GameObject>("LoaderCharge.prefab");
-            ChargeParticle = Core.Assets.LoadAsset<GameObject>("ArmCharge.prefab");
             Release = Core.Assets.LoadAsset<GameObject>("LoaderRelease.prefab");
             LoaderArmCollisionHandler.NotifyGrounded = Core.Assets.LoadAsset<GameObject>("LoaderBell.prefab");
             Core.Harmony.PatchAll(typeof(LoaderGauntlet));
@@ -35,7 +33,6 @@ namespace ExtraAlts.Weapons
             base.Create(parent);
 
             GameObject thing = GameObject.Instantiate(Arm, parent);
-            //GameObject thing = GameObject.Instantiate(ArmObj);
             thing.AddComponent<LoaderBehaviour>();
 
             return thing;
@@ -259,8 +256,8 @@ namespace ExtraAlts.Weapons
                 // should be 100 at finish
                 float CoolCharge = 0;
                 CoolCharge = Charge * 100 / 6;
-                CeSrc.volume = 0.25f + CoolCharge * 0.005f;
-                CeSrc.pitch = CoolCharge * 0.005f;
+                CeSrc.volume = 0.3f + CoolCharge * 0.005f;
+                CeSrc.pitch = 0.1f + (CoolCharge * 0.0125f);
 
                 //Debug.Log(Charge);
                 if (OnPunchHeld() && LoaderArmCollisionHandler.Instance.CanCharge)

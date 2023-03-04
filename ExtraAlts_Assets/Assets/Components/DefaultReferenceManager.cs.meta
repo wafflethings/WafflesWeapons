@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: c68eb804214037d4eb3bc87acb1e3f14
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - wetParticle: {fileID: 3906180818712674999, guid: e55568cffca9e044f817f768391b0d47,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
