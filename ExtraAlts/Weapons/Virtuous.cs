@@ -33,11 +33,11 @@ namespace ExtraAlts.Weapons
             SceneManager.sceneLoaded -= LoadInsig;  
         }
 
-        public override GameObject Create()
+        public override GameObject Create(Transform parent)
         {
-            base.Create();
+            base.Create(parent);
 
-            GameObject thing = GameObject.Instantiate(GunSetter.Instance.railCannon[0]);
+            GameObject thing = GameObject.Instantiate(GunSetter.Instance.railCannon[0], parent);
 
             var ico = thing.GetComponent<WeaponIcon>();
             ico.variationColor = 3;
@@ -162,10 +162,6 @@ namespace ExtraAlts.Weapons
 
             public void Start()
             {
-                transform.localPosition = GunSetter.Instance.shotgunGrenade[0].transform.position;
-                typeof(WeaponPos).GetField("ready", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(transform.GetComponent<WeaponPos>(), false);
-                GetComponent<WeaponPos>().CheckPosition();
-
                 gc = GetComponentInParent<GunControl>();
                 rai = GetComponent<Railcannon>();
 

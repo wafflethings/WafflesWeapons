@@ -26,11 +26,11 @@ namespace ExtraAlts.Weapons
             Core.Harmony.PatchAll(typeof(TacticalNuke));
         }
 
-        public override GameObject Create()
+        public override GameObject Create(Transform parent)
         {
-            base.Create();
+            base.Create(parent);
 
-            GameObject thing = GameObject.Instantiate(GunSetter.Instance.rocketBlue[0]);
+            GameObject thing = GameObject.Instantiate(GunSetter.Instance.rocketBlue[0], parent);
 
             var rock = thing.GetComponent<RocketLauncher>();
             rock.variation = 4;
@@ -106,10 +106,6 @@ namespace ExtraAlts.Weapons
 
             public void Start()
             {
-                transform.localPosition = GunSetter.Instance.rocketBlue[0].transform.position;
-                typeof(WeaponPos).GetField("ready", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(transform.GetComponent<WeaponPos>(), false);
-                GetComponent<WeaponPos>().CheckPosition();
-
                 gc = GetComponentInParent<GunControl>();
                 WindUp = 0;
             }

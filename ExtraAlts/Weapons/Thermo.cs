@@ -32,11 +32,11 @@ namespace ExtraAlts.Weapons
             Core.Harmony.PatchAll(typeof(Thermo));
         }
 
-        public override GameObject Create()
+        public override GameObject Create(Transform parent)
         {
-            base.Create();
+            base.Create(parent);
 
-            GameObject thing = GameObject.Instantiate(GunSetter.Instance.shotgunGrenade[0]);
+            GameObject thing = GameObject.Instantiate(GunSetter.Instance.shotgunGrenade[0], parent);
 
             var sho = thing.GetComponent<Shotgun>();
             sho.variation = 4;
@@ -125,10 +125,6 @@ namespace ExtraAlts.Weapons
 
             public void Start()
             {
-                transform.localPosition = GunSetter.Instance.shotgunGrenade[0].transform.position;
-                typeof(WeaponPos).GetField("ready", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(transform.GetComponent<WeaponPos>(), false);
-                GetComponent<WeaponPos>().CheckPosition();
-
                 gc = GetComponentInParent<GunControl>();
                 fill = GetComponentInChildren<Slider>().fillRect.GetComponent<Image>();
                 slider = GetComponentInChildren<Slider>();

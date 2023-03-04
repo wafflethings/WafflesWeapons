@@ -36,18 +36,18 @@ namespace ExtraAlts.Weapons
             Core.Harmony.PatchAll(typeof(Airblast));
         }
 
-        public override GameObject Create()
+        public override GameObject Create(Transform parent)
         {
-            base.Create();
+            base.Create(parent);
 
             GameObject thing;
 
             if(Enabled() == 2)
             {
-                thing = GameObject.Instantiate(GunSetter.Instance.nailOverheat[1]);
+                thing = GameObject.Instantiate(GunSetter.Instance.nailOverheat[1], parent);
             } else
             {
-                thing = GameObject.Instantiate(GunSetter.Instance.nailOverheat[0]);
+                thing = GameObject.Instantiate(GunSetter.Instance.nailOverheat[0], parent);
             }
 
             var nai = thing.GetComponent<Nailgun>();
@@ -140,17 +140,6 @@ namespace ExtraAlts.Weapons
             public void Start()
             {
                 nai = GetComponent<Nailgun>();
-                if (nai.altVersion)
-                {
-                    transform.localPosition = GunSetter.Instance.nailOverheat[1].transform.position;
-                }
-                else
-                {
-                    transform.localPosition = GunSetter.Instance.nailOverheat[0].transform.position;
-                }
-                
-                typeof(WeaponPos).GetField("ready", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(transform.GetComponent<WeaponPos>(), false);
-                GetComponent<WeaponPos>().CheckPosition();
 
                 anim = GetComponentInChildren<Animator>();
                 gc = GetComponentInParent<GunControl>();

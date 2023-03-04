@@ -12,18 +12,17 @@ namespace ExtraAlts.Weapons
 {
     public class LoaderGauntlet : Fist
     {
-        public static Material Arm;
+        public static GameObject Arm;
         public static GameObject Click;
-        public static GameObject ArmObj;
         public static GameObject ChargeSound;
         public static GameObject Release;
         public static GameObject ChargeParticle;
 
         public static void LoadAssets()
         {
-            Arm = Core.Assets.LoadAsset<Material>("loader arm.mat");
+            Arm = Core.Assets.LoadAsset<GameObject>("ESARM.prefab");
+            Arm.GetComponentInChildren<SkinnedMeshRenderer>().material.shader = Shader.Find("psx/vertexlit/vertexlit");
             Click = Core.Assets.LoadAsset<GameObject>("LoaderReady.prefab");
-            ArmObj = Core.Assets.LoadAsset<GameObject>("LoaderArm.prefab");
             ChargeSound = Core.Assets.LoadAsset<GameObject>("LoaderCharge.prefab");
             ChargeParticle = Core.Assets.LoadAsset<GameObject>("ArmCharge.prefab");
             Release = Core.Assets.LoadAsset<GameObject>("LoaderRelease.prefab");
@@ -31,11 +30,11 @@ namespace ExtraAlts.Weapons
             Core.Harmony.PatchAll(typeof(LoaderGauntlet));
         }
 
-        public override GameObject Create()
+        public override GameObject Create(Transform parent)
         {
-            base.Create();
+            base.Create(parent);
 
-            GameObject thing = GameObject.Instantiate(FistControl.Instance.redArm);
+            GameObject thing = GameObject.Instantiate(Arm, parent);
             //GameObject thing = GameObject.Instantiate(ArmObj);
             thing.AddComponent<LoaderBehaviour>();
 
@@ -86,23 +85,6 @@ namespace ExtraAlts.Weapons
                 LoaderArmCollisionHandler.Instance.BadCoins.Add(__instance);
             }
         }
-
-        [HarmonyPatch(typeof(Punch), nameof(Punch.BlastCheck))]
-        [HarmonyPrefix]
-        public static bool CancelStupidFuckingBlastWhatTheFuck(Punch __instance)
-        {
-            if (LoaderBehaviour.pu != null)
-            {
-                Debug.Log("Silly ahh! " + __instance.gameObject.name + ", " + LoaderBehaviour.pu.gameObject.name);
-                Debug.Log(!__instance == LoaderBehaviour.pu);
-                return !(__instance == LoaderBehaviour.pu);
-            }
-            else
-            {
-                return true;
-            }
-        }
-
 
         [HarmonyPatch(typeof(NewMovement), nameof(NewMovement.Dodge))]
         [HarmonyPostfix]
@@ -259,10 +241,7 @@ namespace ExtraAlts.Weapons
 
             public void Start()
             {
-                transform.localPosition = FistControl.Instance.redArm.transform.position;
                 StartPos = transform.localPosition;
-                Arm.shader = FistControl.Instance.redArm.GetComponentInChildren<SkinnedMeshRenderer>().material.shader;
-                GetComponentInChildren<SkinnedMeshRenderer>().material = Arm;
                 CeSrc = Instantiate(ChargeSound, gameObject.transform).GetComponent<AudioSource>();
 
                 Charge = 0;
@@ -271,12 +250,7 @@ namespace ExtraAlts.Weapons
                 cc = CameraController.Instance;
                 pu = GetComponent<Punch>();
 
-                pu.enabled = false;
-            }
-
-            public void Guh()
-            {
-                pu.anim.speed = 0;
+                pu.anim = GetComponentsInChildren<Animator>()[1];
             }
 
             public void Update()
@@ -291,10 +265,9 @@ namespace ExtraAlts.Weapons
                 //Debug.Log(Charge);
                 if (OnPunchHeld() && LoaderArmCollisionHandler.Instance.CanCharge)
                 {
-                    if(!pu.anim.GetCurrentAnimatorStateInfo(0).IsName("Jab"))
+                    if(!pu.anim.GetCurrentAnimatorStateInfo(0).IsName("Charge"))
                     {
-                        pu.anim.Play("Jab", 0, 0.075f);
-                        Invoke("Guh", 0.3f);
+                        pu.anim.Play("Charge", 0);
                     }
 
                     if(!CeSrc.isPlaying)
@@ -303,9 +276,9 @@ namespace ExtraAlts.Weapons
                     }
 
                     transform.localPosition = new Vector3(
-                        StartPos.x + Charge / 10 * UnityEngine.Random.Range(-0.05f, 0.05f),
-                        StartPos.y + Charge / 10 * UnityEngine.Random.Range(-0.05f, 0.05f),
-                        StartPos.z + Charge / 10 * UnityEngine.Random.Range(-0.05f, 0.05f));
+                        StartPos.x + Charge / 10 * UnityEngine.Random.Range(-0.01f, 0.01f),
+                        StartPos.y + Charge / 10 * UnityEngine.Random.Range(-0.01f, 0.01f),
+                        StartPos.z + Charge / 10 * UnityEngine.Random.Range(-0.01f, 0.01f));
                     // cc.CameraShake(Charge / 10);
 
                     float ChargePreAdd = Charge;
@@ -349,27 +322,22 @@ namespace ExtraAlts.Weapons
                     }
                 }
 
-                if (LoaderArmCollisionHandler.Instance.CanCharge && Charge <= 2f && OnPunchReleased())
-                {
-                    CancelInvoke("Guh");
-                    pu.anim.speed = 1;
-                }
-
-                if(OnPunchReleased() && Charge <= 2f && LoaderArmCollisionHandler.Instance.CanCharge)
+                // cancel if released early
+                if (OnPunchReleased() && Charge <= 2f && LoaderArmCollisionHandler.Instance.CanCharge)
                 {
                     Charge = 0;
+                    pu.anim.CrossFade("Idle", 0.25f);
                 }
 
                 if (LoaderArmCollisionHandler.Instance.CanCharge && Charge >= 2f && OnPunchReleased())
                 {
-                    pu.anim.speed = 1;
+                    pu.anim.CrossFade("Idle", 0.25f);
                     LoaderArmCollisionHandler.Instance.Charge = Charge;
-                    nm.GetHurt(ChargeToDmg[(int)Charge], false, 0);
-                    nm.ForceAddAntiHP(ChargeToDmg[(int)Charge] * 1.5f, true, true);
 
                     if (nm.ridingRocket != null)
                     {
-                        nm.ridingRocket.PlayerRideEnd();
+                        nm.ridingRocket.rocketSpeed *= Charge / 2;
+                        nm.ridingRocket.transform.rotation = cc.transform.rotation;
                     }
 
                     if (FindObjectOfType<GroundCheck>().touchingGround)
@@ -392,6 +360,8 @@ namespace ExtraAlts.Weapons
                     LoaderArmCollisionHandler.Instance.CanCharge = false;
                     LoaderArmCollisionHandler.Instance.BadCoins.Clear();
                     nm.rb.velocity = cc.transform.forward * nm.walkSpeed * CalcCharge * Time.deltaTime;
+                    nm.GetHurt(ChargeToDmg[(int)Charge], false, 0);
+                    nm.ForceAddAntiHP(ChargeToDmg[(int)Charge] * 1.5f, true, true);
                     Charge = 0;
                 }
             }
