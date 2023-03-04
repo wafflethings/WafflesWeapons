@@ -207,7 +207,7 @@ namespace ExtraAlts.Weapons
 
                         if (!eid.dead && !AlrHit.Contains(eid.gameObject))
                         {
-                            eid.hitter = "punch";
+                            eid.hitter = "heavypunch";
                             eid.DeliverDamage(eid.gameObject, NewMovement.Instance.rb.velocity, other.gameObject.transform.position, Charge * 1.1f, false, 0, gameObject);
                             if (eid.dead)
                             {
@@ -359,7 +359,8 @@ namespace ExtraAlts.Weapons
                     LoaderArmCollisionHandler.Instance.MidCharge = true;
                     LoaderArmCollisionHandler.Instance.CanCharge = false;
                     LoaderArmCollisionHandler.Instance.BadCoins.Clear();
-                    nm.rb.velocity = cc.transform.forward * nm.walkSpeed * CalcCharge * Time.deltaTime;
+
+                    nm.rb.velocity = (cc.transform.forward * nm.walkSpeed * CalcCharge) / 60;
                     nm.GetHurt(ChargeToDmg[(int)Charge], false, 0);
                     nm.ForceAddAntiHP(ChargeToDmg[(int)Charge] * 1.5f, true, true);
                     Charge = 0;
