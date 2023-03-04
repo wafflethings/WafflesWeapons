@@ -121,13 +121,24 @@ namespace ExtraAlts.Weapons
                 cc = CameraController.Instance;
             }
 
+            public void FireSticky()
+            {
+                GameObject silly = Instantiate(StickyBomb, cc.transform.position + (cc.transform.forward * 0.5f), Quaternion.identity);
+                Physics.IgnoreCollision(silly.GetComponent<Collider>(), NewMovement.Instance.GetComponent<Collider>());
+                silly.AddComponent<StickyBombBehaviour>().isGreed = GetComponent<WeaponIdentifier>().delay != 0;
+            }
+
             public void Update()
             {
                 if(Charges < 4 && InputManager.Instance.InputSource.Fire2.WasPerformedThisFrame && gc.activated) 
                 {
-                    GameObject silly = Instantiate(StickyBomb, cc.transform.position + (cc.transform.forward * 0.5f), Quaternion.identity);
-                    Physics.IgnoreCollision(silly.GetComponent<Collider>(), NewMovement.Instance.GetComponent<Collider>());
-                    silly.AddComponent<StickyBombBehaviour>();
+                    float Delay = GetComponent<WeaponIdentifier>().delay;
+                    Invoke("FireSticky", Delay);
+
+                    if (Delay == 0)
+                    {
+                        Charges++;
+                    }
                 }
 
                 slider.value = 20 * (4 - (Charges + 1));
@@ -143,6 +154,7 @@ namespace ExtraAlts.Weapons
             public class StickyBombBehaviour : MonoBehaviour
             {
                 public bool Frozen = false;
+                public bool isGreed = false;
 
                 public void Start()
                 {
@@ -152,7 +164,6 @@ namespace ExtraAlts.Weapons
                        (NewMovement.Instance.ridingRocket ? MonoSingleton<NewMovement>.Instance.ridingRocket.rb.velocity : NewMovement.Instance.rb.velocity) 
                        + (Vector3.up * 10), ForceMode.VelocityChange);
 
-                    Charges += 1;
                     GetComponent<Projectile>().undeflectable = true;
                     Invoke("MakeParriable", 0.25f);
                     DestroyTime(5);
@@ -202,6 +213,11 @@ namespace ExtraAlts.Weapons
                         Destroy(GetComponent<RemoveOnTime>());
                         DestroyTime(15);
 
+                        //if (c.CompareTag("Floor"))
+                        //{
+                        //    transform.position = new Vector3(transform.position.x, c.bounds.max.y, transform.position.z);
+                        //}
+
                         Destroy(gameObject.ChildByName("ChargeEffect"));
                     }
 
@@ -224,7 +240,10 @@ namespace ExtraAlts.Weapons
 
                 public void OnDestroy()
                 {
-                    Charges -= 1;
+                    if (!isGreed)
+                    {
+                        Charges -= 1;
+                    }
                 }
             }
         }
