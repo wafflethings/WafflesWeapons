@@ -91,7 +91,7 @@ namespace ExtraAlts.Weapons
         {
             if (sourceWeapon.GetComponent<MalevolentBehaviour>() != null)
             {
-                var dict = __instance.GetPrivateField("weaponFreshness") as Dictionary<GameObject, float>;
+                var dict = __instance.weaponFreshness;
                 if (!dict.ContainsKey(sourceWeapon))
                 {
                     return;
@@ -142,23 +142,6 @@ namespace ExtraAlts.Weapons
 
         public class MalevolentBehaviour : MonoBehaviour
         {
-            private CameraController cc;
-            private CameraFrustumTargeter targeter;
-            private GunControl gc;
-            private Animator anim;
-            private AudioSource gunAud;
-            private Camera cam;
-
-            private bool shootReady;
-            private float shootCharge;
-            private int currentGunShot;
-            private bool pierceReady = false;
-            private bool chargingPierce = false;
-            private AudioSource screenAud;
-            private AudioSource ceaud;
-            private Light celight;
-            private WeaponPos wpos;
-
             private Revolver rev;
 
             public void OnDestroy()
@@ -182,17 +165,17 @@ namespace ExtraAlts.Weapons
                     }
                     else
                     {
-                        if (!pierceReady)
+                        if (!rev.pierceReady)
                         {
-                            screenAud.clip = rev.chargedSound;
-                            screenAud.loop = false;
-                            screenAud.volume = 0.35f;
-                            screenAud.pitch = UnityEngine.Random.Range(1f, 1.1f);
-                            screenAud.Play();
+                            rev.screenAud.clip = rev.chargedSound;
+                            rev.screenAud.loop = false;
+                            rev.screenAud.volume = 0.35f;
+                            rev.screenAud.pitch = UnityEngine.Random.Range(1f, 1.1f);
+                            rev.screenAud.Play();
                         }
 
                         rev.pierceCharge = 100f;
-                        pierceReady = true;
+                        rev.pierceReady = true;
                     }
                 }
             }
@@ -202,19 +185,8 @@ namespace ExtraAlts.Weapons
                 if (rev != null)
                 {
                     rev.pierceCharge = 100;
-                    pierceReady = true;
+                    rev.pierceReady = true;
                 }
-            }
-
-            public void Start()
-            {
-                cc = CameraController.Instance;
-                targeter = CameraFrustumTargeter.Instance;
-                gc = GetComponentInParent<GunControl>();
-                anim = GetComponentInChildren<Animator>();
-                gunAud = GetComponent<AudioSource>();
-                cam = CameraController.Instance.GetComponent<Camera>();
-                wpos = GetComponent<WeaponPos>();
             }
 
             public void Update()
@@ -222,34 +194,22 @@ namespace ExtraAlts.Weapons
                 if (rev == null)
                 {
                     rev = GetComponent<Revolver>();
-                    screenAud = rev.screenMR.gameObject.GetComponent<AudioSource>();
+                    rev.screenAud = rev.screenMR.gameObject.GetComponent<AudioSource>();
                     rev.chargeEffect.transform.localPosition += new Vector3(0, -0.25f, 0);
                     rev.chargeEffect.GetComponent<MeshRenderer>().material = Charge;
                     rev.chargeEffect.GetComponent<ParticleSystemRenderer>().material = Charge;
                     rev.chargeEffect.GetComponent<Light>().color = new Color(1, 0.5f, 0.25f);
                 }
 
-                if (celight == null)
+                if (rev.celight == null)
                 {
-                    ceaud = rev.chargeEffect.GetComponent<AudioSource>();
-                    celight = rev.chargeEffect.GetComponent<Light>();
-                }
-                //
-                //rev.screenMR.material.SetTexture("_MainTex", NumberToTexture[(int)Charge]);
-
-                if (shootCharge + 150f * Time.deltaTime < 100f)
-                {
-                    shootCharge += 150f * Time.deltaTime;
-                }
-                else
-                {
-                    shootCharge = 100f;
-                    shootReady = true;
+                    rev.ceaud = rev.chargeEffect.GetComponent<AudioSource>();
+                    rev.celight = rev.chargeEffect.GetComponent<Light>();
                 }
 
-                if (OnFireHeld() && shootReady && gc.activated)
+                if (OnFireHeld() && rev.shootReady && rev.gc.activated)
                 {
-                    if ((rev.altVersion && MonoSingleton<WeaponCharges>.Instance.revaltpickupcharge == 0) || !rev.altVersion)
+                    if ((rev.altVersion && WeaponCharges.Instance.revaltpickupcharge == 0) || !rev.altVersion)
                     {
                         float delay = GetComponent<WeaponIdentifier>().delay;
                         if (!rev.altVersion)
@@ -269,11 +229,11 @@ namespace ExtraAlts.Weapons
                 }
 
                 rev.chargeEffect.transform.localScale = Vector3.one * rev.pierceShotCharge * 0.02f;
-                ceaud.volume = 0.25f + rev.pierceShotCharge * 0.005f;
-                ceaud.pitch = rev.pierceShotCharge * 0.005f;
-                celight.range = rev.pierceShotCharge * 0.01f;
+                rev.ceaud.volume = 0.25f + rev.pierceShotCharge * 0.005f;
+                rev.ceaud.pitch = rev.pierceShotCharge * 0.005f;
+                rev.celight.range = rev.pierceShotCharge * 0.01f;
 
-                if (OnAltFireReleased() && pierceReady && shootReady && rev.pierceShotCharge == 100f && gc.activated)
+                if (OnAltFireReleased() && rev.pierceReady && rev.shootReady && rev.pierceShotCharge == 100f && rev.gc.activated)
                 {
                     Shoot2();
                 }
@@ -296,11 +256,11 @@ namespace ExtraAlts.Weapons
                     }
                 }
 
-                if (gc.activated)
+                if (rev.gc.activated)
                 {
-                    if (InputManager.Instance.InputSource.Fire2.IsPressed && shootReady && pierceReady)
+                    if (InputManager.Instance.InputSource.Fire2.IsPressed && rev.shootReady && rev.pierceReady)
                     {
-                        chargingPierce = true;
+                        rev.chargingPierce = true;
                         if (rev.pierceShotCharge + 175f * Time.deltaTime < 100f)
                         {
                             rev.pierceShotCharge += 175f * Time.deltaTime;
@@ -312,7 +272,7 @@ namespace ExtraAlts.Weapons
                     }
                     else
                     {
-                        chargingPierce = false;
+                        rev.chargingPierce = false;
                         if (rev.pierceShotCharge - 175f * Time.deltaTime > 0f)
                         {
                             rev.pierceShotCharge -= 175f * Time.deltaTime;
@@ -342,9 +302,9 @@ namespace ExtraAlts.Weapons
                         }
                     }
 
-                    transform.localPosition = new Vector3(wpos.currentDefault.x + rev.pierceShotCharge / 250f *
-                        UnityEngine.Random.Range(-0.05f, 0.05f), wpos.currentDefault.y + rev.pierceShotCharge / 250f *
-                        UnityEngine.Random.Range(-0.05f, 0.05f), wpos.currentDefault.z + rev.pierceShotCharge / 250f *
+                    transform.localPosition = new Vector3(rev.wpos.currentDefault.x + rev.pierceShotCharge / 250f *
+                        UnityEngine.Random.Range(-0.05f, 0.05f), rev.wpos.currentDefault.y + rev.pierceShotCharge / 250f *
+                        UnityEngine.Random.Range(-0.05f, 0.05f), rev.wpos.currentDefault.z + rev.pierceShotCharge / 250f *
                         UnityEngine.Random.Range(-0.05f, 0.05f));
                 }
 
@@ -353,37 +313,37 @@ namespace ExtraAlts.Weapons
 
             public void Shoot()
             {
-                cc.StopShake();
-                shootReady = false;
-                shootCharge = 0f;
+                rev.cc.StopShake();
+                rev.shootReady = false;
+                rev.shootCharge = 0f;
                 if (rev.altVersion)
                 {
                     MonoSingleton<WeaponCharges>.Instance.revaltpickupcharge = 2f;
                 }
 
-                GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(rev.revolverBeam, cc.transform.position, cc.transform.rotation);
-                if (targeter.CurrentTarget && targeter.IsAutoAimed)
+                GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(rev.revolverBeam, rev.cc.transform.position, rev.cc.transform.rotation);
+                if (rev.targeter.CurrentTarget && rev.targeter.IsAutoAimed)
                 {
-                    gameObject.transform.LookAt(targeter.CurrentTarget.bounds.center);
+                    gameObject.transform.LookAt(rev.targeter.CurrentTarget.bounds.center);
                 }
                 RevolverBeam component = gameObject.GetComponent<RevolverBeam>();
                 component.damage *= 0.5f;
                 component.critDamageOverride = 1;
-                component.sourceWeapon = gc.currentWeapon;
+                component.sourceWeapon = rev.gc.currentWeapon;
                 component.alternateStartPoint = rev.gunBarrel.transform.position;
                 component.gunVariation = rev.gunVariation;
 
-                if (anim.GetCurrentAnimatorStateInfo(0).IsName("PickUp"))
+                if (rev.anim.GetCurrentAnimatorStateInfo(0).IsName("PickUp"))
                 {
                     component.quickDraw = true;
                 }
 
-                currentGunShot = UnityEngine.Random.Range(0, rev.gunShots.Length);
-                gunAud.clip = rev.gunShots[currentGunShot];
-                gunAud.volume = 0.55f;
-                gunAud.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
-                gunAud.Play();
-                cam.fieldOfView = cam.fieldOfView + cc.defaultFov / 40f;
+                rev.currentGunShot = UnityEngine.Random.Range(0, rev.gunShots.Length);
+                rev.gunAud.clip = rev.gunShots[rev.currentGunShot];
+                rev.gunAud.volume = 0.55f;
+                rev.gunAud.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+                rev.gunAud.Play();
+                rev.cam.fieldOfView = rev.cam.fieldOfView + rev.cc.defaultFov / 40f;
                 //RumbleManager.Instance.SetVibrationTracked("rumble.gun.fire", base.gameObject);
 
                 if (!rev.altVersion)
@@ -391,44 +351,44 @@ namespace ExtraAlts.Weapons
                     rev.cylinder.DoTurn();
                 }
 
-                anim.SetFloat("RandomChance", UnityEngine.Random.Range(0f, 1f));
-                anim.SetTrigger("Shoot");
+                rev.anim.SetFloat("RandomChance", UnityEngine.Random.Range(0f, 1f));
+                rev.anim.SetTrigger("Shoot");
             }
 
             public void Shoot2()
             {
-                cc.StopShake();
-                shootReady = false;
-                shootCharge = 0f;
+                rev.cc.StopShake();
+                rev.shootReady = false;
+                rev.shootCharge = 0f;
                 if (rev.altVersion)
                 {
                     MonoSingleton<WeaponCharges>.Instance.revaltpickupcharge = 2f;
                 }
 
-                GameObject beam = UnityEngine.Object.Instantiate<GameObject>(rev.revolverBeamSuper, cc.transform.position, cc.transform.rotation);
-                if (targeter.CurrentTarget && targeter.IsAutoAimed)
+                GameObject beam = UnityEngine.Object.Instantiate<GameObject>(rev.revolverBeamSuper, rev.cc.transform.position, rev.cc.transform.rotation);
+                if (rev.targeter.CurrentTarget && rev.targeter.IsAutoAimed)
                 {
-                    beam.transform.LookAt(targeter.CurrentTarget.bounds.center);
+                    beam.transform.LookAt(rev.targeter.CurrentTarget.bounds.center);
                 }
                 RevolverBeam component = beam.GetComponent<RevolverBeam>();
                 component.sourceWeapon = gameObject;
 
                 component.critDamageOverride = 1;
-                component.sourceWeapon = gc.currentWeapon;
+                component.sourceWeapon = rev.gc.currentWeapon;
                 component.alternateStartPoint = rev.gunBarrel.transform.position;
                 component.gunVariation = rev.gunVariation;
 
-                if (anim.GetCurrentAnimatorStateInfo(0).IsName("PickUp"))
+                if (rev.anim.GetCurrentAnimatorStateInfo(0).IsName("PickUp"))
                 {
                     component.quickDraw = true;
                 }
 
-                currentGunShot = UnityEngine.Random.Range(0, rev.gunShots.Length);
-                gunAud.clip = rev.gunShots[currentGunShot];
-                gunAud.volume = 0.55f;
-                gunAud.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
-                gunAud.Play();
-                cam.fieldOfView = cam.fieldOfView + cc.defaultFov / 40f;
+                rev.currentGunShot = UnityEngine.Random.Range(0, rev.gunShots.Length);
+                rev.gunAud.clip = rev.gunShots[rev.currentGunShot];
+                rev.gunAud.volume = 0.55f;
+                rev.gunAud.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+                rev.gunAud.Play();
+                rev.cam.fieldOfView = rev.cam.fieldOfView + rev.cc.defaultFov / 40f;
                 //RumbleManager.Instance.SetVibrationTracked("rumble.gun.fire", base.gameObject);
 
                 if (!rev.altVersion)
@@ -436,25 +396,25 @@ namespace ExtraAlts.Weapons
                     rev.cylinder.DoTurn();
                 }
 
-                anim.SetFloat("RandomChance", UnityEngine.Random.Range(0f, 1f));
-                anim.SetTrigger("Shoot");
+                rev.anim.SetFloat("RandomChance", UnityEngine.Random.Range(0f, 1f));
+                rev.anim.SetTrigger("Shoot");
 
                 rev.pierceShotCharge = 0f;
                 rev.pierceCharge = 0;
-                pierceReady = false;
+                rev.pierceReady = false;
 
-                screenAud.clip = rev.chargingSound;
-                screenAud.loop = true;
+                rev.screenAud.clip = rev.chargingSound;
+                rev.screenAud.loop = true;
                 if (rev.altVersion)
                 {
-                    screenAud.pitch = 0.5f;
+                    rev.screenAud.pitch = 0.5f;
                 }
                 else
                 {
-                    screenAud.pitch = 0.75f;
+                    rev.screenAud.pitch = 0.75f;
                 }
-                screenAud.volume = 0.55f;
-                screenAud.Play();
+                rev.screenAud.volume = 0.55f;
+                rev.screenAud.Play();
             }
         }
     }

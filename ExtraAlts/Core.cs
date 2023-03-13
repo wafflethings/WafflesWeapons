@@ -77,7 +77,7 @@ namespace ExtraAlts
         [HarmonyPostfix]
         public static void AddNailProj(Nailgun __instance)
         {
-            __instance.SetPrivateField("projectileVariationTypes", new string[] {
+            __instance.projectileVariationTypes = new string[] {
                 "nailgun0",
                 "nailgun1",
                 "nailgun2",
@@ -86,7 +86,7 @@ namespace ExtraAlts
                 "nailgun5",
                 "nailgun6",
                 "nailgun8"
-            });
+            };
         }
     }
 }

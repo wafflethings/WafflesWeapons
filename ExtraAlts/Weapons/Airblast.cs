@@ -128,34 +128,22 @@ namespace ExtraAlts.Weapons
         public class AirblastBehaviour : MonoBehaviour
         {
             private GameObject MyBlast;
-            private Animator anim;
-            private GunControl gc;
-            private CameraController cc;
             private Nailgun nai;
-            private Slider heatSlider;
             public static float Charge;
-            public Image sliderBg;
             public static GroundCheck gcc;
 
             public void Start()
             {
                 nai = GetComponent<Nailgun>();
 
-                anim = GetComponentInChildren<Animator>();
-                gc = GetComponentInParent<GunControl>();
-                cc = CameraController.Instance;
-                heatSlider = (Slider)GetComponent<Nailgun>().GetPrivateField("heatSlider");
-                heatSlider.gameObject.ChildByName("Fill Area").ChildByName("Fill").GetComponent<Image>().color = ColorBlindSettings.Instance.variationColors[4];
-                heatSlider.transform.parent.transform.localPosition += new Vector3(0, -4, 0);
+                nai.heatSlider.gameObject.ChildByName("Fill Area").ChildByName("Fill").GetComponent<Image>().color = ColorBlindSettings.Instance.variationColors[4];
+                nai.heatSlider.transform.parent.transform.localPosition += new Vector3(0, -4, 0);
                 foreach(Image img in nai.heatSinkImages)
                 {
                     img.gameObject.SetActive(false);
                 }
-                sliderBg = (Image)GetComponent<Nailgun>().GetPrivateField("sliderBg");
-                GameObject decoy = Instantiate(heatSlider.gameObject);
-                decoy.transform.localScale = Vector3.zero;
+
                 gcc = FindObjectOfType<GroundCheck>();
-                nai.SetPrivateField("heatSlider", decoy.GetComponent<Slider>());
 
                 if(nai.altVersion)
                 {
@@ -173,7 +161,7 @@ namespace ExtraAlts.Weapons
                     nai = GetComponent<Nailgun>();
                 }
 
-                sliderBg.color = ColorBlindSettings.Instance.variationColors[4];
+                nai.sliderBg.color = ColorBlindSettings.Instance.variationColors[4];
                 if (nai.altVersion)
                 {
                     nai.fireRate = 35f;
@@ -182,22 +170,22 @@ namespace ExtraAlts.Weapons
                     nai.fireRate = 6f;
                 }
 
-                if (gc.activated)
+                if (nai.gc.activated)
                 {
                     bool Touching = gcc.touchingGround;
-                    heatSlider.value = Charge;
+                    nai.heatSlider.value = Charge;
 
                     if (Charge == 1 && OnAltFire()) 
                     {
-                        anim.SetTrigger("Shoot");
+                        nai.anim.SetTrigger("Shoot");
 
-                        Quaternion rot = cc.transform.rotation;
+                        Quaternion rot = nai.cc.transform.rotation;
                         if(nai.altVersion)
                         {
                             rot = MyBlast.transform.rotation;
                         }
 
-                        GameObject guh = GameObject.Instantiate(MyBlast, cc.transform.position + cc.transform.forward, rot);
+                        GameObject guh = GameObject.Instantiate(MyBlast, nai.cc.transform.position + nai.cc.transform.forward, rot);
                         if (!nai.altVersion)
                         {
                             guh.ChildByName("PlayerLaunch").SetActive(!Touching);

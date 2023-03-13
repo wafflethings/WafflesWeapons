@@ -104,8 +104,6 @@ namespace ExtraAlts.Weapons
 
         public class StickyBehaviour : MonoBehaviour
         {
-            private GunControl gc;
-            private CameraController cc;
             private Shotgun sho;
             private Slider slider;
             private Image fill;
@@ -114,23 +112,26 @@ namespace ExtraAlts.Weapons
 
             public void Start()
             {
-                gc = GetComponentInParent<GunControl>();
                 fill = GetComponentInChildren<Slider>().fillRect.GetComponent<Image>();
                 slider = GetComponentInChildren<Slider>();
                 fill.color = ColorBlindSettings.Instance.variationColors[4];
-                cc = CameraController.Instance;
             }
 
             public void FireSticky()
             {
-                GameObject silly = Instantiate(StickyBomb, cc.transform.position + (cc.transform.forward * 0.5f), Quaternion.identity);
+                GameObject silly = Instantiate(StickyBomb, sho.cc.transform.position + (sho.cc.transform.forward * 0.5f), Quaternion.identity);
                 Physics.IgnoreCollision(silly.GetComponent<Collider>(), NewMovement.Instance.GetComponent<Collider>());
                 silly.AddComponent<StickyBombBehaviour>().isGreed = GetComponent<WeaponIdentifier>().delay != 0;
             }
 
             public void Update()
             {
-                if(Charges < 4 && InputManager.Instance.InputSource.Fire2.WasPerformedThisFrame && gc.activated) 
+                if (sho == null)
+                {
+                    sho = GetComponent<Shotgun>();
+                }
+
+                if(Charges < 4 && InputManager.Instance.InputSource.Fire2.WasPerformedThisFrame && sho.gc.activated) 
                 {
                     float Delay = GetComponent<WeaponIdentifier>().delay;
                     Invoke("FireSticky", Delay);

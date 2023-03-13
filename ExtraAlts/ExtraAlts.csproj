@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -38,7 +39,6 @@
     <Compile Include="Weapons\Sticky.cs" />
     <Compile Include="Weapons\Virtuous.cs" />
     <Compile Include="Weapons\LoaderGauntlet.cs" />
-    <Compile Include="Weapons\Thermo.cs" />
     <Compile Include="Weapons\Malevolent.cs" />
     <Compile Include="Weapons\FanFire.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

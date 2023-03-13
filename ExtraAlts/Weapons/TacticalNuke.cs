@@ -80,13 +80,6 @@ namespace ExtraAlts.Weapons
             }
         }
 
-        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.Charge))]
-        [HarmonyPostfix]
-        public static void DoCharge(float amount)
-        {
-
-        }
-
         [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.MaxCharges))]
         [HarmonyPostfix]
         public static void MaxCharge()
@@ -100,8 +93,6 @@ namespace ExtraAlts.Weapons
             private RocketLauncher rock;
             public static float WindUp = 0;
             public static float MaxWind = 4;
-            private RectTransform timerArm;
-            private Image timerMeter;
             float Target = 0;
 
             public void Start()
@@ -115,13 +106,11 @@ namespace ExtraAlts.Weapons
                 if (rock == null)
                 {
                     rock = GetComponent<RocketLauncher>();
-                    timerArm = (RectTransform)rock.GetPrivateField("timerArm");
-                    timerMeter = (Image)rock.GetPrivateField("timerMeter");
                 }
 
                 Target = Mathf.MoveTowards(Target, WindUp / MaxWind, Time.deltaTime * 5);
-                timerArm.localRotation = Quaternion.Euler(0f, 0f, Mathf.Lerp(360f, 0f, Target));
-                timerMeter.fillAmount = Target;
+                rock.timerArm.localRotation = Quaternion.Euler(0f, 0f, Mathf.Lerp(360f, 0f, Target));
+                rock.timerMeter.fillAmount = Target;
 
                 if (WindUp == MaxWind && InputManager.Instance.InputSource.Fire2.WasPerformedThisFrame && gc.activated)
                 {

@@ -122,7 +122,7 @@ namespace ExtraAlts.Weapons
         {
             if (sourceWeapon.GetComponent<FanFireBehaviour>() != null)
             {
-                var dict = __instance.GetPrivateField("weaponFreshness") as Dictionary<GameObject, float>;
+                var dict = __instance.weaponFreshness;
                 if (!dict.ContainsKey(sourceWeapon))
                 {
                     return;
@@ -212,31 +212,10 @@ namespace ExtraAlts.Weapons
 
         public class FanFireBehaviour : MonoBehaviour
         {
-            private CameraController cc;
-            private CameraFrustumTargeter targeter;
-            private GunControl gc;
-            private Animator anim;
-            private AudioSource gunAud;
-            private Camera cam;
-
-            private bool shootReady;
-            private float shootCharge;
-            private int currentGunShot;
-
             private Revolver rev;
             public static float Charge = 0;
             public float Damage = 0;
             private bool CanFan = true;
-
-            public void Start()
-            {
-                cc = CameraController.Instance;
-                targeter = CameraFrustumTargeter.Instance;
-                gc = GetComponentInParent<GunControl>();
-                anim = GetComponentInChildren<Animator>();
-                gunAud = GetComponent<AudioSource>();
-                cam = CameraController.Instance.GetComponent<Camera>();
-            }
 
             public void Update()
             {
@@ -244,21 +223,12 @@ namespace ExtraAlts.Weapons
                 {
                     rev = GetComponent<Revolver>();
                 }
+
                 rev.screenMR.material.SetTexture("_MainTex", NumberToTexture[(int)Charge]);
 
-                if (shootCharge + 175f * Time.deltaTime < 100f)
+                if (OnFireHeld() && rev.shootReady && rev.gc.activated)
                 {
-                    shootCharge += 175f * Time.deltaTime;
-                }
-                else
-                {
-                    shootCharge = 100f;
-                    shootReady = true;
-                }
-
-                if (OnFireHeld() && shootReady && gc.activated)
-                {
-                    if ((rev.altVersion && MonoSingleton<WeaponCharges>.Instance.revaltpickupcharge == 0) || !rev.altVersion)
+                    if ((rev.altVersion && WeaponCharges.Instance.revaltpickupcharge == 0) || !rev.altVersion)
                     {
                         Shoot();
                     }
@@ -292,35 +262,35 @@ namespace ExtraAlts.Weapons
 
             public void Shoot()
             {
-                cc.StopShake();
-                shootReady = false;
-                shootCharge = 0f;
+                rev.cc.StopShake();
+                rev.shootReady = false;
+                rev.shootCharge = 0f;
                 if (rev.altVersion)
                 {
                     MonoSingleton<WeaponCharges>.Instance.revaltpickupcharge = 2f;
                 }
 
-                GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(rev.revolverBeam, cc.transform.position, cc.transform.rotation);
-                if (targeter.CurrentTarget && targeter.IsAutoAimed)
+                GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(rev.revolverBeam, rev.cc.transform.position, rev.cc.transform.rotation);
+                if (rev.targeter.CurrentTarget && rev.targeter.IsAutoAimed)
                 {
-                    gameObject.transform.LookAt(targeter.CurrentTarget.bounds.center);
+                    gameObject.transform.LookAt(rev.targeter.CurrentTarget.bounds.center);
                 }
                 RevolverBeam component = gameObject.GetComponent<RevolverBeam>();
-                component.sourceWeapon = gc.currentWeapon;
+                component.sourceWeapon = rev.gc.currentWeapon;
                 component.alternateStartPoint = rev.gunBarrel.transform.position;
                 component.gunVariation = rev.gunVariation;
 
-                if (anim.GetCurrentAnimatorStateInfo(0).IsName("PickUp"))
+                if (rev.anim.GetCurrentAnimatorStateInfo(0).IsName("PickUp"))
                 {
                     component.quickDraw = true;
                 }
 
-                currentGunShot = UnityEngine.Random.Range(0, rev.gunShots.Length);
-                gunAud.clip = rev.gunShots[currentGunShot];
-                gunAud.volume = 0.55f;
-                gunAud.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
-                gunAud.Play();
-                cam.fieldOfView = cam.fieldOfView + cc.defaultFov / 40f;
+                rev.currentGunShot = UnityEngine.Random.Range(0, rev.gunShots.Length);
+                rev.gunAud.clip = rev.gunShots[rev.currentGunShot];
+                rev.gunAud.volume = 0.55f;
+                rev.gunAud.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+                rev.gunAud.Play();
+                rev.cam.fieldOfView = rev.cam.fieldOfView + rev.cc.defaultFov / 40f;
                 //RumbleManager.Instance.SetVibrationTracked("rumble.gun.fire", base.gameObject);
 
                 if (!rev.altVersion)
@@ -328,47 +298,47 @@ namespace ExtraAlts.Weapons
                     rev.cylinder.DoTurn();
                 }
 
-                anim.SetFloat("RandomChance", UnityEngine.Random.Range(0f, 1f));
-                anim.SetTrigger("Shoot");
+                rev.anim.SetFloat("RandomChance", UnityEngine.Random.Range(0f, 1f));
+                rev.anim.SetTrigger("Shoot");
             }
 
             public void ShootFan()
             {
-                cc.StopShake();
+                rev.cc.StopShake();
                 if (this.gameObject.GetComponentInParent<DualWield>() == null)
                 {
                     Charge--;
                 }
-                shootReady = false;
-                shootCharge = 0f;
+                rev.shootReady = false;
+                rev.shootCharge = 0f;
                 if (rev.altVersion)
                 {
                     WeaponCharges.Instance.revaltpickupcharge = 2f;
                 }
 
-                GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(rev.revolverBeamSuper, cc.transform.position, cc.transform.rotation);
-                if (targeter.CurrentTarget && targeter.IsAutoAimed)
+                GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(rev.revolverBeamSuper, rev.cc.transform.position, rev.cc.transform.rotation);
+                if (rev.targeter.CurrentTarget && rev.targeter.IsAutoAimed)
                 {
-                    gameObject.transform.LookAt(targeter.CurrentTarget.bounds.center);
+                    gameObject.transform.LookAt(rev.targeter.CurrentTarget.bounds.center);
                 }
 
                 RevolverBeam component = gameObject.GetComponent<RevolverBeam>();
                 component.damage = Damage;
-                component.sourceWeapon = gc.currentWeapon;
+                component.sourceWeapon = rev.gc.currentWeapon;
                 component.alternateStartPoint = rev.gunBarrel.transform.position;
                 component.gunVariation = rev.gunVariation;
 
-                if (anim.GetCurrentAnimatorStateInfo(0).IsName("PickUp"))
+                if (rev.anim.GetCurrentAnimatorStateInfo(0).IsName("PickUp"))
                 {
                     component.quickDraw = true;
                 }
 
-                currentGunShot = UnityEngine.Random.Range(0, rev.gunShots.Length);
-                gunAud.clip = rev.gunShots[currentGunShot];
-                gunAud.volume = 0.55f;
-                gunAud.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
-                gunAud.Play();
-                cam.fieldOfView = cam.fieldOfView + cc.defaultFov / 40f;
+                rev.currentGunShot = UnityEngine.Random.Range(0, rev.gunShots.Length);
+                rev.gunAud.clip = rev.gunShots[rev.currentGunShot];
+                rev.gunAud.volume = 0.55f;
+                rev.gunAud.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+                rev.gunAud.Play();
+                rev.cam.fieldOfView = rev.cam.fieldOfView + rev.cc.defaultFov / 40f;
                 //RumbleManager.Instance.SetVibrationTracked("rumble.gun.fire", base.gameObject);
 
                 if (!rev.altVersion)
@@ -376,8 +346,8 @@ namespace ExtraAlts.Weapons
                     rev.cylinder.DoTurn();
                 }
 
-                anim.SetFloat("RandomChance", UnityEngine.Random.Range(0f, 1f));
-                anim.SetTrigger("Shoot");
+                rev.anim.SetFloat("RandomChance", UnityEngine.Random.Range(0f, 1f));
+                rev.anim.SetTrigger("Shoot");
             }
         }
     }

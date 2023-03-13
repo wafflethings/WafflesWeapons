@@ -97,7 +97,7 @@ namespace ExtraAlts.Weapons
         {
             if (sourceWeapon.GetComponent<VirtuousBehaviour>() != null)
             {
-                var dict = __instance.GetPrivateField("weaponFreshness") as Dictionary<GameObject, float>;
+                var dict = __instance.weaponFreshness;
                 if (!dict.ContainsKey(sourceWeapon))
                 {
                     return;

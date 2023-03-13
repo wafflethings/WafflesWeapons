@@ -35,20 +35,6 @@ namespace ExtraAlts
         }
     }
 
-    public static class ReflectionUtils
-    {
-        public static object GetPrivateField(this object ob, string var)
-        {
-            return ob.GetType().GetField(var, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(ob);
-        }
-
-        public static void SetPrivateField(this object ob, string var, object val)
-        {
-            var prop = ob.GetType().GetField(var, BindingFlags.NonPublic | BindingFlags.Instance);
-            prop.SetValue(ob, val);
-        }
-    }
-
     public static class GameObjectUtils
     {
         public static GameObject ChildByName(this GameObject from, string name)
