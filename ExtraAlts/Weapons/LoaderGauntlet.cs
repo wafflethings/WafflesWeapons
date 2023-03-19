@@ -84,7 +84,7 @@ namespace WafflesWeapons.Weapons
                     {
                         __instance.fistIcon.color = ColorBlindSettings.Instance.variationColors[5];
                     } 
-                    catch (IndexOutOfRangeException ex)
+                    catch
                     {
                         Debug.LogError($"whar? {ColorBlindSettings.Instance.variationColors.Length}");
                     }

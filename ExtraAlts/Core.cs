@@ -60,6 +60,22 @@ namespace WafflesWeapons
             GunRegistry.Register(typeof(TacticalNuke));
         }
 
+        [HarmonyPatch(typeof(SteamController), nameof(SteamController.SubmitCyberGrindScore))]
+        [HarmonyPrefix]
+        public static bool DisableCG()
+        {
+            foreach (Gun gun in GunRegistry.TypeToGun.Values)
+            {
+                if (gun.Enabled() > 0)
+                {
+                    Debug.Log("A weapon has been detected, disable CG ‼️");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         [HarmonyPatch(typeof(ShopZone), nameof(ShopZone.Start))]
         [HarmonyPrefix]
         public static void AddCredits(ShopZone __instance)
