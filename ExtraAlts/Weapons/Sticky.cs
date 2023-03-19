@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ExtraAlts.Weapons
+namespace WafflesWeapons.Weapons
 {
     public class Sticky : Gun
     {
@@ -122,6 +122,7 @@ namespace ExtraAlts.Weapons
                 GameObject silly = Instantiate(StickyBomb, sho.cc.transform.position + (sho.cc.transform.forward * 0.5f), Quaternion.identity);
                 Physics.IgnoreCollision(silly.GetComponent<Collider>(), NewMovement.Instance.GetComponent<Collider>());
                 silly.AddComponent<StickyBombBehaviour>().isGreed = GetComponent<WeaponIdentifier>().delay != 0;
+                sho.anim.SetTrigger("PumpFire");
             }
 
             public void Update()
@@ -149,7 +150,7 @@ namespace ExtraAlts.Weapons
                 } else
                 {
                     slider.gameObject.SetActive(false);
-                }
+                } 
             }
 
             public class StickyBombBehaviour : MonoBehaviour
@@ -159,7 +160,9 @@ namespace ExtraAlts.Weapons
 
                 public void Start()
                 {
-                    Debug.Log("sticky spawn");
+                    // :3
+                    // it has the collider that isnt a trigger
+                    Physics.IgnoreCollision(NewMovement.Instance.GetComponent<Collider>(), gameObject.ChildByName(":3").GetComponent<Collider>());
 
                     GetComponent<Rigidbody>().AddForce(CameraController.Instance.transform.forward * 12f + 
                        (NewMovement.Instance.ridingRocket ? MonoSingleton<NewMovement>.Instance.ridingRocket.rb.velocity : NewMovement.Instance.rb.velocity) 
@@ -210,8 +213,8 @@ namespace ExtraAlts.Weapons
                         Frozen = true;
                         CancelInvoke("MakeParriable");
                         GetComponent<Projectile>().undeflectable = true;
-                        GetComponent<Rigidbody>().isKinematic = true;
                         Destroy(GetComponent<RemoveOnTime>());
+                        Invoke("Kinematic", 0.01f);
                         DestroyTime(15);
 
                         //if (c.CompareTag("Floor"))
@@ -232,6 +235,11 @@ namespace ExtraAlts.Weapons
                             GetComponent<Projectile>().Explode();
                         }
                     }
+                }
+
+                public void Kinematic()
+                {
+                    GetComponent<Rigidbody>().isKinematic = true;
                 }
 
                 public void OnCollisionEnter(Collision c)

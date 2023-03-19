@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtraAlts", "ExtraAlts\ExtraAlts.csproj", "{3B125B5E-1432-45FD-BBB9-AECDD67EE054}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waffle's Weapons", "ExtraAlts\Waffle's Weapons.csproj", "{3B125B5E-1432-45FD-BBB9-AECDD67EE054}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

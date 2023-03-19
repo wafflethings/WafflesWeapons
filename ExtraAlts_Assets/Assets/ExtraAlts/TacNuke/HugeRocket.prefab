@@ -898,7 +898,7 @@ GameObject:
   - component: {fileID: 4343074793444024}
   - component: {fileID: 33202681872275423}
   - component: {fileID: 23291527813429211}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Cylinder (1)(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -987,7 +987,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4438841783077275
 Transform:
   m_ObjectHideFlags: 0
@@ -1089,7 +1089,7 @@ GameObject:
   - component: {fileID: 4934701969856882}
   - component: {fileID: 33170463131395863}
   - component: {fileID: 23704216348952728}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1396,7 +1396,7 @@ GameObject:
   - component: {fileID: 33899254980574979}
   - component: {fileID: 23025524043082792}
   - component: {fileID: 114007849024861404}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}

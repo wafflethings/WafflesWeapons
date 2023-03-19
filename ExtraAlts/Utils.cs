@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace ExtraAlts
+namespace WafflesWeapons
 {
     public static class PathUtils
     {
@@ -32,6 +32,11 @@ namespace ExtraAlts
         {
             // return Path.Combine(GameDirectory(), @"BepInEx\UMM Mods");
             return Path.Combine(GameDirectory(), @"BepInEx\plugins");
+        }
+
+        public static string ModPath()
+        {
+            return Assembly.GetExecutingAssembly().Location.Substring(0, Assembly.GetExecutingAssembly().Location.LastIndexOf(@"\"));
         }
     }
 

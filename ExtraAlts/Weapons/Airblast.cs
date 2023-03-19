@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ExtraAlts.Weapons
+namespace WafflesWeapons.Weapons
 {
     public class Airblast : Gun
     {

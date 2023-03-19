@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ExtraAlts")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Waffle's Weapons")]
+[assembly: AssemblyDescription("silly little mod :3")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ExtraAlts")]
-[assembly: AssemblyCopyright("Copyright ©  2023")]
+[assembly: AssemblyProduct("Waffle's Weapons")]
+[assembly: AssemblyCopyright("Copyright © Waffle 2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

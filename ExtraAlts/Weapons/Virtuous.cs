@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace ExtraAlts.Weapons
+namespace WafflesWeapons.Weapons
 {
     public class Virtuous : Gun
     {
@@ -23,19 +23,17 @@ namespace ExtraAlts.Weapons
             Icon = Core.Assets.LoadAsset<Sprite>("rail virt.png");
             IconGlow = Core.Assets.LoadAsset<Sprite>("rail virt glow.png");
             RailBeam = Core.Assets.LoadAsset<GameObject>("VirtRail.prefab");
-            SceneManager.sceneLoaded += LoadInsig;
             Core.Harmony.PatchAll(typeof(Virtuous));
-        }
-
-        public static void LoadInsig(Scene s, LoadSceneMode l) 
-        {
-            VirtueBeam = MapLoader.Instance.loadedBundles["bundle-0"].LoadAsset<GameObject>("Assets/Prefabs/VirtueInsignia.prefab");
-            SceneManager.sceneLoaded -= LoadInsig;  
         }
 
         public override GameObject Create(Transform parent)
         {
             base.Create(parent);
+
+            if (VirtueBeam == null)
+            {
+                VirtueBeam = AssetHelper.LoadPrefab("Assets/Prefabs/VirtueInsignia.prefab");
+            }
 
             GameObject thing = GameObject.Instantiate(GunSetter.Instance.railCannon[0], parent);
 

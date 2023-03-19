@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace ExtraAlts.Weapons
+namespace WafflesWeapons.Weapons
 {
     public class LoaderGauntlet : Fist
     {
@@ -16,11 +16,11 @@ namespace ExtraAlts.Weapons
         public static GameObject Click;
         public static GameObject ChargeSound;
         public static GameObject Release;
+        public static Punch curOne;
 
         public static void LoadAssets()
         {
             Arm = Core.Assets.LoadAsset<GameObject>("ESARM.prefab");
-            Arm.GetComponentInChildren<SkinnedMeshRenderer>().material.shader = Shader.Find("psx/vertexlit/vertexlit");
             Click = Core.Assets.LoadAsset<GameObject>("LoaderReady.prefab");
             ChargeSound = Core.Assets.LoadAsset<GameObject>("LoaderCharge.prefab");
             Release = Core.Assets.LoadAsset<GameObject>("LoaderRelease.prefab");
@@ -60,6 +60,18 @@ namespace ExtraAlts.Weapons
             __instance.gameObject.AddComponent<LoaderArmCollisionHandler>();
         }
 
+        [HarmonyPatch(typeof(Punch), nameof(Punch.CoinFlip))]
+        [HarmonyPrefix]
+        public static bool CancelIfCharging(Punch __instance)
+        {
+            if (__instance.GetComponent<LoaderBehaviour>() != null)
+            {
+                return LoaderBehaviour.Charge == 0;
+            }
+
+            return true;
+        }
+
         [HarmonyPatch(typeof(FistControl), nameof(FistControl.UpdateFistIcon))]
         [HarmonyPostfix]
         public static void FixColour(FistControl __instance)
@@ -68,7 +80,7 @@ namespace ExtraAlts.Weapons
             {
                 if (__instance.currentArmObject == GameObject.FindObjectOfType<LoaderBehaviour>().gameObject)
                 {
-                    __instance.fistIcon.color = ColorBlindSettings.Instance.variationColors[4];
+                    __instance.fistIcon.color = ColorBlindSettings.Instance.variationColors[5];
                 }
             }
         }
@@ -87,7 +99,11 @@ namespace ExtraAlts.Weapons
         [HarmonyPostfix]
         public static void StopOnDodge()
         {
-            LoaderArmCollisionHandler.Instance.MidCharge = false;
+            if (curOne != null && LoaderArmCollisionHandler.Instance != null)
+            {
+                LoaderArmCollisionHandler.Instance.MidCharge = false;
+                curOne.anim.SetBool("Midflight", false);
+            }
         }
 
 
@@ -95,24 +111,34 @@ namespace ExtraAlts.Weapons
         [HarmonyPostfix]
         public static void StopOnSlam()
         {
-            LoaderArmCollisionHandler.Instance.MidCharge = false;
+            if (curOne != null && LoaderArmCollisionHandler.Instance != null)
+            {
+                LoaderArmCollisionHandler.Instance.MidCharge = false;
+                curOne.anim.SetBool("Midflight", false);
+            }
         }
 
         [HarmonyPatch(typeof(NewMovement), nameof(NewMovement.WallJump))]
         [HarmonyPostfix]
         public static void StopOnWallJump()
         {
-            LoaderArmCollisionHandler.Instance.MidCharge = false;
+            if (curOne != null && LoaderArmCollisionHandler.Instance != null)
+            {
+                LoaderArmCollisionHandler.Instance.MidCharge = false;
+                curOne.anim.SetBool("Midflight", false);
+            }
         }
 
         [HarmonyPatch(typeof(HookArm), nameof(HookArm.Update))]
         [HarmonyPostfix]
         public static void StopOnHook(HookArm __instance)
         {
-            if (__instance.state == HookState.Caught)
+            if (curOne != null && LoaderArmCollisionHandler.Instance != null && __instance.state == HookState.Caught)
             {
                 LoaderArmCollisionHandler.Instance.MidCharge = false;
+                curOne.anim.SetBool("Midflight", false);
             }
+
         }
 
         public class LoaderArmCollisionHandler : MonoSingleton<LoaderArmCollisionHandler>
@@ -130,11 +156,14 @@ namespace ExtraAlts.Weapons
             private void Start()
             {
                 gc = FindObjectOfType<GroundCheck>();
+                GetComponentInChildren<SkinnedMeshRenderer>().material.shader = Shader.Find("psx/vertexlit/vertexlit");
             }
 
             //FromGround = the reset came from touching ground (not from coin)
             public void ResetDash(bool FromGround)
             {
+                curOne.anim.SetBool("Midflight", false);
+
                 if (FromGround)
                 {
                     Dashes = 0;
@@ -187,6 +216,9 @@ namespace ExtraAlts.Weapons
                         {
                             ResetDash(false);
                             coin.Punchflection();
+                            TimeController.Instance.ParryFlash();
+                            // this doesnt work and its killing me
+                            //curOne.anim.SetTrigger("Hook");
                         }
                     }
 
@@ -240,19 +272,26 @@ namespace ExtraAlts.Weapons
             {
                 StartPos = transform.localPosition;
                 CeSrc = Instantiate(ChargeSound, gameObject.transform).GetComponent<AudioSource>();
-
                 Charge = 0;
 
                 nm = NewMovement.Instance;
                 cc = CameraController.Instance;
                 pu = GetComponent<Punch>();
+                curOne = pu;
+                pu.anim.SetBool("Midflight", false);
 
                 pu.anim = GetComponentsInChildren<Animator>()[1];
             }
 
+            public void OnDisable()
+            {
+                pu.anim.Play("NewES Idle");
+            }
+
             public void Update()
             {
-                pu.ready = false;
+                pu.ready = true;
+
                 // should be 100 at finish
                 float CoolCharge = 0;
                 CoolCharge = Charge * 100 / 6;
@@ -262,11 +301,6 @@ namespace ExtraAlts.Weapons
                 //Debug.Log(Charge);
                 if (OnPunchHeld() && LoaderArmCollisionHandler.Instance.CanCharge)
                 {
-                    if(!pu.anim.GetCurrentAnimatorStateInfo(0).IsName("Charge"))
-                    {
-                        pu.anim.Play("Charge", 0);
-                    }
-
                     if(!CeSrc.isPlaying)
                     {
                         CeSrc.Play();
@@ -305,30 +339,31 @@ namespace ExtraAlts.Weapons
                         Charge = 6;
                     }
 
-                    Debug.Log($"{ChargePreAdd} => {Charge} | {(int)ChargePreAdd} => {(int)Charge}");
-
                     if((int)ChargePreAdd < (int)Charge && (int)Charge > 2)
                     {
                         Instantiate(Click, nm.transform.position, Quaternion.identity);
                     }
+
+                    pu.anim.SetBool("Charging", true);
                 } else
                 {
                     if (CeSrc.isPlaying)
                     {
                         CeSrc.Stop();
                     }
+                    pu.anim.SetBool("Charging", false);
                 }
 
                 // cancel if released early
                 if (OnPunchReleased() && Charge <= 2f && LoaderArmCollisionHandler.Instance.CanCharge)
                 {
+                    pu.anim.Play("NewES Idle");
                     Charge = 0;
-                    pu.anim.CrossFade("Idle", 0.25f);
                 }
 
                 if (LoaderArmCollisionHandler.Instance.CanCharge && Charge >= 2f && OnPunchReleased())
                 {
-                    pu.anim.CrossFade("Idle", 0.25f);
+                    pu.anim.Play("Armature|ES_ChargeHold");
                     LoaderArmCollisionHandler.Instance.Charge = Charge;
 
                     if (nm.ridingRocket != null)
@@ -361,6 +396,7 @@ namespace ExtraAlts.Weapons
                     nm.GetHurt(ChargeToDmg[(int)Charge], false, 0);
                     nm.ForceAddAntiHP(ChargeToDmg[(int)Charge] * 1.5f, true, true);
                     Charge = 0;
+                    pu.anim.SetBool("Midflight", true);
                 }
             }
         }

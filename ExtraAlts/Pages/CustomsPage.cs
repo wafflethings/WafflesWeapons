@@ -1,5 +1,5 @@
 ﻿using Atlas.Modules.Terminal;
-using ExtraAlts;
+using WafflesWeapons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace ExtraAlts.Pages
+namespace WafflesWeapons.Pages
 {
     public class CustomsPage : Page
     {

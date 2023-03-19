@@ -1,20 +1,21 @@
 ﻿using Atlas.Modules.Guns;
 using Atlas.Modules.Terminal;
 using BepInEx;
-using ExtraAlts.Pages;
-using ExtraAlts.Weapons;
+using WafflesWeapons.Pages;
+using WafflesWeapons.Weapons;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace ExtraAlts
+namespace WafflesWeapons
 {
-    [BepInPlugin("waffle.ultrakill.extraalts", "Extra Alts", "1.0.0")]
+    [BepInPlugin("waffle.ultrakill.extraalts", "Waffle's Weapons", "1.0.0")]
     public class Core : BaseUnityPlugin
     {
         public static Harmony Harmony = new Harmony("waffle.ultrakill.extraalts");
@@ -30,7 +31,7 @@ namespace ExtraAlts
 
         public void Start()
         {
-            Assets = AssetBundle.LoadFromFile(Path.Combine(PathUtils.ModDirectory(), "Extra Alts", "redrevolver.bundle"));
+            Assets = AssetBundle.LoadFromFile(Path.Combine(PathUtils.ModPath(), "redrevolver.bundle"));
             Harmony.PatchAll(typeof(Core));
 
             Instance = this;
@@ -57,9 +58,18 @@ namespace ExtraAlts
 
             TacticalNuke.LoadAssets();
             GunRegistry.Register(typeof(TacticalNuke));
+        }
 
-            //Thermo.LoadAssets();
-            //GunRegistry.Register(typeof(Thermo));
+        [HarmonyPatch(typeof(ShopZone), nameof(ShopZone.Start))]
+        [HarmonyPrefix]
+        public static void AddCredits(ShopZone __instance)
+        {
+            if (__instance.gameObject.ChildByName("Canvas").ChildByName("Weapons") != null)
+            {
+                GameObject page = GameObject.Instantiate(Assets.LoadAsset<GameObject>("ExtraAlts Credits.prefab"));
+                page.transform.SetParent(__instance.gameObject.ChildByName("Canvas").transform, false);
+                page.transform.SetSiblingIndex(10);
+            }
         }
 
         [HarmonyPatch(typeof(GunSetter), nameof(GunSetter.ResetWeapons))]
@@ -67,10 +77,17 @@ namespace ExtraAlts
         public static void AddCustomColours()
         {
             var col = ColorBlindSettings.Instance;
-            var SillyList = col.variationColors.ToList();
+            var SillyList = col.variationColors.ToList(); // :3
             SillyList.AddRange(NewColours);
 
             col.variationColors = SillyList.ToArray();
+        }
+
+        [HarmonyPatch(typeof(NewMovement), nameof(NewMovement.Start))]
+        [HarmonyPrefix]
+        public static void FixCharges()
+        {
+            WeaponCharges.Instance.revaltpickupcharges = new float[7];
         }
 
         [HarmonyPatch(typeof(Nailgun), nameof(Nailgun.Start))]

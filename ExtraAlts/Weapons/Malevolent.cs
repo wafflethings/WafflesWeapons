@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace ExtraAlts.Weapons
+namespace WafflesWeapons.Weapons
 {
     public class Malevolent : Gun
     {
@@ -209,7 +209,7 @@ namespace ExtraAlts.Weapons
 
                 if (OnFireHeld() && rev.shootReady && rev.gc.activated)
                 {
-                    if ((rev.altVersion && WeaponCharges.Instance.revaltpickupcharge == 0) || !rev.altVersion)
+                    if ((rev.altVersion && WeaponCharges.Instance.revaltpickupcharges[rev.gunVariation] == 0) || !rev.altVersion)
                     {
                         float delay = GetComponent<WeaponIdentifier>().delay;
                         if (!rev.altVersion)
@@ -318,7 +318,7 @@ namespace ExtraAlts.Weapons
                 rev.shootCharge = 0f;
                 if (rev.altVersion)
                 {
-                    MonoSingleton<WeaponCharges>.Instance.revaltpickupcharge = 2f;
+                    WeaponCharges.Instance.revaltpickupcharges[rev.gunVariation] = 2f;
                 }
 
                 GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(rev.revolverBeam, rev.cc.transform.position, rev.cc.transform.rotation);
@@ -362,7 +362,7 @@ namespace ExtraAlts.Weapons
                 rev.shootCharge = 0f;
                 if (rev.altVersion)
                 {
-                    MonoSingleton<WeaponCharges>.Instance.revaltpickupcharge = 2f;
+                   WeaponCharges.Instance.revaltpickupcharges[rev.gunVariation] = 2f;
                 }
 
                 GameObject beam = UnityEngine.Object.Instantiate<GameObject>(rev.revolverBeamSuper, rev.cc.transform.position, rev.cc.transform.rotation);

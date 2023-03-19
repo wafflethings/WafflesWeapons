@@ -7,8 +7,8 @@
     <ProjectGuid>{3B125B5E-1432-45FD-BBB9-AECDD67EE054}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExtraAlts</RootNamespace>
-    <AssemblyName>ExtraAlts</AssemblyName>
+    <RootNamespace>WafflesWeapons</RootNamespace>
+    <AssemblyName>WafflesWeapons</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
