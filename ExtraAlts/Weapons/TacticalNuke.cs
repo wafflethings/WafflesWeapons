@@ -43,7 +43,9 @@ namespace WafflesWeapons.Weapons
 
             thing.AddComponent<TacticalNukeBehaviour>();
 
-            thing.name = "TacNuke Rocket";
+            thing.name = "Tactical Nuke Rocket";
+
+            StyleHUD.Instance.weaponFreshness.Add(thing, 10);
 
             return thing;
         }

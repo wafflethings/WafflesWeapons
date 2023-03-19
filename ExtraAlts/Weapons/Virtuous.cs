@@ -44,6 +44,10 @@ namespace WafflesWeapons.Weapons
 
             thing.AddComponent<VirtuousBehaviour>();
 
+            thing.name = "Virtue Rail";
+
+            StyleHUD.Instance.weaponFreshness.Add(thing, 10);
+
             return thing;
         }
 
@@ -132,7 +136,6 @@ namespace WafflesWeapons.Weapons
                             if (!Ignore.Contains(eid.eid.gameObject))
                             {
                                 Ignore.Add(eid.eid.gameObject);
-                                Debug.Log(eid.gameObject.name + " guh?");
                                 if (!IsSmall)
                                 {
                                     eid.eid.DeliverDamage(eid.gameObject, Vector3.up * 2500, other.gameObject.transform.position, 5, false, 0, MyGun);
@@ -142,10 +145,6 @@ namespace WafflesWeapons.Weapons
                                     eid.eid.DeliverDamage(eid.gameObject, Vector3.up * 2500, other.gameObject.transform.position, 2, false, 0, MyGun);
                                 }
                             }
-                        }
-                        else
-                        {
-                            Debug.Log("Guh??? " + other.gameObject.name);
                         }
                     }
                     catch { } //whatever bruh

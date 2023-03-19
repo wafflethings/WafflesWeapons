@@ -72,6 +72,11 @@ namespace WafflesWeapons.Weapons
             }
 
             Guns.Add(thing.AddComponent<MalevolentBehaviour>());
+
+            thing.name = "Malevolent Revolver";
+
+            StyleHUD.Instance.weaponFreshness.Add(thing, 10);
+
             return thing;
         }
 

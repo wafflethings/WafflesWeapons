@@ -45,6 +45,8 @@ namespace WafflesWeapons.Weapons
 
             thing.name = "Sticky Shotgun";
 
+            StyleHUD.Instance.weaponFreshness.Add(thing, 10);
+
             return thing;
         }
 
@@ -79,7 +81,6 @@ namespace WafflesWeapons.Weapons
                         _other.gameObject.CompareTag("EndLimb")) && !_other.gameObject.CompareTag("Armor");
                 } else
                 {
-                    Debug.Log("frozen sticky hit w layer " + _other.gameObject.layer);
                     __instance.Invoke("CreateExplosionEffect", 0);
                     GameObject.Destroy(__instance.gameObject);
                     return false;
@@ -227,10 +228,8 @@ namespace WafflesWeapons.Weapons
 
                     if(Frozen)
                     {
-                        Debug.Log($"just trig {c.gameObject.name}, layer {c.gameObject.layer}");
-
                         if(c.gameObject.layer == 23 || (c.gameObject.CompareTag("Head") || c.gameObject.CompareTag("Body") || c.gameObject.CompareTag("Limb") ||
-                        c.gameObject.CompareTag("EndLimb")) && !c.gameObject.CompareTag("Armor"))
+                            c.gameObject.CompareTag("EndLimb")) && !c.gameObject.CompareTag("Armor"))
                         {
                             GetComponent<Projectile>().Explode();
                         }
@@ -240,11 +239,6 @@ namespace WafflesWeapons.Weapons
                 public void Kinematic()
                 {
                     GetComponent<Rigidbody>().isKinematic = true;
-                }
-
-                public void OnCollisionEnter(Collision c)
-                {
-                    Debug.Log($"just col {c.gameObject.name}, layer {c.gameObject.layer}");
                 }
 
                 public void OnDestroy()

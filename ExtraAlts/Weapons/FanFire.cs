@@ -74,6 +74,10 @@ namespace WafflesWeapons.Weapons
 
             thing.AddComponent<FanFireBehaviour>();
 
+            thing.name = "FanFire Revolver";
+
+            StyleHUD.Instance.weaponFreshness.Add(thing, 10);
+
             return thing;
         }
 

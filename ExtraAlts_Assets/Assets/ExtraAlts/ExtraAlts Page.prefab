@@ -54,7 +54,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 573625326160783}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -29421,17 +29421,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   varPage: {fileID: 4148272816285043134}
-  moneyText: {fileID: 1326152409343984042}
+  moneyText: {fileID: 4771309222986002108}
   cost: 100000
   costText: {fileID: 6164868763661467549}
-  buyButton: {fileID: 6515395658476225360}
+  buyButton: {fileID: 2501424257246216257}
   buySound: {fileID: 1673117908876384, guid: 4b62b2cbf85cd72408936fd0f3b6e284, type: 3}
   equipButton: {fileID: 1594799534853362912}
   equipSprites:
   - {fileID: 21300000, guid: 0e1c8a44341208e458f8977d8eee14fc, type: 3}
   - {fileID: 21300000, guid: 8f71f2711c6d0ef469ba7bf8619b3ff5, type: 3}
   alreadyOwned: 0
-  weaponName: newfis0
+  weaponName: arm5
   orderButtons: {fileID: 0}
 --- !u!1 &4158935519541366791
 GameObject:

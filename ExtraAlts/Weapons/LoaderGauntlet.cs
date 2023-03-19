@@ -45,7 +45,7 @@ namespace WafflesWeapons.Weapons
 
         public override string Pref()
         {
-            return "newfis0";
+            return "arm5";
         }
 
         public override int ArmNum()
@@ -80,7 +80,14 @@ namespace WafflesWeapons.Weapons
             {
                 if (__instance.currentArmObject == GameObject.FindObjectOfType<LoaderBehaviour>().gameObject)
                 {
-                    __instance.fistIcon.color = ColorBlindSettings.Instance.variationColors[5];
+                    try
+                    {
+                        __instance.fistIcon.color = ColorBlindSettings.Instance.variationColors[5];
+                    } 
+                    catch (IndexOutOfRangeException ex)
+                    {
+                        Debug.LogError($"whar? {ColorBlindSettings.Instance.variationColors.Length}");
+                    }
                 }
             }
         }
@@ -181,6 +188,24 @@ namespace WafflesWeapons.Weapons
 
             private void OnTriggerEnter(Collider other)
             {
+                if (MidCharge)
+                {
+                    Breakable br;
+                    if (other.TryGetComponent(out br))
+                    {
+                        br.Break();
+                        return;
+                    }
+
+                    Glass gl;
+                    if (other.TryGetComponent(out gl))
+                    {
+                        gl.Shatter();
+                        return;
+                    }
+                }
+
+
                 if (other.gameObject.layer == 8 || other.gameObject.layer == 24)
                 {
                     if (other.CompareTag("Floor") || other.CompareTag("Moving"))
@@ -194,7 +219,10 @@ namespace WafflesWeapons.Weapons
                             var nm = NewMovement.Instance;
                             if (nm.rb.velocity.y < -60)
                             {
-                                Instantiate(nm.gc.shockwave, nm.gc.transform.position, Quaternion.identity).GetComponent<PhysicalShockwave>().force *= Charge * 1.5f;
+                                GameObject wave = Instantiate(nm.gc.shockwave, nm.gc.transform.position, Quaternion.identity);
+                                wave.GetComponent<PhysicalShockwave>().force *= Charge * 0.75f;
+                                wave.GetComponent<PhysicalShockwave>().maxSize *= (Charge / 3);
+                                wave.transform.localScale = new Vector3(wave.transform.localScale.x, wave.transform.localScale.y, wave.transform.localScale.z);
                             }
                             ResetDash(true);
                         }
@@ -203,12 +231,6 @@ namespace WafflesWeapons.Weapons
 
                 if (MidCharge)
                 {
-                    Breakable br;
-                    if (other.TryGetComponent(out br))
-                    {
-                        br.Break();
-                    }
-
                     if (other.GetComponent<Coin>() != null)
                     {
                         var coin = other.GetComponent<Coin>();
@@ -285,7 +307,10 @@ namespace WafflesWeapons.Weapons
 
             public void OnDisable()
             {
-                pu.anim.Play("NewES Idle");
+                if (pu.anim != null)
+                {
+                    pu.anim.Play("NewES Idle");
+                }
             }
 
             public void Update()
@@ -298,7 +323,6 @@ namespace WafflesWeapons.Weapons
                 CeSrc.volume = 0.3f + CoolCharge * 0.005f;
                 CeSrc.pitch = 0.1f + (CoolCharge * 0.0125f);
 
-                //Debug.Log(Charge);
                 if (OnPunchHeld() && LoaderArmCollisionHandler.Instance.CanCharge)
                 {
                     if(!CeSrc.isPlaying)
@@ -310,7 +334,6 @@ namespace WafflesWeapons.Weapons
                         StartPos.x + Charge / 10 * UnityEngine.Random.Range(-0.01f, 0.01f),
                         StartPos.y + Charge / 10 * UnityEngine.Random.Range(-0.01f, 0.01f),
                         StartPos.z + Charge / 10 * UnityEngine.Random.Range(-0.01f, 0.01f));
-                    // cc.CameraShake(Charge / 10);
 
                     float ChargePreAdd = Charge;
 
@@ -382,7 +405,7 @@ namespace WafflesWeapons.Weapons
                     cc.CameraShake(Charge);
 
                     float CalcCharge = Charge;
-                    float Mult = 1.25f;
+                    float Mult = 1.125f;
                     float AddTo = 1 - (1 / Mult);
                     CalcCharge /= AddTo + ((LoaderArmCollisionHandler.Instance.Dashes + 1) / Mult);
 

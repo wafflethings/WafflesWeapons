@@ -78,6 +78,8 @@ namespace WafflesWeapons.Weapons
 
             thing.name = "Airblast Nailgun";
 
+            StyleHUD.Instance.weaponFreshness.Add(thing, 10);
+
             return thing;
         }
 
