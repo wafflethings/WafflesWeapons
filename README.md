@@ -7,8 +7,7 @@ I'm 14, so it's not like I can get a job and earn it myself.
 You'll also get early access to updates.
 
 ## Gameplay
-[![](https://markdown-videos.deta.dev/youtube/g-NewxZzULI)](https://youtu.be/watch?v=g-NewxZzULI)
-replace this with the yt vid later, lmao
+[![](https://markdown-videos.deta.dev/youtube/kCemM-W9_XA)](https://youtu.be/watch?v=kCemM-W9_XA)
 
 ## Weapons
 
