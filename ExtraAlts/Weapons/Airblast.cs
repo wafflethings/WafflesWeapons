@@ -33,6 +33,13 @@ namespace WafflesWeapons.Weapons
             AirNail = Core.Assets.LoadAsset<GameObject>("AirNail.prefab");
             AirSaw = Core.Assets.LoadAsset<GameObject>("AirSaw.prefab");
 
+            foreach (Transform t in AirSaw.GetComponentsInChildren<Transform>())
+            {
+                t.gameObject.tag = "Metal";
+            }
+
+            AirNail.tag = "Metal";
+
             Core.Harmony.PatchAll(typeof(Airblast));
         }
 
@@ -93,6 +100,17 @@ namespace WafflesWeapons.Weapons
             return "nai3";
         }
 
+        [HarmonyPatch(typeof(Nail), nameof(Nail.HitEnemy))]
+        [HarmonyPostfix]
+        public static void AddForceToAir(Nail __instance, EnemyIdentifierIdentifier eidid = null)
+        {
+            if (eidid != null && eidid.eid != null && !eidid.eid.dead && __instance.gameObject.name.Contains("Air"))
+            {
+                var eid = eidid.eid;
+                eid.GetComponent<Rigidbody>().AddForce(__instance.transform.forward * (__instance.sawblade ? -15 / __instance.hitAmount : -15f), ForceMode.VelocityChange);
+            }
+        }
+
         [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.Charge))]
         [HarmonyPostfix]
         public static void DoCharge(float amount)
@@ -136,6 +154,7 @@ namespace WafflesWeapons.Weapons
 
             public void Start()
             {
+                gcc = FindObjectOfType<GroundCheck>();
                 nai = GetComponent<Nailgun>();
 
                 nai.heatSlider.gameObject.ChildByName("Fill Area").ChildByName("Fill").GetComponent<Image>().color = ColorBlindSettings.Instance.variationColors[4];
@@ -144,8 +163,6 @@ namespace WafflesWeapons.Weapons
                 {
                     img.gameObject.SetActive(false);
                 }
-
-                gcc = FindObjectOfType<GroundCheck>();
 
                 if(nai.altVersion)
                 {
@@ -158,11 +175,6 @@ namespace WafflesWeapons.Weapons
 
             public void Update()
             {
-                if(nai == null)
-                {
-                    nai = GetComponent<Nailgun>();
-                }
-
                 nai.sliderBg.color = ColorBlindSettings.Instance.variationColors[4];
                 if (nai.altVersion)
                 {

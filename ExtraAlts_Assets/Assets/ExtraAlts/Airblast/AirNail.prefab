@@ -133,14 +133,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a9b354d223fe484f9d8de93008d24dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0.125
+  sourceWeapon: {fileID: 0}
+  hit: 0
+  damage: 0.25
+  rb: {fileID: 0}
   environmentHitSound: {fileID: 8300000, guid: fcf0d9d409f057141a8be5cf02e0b29a, type: 3}
   enemyHitSound: {fileID: 8300000, guid: 075a64ff58624ae408516bc371f48c55, type: 3}
   zapMaterial: {fileID: 2100000, guid: 079a645b54b50f744879c7142c506a01, type: 2}
   zapParticle: {fileID: 4930709139136106586, guid: f3ae8b6ca10110b47b2d7ae06950ca3d,
     type: 3}
+  fodderDamageBoost: 0
   weaponType: 
   heated: 0
+  magnets: []
+  enemy: 0
+  safeEnemyType: 0
+  sawblade: 0
+  hitAmount: 3.9
+  sawBreakEffect: {fileID: 0}
+  sawBounceEffect: {fileID: 0}
+  magnetRotationDirection: 0
+  bounceToSurfaceNormal: 0
+  stopped: 0
+  multiHitAmount: 1
+  originalVelocity: {x: 0, y: 0, z: 0}
+  stoppedAud: {fileID: 0}
+  punchable: 0
+  punched: 0
+  punchDistance: 0
 --- !u!96 &3344679413277544448
 TrailRenderer:
   serializedVersion: 2

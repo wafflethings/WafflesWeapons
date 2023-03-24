@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace WafflesWeapons
 {
-    [BepInPlugin("waffle.ultrakill.extraalts", "Waffle's Weapons", "1.0.0")]
+    [BepInPlugin("waffle.ultrakill.extraalts", "Waffle's Weapons", "1.0.1")]
     public class Core : BaseUnityPlugin
     {
         public static Harmony Harmony = new Harmony("waffle.ultrakill.extraalts");
@@ -76,15 +76,29 @@ namespace WafflesWeapons
             return true;
         }
 
+        public static GameObject page;
+        public static GameObject tip;
+
         [HarmonyPatch(typeof(ShopZone), nameof(ShopZone.Start))]
         [HarmonyPrefix]
         public static void AddCredits(ShopZone __instance)
         {
             if (__instance.gameObject.ChildByName("Canvas").ChildByName("Weapons") != null)
             {
-                GameObject page = GameObject.Instantiate(Assets.LoadAsset<GameObject>("ExtraAlts Credits.prefab"));
+                tip = __instance.gameObject.ChildByName("Canvas").ChildByName("TipBox");
+                page = GameObject.Instantiate(Assets.LoadAsset<GameObject>("ExtraAlts Credits.prefab"));
                 page.transform.SetParent(__instance.gameObject.ChildByName("Canvas").transform, false);
                 page.transform.SetSiblingIndex(10);
+            }
+        }
+
+        [HarmonyPatch(typeof(ShopZone), nameof(ShopZone.Update))]
+        [HarmonyPrefix]
+        public static void ToggleCredits(ShopZone __instance)
+        {
+            if (page != null)
+            {
+                page.SetActive(tip.activeSelf);
             }
         }
 

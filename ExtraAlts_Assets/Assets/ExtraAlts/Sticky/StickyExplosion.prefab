@@ -514,7 +514,7 @@ MonoBehaviour:
   friendlyFire: 0
   hitterWeapon: 
   halved: 0
-  canHit: 0
+  canHit: 2
   rocketExplosion: 0
   toIgnore: 
   interruptedEnemy: {fileID: 0}

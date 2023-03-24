@@ -115,14 +115,23 @@ namespace WafflesWeapons.Weapons
                 rock.timerArm.localRotation = Quaternion.Euler(0f, 0f, Mathf.Lerp(360f, 0f, Target));
                 rock.timerMeter.fillAmount = Target;
 
-                if (WindUp == MaxWind && InputManager.Instance.InputSource.Fire2.WasPerformedThisFrame && gc.activated)
+                if (WindUp == MaxWind && OnAltFire() && gc.activated)
                 {
-                    var old = rock.rocket;
-                    rock.rocket = HugeRocket;
-                    rock.Shoot();
-                    rock.rocket = old;
-                    WindUp = 0;
+                    foreach (TacticalNukeBehaviour tnb in FindObjectsOfType<TacticalNukeBehaviour>())
+                    {
+                        tnb.Invoke("Shoot", tnb.GetComponent<WeaponIdentifier>().delay);
+
+                        WindUp = 0;
+                    }
                 }
+            }
+
+            public void Shoot()
+            {
+                var old = rock.rocket;
+                rock.rocket = HugeRocket;
+                rock.Shoot();
+                rock.rocket = old;
             }
         }
 

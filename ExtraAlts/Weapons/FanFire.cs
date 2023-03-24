@@ -145,13 +145,6 @@ namespace WafflesWeapons.Weapons
             }
         }
 
-        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.Charge))]
-        [HarmonyPostfix]
-        public static void DoCharge(float amount)
-        {
-
-        }
-
         [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.MaxCharges))]
         [HarmonyPostfix]
         public static void MaxCharge()
@@ -221,13 +214,13 @@ namespace WafflesWeapons.Weapons
             public float Damage = 0;
             private bool CanFan = true;
 
+            public void Start()
+            {
+                rev = GetComponent<Revolver>();
+            }
+
             public void Update()
             {
-                if (rev == null)
-                {
-                    rev = GetComponent<Revolver>();
-                }
-
                 rev.screenMR.material.SetTexture("_MainTex", NumberToTexture[(int)Charge]);
 
                 if (OnFireHeld() && rev.shootReady && rev.gc.activated)
@@ -242,11 +235,10 @@ namespace WafflesWeapons.Weapons
                 {
                     Damage = 0;
                     Charge = (int)Charge;
-                    int tempCharge = (int)Charge;
                     CanFan = false;
                     float delay = GetComponent<WeaponIdentifier>().delay;
-                    Invoke("ResetFan", ((tempCharge-1) * 0.15f) + 1 + delay);
-                    for (int i = 0; i < tempCharge; i++)
+                    Invoke("ResetFan", (((int)Charge-1) * 0.15f) + 1 + delay);
+                    for (int i = 0; i < (int)Charge; i++)
                     {
                         Damage = ((i + 1) * 0.25f) + 0.25f;
                         Invoke("ShootFan", (i * 0.15f) + delay);

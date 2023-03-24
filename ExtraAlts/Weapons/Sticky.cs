@@ -77,17 +77,24 @@ namespace WafflesWeapons.Weapons
             {
                 if (!__instance.GetComponent<StickyBehaviour.StickyBombBehaviour>().Frozen)
                 {
+                    if (_other.GetComponent<EnemyIdentifierIdentifier>() != null)
+                    {
+                        StyleCalculator.Instance.AddPoints(150, "<color=cyan>KABLOOIE</color>", _other.GetComponent<EnemyIdentifierIdentifier>().eid, __instance.sourceWeapon);
+                    }
+
                     return (_other.gameObject.CompareTag("Head") || _other.gameObject.CompareTag("Body") || _other.gameObject.CompareTag("Limb") ||
                         _other.gameObject.CompareTag("EndLimb")) && !_other.gameObject.CompareTag("Armor");
-                } else
+                }
+                else
                 {
-                    __instance.Invoke("CreateExplosionEffect", 0);
+                    __instance.CreateExplosionEffect();
                     GameObject.Destroy(__instance.gameObject);
                     return false;
                 }
             }
             return true;
         }
+
 
         [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.Charge))]
         [HarmonyPostfix]
@@ -105,44 +112,74 @@ namespace WafflesWeapons.Weapons
 
         public class StickyBehaviour : MonoBehaviour
         {
+            private GameObject og;
             private Shotgun sho;
             private Slider slider;
             private Image fill;
+            private bool fromGreed;
+            private float cooldown = 0;
 
             public static int Charges = 0;
 
             public void Start()
             {
+                sho = GetComponent<Shotgun>();
                 fill = GetComponentInChildren<Slider>().fillRect.GetComponent<Image>();
                 slider = GetComponentInChildren<Slider>();
                 fill.color = ColorBlindSettings.Instance.variationColors[4];
+
+                bool fromGreed = GetComponent<WeaponIdentifier>().delay != 0;
+
+                if (GetComponent<WeaponIdentifier>().delay == 0)
+                {
+                    og = gameObject;
+                }
             }
 
             public void FireSticky()
             {
                 GameObject silly = Instantiate(StickyBomb, sho.cc.transform.position + (sho.cc.transform.forward * 0.5f), Quaternion.identity);
                 Physics.IgnoreCollision(silly.GetComponent<Collider>(), NewMovement.Instance.GetComponent<Collider>());
-                silly.AddComponent<StickyBombBehaviour>().isGreed = GetComponent<WeaponIdentifier>().delay != 0;
+                silly.AddComponent<StickyBombBehaviour>().isGreed = fromGreed;
                 sho.anim.SetTrigger("PumpFire");
+
+                silly.GetComponent<Projectile>().explosionEffect.GetComponentInChildren<Explosion>().sourceWeapon = og;
+                silly.GetComponent<Projectile>().sourceWeapon = gameObject;
             }
 
             public void Update()
             {
-                if (sho == null)
+                if(sho.gc.activated)
                 {
-                    sho = GetComponent<Shotgun>();
+                    cooldown -= Time.deltaTime;
                 }
 
-                if(Charges < 4 && InputManager.Instance.InputSource.Fire2.WasPerformedThisFrame && sho.gc.activated) 
+                if(OnAltFire() && sho.gc.activated) 
                 {
-                    float Delay = GetComponent<WeaponIdentifier>().delay;
-                    Invoke("FireSticky", Delay);
-
-                    if (Delay == 0)
+                    if (Charges < 4)
                     {
-                        Charges++;
+                        if (cooldown <= 0)
+                        {
+                            float Delay = GetComponent<WeaponIdentifier>().delay;
+                            cooldown = 0.1f;
+                            Invoke("FireSticky", Delay);
+
+                            if (Delay == 0)
+                            {
+                                Charges++;
+                            }
+                        }
                     }
-                }
+                    else if (GetComponent<WeaponIdentifier>().delay == 0)
+                    {
+                        cooldown = 0.5f;
+                        foreach (StickyBombBehaviour sbb in FindObjectsOfType<StickyBombBehaviour>())
+                        {
+                            sbb.GetComponent<Projectile>().CreateExplosionEffect();
+                            GameObject.Destroy(sbb.gameObject);
+                        }
+                    }
+                } 
 
                 slider.value = 20 * (4 - (Charges + 1));
                 if (20 * (4 - (Charges + 1)) != -20)
@@ -171,18 +208,6 @@ namespace WafflesWeapons.Weapons
 
                     GetComponent<Projectile>().undeflectable = true;
                     Invoke("MakeParriable", 0.25f);
-                    DestroyTime(5);
-                }
-
-                public void Update()
-                {
-                    if (Frozen)
-                    {
-                        if (Vector3.Distance(gameObject.transform.position, NewMovement.Instance.transform.position) < 3)
-                        {
-                            GetComponent<Projectile>().Explode();
-                        }
-                    }
                 }
 
                 public void MakeParriable()
@@ -190,33 +215,21 @@ namespace WafflesWeapons.Weapons
                     GetComponent<Projectile>().undeflectable = false;
                 }
 
-                public void DestroyTime(float t)
-                {
-                    CancelInvoke("Destroy");
-                    CancelInvoke("DestroyMine");
-                    Invoke("DestroyMine", t);
-                }
-
-                public void DestroyMine()
-                {
-                    Destroy(gameObject);
-                }
-
                 public void OnDisable()
                 {
-                    DestroyMine();
+                    Destroy(gameObject);
                 }
 
                 public void OnTriggerEnter(Collider c)
                 {
                     if(c.gameObject.layer == 8 || c.gameObject.layer == 24)
                     {
+                        transform.parent = c.transform;
                         Frozen = true;
                         CancelInvoke("MakeParriable");
                         GetComponent<Projectile>().undeflectable = true;
                         Destroy(GetComponent<RemoveOnTime>());
                         Invoke("Kinematic", 0.01f);
-                        DestroyTime(15);
 
                         //if (c.CompareTag("Floor"))
                         //{
@@ -226,10 +239,21 @@ namespace WafflesWeapons.Weapons
                         Destroy(gameObject.ChildByName("ChargeEffect"));
                     }
 
-                    if(Frozen)
+                    if (Frozen)
                     {
-                        if(c.gameObject.layer == 23 || (c.gameObject.CompareTag("Head") || c.gameObject.CompareTag("Body") || c.gameObject.CompareTag("Limb") ||
+                        if (c.gameObject.layer == 23 || (c.gameObject.CompareTag("Head") || c.gameObject.CompareTag("Body") || c.gameObject.CompareTag("Limb") ||
                             c.gameObject.CompareTag("EndLimb")) && !c.gameObject.CompareTag("Armor"))
+                        {
+                            GetComponent<Projectile>().Explode();
+                        }
+                    }
+                }
+
+                public void Update()
+                {
+                    if (Frozen)
+                    {
+                        if (Vector3.Distance(gameObject.transform.position, NewMovement.Instance.transform.position) < 2)
                         {
                             GetComponent<Projectile>().Explode();
                         }
@@ -246,6 +270,11 @@ namespace WafflesWeapons.Weapons
                     if (!isGreed)
                     {
                         Charges -= 1;
+
+                        if(Charges < 0)
+                        {
+                            Charges = 0;
+                        }
                     }
                 }
             }

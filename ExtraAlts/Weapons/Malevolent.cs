@@ -194,24 +194,19 @@ namespace WafflesWeapons.Weapons
                 }
             }
 
+            public void Start()
+            {
+                rev = GetComponent<Revolver>();
+
+                rev.screenAud = rev.screenMR.gameObject.GetComponent<AudioSource>();
+                rev.chargeEffect.transform.localPosition += new Vector3(0, -0.25f, 0);
+                rev.chargeEffect.GetComponent<MeshRenderer>().material = Charge;
+                rev.chargeEffect.GetComponent<ParticleSystemRenderer>().material = Charge;
+                rev.chargeEffect.GetComponent<Light>().color = new Color(1, 0.5f, 0.25f);
+            }
+
             public void Update()
             {
-                if (rev == null)
-                {
-                    rev = GetComponent<Revolver>();
-                    rev.screenAud = rev.screenMR.gameObject.GetComponent<AudioSource>();
-                    rev.chargeEffect.transform.localPosition += new Vector3(0, -0.25f, 0);
-                    rev.chargeEffect.GetComponent<MeshRenderer>().material = Charge;
-                    rev.chargeEffect.GetComponent<ParticleSystemRenderer>().material = Charge;
-                    rev.chargeEffect.GetComponent<Light>().color = new Color(1, 0.5f, 0.25f);
-                }
-
-                if (rev.celight == null)
-                {
-                    rev.ceaud = rev.chargeEffect.GetComponent<AudioSource>();
-                    rev.celight = rev.chargeEffect.GetComponent<Light>();
-                }
-
                 if (OnFireHeld() && rev.shootReady && rev.gc.activated)
                 {
                     if ((rev.altVersion && WeaponCharges.Instance.revaltpickupcharges[rev.gunVariation] == 0) || !rev.altVersion)
@@ -263,7 +258,7 @@ namespace WafflesWeapons.Weapons
 
                 if (rev.gc.activated)
                 {
-                    if (InputManager.Instance.InputSource.Fire2.IsPressed && rev.shootReady && rev.pierceReady)
+                    if (OnAltFireHeld() && rev.shootReady && rev.pierceReady)
                     {
                         rev.chargingPierce = true;
                         if (rev.pierceShotCharge + 175f * Time.deltaTime < 100f)
@@ -314,6 +309,11 @@ namespace WafflesWeapons.Weapons
                 }
 
                 rev.cylinder.spinSpeed = rev.pierceShotCharge;
+            }
+
+            public void OnDisable()
+            {
+                CancelInvoke("Shoot");
             }
 
             public void Shoot()

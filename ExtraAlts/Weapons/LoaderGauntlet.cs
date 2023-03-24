@@ -217,7 +217,7 @@ namespace WafflesWeapons.Weapons
                         if (!CanCharge)
                         {
                             var nm = NewMovement.Instance;
-                            if (nm.rb.velocity.y < -60)
+                            if (nm.rb.velocity.y < -40)
                             {
                                 GameObject wave = Instantiate(nm.gc.shockwave, nm.gc.transform.position, Quaternion.identity);
                                 wave.GetComponent<PhysicalShockwave>().force *= Charge * 0.75f;
@@ -275,6 +275,9 @@ namespace WafflesWeapons.Weapons
 
         public class LoaderBehaviour : MonoBehaviour
         {
+            public const float ChargeSpeedMult = 1.5f * 1.125f;
+            public const float FastChargeSpeedMult = 2.5f * 1.125f;
+
             public Vector3 StartPos;
             public NewMovement nm;
             public CameraController cc;
@@ -284,24 +287,24 @@ namespace WafflesWeapons.Weapons
             public static Dictionary<int, int> ChargeToDmg = new Dictionary<int, int>
             {
                 { 2, 0 },
-                { 3, 5 },
-                { 4, 10 },
-                { 5, 15 },
-                { 6, 20 }
+                { 3, 2 },
+                { 4, 4 },
+                { 5, 8 },
+                { 6, 16 }
             };
 
             public void Start()
             {
-                StartPos = transform.localPosition;
-                CeSrc = Instantiate(ChargeSound, gameObject.transform).GetComponent<AudioSource>();
-                Charge = 0;
 
                 nm = NewMovement.Instance;
                 cc = CameraController.Instance;
                 pu = GetComponent<Punch>();
-                curOne = pu;
-                pu.anim.SetBool("Midflight", false);
 
+                StartPos = transform.localPosition;
+                CeSrc = Instantiate(ChargeSound, gameObject.transform).GetComponent<AudioSource>();
+                Charge = 0;
+                curOne = pu; 
+                pu.anim.SetBool("Midflight", false);
                 pu.anim = GetComponentsInChildren<Animator>()[1];
             }
 
@@ -347,13 +350,13 @@ namespace WafflesWeapons.Weapons
 
                         if (Charge < 2)
                         {
-                            Charge += Time.deltaTime * 1.5f;
+                            Charge += Time.deltaTime * ChargeSpeedMult;
                         }
 
-                        Charge += Time.deltaTime * 2.5f;
+                        Charge += Time.deltaTime * FastChargeSpeedMult;
                     } else
                     {
-                        Charge += Time.deltaTime * 1.5f;
+                        Charge += Time.deltaTime * ChargeSpeedMult;
                     }
                     
 
@@ -397,7 +400,9 @@ namespace WafflesWeapons.Weapons
 
                     if (FindObjectOfType<GroundCheck>().touchingGround)
                     {
+                        nm.jumpPower *= 0.25f;
                         nm.Jump();
+                        nm.jumpPower *= 4;
                     }
 
                     Instantiate(Release);
@@ -417,7 +422,7 @@ namespace WafflesWeapons.Weapons
 
                     nm.rb.velocity = (cc.transform.forward * nm.walkSpeed * CalcCharge) / 60;
                     nm.GetHurt(ChargeToDmg[(int)Charge], false, 0);
-                    nm.ForceAddAntiHP(ChargeToDmg[(int)Charge] * 1.5f, true, true);
+                    nm.ForceAddAntiHP(ChargeToDmg[(int)Charge], true, true);
                     Charge = 0;
                     pu.anim.SetBool("Midflight", true);
                 }
