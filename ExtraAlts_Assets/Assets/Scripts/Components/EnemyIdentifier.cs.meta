@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: ba1029699a926c94cb6dd5c08b146f24
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - zombie: {instanceID: 0}
+  - spider: {instanceID: 0}
+  - machine: {instanceID: 0}
+  - statue: {instanceID: 0}
+  - wicked: {instanceID: 0}
+  - drone: {instanceID: 0}
+  - spawnEffect: {instanceID: 0}
+  - weakPoint: {instanceID: 0}
+  - usingDoor: {instanceID: 0}
+  - ineffectiveSound: {fileID: 1673117908876384, guid: bac9adce8c06b9f4996a5404af0bf622,
+      type: 3}
+  - gce: {instanceID: 0}
+  - buffTargeter: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

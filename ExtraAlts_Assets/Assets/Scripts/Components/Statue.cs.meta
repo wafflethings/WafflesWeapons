@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: a91fc1b4977bd894fa65ed61a8997a28
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - chest: {instanceID: 0}
+  - deadMaterial: {instanceID: 0}
+  - woundedMaterial: {instanceID: 0}
+  - woundedEnrageMaterial: {instanceID: 0}
+  - woundedParticle: {fileID: 6311402704591156762, guid: aed34f332b2f3fe439d03309cd8c82c1,
+      type: 3}
+  - smr: {instanceID: 0}
+  - deathSound: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

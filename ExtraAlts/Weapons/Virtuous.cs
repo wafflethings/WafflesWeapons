@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.ResourceManagement.ResourceLocations;
+using UnityEngine.AddressableAssets;
+using UnityEngine.AddressableAssets.ResourceLocators;
 
 namespace WafflesWeapons.Weapons
 {
@@ -32,7 +35,7 @@ namespace WafflesWeapons.Weapons
 
             if (VirtueBeam == null)
             {
-                VirtueBeam = AssetHelper.LoadPrefab("Assets/Prefabs/VirtueInsignia.prefab");
+                VirtueBeam = AssetHelper.LoadPrefab("Assets/Prefabs/Attacks and Projectiles/Virtue Insignia.prefab");
             }
 
             GameObject thing = GameObject.Instantiate(GunSetter.Instance.railCannon[0], parent);
@@ -49,6 +52,21 @@ namespace WafflesWeapons.Weapons
             StyleHUD.Instance.weaponFreshness.Add(thing, 10);
 
             return thing;
+        }
+
+        public void DumpAssetNames()
+        {
+            var allLocations = new List<IResourceLocation>();
+            foreach (var resourceLocator in Addressables.ResourceLocators)
+            {
+                if (resourceLocator is ResourceLocationMap map)
+                {
+                    foreach (var stuff in map.Locations.Keys)
+                    {
+                        Debug.Log(stuff);
+                    }
+                }
+            }
         }
 
         public override int Slot()

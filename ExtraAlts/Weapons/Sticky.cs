@@ -127,8 +127,7 @@ namespace WafflesWeapons.Weapons
                 fill = GetComponentInChildren<Slider>().fillRect.GetComponent<Image>();
                 slider = GetComponentInChildren<Slider>();
                 fill.color = ColorBlindSettings.Instance.variationColors[4];
-
-                bool fromGreed = GetComponent<WeaponIdentifier>().delay != 0;
+                fromGreed = GetComponent<WeaponIdentifier>().delay != 0;
 
                 if (GetComponent<WeaponIdentifier>().delay == 0)
                 {

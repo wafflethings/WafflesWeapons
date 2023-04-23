@@ -156,6 +156,9 @@ namespace WafflesWeapons.Weapons
                     if (Physics.Raycast(CameraController.Instance.transform.position, CameraController.Instance.transform.forward, out hit, float.PositiveInfinity, ignoreEnemyTrigger))
                     {
                         transform.LookAt(hit.point);
+                    } else
+                    {
+                        transform.LookAt(CameraController.Instance.transform.forward * 10000);
                     }
                 }
             }

@@ -163,7 +163,6 @@ namespace WafflesWeapons.Weapons
             private void Start()
             {
                 gc = FindObjectOfType<GroundCheck>();
-                GetComponentInChildren<SkinnedMeshRenderer>().material.shader = Shader.Find("psx/vertexlit/vertexlit");
             }
 
             //FromGround = the reset came from touching ground (not from coin)

@@ -30,6 +30,7 @@ TagManager:
   - ForwardR
   - Right
   - MessageHud
+  - =3
   layers:
   - Default
   - TransparentFX
