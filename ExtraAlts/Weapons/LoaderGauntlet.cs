@@ -310,7 +310,7 @@ namespace WafflesWeapons.Weapons
 
             public void OnDisable()
             {
-                if (pu.anim != null)
+                if (pu != null && pu.anim != null)
                 {
                     pu.anim.Play("NewES Idle");
                 }

@@ -101,16 +101,12 @@ namespace WafflesWeapons.Weapons
             public void Start()
             {
                 gc = GunControl.Instance;
+                rock = GetComponent<RocketLauncher>();
                 WindUp = 0;
             }
 
             public void Update()
             {
-                if (rock == null)
-                {
-                    rock = GetComponent<RocketLauncher>();
-                }
-
                 Target = Mathf.MoveTowards(Target, WindUp / MaxWind, Time.deltaTime * 5);
                 rock.timerArm.localRotation = Quaternion.Euler(0f, 0f, Mathf.Lerp(360f, 0f, Target));
                 rock.timerMeter.fillAmount = Target;

@@ -3800,7 +3800,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5452118829818895188
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13181,7 +13181,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &344817079029242933
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13277,7 +13277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   varPage: {fileID: 1811801837234928377}
   moneyText: {fileID: 5423537588865432574}
-  cost: 15000
+  cost: 50000
   costText: {fileID: 2619418556655743305}
   buyButton: {fileID: 5276694026001560484}
   buySound: {fileID: 1673117908876384, guid: 4b62b2cbf85cd72408936fd0f3b6e284, type: 3}
@@ -13285,8 +13285,9 @@ MonoBehaviour:
   equipSprites:
   - {fileID: 21300000, guid: 0e1c8a44341208e458f8977d8eee14fc, type: 3}
   - {fileID: 21300000, guid: 8f71f2711c6d0ef469ba7bf8619b3ff5, type: 3}
+  - {fileID: 21300000, guid: 9a3fafe768cb4644097aae536baa3f01, type: 3}
   alreadyOwned: 0
-  weaponName: newrev1
+  weaponName: nai4
   orderButtons: {fileID: 5700908224254566808}
 --- !u!1 &1826823532123938541
 GameObject:
@@ -18000,7 +18001,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a237fa4b2b1bfdb45ba9f4a4c1da73fb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2bccfda96d1e3b94cbdd8bc9524e8041, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -20048,7 +20049,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a237fa4b2b1bfdb45ba9f4a4c1da73fb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 789e3cccf25db4f4ca06b15536cfc14e, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -21854,12 +21855,12 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '<color=orange>Hold</color> Alt Fire to charge a downsized <color=orange>malicious</color>
-    beam.
+  m_Text: 'Hitting enemies with <color=orange>any</color> nails will <color=orange>charge</color>
+    the gauge.
 
 
-    Due to its somewhat <color=orange>low</color> damage output, the
-    beam is useful for <color=orange>movement</color>.'
+    Alt Fire releases a  <color=orange>beam</color> that can hit
+    coins, and will recoil you up.'
 --- !u!1 &3093406106250288249
 GameObject:
   m_ObjectHideFlags: 0
@@ -21937,7 +21938,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MALEVOLENT
+  m_Text: MINDRENDER
 --- !u!1 &3100805072992621715
 GameObject:
   m_ObjectHideFlags: 0
@@ -22832,7 +22833,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a237fa4b2b1bfdb45ba9f4a4c1da73fb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2bccfda96d1e3b94cbdd8bc9524e8041, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -26181,7 +26182,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MALEVOLENT
+  m_Text: AFTERBURNER
 --- !u!1 &3911452988050661997
 GameObject:
   m_ObjectHideFlags: 0
@@ -26748,7 +26749,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a237fa4b2b1bfdb45ba9f4a4c1da73fb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 789e3cccf25db4f4ca06b15536cfc14e, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -28413,7 +28414,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 15,000<color=orange>P</color>
+  m_Text: 50,000<color=orange>P</color>
 --- !u!1 &4249965873050913855
 GameObject:
   m_ObjectHideFlags: 0
@@ -28781,7 +28782,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a237fa4b2b1bfdb45ba9f4a4c1da73fb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 789e3cccf25db4f4ca06b15536cfc14e, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -32970,7 +32971,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MALEVOLENT
+  m_Text: AFTERBURNER
 --- !u!1 &5217275732187015811
 GameObject:
   m_ObjectHideFlags: 0
@@ -33282,7 +33283,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5497220715205188633
 RectTransform:
   m_ObjectHideFlags: 0
@@ -44128,7 +44129,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a237fa4b2b1bfdb45ba9f4a4c1da73fb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2bccfda96d1e3b94cbdd8bc9524e8041, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -48431,11 +48432,11 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Press Alt Fire to <color=orange>launch</color> a mine that explode on
-    contact, and can be parried.
+    contact, and can be <color=orange>parried</color>.
 
 
-    Alt Fire when empty will <color=orange>detonate</color>
-    all mines.'
+    Alt Fire when empty
+    will <color=orange>detonate</color> all mines.'
 --- !u!1 &7976349606012787354
 GameObject:
   m_ObjectHideFlags: 0
@@ -49172,12 +49173,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '<color=orange>Hold</color> Alt Fire to charge a downsized <color=orange>malicious</color>
-    beam.
-
-
-    Due to its somewhat <color=orange>low</color> damage output, the
-    beam is useful for <color=orange>movement</color>.'
+  m_Text: THIS IS GOING TO BE SCRAPPED LMAO IT'S ASS
 --- !u!1 &8173722514680862824
 GameObject:
   m_ObjectHideFlags: 0
@@ -54895,7 +54891,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3036462599602945709
 RectTransform:
   m_ObjectHideFlags: 0
@@ -55000,7 +54996,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0e1c8a44341208e458f8977d8eee14fc, type: 3}
   - {fileID: 21300000, guid: 8f71f2711c6d0ef469ba7bf8619b3ff5, type: 3}
   alreadyOwned: 0
-  weaponName: newrev1
+  weaponName: sho4
   orderButtons: {fileID: 3911452988050661997}
 --- !u!1 &9002736177233757453
 GameObject:
@@ -55537,7 +55533,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MALEVOLENT
+  m_Text: MINDRENDER
 --- !u!1 &9108838099155425393
 GameObject:
   m_ObjectHideFlags: 0

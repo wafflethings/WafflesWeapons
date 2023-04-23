@@ -58,6 +58,12 @@ namespace WafflesWeapons
 
             TacticalNuke.LoadAssets();
             GunRegistry.Register(typeof(TacticalNuke));
+
+            Mindrender.LoadAssets();
+            GunRegistry.Register(typeof(Mindrender));
+
+            FlameBurst.LoadAssets();
+            GunRegistry.Register(typeof(FlameBurst));
         }
 
         [HarmonyPatch(typeof(SteamController), nameof(SteamController.SubmitCyberGrindScore))]

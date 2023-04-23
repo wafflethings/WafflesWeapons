@@ -94,4 +94,26 @@ namespace WafflesWeapons
             return children;
         }
     }
+
+    public class UltrakillUtils
+    {
+        public static GameObject NearestEnemy(Vector3 point, float maxDistance)
+        {
+            float max = maxDistance;
+            GameObject nearestEnemy = null;
+
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            foreach (GameObject enemy in enemies)
+            {
+                if (enemy.GetComponent<EnemyIdentifier>() != null && !enemy.GetComponent<EnemyIdentifier>().dead && Vector3.Distance(point, enemy.transform.position) < max)
+                {
+                    max = Vector3.Distance(point, enemy.transform.position);
+                    nearestEnemy = enemy;
+                }
+            }
+
+            return nearestEnemy;
+        }
+    }
 }
