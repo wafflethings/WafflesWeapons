@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class WeaponIcon : MonoBehaviour
 {
-    public Sprite weaponIcon;
-    public Sprite glowIcon;
-    public int variationColor;
+    [FormerlySerializedAs("descriptor")]
+    public WeaponDescriptor weaponDescriptor;
 
     [SerializeField] Renderer[] variationColoredRenderers;
     [SerializeField] Material[] variationColoredMaterials;

@@ -12,29 +12,19 @@ namespace WafflesWeapons.Weapons
 {
     public class LoaderGauntlet : Fist
     {
-        public static GameObject Arm;
-        public static GameObject Click;
-        public static GameObject ChargeSound;
-        public static GameObject Release;
-        public static Punch curOne;
+        public static GameObject esArm;
+        public static LoaderBehaviour curOne;
 
         public static void LoadAssets()
         {
-            Arm = Core.Assets.LoadAsset<GameObject>("ESARM.prefab");
-            Click = Core.Assets.LoadAsset<GameObject>("LoaderReady.prefab");
-            ChargeSound = Core.Assets.LoadAsset<GameObject>("LoaderCharge.prefab");
-            Release = Core.Assets.LoadAsset<GameObject>("LoaderRelease.prefab");
-            LoaderArmCollisionHandler.NotifyGrounded = Core.Assets.LoadAsset<GameObject>("LoaderBell.prefab");
+            esArm = Core.Assets.LoadAsset<GameObject>("Arm Earthshatter.prefab");
             Core.Harmony.PatchAll(typeof(LoaderGauntlet));
         }
 
         public override GameObject Create(Transform parent)
         {
             base.Create(parent);
-
-            GameObject thing = GameObject.Instantiate(Arm, parent);
-            thing.AddComponent<LoaderBehaviour>();
-
+            GameObject thing = GameObject.Instantiate(esArm, parent);
             return thing;
         }
 
@@ -147,143 +137,144 @@ namespace WafflesWeapons.Weapons
             }
 
         }
+    }
 
-        public class LoaderArmCollisionHandler : MonoSingleton<LoaderArmCollisionHandler>
+    public class LoaderArmCollisionHandler : MonoSingleton<LoaderArmCollisionHandler>
+    {
+        public static GameObject NotifyGrounded;
+
+        public bool CanCharge = true;
+        public bool MidCharge = false;
+        public GroundCheck gc;
+        public float Charge;
+        public List<GameObject> AlrHit = new List<GameObject>();
+        public List<Coin> BadCoins = new List<Coin>();
+        public int Dashes = 0;
+
+        private void Start()
         {
-            public static GameObject NotifyGrounded;
+            gc = FindObjectOfType<GroundCheck>();
+        }
 
-            public bool CanCharge = true;
-            public bool MidCharge = false;
-            public GroundCheck gc;
-            public float Charge;
-            public List<GameObject> AlrHit = new List<GameObject>();
-            public List<Coin> BadCoins = new List<Coin>();
-            public int Dashes = 0;
+        //FromGround = the reset came from touching ground (not from coin)
+        public void ResetDash(bool FromGround)
+        {
+            LoaderGauntlet.curOne.anim.SetBool("Midflight", false);
 
-            private void Start()
+            if (FromGround)
             {
-                gc = FindObjectOfType<GroundCheck>();
+                Dashes = 0;
+                MidCharge = false;
+            }
+            else
+            {
+                Dashes += 1;
             }
 
-            //FromGround = the reset came from touching ground (not from coin)
-            public void ResetDash(bool FromGround)
+            Instantiate(NotifyGrounded);
+            CanCharge = true;
+            AlrHit.Clear();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (MidCharge)
             {
-                curOne.anim.SetBool("Midflight", false);
-
-                if (FromGround)
+                Breakable br;
+                if (other.TryGetComponent(out br))
                 {
-                    Dashes = 0;
-                    MidCharge = false;
-                }
-                else
-                {
-                    Dashes += 1;
+                    br.Break();
+                    return;
                 }
 
-                Instantiate(NotifyGrounded);
-                CanCharge = true;
-                AlrHit.Clear();
+                Glass gl;
+                if (other.TryGetComponent(out gl))
+                {
+                    gl.Shatter();
+                    return;
+                }
             }
 
-            private void OnTriggerEnter(Collider other)
+
+            if (other.gameObject.layer == 8 || other.gameObject.layer == 24)
             {
-                if (MidCharge)
+                if (other.CompareTag("Floor") || other.CompareTag("Moving"))
                 {
-                    Breakable br;
-                    if (other.TryGetComponent(out br))
+                    if (CanCharge)
                     {
-                        br.Break();
-                        return;
+                        MidCharge = false;
                     }
-
-                    Glass gl;
-                    if (other.TryGetComponent(out gl))
+                    if (!CanCharge)
                     {
-                        gl.Shatter();
-                        return;
+                        var nm = NewMovement.Instance;
+                        if (nm.rb.velocity.y < -40)
+                        {
+                            GameObject wave = Instantiate(nm.gc.shockwave, nm.gc.transform.position, Quaternion.identity);
+                            wave.GetComponent<PhysicalShockwave>().force *= Charge * 0.75f;
+                            wave.GetComponent<PhysicalShockwave>().maxSize *= (Charge / 3);
+                            wave.transform.localScale = new Vector3(wave.transform.localScale.x, wave.transform.localScale.y, wave.transform.localScale.z);
+                        }
+                        ResetDash(true);
+                    }
+                }
+            }
+
+            if (MidCharge)
+            {
+                if (other.GetComponent<Coin>() != null)
+                {
+                    var coin = other.GetComponent<Coin>();
+                    if (!BadCoins.Contains(coin))
+                    {
+                        ResetDash(false);
+                        coin.Punchflection();
+                        TimeController.Instance.ParryFlash();
+                        // this doesnt work and its killing me
+                        //curOne.anim.SetTrigger("Hook");
                     }
                 }
 
-
-                if (other.gameObject.layer == 8 || other.gameObject.layer == 24)
+                if (other.GetComponent<EnemyIdentifierIdentifier>() != null || other.GetComponent<EnemyIdentifier>() != null)
                 {
-                    if (other.CompareTag("Floor") || other.CompareTag("Moving"))
+                    EnemyIdentifier eid;
+                    if (!other.GetComponent<EnemyIdentifier>())
                     {
-                        if(CanCharge)
-                        {
-                            MidCharge = false;
-                        }
-                        if (!CanCharge)
-                        {
-                            var nm = NewMovement.Instance;
-                            if (nm.rb.velocity.y < -40)
-                            {
-                                GameObject wave = Instantiate(nm.gc.shockwave, nm.gc.transform.position, Quaternion.identity);
-                                wave.GetComponent<PhysicalShockwave>().force *= Charge * 0.75f;
-                                wave.GetComponent<PhysicalShockwave>().maxSize *= (Charge / 3);
-                                wave.transform.localScale = new Vector3(wave.transform.localScale.x, wave.transform.localScale.y, wave.transform.localScale.z);
-                            }
-                            ResetDash(true);
-                        }
+                        eid = other.GetComponent<EnemyIdentifierIdentifier>().eid;
                     }
-                }
-
-                if (MidCharge)
-                {
-                    if (other.GetComponent<Coin>() != null)
+                    else
                     {
-                        var coin = other.GetComponent<Coin>();
-                        if (!BadCoins.Contains(coin))
-                        {
-                            ResetDash(false);
-                            coin.Punchflection();
-                            TimeController.Instance.ParryFlash();
-                            // this doesnt work and its killing me
-                            //curOne.anim.SetTrigger("Hook");
-                        }
+                        eid = other.GetComponent<EnemyIdentifier>();
                     }
 
-                    if (other.GetComponent<EnemyIdentifierIdentifier>() != null || other.GetComponent<EnemyIdentifier>() != null)
+                    if (!eid.dead && !AlrHit.Contains(eid.gameObject))
                     {
-                        EnemyIdentifier eid;
-                        if (!other.GetComponent<EnemyIdentifier>())
+                        eid.hitter = "heavypunch";
+                        eid.DeliverDamage(eid.gameObject, NewMovement.Instance.rb.velocity, other.gameObject.transform.position, Charge * 1.1f, false, 0, gameObject);
+                        if (eid.dead)
                         {
-                            eid = other.GetComponent<EnemyIdentifierIdentifier>().eid;
+                            eid.gameObject.AddComponent<Bleeder>().GetHit(eid.gameObject.transform.position, GoreType.Head);
                         }
-                        else
-                        {
-                            eid = other.GetComponent<EnemyIdentifier>();
-                        }
-
-                        if (!eid.dead && !AlrHit.Contains(eid.gameObject))
-                        {
-                            eid.hitter = "heavypunch";
-                            eid.DeliverDamage(eid.gameObject, NewMovement.Instance.rb.velocity, other.gameObject.transform.position, Charge * 1.1f, false, 0, gameObject);
-                            if (eid.dead)
-                            {
-                                eid.gameObject.AddComponent<Bleeder>().GetHit(eid.gameObject.transform.position, GoreType.Head);
-                            }
-                            CameraController.Instance.CameraShake(0.5f);
-                            TimeController.Instance.HitStop(0.05f);
-                            AlrHit.Add(eid.gameObject);
-                        }
+                        CameraController.Instance.CameraShake(0.5f);
+                        TimeController.Instance.HitStop(0.05f);
+                        AlrHit.Add(eid.gameObject);
                     }
                 }
             }
         }
+    }
 
-        public class LoaderBehaviour : MonoBehaviour
-        {
-            public const float ChargeSpeedMult = 1.5f * 1.125f;
-            public const float FastChargeSpeedMult = 2.5f * 1.125f;
+    public class LoaderBehaviour : MonoBehaviour
+    {
+        public const float ChargeSpeedMult = 1.5f * 1.125f;
+        public const float FastChargeSpeedMult = 2.5f * 1.125f;
 
-            public Vector3 StartPos;
-            public NewMovement nm;
-            public CameraController cc;
-            public static Punch pu;
-            public AudioSource CeSrc;
-            public static float Charge;
-            public static Dictionary<int, int> ChargeToDmg = new Dictionary<int, int>
+        private Vector3 StartPos;
+        private NewMovement nm;
+        private CameraController cc;
+        private static Punch pu;
+        private AudioSource CeSrc;
+        [HideInInspector] public static float Charge;
+        private static Dictionary<int, int> ChargeToDmg = new Dictionary<int, int>
             {
                 { 2, 0 },
                 { 3, 2 },
@@ -292,139 +283,145 @@ namespace WafflesWeapons.Weapons
                 { 6, 16 }
             };
 
-            public void Start()
+        public Animator anim;
+        public GameObject Click;
+        public GameObject ChargeSound;
+        public GameObject Release;
+        public GameObject GroundedBell;
+
+        public void Start()
+        {
+            nm = NewMovement.Instance;
+            cc = CameraController.Instance;
+            pu = GetComponent<Punch>();
+            LoaderArmCollisionHandler.NotifyGrounded = GroundedBell;
+
+            StartPos = transform.localPosition;
+            CeSrc = Instantiate(ChargeSound, gameObject.transform).GetComponent<AudioSource>();
+            Charge = 0;
+            LoaderGauntlet.curOne = this;
+            anim.SetBool("Midflight", false);
+            anim = GetComponentsInChildren<Animator>()[1];
+        }
+
+        public void OnDisable()
+        {
+            if (anim != null)
             {
-
-                nm = NewMovement.Instance;
-                cc = CameraController.Instance;
-                pu = GetComponent<Punch>();
-
-                StartPos = transform.localPosition;
-                CeSrc = Instantiate(ChargeSound, gameObject.transform).GetComponent<AudioSource>();
-                Charge = 0;
-                curOne = pu; 
-                pu.anim.SetBool("Midflight", false);
-                pu.anim = GetComponentsInChildren<Animator>()[1];
+                anim.Play("NewES Idle");
             }
+        }
 
-            public void OnDisable()
+        public void Update()
+        {
+            pu.ready = true;
+
+            // should be 100 at finish
+            float CoolCharge = Charge * 100 / 6;
+            CeSrc.volume = 0.3f + CoolCharge * 0.005f;
+            CeSrc.pitch = 0.1f + (CoolCharge * 0.0125f);
+
+            if (Fist.OnPunchHeld() && LoaderArmCollisionHandler.Instance.CanCharge)
             {
-                if (pu != null && pu.anim != null)
+                if (!CeSrc.isPlaying)
                 {
-                    pu.anim.Play("NewES Idle");
+                    CeSrc.Play();
                 }
-            }
 
-            public void Update()
-            {
-                pu.ready = true;
+                transform.localPosition = new Vector3(
+                    StartPos.x + Charge / 10 * UnityEngine.Random.Range(-0.01f, 0.01f),
+                    StartPos.y + Charge / 10 * UnityEngine.Random.Range(-0.01f, 0.01f),
+                    StartPos.z + Charge / 10 * UnityEngine.Random.Range(-0.01f, 0.01f));
 
-                // should be 100 at finish
-                float CoolCharge = 0;
-                CoolCharge = Charge * 100 / 6;
-                CeSrc.volume = 0.3f + CoolCharge * 0.005f;
-                CeSrc.pitch = 0.1f + (CoolCharge * 0.0125f);
+                float ChargePreAdd = Charge;
 
-                if (OnPunchHeld() && LoaderArmCollisionHandler.Instance.CanCharge)
+                if (Charge < 4)
                 {
-                    if(!CeSrc.isPlaying)
+                    if (Charge < 2 && Charge + (Time.deltaTime * 3) >= 2)
                     {
-                        CeSrc.Play();
-                    }
-
-                    transform.localPosition = new Vector3(
-                        StartPos.x + Charge / 10 * UnityEngine.Random.Range(-0.01f, 0.01f),
-                        StartPos.y + Charge / 10 * UnityEngine.Random.Range(-0.01f, 0.01f),
-                        StartPos.z + Charge / 10 * UnityEngine.Random.Range(-0.01f, 0.01f));
-
-                    float ChargePreAdd = Charge;
-
-                    if (Charge < 4)
-                    {
-                        if (Charge < 2 && Charge + (Time.deltaTime * 3) >= 2)
-                        {
-                            cc.CameraShake(1.5f);
-                            Instantiate(Click, nm.transform.position, Quaternion.identity);
-                        }
-
-                        if (Charge < 2)
-                        {
-                            Charge += Time.deltaTime * ChargeSpeedMult;
-                        }
-
-                        Charge += Time.deltaTime * FastChargeSpeedMult;
-                    } else
-                    {
-                        Charge += Time.deltaTime * ChargeSpeedMult;
-                    }
-                    
-
-                    if(Charge > 6)
-                    {
-                        Charge = 6;
-                    }
-
-                    if((int)ChargePreAdd < (int)Charge && (int)Charge > 2)
-                    {
+                        cc.CameraShake(1.5f);
                         Instantiate(Click, nm.transform.position, Quaternion.identity);
                     }
 
-                    pu.anim.SetBool("Charging", true);
-                } else
-                {
-                    if (CeSrc.isPlaying)
+                    if (Charge < 2)
                     {
-                        CeSrc.Stop();
-                    }
-                    pu.anim.SetBool("Charging", false);
-                }
-
-                // cancel if released early
-                if (OnPunchReleased() && Charge <= 2f && LoaderArmCollisionHandler.Instance.CanCharge)
-                {
-                    pu.anim.Play("NewES Idle");
-                    Charge = 0;
-                }
-
-                if (LoaderArmCollisionHandler.Instance.CanCharge && Charge >= 2f && OnPunchReleased())
-                {
-                    pu.anim.Play("Armature|ES_ChargeHold");
-                    LoaderArmCollisionHandler.Instance.Charge = Charge;
-
-                    if (nm.ridingRocket != null)
-                    {
-                        nm.ridingRocket.rocketSpeed *= Charge / 2;
-                        nm.ridingRocket.transform.rotation = cc.transform.rotation;
+                        Charge += Time.deltaTime * ChargeSpeedMult;
                     }
 
-                    if (FindObjectOfType<GroundCheck>().touchingGround)
-                    {
-                        nm.jumpPower *= 0.25f;
-                        nm.Jump();
-                        nm.jumpPower *= 4;
-                    }
-
-                    Instantiate(Release);
-
-                    cc.CameraShake(Charge);
-
-                    float CalcCharge = Charge;
-                    float Mult = 1.125f;
-                    float AddTo = 1 - (1 / Mult);
-                    CalcCharge /= AddTo + ((LoaderArmCollisionHandler.Instance.Dashes + 1) / Mult);
-
-                    Debug.Log($"{Charge} / {AddTo + ((LoaderArmCollisionHandler.Instance.Dashes + 1) / Mult)} = {CalcCharge} => {cc.transform.forward * nm.walkSpeed * CalcCharge * Time.deltaTime}");
-
-                    LoaderArmCollisionHandler.Instance.MidCharge = true;
-                    LoaderArmCollisionHandler.Instance.CanCharge = false;
-                    LoaderArmCollisionHandler.Instance.BadCoins.Clear();
-
-                    nm.rb.velocity = (cc.transform.forward * nm.walkSpeed * CalcCharge) / 60;
-                    nm.GetHurt(ChargeToDmg[(int)Charge], false, 0);
-                    nm.ForceAddAntiHP(ChargeToDmg[(int)Charge], true, true);
-                    Charge = 0;
-                    pu.anim.SetBool("Midflight", true);
+                    Charge += Time.deltaTime * FastChargeSpeedMult;
                 }
+                else
+                {
+                    Charge += Time.deltaTime * ChargeSpeedMult;
+                }
+
+
+                if (Charge > 6)
+                {
+                    Charge = 6;
+                }
+
+                if ((int)ChargePreAdd < (int)Charge && (int)Charge > 2)
+                {
+                    Instantiate(Click, nm.transform.position, Quaternion.identity);
+                }
+
+                anim.SetBool("Charging", true);
+            }
+            else
+            {
+                if (CeSrc.isPlaying)
+                {
+                    CeSrc.Stop();
+                }
+                anim.SetBool("Charging", false);
+            }
+
+            // cancel if released early
+            if (Fist.OnPunchReleased() && Charge <= 2f && LoaderArmCollisionHandler.Instance.CanCharge)
+            {
+                anim.Play("NewES Idle");
+                Charge = 0;
+            }
+
+            if (LoaderArmCollisionHandler.Instance.CanCharge && Charge >= 2f && Fist.OnPunchReleased())
+            {
+                anim.Play("Armature|ES_ChargeHold");
+                LoaderArmCollisionHandler.Instance.Charge = Charge;
+
+                if (nm.ridingRocket != null)
+                {
+                    nm.ridingRocket.rocketSpeed *= Charge / 2;
+                    nm.ridingRocket.transform.rotation = cc.transform.rotation;
+                }
+
+                if (FindObjectOfType<GroundCheck>().touchingGround)
+                {
+                    nm.jumpPower *= 0.25f;
+                    nm.Jump();
+                    nm.jumpPower *= 4;
+                }
+
+                Instantiate(Release);
+
+                cc.CameraShake(Charge);
+
+                float CalcCharge = Charge;
+                float Mult = 1.125f;
+                float AddTo = 1 - (1 / Mult);
+                CalcCharge /= AddTo + ((LoaderArmCollisionHandler.Instance.Dashes + 1) / Mult);
+
+                Debug.Log($"{Charge} / {AddTo + ((LoaderArmCollisionHandler.Instance.Dashes + 1) / Mult)} = {CalcCharge} => {cc.transform.forward * nm.walkSpeed * CalcCharge * Time.deltaTime}");
+
+                LoaderArmCollisionHandler.Instance.MidCharge = true;
+                LoaderArmCollisionHandler.Instance.CanCharge = false;
+                LoaderArmCollisionHandler.Instance.BadCoins.Clear();
+
+                nm.rb.velocity = (cc.transform.forward * nm.walkSpeed * CalcCharge) / 60;
+                nm.GetHurt(ChargeToDmg[(int)Charge], false, 0);
+                nm.ForceAddAntiHP(ChargeToDmg[(int)Charge], true, true);
+                Charge = 0;
+                anim.SetBool("Midflight", true);
             }
         }
     }

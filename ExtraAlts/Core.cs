@@ -56,12 +56,10 @@ namespace WafflesWeapons
 
             Mindrender.LoadAssets();
             GunRegistry.Register(typeof(Mindrender));
-
-            FlameBurst.LoadAssets();
-            GunRegistry.Register(typeof(FlameBurst));
         }
 
-        [HarmonyPatch(typeof(SteamController), nameof(SteamController.SubmitCyberGrindScore))]
+        [HarmonyPatch(typeof(LeaderboardController), nameof(LeaderboardController.SubmitCyberGrindScore))]
+        [HarmonyPatch(typeof(LeaderboardController), nameof(LeaderboardController.SubmitLevelScore))]
         [HarmonyPrefix]
         public static bool DisableCG()
         {
@@ -114,7 +112,7 @@ namespace WafflesWeapons
             col.variationColors = SillyList.ToArray();
         }
 
-        [HarmonyPatch(typeof(NewMovement), nameof(NewMovement.Start))]
+        [HarmonyPatch(typeof(GunSetter), nameof(GunSetter.Start))]
         [HarmonyPrefix]
         public static void FixCharges()
         {
@@ -135,6 +133,18 @@ namespace WafflesWeapons
                 "nailgun6",
                 "nailgun8"
             };
+        }
+
+        [HarmonyPatch(typeof(WeaponIcon), nameof(WeaponIcon.variationColor), MethodType.Getter)]
+        [HarmonyPrefix]
+        public static bool ReplaceColour(WeaponIcon __instance, ref int __result)
+        {
+            if (__instance.GetComponent<CustomColour>() != null)
+            {
+                __result = (int)__instance.GetComponent<CustomColour>().variationColorReal;
+                return false;
+            }
+            return true;
         }
     }
 }

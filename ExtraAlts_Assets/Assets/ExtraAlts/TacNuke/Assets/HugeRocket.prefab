@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: -1788668988983328588}
   - component: {fileID: -6596158366203120988}
   - component: {fileID: 7531788337334221263}
+  - component: {fileID: -3899703938472966642}
   m_Layer: 14
   m_Name: HugeRocket
   m_TagString: Metal
@@ -427,6 +428,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 5
   m_Center: {x: 0, y: 0, z: 3}
+--- !u!114 &-3899703938472966642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249651459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 344783583, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2042482544
 GameObject:
   m_ObjectHideFlags: 0

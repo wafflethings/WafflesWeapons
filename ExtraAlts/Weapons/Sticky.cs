@@ -13,15 +13,11 @@ namespace WafflesWeapons.Weapons
 {
     public class Sticky : Gun
     {
-        public static Sprite Icon;
-        public static Sprite IconGlow;
-        public static GameObject StickyBomb;
+        public static GameObject StickyShotgun;
 
         public static void LoadAssets()
         {
-            Icon = Core.Assets.LoadAsset<Sprite>("Sticky Ico.png");
-            IconGlow = Core.Assets.LoadAsset<Sprite>("Sticky Ico Glow.png");
-            StickyBomb = Core.Assets.LoadAsset<GameObject>("Sticky.prefab");
+            StickyShotgun = Core.Assets.LoadAsset<GameObject>("Shotgun Sticky.prefab");
 
             Core.Harmony.PatchAll(typeof(Sticky));
         }
@@ -29,22 +25,9 @@ namespace WafflesWeapons.Weapons
         public override GameObject Create(Transform parent)
         {
             base.Create(parent);
-
-            GameObject thing = GameObject.Instantiate(GunSetter.Instance.shotgunGrenade[0], parent);
             StickyBehaviour.Charges = 0;
 
-            var sho = thing.GetComponent<Shotgun>();
-            sho.variation = 4;
-
-            var ico = thing.GetComponent<WeaponIcon>();
-            ico.variationColor = 4;
-            ico.glowIcon = IconGlow;
-            ico.weaponIcon = Icon;
-
-            thing.AddComponent<StickyBehaviour>();
-
-            thing.name = "Sticky Shotgun";
-
+            GameObject thing = GameObject.Instantiate(StickyShotgun, parent);
             StyleHUD.Instance.weaponFreshness.Add(thing, 10);
 
             return thing;
@@ -109,171 +92,168 @@ namespace WafflesWeapons.Weapons
         {
             StickyBehaviour.Charges = 0;
         }
+    }
 
-        public class StickyBehaviour : MonoBehaviour
+    public class StickyBehaviour : MonoBehaviour
+    {
+        private GameObject og;
+        private Shotgun sho;
+        private bool fromGreed;
+        private float cooldown = 0;
+        [HideInInspector] public static int Charges = 0;
+        public GameObject StickyBomb;
+        public Slider slider;
+
+        public void Start()
         {
-            private GameObject og;
-            private Shotgun sho;
-            private Slider slider;
-            private Image fill;
-            private bool fromGreed;
-            private float cooldown = 0;
+            sho = GetComponent<Shotgun>();
+            fromGreed = GetComponent<WeaponIdentifier>().delay != 0;
 
-            public static int Charges = 0;
-
-            public void Start()
+            if (GetComponent<WeaponIdentifier>().delay == 0)
             {
-                sho = GetComponent<Shotgun>();
-                fill = GetComponentInChildren<Slider>().fillRect.GetComponent<Image>();
-                slider = GetComponentInChildren<Slider>();
-                fill.color = ColorBlindSettings.Instance.variationColors[4];
-                fromGreed = GetComponent<WeaponIdentifier>().delay != 0;
+                og = gameObject;
+            }
+        }
 
-                if (GetComponent<WeaponIdentifier>().delay == 0)
+        public void FireSticky()
+        {
+            GameObject silly = Instantiate(StickyBomb, sho.cc.transform.position + (sho.cc.transform.forward * 0.5f), Quaternion.identity);
+            Physics.IgnoreCollision(silly.GetComponent<Collider>(), NewMovement.Instance.GetComponent<Collider>());
+            silly.AddComponent<StickyBombBehaviour>().isGreed = fromGreed;
+            sho.anim.SetTrigger("PumpFire");
+
+            silly.GetComponent<Projectile>().explosionEffect.GetComponentInChildren<Explosion>().sourceWeapon = og;
+            silly.GetComponent<Projectile>().sourceWeapon = gameObject;
+        }
+
+        public void Update()
+        {
+            if (sho.gc.activated)
+            {
+                cooldown -= Time.deltaTime;
+            }
+
+            if (Gun.OnAltFire() && sho.gc.activated)
+            {
+                if (Charges < 4)
                 {
-                    og = gameObject;
+                    if (cooldown <= 0)
+                    {
+                        float Delay = GetComponent<WeaponIdentifier>().delay;
+                        cooldown = 0.1f;
+                        Invoke("FireSticky", Delay);
+
+                        if (Delay == 0)
+                        {
+                            Charges++;
+                        }
+                    }
+                }
+                else if (GetComponent<WeaponIdentifier>().delay == 0)
+                {
+                    cooldown = 0.5f;
+                    foreach (StickyBombBehaviour sbb in FindObjectsOfType<StickyBombBehaviour>())
+                    {
+                        sbb.GetComponent<Projectile>().CreateExplosionEffect();
+                        GameObject.Destroy(sbb.gameObject);
+                    }
                 }
             }
 
-            public void FireSticky()
+            slider.value = 20 * (4 - (Charges + 1));
+            if (20 * (4 - (Charges + 1)) != -20)
             {
-                GameObject silly = Instantiate(StickyBomb, sho.cc.transform.position + (sho.cc.transform.forward * 0.5f), Quaternion.identity);
-                Physics.IgnoreCollision(silly.GetComponent<Collider>(), NewMovement.Instance.GetComponent<Collider>());
-                silly.AddComponent<StickyBombBehaviour>().isGreed = fromGreed;
-                sho.anim.SetTrigger("PumpFire");
+                slider.gameObject.SetActive(true);
+            }
+            else
+            {
+                slider.gameObject.SetActive(false);
+            }
+        }
 
-                silly.GetComponent<Projectile>().explosionEffect.GetComponentInChildren<Explosion>().sourceWeapon = og;
-                silly.GetComponent<Projectile>().sourceWeapon = gameObject;
+        public class StickyBombBehaviour : MonoBehaviour
+        {
+            public bool Frozen = false;
+            public bool isGreed = false;
+
+            public void Start()
+            {
+                // :3
+                // it has the collider that isnt a trigger
+                Physics.IgnoreCollision(NewMovement.Instance.GetComponent<Collider>(), gameObject.ChildByName(":3").GetComponent<Collider>());
+
+                GetComponent<Rigidbody>().AddForce(CameraController.Instance.transform.forward * 12f +
+                   (NewMovement.Instance.ridingRocket ? MonoSingleton<NewMovement>.Instance.ridingRocket.rb.velocity : NewMovement.Instance.rb.velocity)
+                   + (Vector3.up * 10), ForceMode.VelocityChange);
+
+                GetComponent<Projectile>().undeflectable = true;
+                Invoke("MakeParriable", 0.25f);
+            }
+
+            public void MakeParriable()
+            {
+                GetComponent<Projectile>().undeflectable = false;
+            }
+
+            public void OnDisable()
+            {
+                Destroy(gameObject);
+            }
+
+            public void OnTriggerEnter(Collider c)
+            {
+                if (c.gameObject.layer == 8 || c.gameObject.layer == 24)
+                {
+                    transform.parent = c.transform;
+                    Frozen = true;
+                    CancelInvoke("MakeParriable");
+                    GetComponent<Projectile>().undeflectable = true;
+                    Destroy(GetComponent<RemoveOnTime>());
+                    Invoke("Kinematic", 0.01f);
+
+                    //if (c.CompareTag("Floor"))
+                    //{
+                    //    transform.position = new Vector3(transform.position.x, c.bounds.max.y, transform.position.z);
+                    //}
+
+                    Destroy(gameObject.ChildByName("ChargeEffect"));
+                }
+
+                if (Frozen)
+                {
+                    if (c.gameObject.layer == 23 || (c.gameObject.CompareTag("Head") || c.gameObject.CompareTag("Body") || c.gameObject.CompareTag("Limb") ||
+                        c.gameObject.CompareTag("EndLimb")) && !c.gameObject.CompareTag("Armor"))
+                    {
+                        GetComponent<Projectile>().Explode();
+                    }
+                }
             }
 
             public void Update()
             {
-                if(sho.gc.activated)
+                if (Frozen)
                 {
-                    cooldown -= Time.deltaTime;
+                    if (Vector3.Distance(gameObject.transform.position, NewMovement.Instance.transform.position) < 2)
+                    {
+                        GetComponent<Projectile>().Explode();
+                    }
                 }
-
-                if(OnAltFire() && sho.gc.activated) 
-                {
-                    if (Charges < 4)
-                    {
-                        if (cooldown <= 0)
-                        {
-                            float Delay = GetComponent<WeaponIdentifier>().delay;
-                            cooldown = 0.1f;
-                            Invoke("FireSticky", Delay);
-
-                            if (Delay == 0)
-                            {
-                                Charges++;
-                            }
-                        }
-                    }
-                    else if (GetComponent<WeaponIdentifier>().delay == 0)
-                    {
-                        cooldown = 0.5f;
-                        foreach (StickyBombBehaviour sbb in FindObjectsOfType<StickyBombBehaviour>())
-                        {
-                            sbb.GetComponent<Projectile>().CreateExplosionEffect();
-                            GameObject.Destroy(sbb.gameObject);
-                        }
-                    }
-                } 
-
-                slider.value = 20 * (4 - (Charges + 1));
-                if (20 * (4 - (Charges + 1)) != -20)
-                {
-                    slider.gameObject.SetActive(true);
-                } else
-                {
-                    slider.gameObject.SetActive(false);
-                } 
             }
 
-            public class StickyBombBehaviour : MonoBehaviour
+            public void Kinematic()
             {
-                public bool Frozen = false;
-                public bool isGreed = false;
+                GetComponent<Rigidbody>().isKinematic = true;
+            }
 
-                public void Start()
+            public void OnDestroy()
+            {
+                if (!isGreed)
                 {
-                    // :3
-                    // it has the collider that isnt a trigger
-                    Physics.IgnoreCollision(NewMovement.Instance.GetComponent<Collider>(), gameObject.ChildByName(":3").GetComponent<Collider>());
+                    Charges -= 1;
 
-                    GetComponent<Rigidbody>().AddForce(CameraController.Instance.transform.forward * 12f + 
-                       (NewMovement.Instance.ridingRocket ? MonoSingleton<NewMovement>.Instance.ridingRocket.rb.velocity : NewMovement.Instance.rb.velocity) 
-                       + (Vector3.up * 10), ForceMode.VelocityChange);
-
-                    GetComponent<Projectile>().undeflectable = true;
-                    Invoke("MakeParriable", 0.25f);
-                }
-
-                public void MakeParriable()
-                {
-                    GetComponent<Projectile>().undeflectable = false;
-                }
-
-                public void OnDisable()
-                {
-                    Destroy(gameObject);
-                }
-
-                public void OnTriggerEnter(Collider c)
-                {
-                    if(c.gameObject.layer == 8 || c.gameObject.layer == 24)
+                    if (Charges < 0)
                     {
-                        transform.parent = c.transform;
-                        Frozen = true;
-                        CancelInvoke("MakeParriable");
-                        GetComponent<Projectile>().undeflectable = true;
-                        Destroy(GetComponent<RemoveOnTime>());
-                        Invoke("Kinematic", 0.01f);
-
-                        //if (c.CompareTag("Floor"))
-                        //{
-                        //    transform.position = new Vector3(transform.position.x, c.bounds.max.y, transform.position.z);
-                        //}
-
-                        Destroy(gameObject.ChildByName("ChargeEffect"));
-                    }
-
-                    if (Frozen)
-                    {
-                        if (c.gameObject.layer == 23 || (c.gameObject.CompareTag("Head") || c.gameObject.CompareTag("Body") || c.gameObject.CompareTag("Limb") ||
-                            c.gameObject.CompareTag("EndLimb")) && !c.gameObject.CompareTag("Armor"))
-                        {
-                            GetComponent<Projectile>().Explode();
-                        }
-                    }
-                }
-
-                public void Update()
-                {
-                    if (Frozen)
-                    {
-                        if (Vector3.Distance(gameObject.transform.position, NewMovement.Instance.transform.position) < 2)
-                        {
-                            GetComponent<Projectile>().Explode();
-                        }
-                    }
-                }
-
-                public void Kinematic()
-                {
-                    GetComponent<Rigidbody>().isKinematic = true;
-                }
-
-                public void OnDestroy()
-                {
-                    if (!isGreed)
-                    {
-                        Charges -= 1;
-
-                        if(Charges < 0)
-                        {
-                            Charges = 0;
-                        }
+                        Charges = 0;
                     }
                 }
             }

@@ -13,33 +13,13 @@ namespace WafflesWeapons.Weapons
 {
     public class Airblast : Gun
     {
-        public static Sprite Icon;
-        public static Sprite IconGlow;
-        public static Sprite IconAlt;
-        public static Sprite IconGlowAlt;
-        public static GameObject Blast;
-        public static GameObject AltBlast;
         public static GameObject AirNail;
         public static GameObject AirSaw;
 
         public static void LoadAssets()
         {
-            Icon = Core.Assets.LoadAsset<Sprite>("Airblast ico.png");
-            IconGlow = Core.Assets.LoadAsset<Sprite>("Airblast ico glow.png");
-            IconAlt = Core.Assets.LoadAsset<Sprite>("AirSawIcon.png");
-            IconGlowAlt = Core.Assets.LoadAsset<Sprite>("AirSawGlow.png");
-            Blast = Core.Assets.LoadAsset<GameObject>("Airblast.prefab");
-            AltBlast = Core.Assets.LoadAsset<GameObject>("AltBlast.prefab");
-            AirNail = Core.Assets.LoadAsset<GameObject>("AirNail.prefab");
-            AirSaw = Core.Assets.LoadAsset<GameObject>("AirSaw.prefab");
-
-            foreach (Transform t in AirSaw.GetComponentsInChildren<Transform>())
-            {
-                t.gameObject.tag = "Metal";
-            }
-
-            AirNail.tag = "Metal";
-
+            AirNail = Core.Assets.LoadAsset<GameObject>("Nailgun Airblast.prefab");
+            AirSaw = Core.Assets.LoadAsset<GameObject>("Sawblade Launcher Airblast.prefab");
             Core.Harmony.PatchAll(typeof(Airblast));
         }
 
@@ -48,45 +28,15 @@ namespace WafflesWeapons.Weapons
             base.Create(parent);
 
             GameObject thing;
-
-            if(Enabled() == 2)
+            if (Enabled() == 2)
             {
-                thing = GameObject.Instantiate(GunSetter.Instance.nailOverheat[1], parent);
+                thing = GameObject.Instantiate(AirSaw, parent);
             } else
             {
-                thing = GameObject.Instantiate(GunSetter.Instance.nailOverheat[0], parent);
+                thing = GameObject.Instantiate(AirNail, parent);
             }
-
-            var nai = thing.GetComponent<Nailgun>();
-            nai.variation = 4;
-            nai.fireRate *= 0.5f;
-            if (!nai.altVersion)
-            {
-                nai.nail = AirNail;
-            } else
-            {
-                nai.nail = AirSaw;
-            }
-
-            var ico = thing.GetComponent<WeaponIcon>();
-            ico.variationColor = 4;
-            if (nai.altVersion)
-            {
-                ico.glowIcon = IconGlowAlt;
-                ico.weaponIcon = IconAlt;
-            }
-            else
-            {
-                ico.glowIcon = IconGlow;
-                ico.weaponIcon = Icon;
-            }
-
-            thing.AddComponent<AirblastBehaviour>();
-
-            thing.name = "Airblast Nailgun";
 
             StyleHUD.Instance.weaponFreshness.Add(thing, 10);
-
             return thing;
         }
 
@@ -144,69 +94,69 @@ namespace WafflesWeapons.Weapons
         {
             AirblastBehaviour.Charge = 1;
         }
+    }
 
-        public class AirblastBehaviour : MonoBehaviour
+    public class AirblastBehaviour : MonoBehaviour
+    {
+        private GameObject MyBlast;
+        private Nailgun nail;
+        [HideInInspector] public static float Charge;
+        [HideInInspector] public static GroundCheck gcc;
+        public GameObject sawbladeAirblast;
+        public GameObject nailgunAirblast;
+        public Slider chargeSlider;
+        private float fireRate = 0;
+
+        public void Start()
         {
-            private GameObject MyBlast;
-            private Nailgun nai;
-            public static float Charge;
-            public static GroundCheck gcc;
+            gcc = FindObjectOfType<GroundCheck>();
+            nail = GetComponent<Nailgun>();
+            fireRate = nail.fireRate;
+        }
 
-            public void Start()
+        public void Update()
+        {
+            nail.fireRate = fireRate;
+
+            if (nail.gc.activated)
             {
-                gcc = FindObjectOfType<GroundCheck>();
-                nai = GetComponent<Nailgun>();
+                nail.heatSlider = null;
+                chargeSlider.value = Charge;
 
-                nai.heatSlider.gameObject.ChildByName("Fill Area").ChildByName("Fill").GetComponent<Image>().color = ColorBlindSettings.Instance.variationColors[4];
-                nai.heatSlider.transform.parent.transform.localPosition += new Vector3(0, -4, 0);
-                foreach(Image img in nai.heatSinkImages)
+                if (Charge == 1 && Gun.OnAltFire())
                 {
-                    img.gameObject.SetActive(false);
-                }
+                    if (MyBlast == null)
+                    {
+                        CheckBlast();
+                    }
 
-                if(nai.altVersion)
-                {
-                    MyBlast = AltBlast;
-                } else
-                {
-                    MyBlast = Blast;
+                    nail.anim.SetTrigger("Shoot");
+
+                    Quaternion rot = nail.cc.transform.rotation;
+                    if (nail.altVersion)
+                    {
+                        rot = MyBlast.transform.rotation;
+                    }
+
+                    GameObject guh = GameObject.Instantiate(MyBlast, nail.cc.transform.position + nail.cc.transform.forward, rot);
+                    if (!nail.altVersion)
+                    {
+                        guh.ChildByName("PlayerLaunch").SetActive(!gcc.touchingGround);
+                    }
+                    Charge = 0;
                 }
             }
+        }
 
-            public void Update()
+        public void CheckBlast()
+        {
+            if (nail.altVersion)
             {
-                nai.sliderBg.color = ColorBlindSettings.Instance.variationColors[4];
-                if (nai.altVersion)
-                {
-                    nai.fireRate = 35f;
-                } else
-                {
-                    nai.fireRate = 6f;
-                }
-
-                if (nai.gc.activated)
-                {
-                    bool Touching = gcc.touchingGround;
-                    nai.heatSlider.value = Charge;
-
-                    if (Charge == 1 && OnAltFire()) 
-                    {
-                        nai.anim.SetTrigger("Shoot");
-
-                        Quaternion rot = nai.cc.transform.rotation;
-                        if(nai.altVersion)
-                        {
-                            rot = MyBlast.transform.rotation;
-                        }
-
-                        GameObject guh = GameObject.Instantiate(MyBlast, nai.cc.transform.position + nai.cc.transform.forward, rot);
-                        if (!nai.altVersion)
-                        {
-                            guh.ChildByName("PlayerLaunch").SetActive(!Touching);
-                        }
-                        Charge = 0;
-                    }
-                }
+                MyBlast = sawbladeAirblast;
+            }
+            else
+            {
+                MyBlast = nailgunAirblast;
             }
         }
     }

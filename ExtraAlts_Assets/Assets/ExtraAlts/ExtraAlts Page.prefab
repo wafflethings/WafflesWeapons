@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -477,6 +478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -1137,6 +1139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -1566,6 +1569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -2603,6 +2607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -3395,6 +3400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -3570,6 +3576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -3800,7 +3807,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5452118829818895188
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4028,6 +4035,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -4331,6 +4339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -4481,6 +4490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -4673,6 +4683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
   failSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
@@ -5536,6 +5547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -5992,6 +6004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -6231,6 +6244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -6922,6 +6936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
   failSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
@@ -7136,6 +7151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -7688,6 +7704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
   failSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
@@ -7784,6 +7801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -8168,6 +8186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -8618,6 +8637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -9010,6 +9030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -9308,6 +9329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -10156,6 +10178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -10883,6 +10906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -10905,8 +10929,12 @@ MonoBehaviour:
   disableOnExit: 0
   dontActivateOnEnable: 0
   reactivateOnEnable: 0
+  forEnemies: 0
+  notIfEnemiesDisabled: 0
+  onlyIfPlayerIsAlive: 0
   delay: 0
   obac: {fileID: 0}
+  onlyCheckObacOnce: 0
   events:
     toActivateObjects: []
     toDisActivateObjects:
@@ -10917,7 +10945,6 @@ MonoBehaviour:
     onDisActivate:
       m_PersistentCalls:
         m_Calls: []
-  forEnemies: 0
 --- !u!114 &1594799534853362912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11271,6 +11298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -12385,6 +12413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -12577,6 +12606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -12752,6 +12782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -12944,6 +12975,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
   failSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
@@ -13082,6 +13114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
   failSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
@@ -13256,6 +13289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -13473,6 +13507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -14383,6 +14418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -14714,6 +14750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -14736,8 +14773,12 @@ MonoBehaviour:
   disableOnExit: 0
   dontActivateOnEnable: 0
   reactivateOnEnable: 0
+  forEnemies: 0
+  notIfEnemiesDisabled: 0
+  onlyIfPlayerIsAlive: 0
   delay: 0
   obac: {fileID: 0}
+  onlyCheckObacOnce: 0
   events:
     toActivateObjects: []
     toDisActivateObjects:
@@ -14748,7 +14789,6 @@ MonoBehaviour:
     onDisActivate:
       m_PersistentCalls:
         m_Calls: []
-  forEnemies: 0
 --- !u!114 &3969349363407987137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15369,6 +15409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -15698,6 +15739,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -16630,6 +16672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -16652,8 +16695,12 @@ MonoBehaviour:
   disableOnExit: 0
   dontActivateOnEnable: 0
   reactivateOnEnable: 0
+  forEnemies: 0
+  notIfEnemiesDisabled: 0
+  onlyIfPlayerIsAlive: 0
   delay: 0
   obac: {fileID: 0}
+  onlyCheckObacOnce: 0
   events:
     toActivateObjects: []
     toDisActivateObjects:
@@ -16664,7 +16711,6 @@ MonoBehaviour:
     onDisActivate:
       m_PersistentCalls:
         m_Calls: []
-  forEnemies: 0
 --- !u!114 &3343234171860302065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17035,6 +17081,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -17650,6 +17697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -18120,6 +18168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -18678,6 +18727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -19044,6 +19094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -19145,6 +19196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -19474,6 +19526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -19747,6 +19800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -20388,6 +20442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -20526,6 +20581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -21097,6 +21153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -21289,6 +21346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
   failSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
@@ -21530,6 +21588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -22423,6 +22482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -22523,6 +22583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -22545,8 +22606,12 @@ MonoBehaviour:
   disableOnExit: 0
   dontActivateOnEnable: 0
   reactivateOnEnable: 0
+  forEnemies: 0
+  notIfEnemiesDisabled: 0
+  onlyIfPlayerIsAlive: 0
   delay: 0
   obac: {fileID: 0}
+  onlyCheckObacOnce: 0
   events:
     toActivateObjects: []
     toDisActivateObjects:
@@ -22557,7 +22622,6 @@ MonoBehaviour:
     onDisActivate:
       m_PersistentCalls:
         m_Calls: []
-  forEnemies: 0
 --- !u!114 &8225728883298103204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23338,6 +23402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -23360,8 +23425,12 @@ MonoBehaviour:
   disableOnExit: 0
   dontActivateOnEnable: 0
   reactivateOnEnable: 0
+  forEnemies: 0
+  notIfEnemiesDisabled: 0
+  onlyIfPlayerIsAlive: 0
   delay: 0
   obac: {fileID: 0}
+  onlyCheckObacOnce: 0
   events:
     toActivateObjects: []
     toDisActivateObjects:
@@ -23372,7 +23441,6 @@ MonoBehaviour:
     onDisActivate:
       m_PersistentCalls:
         m_Calls: []
-  forEnemies: 0
 --- !u!114 &8517628023279880543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23935,6 +24003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -24237,6 +24306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -24466,6 +24536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -24488,8 +24559,12 @@ MonoBehaviour:
   disableOnExit: 0
   dontActivateOnEnable: 0
   reactivateOnEnable: 0
+  forEnemies: 0
+  notIfEnemiesDisabled: 0
+  onlyIfPlayerIsAlive: 0
   delay: 0
   obac: {fileID: 0}
+  onlyCheckObacOnce: 0
   events:
     toActivateObjects: []
     toDisActivateObjects:
@@ -24500,7 +24575,6 @@ MonoBehaviour:
     onDisActivate:
       m_PersistentCalls:
         m_Calls: []
-  forEnemies: 0
 --- !u!114 &2221297087495400248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25418,6 +25492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -25946,6 +26021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -26450,6 +26526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -27012,6 +27089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -27396,6 +27474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -27717,6 +27796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -27959,6 +28039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
   failSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
@@ -28227,6 +28308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -28976,6 +29058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -28998,8 +29081,12 @@ MonoBehaviour:
   disableOnExit: 0
   dontActivateOnEnable: 0
   reactivateOnEnable: 0
+  forEnemies: 0
+  notIfEnemiesDisabled: 0
+  onlyIfPlayerIsAlive: 0
   delay: 0
   obac: {fileID: 0}
+  onlyCheckObacOnce: 0
   events:
     toActivateObjects: []
     toDisActivateObjects:
@@ -29010,7 +29097,6 @@ MonoBehaviour:
     onDisActivate:
       m_PersistentCalls:
         m_Calls: []
-  forEnemies: 0
 --- !u!114 &1636328860081393504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29200,6 +29286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -29496,6 +29583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -29926,6 +30014,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
   failSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
@@ -30535,6 +30624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -31151,6 +31241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -32321,6 +32412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -32739,6 +32831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -33103,6 +33196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -33125,8 +33219,12 @@ MonoBehaviour:
   disableOnExit: 0
   dontActivateOnEnable: 0
   reactivateOnEnable: 0
+  forEnemies: 0
+  notIfEnemiesDisabled: 0
+  onlyIfPlayerIsAlive: 0
   delay: 0
   obac: {fileID: 0}
+  onlyCheckObacOnce: 0
   events:
     toActivateObjects: []
     toDisActivateObjects:
@@ -33137,7 +33235,6 @@ MonoBehaviour:
     onDisActivate:
       m_PersistentCalls:
         m_Calls: []
-  forEnemies: 0
 --- !u!114 &15844367669115327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33587,6 +33684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
   failSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
@@ -33991,6 +34089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -34522,6 +34621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -34892,6 +34992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -35368,6 +35469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -36490,6 +36592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -37100,6 +37203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -37760,6 +37864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -38218,6 +38323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -39150,6 +39256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -39469,6 +39576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -39491,8 +39599,12 @@ MonoBehaviour:
   disableOnExit: 0
   dontActivateOnEnable: 0
   reactivateOnEnable: 0
+  forEnemies: 0
+  notIfEnemiesDisabled: 0
+  onlyIfPlayerIsAlive: 0
   delay: 0
   obac: {fileID: 0}
+  onlyCheckObacOnce: 0
   events:
     toActivateObjects: []
     toDisActivateObjects:
@@ -39503,7 +39615,6 @@ MonoBehaviour:
     onDisActivate:
       m_PersistentCalls:
         m_Calls: []
-  forEnemies: 0
 --- !u!114 &7980265663005169726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40113,6 +40224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -40617,6 +40729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
   failSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
@@ -40718,6 +40831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -41050,6 +41164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -41369,6 +41484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -41391,8 +41507,12 @@ MonoBehaviour:
   disableOnExit: 0
   dontActivateOnEnable: 0
   reactivateOnEnable: 0
+  forEnemies: 0
+  notIfEnemiesDisabled: 0
+  onlyIfPlayerIsAlive: 0
   delay: 0
   obac: {fileID: 0}
+  onlyCheckObacOnce: 0
   events:
     toActivateObjects: []
     toDisActivateObjects:
@@ -41403,7 +41523,6 @@ MonoBehaviour:
     onDisActivate:
       m_PersistentCalls:
         m_Calls: []
-  forEnemies: 0
 --- !u!114 &8618497988692051975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41548,6 +41667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -41909,6 +42029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -42006,6 +42127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -43298,6 +43420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -44244,6 +44367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -45480,6 +45604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -46050,6 +46175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -46072,8 +46198,12 @@ MonoBehaviour:
   disableOnExit: 0
   dontActivateOnEnable: 0
   reactivateOnEnable: 0
+  forEnemies: 0
+  notIfEnemiesDisabled: 0
+  onlyIfPlayerIsAlive: 0
   delay: 0
   obac: {fileID: 0}
+  onlyCheckObacOnce: 0
   events:
     toActivateObjects: []
     toDisActivateObjects:
@@ -46084,7 +46214,6 @@ MonoBehaviour:
     onDisActivate:
       m_PersistentCalls:
         m_Calls: []
-  forEnemies: 0
 --- !u!114 &3414775641567245139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46271,6 +46400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
   failSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
@@ -46561,6 +46691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -46906,6 +47037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
   failSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
@@ -47122,6 +47254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -47996,6 +48129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -48220,6 +48354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -48806,6 +48941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -48828,8 +48964,12 @@ MonoBehaviour:
   disableOnExit: 0
   dontActivateOnEnable: 0
   reactivateOnEnable: 0
+  forEnemies: 0
+  notIfEnemiesDisabled: 0
+  onlyIfPlayerIsAlive: 0
   delay: 0
   obac: {fileID: 0}
+  onlyCheckObacOnce: 0
   events:
     toActivateObjects: []
     toDisActivateObjects:
@@ -48840,7 +48980,6 @@ MonoBehaviour:
     onDisActivate:
       m_PersistentCalls:
         m_Calls: []
-  forEnemies: 0
 --- !u!114 &3753050747110839709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48989,6 +49128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -49742,6 +49882,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -50009,6 +50150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -50688,6 +50830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
   failSound: {fileID: 1673117908876384, guid: d57dcc58e72fdd349b8732a4026da2c7, type: 3}
@@ -50941,6 +51084,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -50963,8 +51107,12 @@ MonoBehaviour:
   disableOnExit: 0
   dontActivateOnEnable: 0
   reactivateOnEnable: 0
+  forEnemies: 0
+  notIfEnemiesDisabled: 0
+  onlyIfPlayerIsAlive: 0
   delay: 0
   obac: {fileID: 0}
+  onlyCheckObacOnce: 0
   events:
     toActivateObjects: []
     toDisActivateObjects:
@@ -50975,7 +51123,6 @@ MonoBehaviour:
     onDisActivate:
       m_PersistentCalls:
         m_Calls: []
-  forEnemies: 0
 --- !u!114 &139097181231216784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51246,6 +51393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -51782,6 +51930,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -52056,6 +52205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -53444,6 +53594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -53619,6 +53770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -53844,6 +53996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -53994,6 +54147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -54783,6 +54937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -54805,8 +54960,12 @@ MonoBehaviour:
   disableOnExit: 0
   dontActivateOnEnable: 0
   reactivateOnEnable: 0
+  forEnemies: 0
+  notIfEnemiesDisabled: 0
+  onlyIfPlayerIsAlive: 0
   delay: 0
   obac: {fileID: 0}
+  onlyCheckObacOnce: 0
   events:
     toActivateObjects: []
     toDisActivateObjects:
@@ -54817,7 +54976,6 @@ MonoBehaviour:
     onDisActivate:
       m_PersistentCalls:
         m_Calls: []
-  forEnemies: 0
 --- !u!114 &4947445212709429089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54891,7 +55049,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3036462599602945709
 RectTransform:
   m_ObjectHideFlags: 0
@@ -54966,6 +55124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -55166,6 +55325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -55911,6 +56071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -56086,6 +56247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}

@@ -4,33 +4,37 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Wall
-  - Metal
-  - Floor
-  - Moving
-  - OptionsManager
-  - Glass
-  - Body
-  - EndLimb
-  - Limb
-  - Head
-  - Enemy
-  - Coin
-  - Door
-  - Breakable
-  - Slippery
-  - Armor
-  - GlassFloor
-  - PlayerPosInfo
-  - Piston
   - RoomManager
+  - Body
   - Forward
   - Left
-  - ForwardL
-  - ForwardR
   - Right
+  - ForwardR
+  - ForwardL
+  - Floor
+  - Wall
+  - Limb
+  - Head
+  - EndLimb
+  - Spider
+  - Door
+  - Glass
+  - GlassFloor
+  - Enemy
+  - StyleHUD
+  - ChallengeManager
+  - Piston
+  - PlayerPosInfo
+  - GunControl
+  - Breakable
+  - OptionsManager
+  - Moving
   - MessageHud
-  - =3
+  - Coin
+  - Slippery
+  - Armor
+  - Metal
+  - IgnorePushes
   layers:
   - Default
   - TransparentFX
@@ -59,7 +63,7 @@ TagManager:
   - Outdoors
   - Outdoors Non-solid
   - Armor
-  - 
+  - Ignore Navmesh
   - 
   - 
   - 
@@ -67,4 +71,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: HUD
+    uniqueID: 3479309373
     locked: 0

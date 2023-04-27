@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 58f6a468cb88e4640b8e3b0a829e9a27, type: 2}
+  - {fileID: 2100000, guid: cd768528daa4dab4c9780c9aa23cd1dc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -134,9 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourceWeapon: {fileID: 0}
-  hit: 0
   damage: 0.125
-  rb: {fileID: 0}
   environmentHitSound: {fileID: 8300000, guid: 2e1cefe691ba93c48bb9607c1982263d, type: 3}
   enemyHitSound: {fileID: 8300000, guid: c13297d12e13f0144a3480ce9865da39, type: 3}
   zapMaterial: {fileID: 2100000, guid: 079a645b54b50f744879c7142c506a01, type: 2}
@@ -145,22 +143,15 @@ MonoBehaviour:
   fodderDamageBoost: 0
   weaponType: 
   heated: 0
-  magnets: []
   enemy: 0
   safeEnemyType: 0
   sawblade: 0
   hitAmount: 3.9
   sawBreakEffect: {fileID: 0}
   sawBounceEffect: {fileID: 0}
-  magnetRotationDirection: 0
   bounceToSurfaceNormal: 0
-  stopped: 0
   multiHitAmount: 1
-  originalVelocity: {x: 0, y: 0, z: 0}
   stoppedAud: {fileID: 0}
-  punchable: 0
-  punched: 0
-  punchDistance: 0
 --- !u!96 &3344679413277544448
 TrailRenderer:
   serializedVersion: 2

@@ -33,9 +33,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Core.cs" />
+    <Compile Include="CustomColour.cs" />
     <Compile Include="Pages\CustomsPage.cs" />
     <Compile Include="Weapons\Airblast.cs" />
-    <Compile Include="Weapons\FlameBurst.cs" />
     <Compile Include="Weapons\Mindrender.cs" />
     <Compile Include="Weapons\TacticalNuke.cs" />
     <Compile Include="Weapons\Sticky.cs" />
