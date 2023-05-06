@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &3777061805193413116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5778661170866518361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59b1c430c9fa4af4aa83a5607a86a98c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hct: 0
+  variationColor: 1
+  variationNumber: 6
+--- !u!114 &1338998670153175238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5799520675728420017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1711603494, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSize: 0.05
+  maxSize: 0.225
+  sizeGainRate: 0.03
+  perfectSizeDecrease: 0.1
+  maxSpeed: 5
+  minSpeed: 1.5
+  speedDecayRate: 0.5
+  PerfectIncrease: 0.75
+  BadIncrease: 1
+  shouldMove: 0
+  PerfectBeam: {fileID: 7895760926372804384, guid: 33d094ccb9b2fdb44818de8a80f4c2ce,
+    type: 3}
+  PerfectDamage: 3
+  PerfectStepDecrease: 0.5
+  PerfectCurrentDamage: 0
+  BadBeam: {fileID: 1659085721669404, guid: 04aacb573449f47459783f645c557466, type: 3}
+  slider: {fileID: 3890915350084829340}
+  left: {fileID: 4530946408088444177}
+  right: {fileID: 319580316835467379}
+  perfectBar: {fileID: 1356357140937746102}
+--- !u!114 &4220106230805389173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5799520675728420017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -127227072, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  variationColorReal: 6
 --- !u!1 &5209569958412548922
 GameObject:
   m_ObjectHideFlags: 0
@@ -4962,66 +5022,6 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &3777061805193413116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5778661170866518361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59b1c430c9fa4af4aa83a5607a86a98c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hct: 0
-  variationColor: 1
-  variationNumber: 6
---- !u!114 &1338998670153175238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5799520675728420017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1711603494, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minSize: 0.05
-  maxSize: 0.225
-  sizeGainRate: 0.03
-  perfectSizeDecrease: 0.1
-  maxSpeed: 5
-  minSpeed: 1.5
-  speedDecayRate: 0.5
-  PerfectIncrease: 0.75
-  BadIncrease: 1
-  shouldMove: 0
-  PerfectBeam: {fileID: 7895760926372804384, guid: 33d094ccb9b2fdb44818de8a80f4c2ce,
-    type: 3}
-  PerfectDamage: 3
-  PerfectStepDecrease: 0.75
-  PerfectCurrentDamage: 0
-  BadBeam: {fileID: 1659085721669404, guid: 04aacb573449f47459783f645c557466, type: 3}
-  slider: {fileID: 3890915350084829340}
-  left: {fileID: 4530946408088444177}
-  right: {fileID: 319580316835467379}
-  perfectBar: {fileID: 1356357140937746102}
---- !u!114 &4220106230805389173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5799520675728420017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -127227072, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  variationColorReal: 6
 --- !u!1001 &2683505750758872810
 PrefabInstance:
   m_ObjectHideFlags: 0
