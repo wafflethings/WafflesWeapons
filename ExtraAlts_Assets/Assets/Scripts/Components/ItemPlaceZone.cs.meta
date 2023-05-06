@@ -3,9 +3,7 @@ guid: 805e43cf1129e564cbc00a2dcb1aa7f2
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - boundsError: {fileID: 2069160196546826739, guid: 5c28a2c719ee6f24ea748ffae8fad617,
-      type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

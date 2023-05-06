@@ -1,23 +1,13 @@
 ﻿using Atlas.Modules.Guns;
 using HarmonyLib;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.ResourceManagement.ResourceLocations;
-using UnityEngine.AddressableAssets;
-using UnityEngine.AddressableAssets.ResourceLocators;
 
 namespace WafflesWeapons.Weapons
 {
     public class Virtuous : Gun
     {
         public static GameObject VirtueRail;
-        public static GameObject VirtueBeam;
 
         public static void LoadAssets()
         {
@@ -29,30 +19,11 @@ namespace WafflesWeapons.Weapons
         {
             base.Create(parent);
 
-            if (VirtueBeam == null)
-            {
-                VirtueBeam = AssetHelper.LoadPrefab("Assets/Prefabs/Attacks and Projectiles/Virtue Insignia.prefab");
-            }
-
             GameObject thing = GameObject.Instantiate(VirtueRail, parent);
+            OrderInSlot = GunSetter.Instance.CheckWeaponOrder("rock")[6];
             StyleHUD.Instance.weaponFreshness.Add(thing, 10);
 
             return thing;
-        }
-
-        public void DumpAssetNames()
-        {
-            var allLocations = new List<IResourceLocation>();
-            foreach (var resourceLocator in Addressables.ResourceLocators)
-            {
-                if (resourceLocator is ResourceLocationMap map)
-                {
-                    foreach (var stuff in map.Locations.Keys)
-                    {
-                        Debug.Log(stuff);
-                    }
-                }
-            }
         }
 
         public override int Slot()
@@ -82,13 +53,13 @@ namespace WafflesWeapons.Weapons
                         var eidid = currentHit.collider.gameObject.GetComponent<EnemyIdentifierIdentifier>();
                         if (eidid != null && !eidid.eid.dead)
                         {
-                            vb.CreateBeam(eidid.eid);
+                            vb.CreateBeam(eidid.eid.transform.position);
                         } 
                         else if (currentHit.collider.gameObject.layer == 8 || currentHit.collider.gameObject.layer == 24)
                         {
                             if (__instance.hitEids.Count == 0)
                             {
-                                vb.CreateSmallBeam(currentHit.point);
+                                vb.CreateBeam(currentHit.point, true);
                             }
                         }
                     }
@@ -159,25 +130,17 @@ namespace WafflesWeapons.Weapons
 
     public class VirtuousBehaviour : MonoBehaviour
     {
-        public void CreateBeam(EnemyIdentifier eid)
-        {
-            GameObject beam = Instantiate(Virtuous.VirtueBeam, NewMovement.Instance.transform.position, Quaternion.identity);
-            var vi = beam.GetComponent<VirtueInsignia>();
-            vi.target = new GameObject().transform;
-            vi.target.transform.position = eid.transform.position;
-            beam.ChildByName("Capsule").AddComponent<VirtueCannonBeam>().MyGun = gameObject;
-            Core.Instance.StartCoroutine(DestroyVi(vi.target));
-        }
+        public GameObject VirtueBeam;
+        public GameObject VirtueBeamSmall;
 
-        public void CreateSmallBeam(Vector3 pos)
+        public void CreateBeam(Vector3 pos, bool isSmall = false)
         {
-            GameObject beam = Instantiate(Virtuous.VirtueBeam, NewMovement.Instance.transform.position, Quaternion.identity);
-            beam.transform.localScale = Vector3.one;
+            GameObject beam = Instantiate((isSmall ? VirtueBeamSmall : VirtueBeam), NewMovement.Instance.transform.position, Quaternion.identity);
             var vi = beam.GetComponent<VirtueInsignia>();
             vi.target = new GameObject().transform;
             vi.target.transform.position = pos;
             beam.ChildByName("Capsule").AddComponent<VirtueCannonBeam>().MyGun = gameObject;
-            Core.Instance.StartCoroutine(DestroyVi(vi.target));
+            StartCoroutine(DestroyVi(vi.target));
         }
 
         public static System.Collections.IEnumerator DestroyVi(Transform t)

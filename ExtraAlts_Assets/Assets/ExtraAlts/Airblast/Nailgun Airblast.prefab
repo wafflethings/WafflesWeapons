@@ -435,8 +435,8 @@ MonoBehaviour:
     type: 3}
   snapSound: {fileID: 0}
   fireRate: 6
-  nail: {fileID: 1516943383673243530, guid: 5ccfa77edd4af9a479c89305b428970d, type: 3}
-  heatedNail: {fileID: 1516943383673243530, guid: 5ccfa77edd4af9a479c89305b428970d,
+  nail: {fileID: 1516943383673243530, guid: b1f25b425bb8713429956bafc71074c7, type: 3}
+  heatedNail: {fileID: 1516943383673243530, guid: b1f25b425bb8713429956bafc71074c7,
     type: 3}
   magnetNail: {fileID: 0}
   spread: 20

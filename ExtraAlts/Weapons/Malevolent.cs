@@ -1,11 +1,6 @@
 ﻿using Atlas.Modules.Guns;
 using HarmonyLib;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace WafflesWeapons.Weapons
@@ -36,6 +31,7 @@ namespace WafflesWeapons.Weapons
                 thing = GameObject.Instantiate(Mal, parent);
             }
 
+            OrderInSlot = GunSetter.Instance.CheckWeaponOrder("rev")[4];
             StyleHUD.Instance.weaponFreshness.Add(thing, 10);
             return thing;
         }
@@ -85,16 +81,6 @@ namespace WafflesWeapons.Weapons
 
         public static List<MalevolentBehaviour> Guns = new List<MalevolentBehaviour>();
 
-        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.Charge))]
-        [HarmonyPostfix]
-        public static void DoCharge(float amount)
-        {
-            foreach (MalevolentBehaviour gun in Guns)
-            {
-                gun.DoCharge();
-            }
-        }
-
         [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.MaxCharges))]
         [HarmonyPostfix]
         public static void MaxCharge()
@@ -104,46 +90,32 @@ namespace WafflesWeapons.Weapons
                 gun.MaxCharge();
             }
         }
+
+        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.Charge))]
+        [HarmonyPostfix]
+        public static void DoCharge(float amount)
+        {
+            foreach (MalevolentBehaviour mal in Guns)
+            {
+                mal.Charge();
+            }
+        }
+
+        [HarmonyPatch(typeof(Revolver), nameof(Revolver.Update))]
+        [HarmonyPrefix] // i blame hakita
+        public static bool AAAAAAAAAAAAAAAA(Revolver __instance)
+        {
+            return __instance.gunVariation != 5;
+        }
     }
 
     public class MalevolentBehaviour : MonoBehaviour
     {
-        private Revolver rev;
+        public Revolver rev;
 
         public void OnDestroy()
         {
             Malevolent.Guns.Remove(this);
-        }
-
-        public void DoCharge()
-        {
-            if (rev != null)
-            {
-                float num = 1f;
-                if (rev.altVersion)
-                {
-                    num = 0.5f;
-                }
-
-                if (rev.pierceCharge + 30f * Time.deltaTime < 100f)
-                {
-                    rev.pierceCharge += 30f * Time.deltaTime * num;
-                }
-                else
-                {
-                    if (!rev.pierceReady)
-                    {
-                        rev.screenAud.clip = rev.chargedSound;
-                        rev.screenAud.loop = false;
-                        rev.screenAud.volume = 0.35f;
-                        rev.screenAud.pitch = UnityEngine.Random.Range(1f, 1.1f);
-                        rev.screenAud.Play();
-                    }
-
-                    rev.pierceCharge = 100f;
-                    rev.pierceReady = true;
-                }
-            }
         }
 
         public void MaxCharge()
@@ -151,6 +123,48 @@ namespace WafflesWeapons.Weapons
             if (rev != null)
             {
                 rev.pierceCharge = 100;
+                rev.pierceReady = true;
+            }
+        }
+
+        public void Charge()
+        {
+            if (!rev.shootReady)
+            {
+                if (rev.shootCharge + 200f * Time.deltaTime < 100f)
+                {
+                    rev.shootCharge += 200f * Time.deltaTime;
+                }
+                else
+                {
+                    rev.shootCharge = 100f;
+                    rev.shootReady = true;
+                }
+            }
+
+            float num = 1f;
+
+            if (rev.altVersion)
+            {
+                num = 0.5f;
+            }
+
+            if (rev.pierceCharge + 30f * Time.deltaTime < 100f)
+            {
+                rev.pierceCharge += 30f * Time.deltaTime * num;
+            }
+            else
+            {
+                if (!rev.pierceReady)
+                {
+                    rev.screenAud.clip = rev.chargedSound;
+                    rev.screenAud.loop = false;
+                    rev.screenAud.volume = 0.35f;
+                    rev.screenAud.pitch = Random.Range(1f, 1.1f);
+                    rev.screenAud.Play();
+                }
+
+                rev.pierceCharge = 100f;
                 rev.pierceReady = true;
             }
         }
@@ -172,10 +186,16 @@ namespace WafflesWeapons.Weapons
                     float delay = GetComponent<WeaponIdentifier>().delay;
                     if (!rev.altVersion)
                     {
-
+                        Debug.Log("invoking on " + gameObject.name);
                         Invoke("Shoot", 0 + delay);
                         Invoke("Shoot", 0.1f + delay);
                         Invoke("Shoot", 0.2f + delay);
+
+                        if (rev.wid.delay != 0)
+                        {
+                            rev.shootCharge = 0;
+                            rev.shootReady = false;
+                        }
                     }
                     else
                     {
@@ -272,7 +292,7 @@ namespace WafflesWeapons.Weapons
 
         public void OnDisable()
         {
-            rev?.CancelInvoke("Shoot");
+            CancelInvoke("Shoot");
         }
 
         public void Shoot()
@@ -283,6 +303,9 @@ namespace WafflesWeapons.Weapons
         public void Shoot2()
         {
             rev.Shoot(2);
+            rev.wc.rev2charge += (rev.altVersion ? 300 : 100); // hakita's code is pretty bad.
+                                                               // instead of checking if it is the sharpshooter revolver, it checks if it isnt the piercer.
+                                                               // there's no way not to make it subtract, so i just add it back. this code hurts me.
         }
     }
 }

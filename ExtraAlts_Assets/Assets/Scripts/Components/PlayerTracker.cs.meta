@@ -3,11 +3,7 @@ guid: 0e4c59838286a9646961d9b882036cc5
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - platformerPlayerPrefab: {fileID: 6317990915808334855, guid: 2208f7660fe1e324cbe100cd4a5ed7f9,
-      type: 3}
-  - currentPlatformerPlayerPrefab: {instanceID: 0}
-  - pmov: {instanceID: 0}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

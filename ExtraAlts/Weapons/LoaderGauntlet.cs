@@ -1,11 +1,6 @@
 ﻿using Atlas.Modules.Guns;
 using HarmonyLib;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace WafflesWeapons.Weapons
@@ -30,17 +25,12 @@ namespace WafflesWeapons.Weapons
 
         public override int Slot()
         {
-            return 0;
+            return 2;
         }
 
         public override string Pref()
         {
             return "arm5";
-        }
-
-        public override int ArmNum()
-        {
-            return 2;
         }
 
         [HarmonyPatch(typeof(NewMovement), nameof(NewMovement.Start))]
@@ -66,19 +56,19 @@ namespace WafflesWeapons.Weapons
         [HarmonyPostfix]
         public static void FixColour(FistControl __instance)
         {
-            if (GameObject.FindObjectOfType<LoaderBehaviour>() != null)
+            try
             {
-                if (__instance.currentArmObject == GameObject.FindObjectOfType<LoaderBehaviour>().gameObject)
+                if (GameObject.FindObjectOfType<LoaderBehaviour>() != null)
                 {
-                    try
+                    if (__instance.currentArmObject == GameObject.FindObjectOfType<LoaderBehaviour>().gameObject)
                     {
                         __instance.fistIcon.color = ColorBlindSettings.Instance.variationColors[5];
-                    } 
-                    catch
-                    {
-                        Debug.LogError($"whar? {ColorBlindSettings.Instance.variationColors.Length}");
                     }
                 }
+            }
+            catch
+            {
+                Debug.LogError($"whar? {ColorBlindSettings.Instance.variationColors.Length}");
             }
         }
 
@@ -211,7 +201,7 @@ namespace WafflesWeapons.Weapons
                         {
                             GameObject wave = Instantiate(nm.gc.shockwave, nm.gc.transform.position, Quaternion.identity);
                             wave.GetComponent<PhysicalShockwave>().force *= Charge * 0.75f;
-                            wave.GetComponent<PhysicalShockwave>().maxSize *= (Charge / 3);
+                            wave.GetComponent<PhysicalShockwave>().maxSize *= (Charge / 2);
                             wave.transform.localScale = new Vector3(wave.transform.localScale.x, wave.transform.localScale.y, wave.transform.localScale.z);
                         }
                         ResetDash(true);
@@ -249,7 +239,7 @@ namespace WafflesWeapons.Weapons
                     if (!eid.dead && !AlrHit.Contains(eid.gameObject))
                     {
                         eid.hitter = "heavypunch";
-                        eid.DeliverDamage(eid.gameObject, NewMovement.Instance.rb.velocity, other.gameObject.transform.position, Charge * 1.1f, false, 0, gameObject);
+                        eid.DeliverDamage(eid.gameObject, NewMovement.Instance.rb.velocity, other.gameObject.transform.position, Charge * 1.5f, false, 0, gameObject);
                         if (eid.dead)
                         {
                             eid.gameObject.AddComponent<Bleeder>().GetHit(eid.gameObject.transform.position, GoreType.Head);
@@ -301,7 +291,6 @@ namespace WafflesWeapons.Weapons
             Charge = 0;
             LoaderGauntlet.curOne = this;
             anim.SetBool("Midflight", false);
-            anim = GetComponentsInChildren<Animator>()[1];
         }
 
         public void OnDisable()
@@ -314,7 +303,8 @@ namespace WafflesWeapons.Weapons
 
         public void Update()
         {
-            pu.ready = true;
+            pu.ready = false;
+            pu.anim = anim;
 
             // should be 100 at finish
             float CoolCharge = Charge * 100 / 6;
@@ -377,10 +367,15 @@ namespace WafflesWeapons.Weapons
                 anim.SetBool("Charging", false);
             }
 
+            // Debug.Log(anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+
             // cancel if released early
             if (Fist.OnPunchReleased() && Charge <= 2f && LoaderArmCollisionHandler.Instance.CanCharge)
             {
-                anim.Play("NewES Idle");
+                if (anim.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Armature|ES_HookPunch")
+                {
+                    anim.Play("NewES Idle");
+                }
                 Charge = 0;
             }
 
@@ -419,7 +414,7 @@ namespace WafflesWeapons.Weapons
 
                 nm.rb.velocity = (cc.transform.forward * nm.walkSpeed * CalcCharge) / 60;
                 nm.GetHurt(ChargeToDmg[(int)Charge], false, 0);
-                nm.ForceAddAntiHP(ChargeToDmg[(int)Charge], true, true);
+                nm.ForceAddAntiHP(ChargeToDmg[(int)Charge] / 2, true, true);
                 Charge = 0;
                 anim.SetBool("Midflight", true);
             }

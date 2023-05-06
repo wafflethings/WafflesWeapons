@@ -1,13 +1,6 @@
 ﻿using Atlas.Modules.Guns;
 using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace WafflesWeapons.Weapons
 {
@@ -26,6 +19,7 @@ namespace WafflesWeapons.Weapons
             base.Create(parent);
 
             GameObject thing = GameObject.Instantiate(NukeRl, parent);
+            OrderInSlot = GunSetter.Instance.CheckWeaponOrder("rock")[3];
             StyleHUD.Instance.weaponFreshness.Add(thing, 10);
 
             return thing;
@@ -45,8 +39,7 @@ namespace WafflesWeapons.Weapons
         [HarmonyPostfix]
         public static void IncreaseIfBig(Grenade __instance, bool harmless, bool super = false)
         {
-
-            if (!harmless && __instance.sourceWeapon.GetComponent<RocketLauncher>() != null)
+            if (!harmless && __instance.rocket)
             {
                 if (super)
                 {
@@ -70,8 +63,6 @@ namespace WafflesWeapons.Weapons
         {
             TacticalNukeBehaviour.WindUp = 4;
         }
-
-        
     }
 
     public class TacticalNukeBehaviour : MonoBehaviour

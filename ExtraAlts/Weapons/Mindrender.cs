@@ -2,10 +2,6 @@
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,6 +34,7 @@ namespace WafflesWeapons.Weapons
                 thing = GameObject.Instantiate(RendNail, parent);
             }
 
+            OrderInSlot = GunSetter.Instance.CheckWeaponOrder("nai")[4];
             StyleHUD.Instance.weaponFreshness.Add(thing, 10);
             return thing;
         }
@@ -93,16 +90,16 @@ namespace WafflesWeapons.Weapons
             {
                 float amount = 0;
 
-                if (__instance.gameObject.name.Contains("Nail"))
+                if (__instance.sawblade)
                 {
                     amount = 0.0125f;
                 }
-                else if (__instance.gameObject.name.Contains("Saw"))
+                else
                 {
                     amount = 0.025f;
-
                 }
-                if (!__instance.gameObject.name.Contains("Flay"))
+
+                if (!__instance.sourceWeapon.GetComponent<MindrenderBehaviour>())
                 {
                     amount /= 3;
                 }
@@ -240,7 +237,7 @@ namespace WafflesWeapons.Weapons
                                         if ((DateTime.Now - timeSinceHit[eid]).TotalMilliseconds > BEAM_MILLISECOND_DELAY)
                                         {
                                             lr.positionCount = 3;
-                                            lr.SetPosition(2, potentialEnemy.transform.position);
+                                            lr.SetPosition(2, UltrakillUtils.NearestEnemyPoint(hit.transform.position, 10000));
 
                                             eid.hitter = "mindrend beam :3";
                                             eid.DeliverDamage(hit.transform.gameObject, CameraController.Instance.transform.forward, hit.point, BEAM_DAMAGE, false, 0, gameObject);
@@ -324,7 +321,7 @@ namespace WafflesWeapons.Weapons
         {
             Instantiate(Ball, CameraController.Instance.transform.position + CameraController.Instance.transform.forward, CameraController.Instance.transform.rotation);
             nai.anim.SetTrigger("SuperShoot");
-            NewMovement.Instance.rb.AddForce(CameraController.Instance.transform.forward * -500 * Time.deltaTime, ForceMode.VelocityChange);
+            NewMovement.Instance.rb.AddForce(CameraController.Instance.transform.forward * -750 * Time.deltaTime, ForceMode.VelocityChange);
             CameraController.Instance.CameraShake(0.25f);
         }
 
@@ -340,6 +337,45 @@ namespace WafflesWeapons.Weapons
                 Shooting = false;
                 Destroy(curVis);
                 Charge = 0;
+            }
+        }
+    }
+
+    public class HomingProjectile : MonoBehaviour
+    {
+        private LayerMask enemyLayerMask;
+        private LayerMask pierceLayerMask;
+        private LayerMask ignoreEnemyTrigger;
+        public float speed = 1;
+
+        public void Start()
+        {
+            enemyLayerMask |= 1024;
+            enemyLayerMask |= 2048;
+            pierceLayerMask |= 256;
+            pierceLayerMask |= 16777216;
+            pierceLayerMask |= 67108864;
+
+            ignoreEnemyTrigger = enemyLayerMask | pierceLayerMask;
+        }
+
+        public void Update()
+        {
+            if (GunControl.Instance.activated)
+            {
+                RaycastHit hit;
+                Quaternion startRotation = transform.rotation;
+
+                if (Physics.Raycast(CameraController.Instance.transform.position, CameraController.Instance.transform.forward, out hit, float.PositiveInfinity, ignoreEnemyTrigger))
+                {
+                    transform.LookAt(hit.point);
+                }
+                else
+                {
+                    transform.LookAt(CameraController.Instance.transform.forward * 10000);
+                }
+
+                transform.rotation = Quaternion.Lerp(startRotation, transform.rotation, Time.deltaTime * speed);
             }
         }
     }

@@ -5232,6 +5232,10 @@ MonoBehaviour:
   m_Script: {fileID: 1661516879, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VirtueBeam: {fileID: 4632370053128763137, guid: 09b8b1b1840f68e45b17d36afc4ca780,
+    type: 3}
+  VirtueBeamSmall: {fileID: 4632370053128763137, guid: 7df45afdf4853ba45aa99d3687c1fd6b,
+    type: 3}
 --- !u!114 &4942826025502244238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5245,7 +5249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   variation: 3
-  beam: {fileID: 1659085721669404, guid: fc96bf98a434f66438446304196f4e26, type: 3}
+  beam: {fileID: 1659085721669404, guid: 60664c2b1fcda824f83a618b60bf430d, type: 3}
   shootPoint: {fileID: 6550905323193537559}
   fullCharge: {fileID: 6422642056922351659}
   fireSound: {fileID: 1673117908876384, guid: aab7bea746a6694448f928ffb1425b0f, type: 3}

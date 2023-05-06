@@ -1,11 +1,6 @@
 ﻿using Atlas.Modules.Guns;
 using HarmonyLib;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace WafflesWeapons.Weapons
@@ -36,6 +31,8 @@ namespace WafflesWeapons.Weapons
                 thing = GameObject.Instantiate(Fan, parent);
             }
 
+            FanFireBehaviour.BeamsUsed.Clear();
+            OrderInSlot = GunSetter.Instance.CheckWeaponOrder("rev")[3];
             StyleHUD.Instance.weaponFreshness.Add(thing, 10);
             return thing;
         }
@@ -60,12 +57,13 @@ namespace WafflesWeapons.Weapons
             {
                 FanFireBehaviour ffb;
 
-                if (currentHit.collider != null)
+                if (currentHit.collider != null && !FanFireBehaviour.BeamsUsed.Contains(__instance))
                 {
+                    FanFireBehaviour.BeamsUsed.Add(__instance);
                     float amount = 0.5f;
                     if (__instance.sourceWeapon.TryGetComponent(out ffb))
                     {
-                        amount = 0.25f;
+                        amount = 1f;
                     }
 
                     if (__instance.beamType == BeamType.Revolver && FanFireBehaviour.Charge < 6 &&
@@ -174,6 +172,7 @@ namespace WafflesWeapons.Weapons
         [HideInInspector] public float Damage = 0;
         private bool CanFan = true;
         public Texture2D[] NumberToTexture;
+        public static List<RevolverBeam> BeamsUsed = new List<RevolverBeam>();
 
         public void Start()
         {
@@ -183,6 +182,7 @@ namespace WafflesWeapons.Weapons
 
         public void Update()
         {
+            rev.pierceShotCharge = 0;
             rev.screenMR.material.SetTexture("_MainTex", NumberToTexture[(int)Charge]);
 
             if (Gun.OnFireHeld() && rev.shootReady && rev.gc.activated && rev.gunReady)

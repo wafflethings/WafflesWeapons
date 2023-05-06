@@ -181,7 +181,7 @@ MonoBehaviour:
   alternateStartPoint: {x: 0, y: 0, z: 0}
   sourceWeapon: {fileID: 0}
   cc: {fileID: 0}
-  hitParticle: {fileID: 166480979879108960, guid: afa02a0cb29fea440928e76ccb4ff113,
+  hitParticle: {fileID: 166480979879108960, guid: 4a06985f168e87e4892a73bf1992385e,
     type: 3}
   bulletForce: 50000
   quickDraw: 0

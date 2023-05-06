@@ -1,11 +1,5 @@
 ﻿using Atlas.Modules.Guns;
 using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,6 +30,7 @@ namespace WafflesWeapons.Weapons
                 thing = GameObject.Instantiate(AirNail, parent);
             }
 
+            OrderInSlot = GunSetter.Instance.CheckWeaponOrder("nai")[3];
             StyleHUD.Instance.weaponFreshness.Add(thing, 10);
             return thing;
         }
@@ -54,7 +49,7 @@ namespace WafflesWeapons.Weapons
         [HarmonyPostfix]
         public static void AddForceToAir(Nail __instance, EnemyIdentifierIdentifier eidid = null)
         {
-            if (eidid != null && eidid.eid != null && !eidid.eid.dead && __instance.gameObject.name.Contains("Air"))
+            if (eidid != null && eidid.eid != null && !eidid.eid.dead && __instance.sourceWeapon.GetComponent<AirblastBehaviour>() != null)
             {
                 var eid = eidid.eid;
                 eid.GetComponent<Rigidbody>().AddForce(__instance.transform.forward * (__instance.sawblade ? -15 / __instance.hitAmount : -15f), ForceMode.VelocityChange);
