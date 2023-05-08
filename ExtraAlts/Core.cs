@@ -31,7 +31,7 @@ namespace WafflesWeapons
             Harmony.PatchAll(typeof(Core));
 
             TerminalPageRegistry.RegisterPage(typeof(CustomsPage));
-            TerminalPageRegistry.RegisterPage(typeof(ExtrasPage));
+            //TerminalPageRegistry.RegisterPage(typeof(ExtrasPage));
 
             FanFire.LoadAssets();
             GunRegistry.Register(new FanFire());

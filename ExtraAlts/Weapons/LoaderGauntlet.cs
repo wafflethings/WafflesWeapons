@@ -44,13 +44,65 @@ namespace WafflesWeapons.Weapons
         [HarmonyPrefix]
         public static bool CancelIfCharging(Punch __instance)
         {
-            if (__instance.GetComponent<LoaderBehaviour>() != null)
+            if (__instance.GetComponent<LoaderBehaviour>() != null && !__instance.holdingInput)
             {
-                return LoaderBehaviour.Charge == 0;
+                __instance.anim.SetTrigger("CoinFlip");
+                return false;
             }
 
             return true;
         }
+
+        [HarmonyPatch(typeof(Punch), nameof(Punch.PunchStart))]
+        [HarmonyPrefix]
+        public static bool LoaderPunch(Punch __instance)
+        {
+            LoaderBehaviour lb = __instance.GetComponent<LoaderBehaviour>();
+
+            if (lb != null)
+            {
+                if (LoaderArmCollisionHandler.Instance.MidCharge)
+                {
+                    return false;
+                }
+
+                if (__instance.ready)
+                {
+                    // lb.anim.Play("Armature|ES_HookPunch", 0, 0);
+                    lb.Punch();
+                }
+            }
+
+            return true;
+        }
+
+        [HarmonyPatch(typeof(Punch), nameof(Punch.BlastCheck))]
+        [HarmonyPrefix]
+        public static bool CancelBlast(Punch __instance)
+        {
+            LoaderBehaviour lb = __instance.GetComponent<LoaderBehaviour>();
+
+            if (lb != null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /* [HarmonyPatch(typeof(Punch), nameof(Punch.PunchSuccess))]
+        [HarmonyPrefix]
+        public static void SetStartRot(Punch __instance, out Quaternion __state)
+        {
+            __state = __instance.transform.parent.localRotation;
+        }
+
+        [HarmonyPatch(typeof(Punch), nameof(Punch.PunchSuccess))]
+        [HarmonyPostfix]
+        public static void SetEndRot(Punch __instance, Quaternion __state)
+        {
+            __instance.transform.parent.localRotation = __state;
+        } */
 
         [HarmonyPatch(typeof(FistControl), nameof(FistControl.UpdateFistIcon))]
         [HarmonyPostfix]
@@ -219,8 +271,6 @@ namespace WafflesWeapons.Weapons
                         ResetDash(false);
                         coin.Punchflection();
                         TimeController.Instance.ParryFlash();
-                        // this doesnt work and its killing me
-                        //curOne.anim.SetTrigger("Hook");
                     }
                 }
 
@@ -238,11 +288,24 @@ namespace WafflesWeapons.Weapons
 
                     if (!eid.dead && !AlrHit.Contains(eid.gameObject))
                     {
+                        Debug.Log($"{NewMovement.Instance.rb.velocity.magnitude} from charge {Charge}: damage {NewMovement.Instance.rb.velocity.magnitude * 0.075f}");
                         eid.hitter = "heavypunch";
-                        eid.DeliverDamage(eid.gameObject, NewMovement.Instance.rb.velocity, other.gameObject.transform.position, Charge * 1.5f, false, 0, gameObject);
+                        eid.DeliverDamage(eid.gameObject, NewMovement.Instance.rb.velocity, other.gameObject.transform.position, NewMovement.Instance.rb.velocity.magnitude * 0.075f, false, 0, gameObject);
                         if (eid.dead)
                         {
                             eid.gameObject.AddComponent<Bleeder>().GetHit(eid.gameObject.transform.position, GoreType.Head);
+                            ResetDash(false);
+                        }
+                        else 
+                        {
+                            NewMovement.Instance.rb.velocity = (NewMovement.Instance.rb.velocity * -0.5f);
+                            if (NewMovement.Instance.rb.velocity.y < 0)
+                            {
+                                Vector3 vel = NewMovement.Instance.rb.velocity;
+                                NewMovement.Instance.rb.velocity = new Vector3(vel.x, vel.y * -1, vel.z);
+                                Instantiate(LoaderGauntlet.curOne.DoinkSound, NewMovement.Instance.transform.position, Quaternion.identity);
+                            }
+                            NewMovement.Instance.ForceAddAntiHP((int)(NewMovement.Instance.rb.velocity.magnitude * 0.5f), false, true);
                         }
                         CameraController.Instance.CameraShake(0.5f);
                         TimeController.Instance.HitStop(0.05f);
@@ -264,20 +327,13 @@ namespace WafflesWeapons.Weapons
         private static Punch pu;
         private AudioSource CeSrc;
         [HideInInspector] public static float Charge;
-        private static Dictionary<int, int> ChargeToDmg = new Dictionary<int, int>
-            {
-                { 2, 0 },
-                { 3, 2 },
-                { 4, 4 },
-                { 5, 8 },
-                { 6, 16 }
-            };
 
         public Animator anim;
         public GameObject Click;
         public GameObject ChargeSound;
         public GameObject Release;
         public GameObject GroundedBell;
+        public GameObject DoinkSound;
 
         public void Start()
         {
@@ -301,9 +357,33 @@ namespace WafflesWeapons.Weapons
             }
         }
 
+        public void Punch()
+        {
+            pu.damage = 1.5f;
+            pu.screenShakeMultiplier = 2f;
+            pu.force = 50f;
+            pu.tryForExplode = true;
+            pu.cooldownCost = 1.5f;
+
+            pu.ActiveStart();
+            pu.Invoke("ActiveEnd", 3f / 30f);
+            Invoke("ReadyToPunch_WithoutHolding", 10f / 30f);
+            pu.Invoke("PunchEnd", 28f / 30f);
+        }
+
+        private void ReadyToPunch_WithoutHolding()
+        {
+            pu.returnToOrigRot = true;
+            //this.holdingInput = false;
+            pu.ready = true;
+            pu.alreadyBoostedProjectile = false;
+            pu.ignoreDoublePunch = false;
+        }
+
         public void Update()
         {
-            pu.ready = false;
+            Debug.Log($"{anim.GetCurrentAnimatorClipInfo(0)[0].clip.name} of {anim.GetCurrentAnimatorClipInfo(0).Length}");
+            // pu.ready = false;
             pu.anim = anim;
 
             // should be 100 at finish
@@ -311,7 +391,7 @@ namespace WafflesWeapons.Weapons
             CeSrc.volume = 0.3f + CoolCharge * 0.005f;
             CeSrc.pitch = 0.1f + (CoolCharge * 0.0125f);
 
-            if (Fist.OnPunchHeld() && LoaderArmCollisionHandler.Instance.CanCharge)
+            if (pu.holdingInput && LoaderArmCollisionHandler.Instance.CanCharge)
             {
                 if (!CeSrc.isPlaying)
                 {
@@ -365,16 +445,14 @@ namespace WafflesWeapons.Weapons
                     CeSrc.Stop();
                 }
                 anim.SetBool("Charging", false);
-            }
-
-            // Debug.Log(anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+            } 
 
             // cancel if released early
             if (Fist.OnPunchReleased() && Charge <= 2f && LoaderArmCollisionHandler.Instance.CanCharge)
             {
                 if (anim.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Armature|ES_HookPunch")
                 {
-                    anim.Play("NewES Idle");
+                    // anim.Play("NewES Idle");
                 }
                 Charge = 0;
             }
@@ -392,29 +470,19 @@ namespace WafflesWeapons.Weapons
 
                 if (FindObjectOfType<GroundCheck>().touchingGround)
                 {
-                    nm.jumpPower *= 0.25f;
+                    nm.jumpPower /= 3f;
                     nm.Jump();
-                    nm.jumpPower *= 4;
+                    nm.jumpPower *= 3;
                 }
 
                 Instantiate(Release);
-
                 cc.CameraShake(Charge);
-
-                float CalcCharge = Charge;
-                float Mult = 1.125f;
-                float AddTo = 1 - (1 / Mult);
-                CalcCharge /= AddTo + ((LoaderArmCollisionHandler.Instance.Dashes + 1) / Mult);
-
-                Debug.Log($"{Charge} / {AddTo + ((LoaderArmCollisionHandler.Instance.Dashes + 1) / Mult)} = {CalcCharge} => {cc.transform.forward * nm.walkSpeed * CalcCharge * Time.deltaTime}");
 
                 LoaderArmCollisionHandler.Instance.MidCharge = true;
                 LoaderArmCollisionHandler.Instance.CanCharge = false;
                 LoaderArmCollisionHandler.Instance.BadCoins.Clear();
 
-                nm.rb.velocity = (cc.transform.forward * nm.walkSpeed * CalcCharge) / 60;
-                nm.GetHurt(ChargeToDmg[(int)Charge], false, 0);
-                nm.ForceAddAntiHP(ChargeToDmg[(int)Charge] / 2, true, true);
+                nm.rb.AddForce((cc.transform.forward * nm.walkSpeed * Charge) / 70, ForceMode.VelocityChange);
                 Charge = 0;
                 anim.SetBool("Midflight", true);
             }

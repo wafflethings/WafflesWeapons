@@ -343,7 +343,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1585733057949752430}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.25, y: 0, z: -0.031}
+  m_LocalPosition: {x: -0.25, y: 0, z: 0.1}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children:
   - {fileID: 4925308755261607683}
@@ -1668,6 +1668,7 @@ MonoBehaviour:
   Release: {fileID: 1673117908876384, guid: f562506901a73ec45b69d9db174c22b7, type: 3}
   GroundedBell: {fileID: 1673117908876384, guid: 31dff362bc662a04fa2b2a1044a3d0ed,
     type: 3}
+  DoinkSound: {fileID: 1673117908876384, guid: 98ade1b7199593b41bde0bf47c33e815, type: 3}
 --- !u!114 &4953543386438743839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1735,10 +1736,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
+  m_audioClip: {fileID: 8300000, guid: 48f2cbe8ce3c8fd4bbb268854634c2d1, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.85
+  m_Pitch: 0.6
   Loop: 0
   Mute: 0
   Spatialize: 0

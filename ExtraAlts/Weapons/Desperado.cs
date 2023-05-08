@@ -250,6 +250,11 @@ namespace WafflesWeapons.Weapons
 
         public void Update()
         {
+            if (ULTRAKILL.Cheats.NoWeaponCooldown.NoCooldown)
+            {
+                Charge();
+            }
+
             rev.pierceShotCharge = 0;
             
             if (rev.gc.activated)

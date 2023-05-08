@@ -446,8 +446,8 @@ MonoBehaviour:
   enemy: 0
   harmless: 0
   lowQuality: 0
-  speed: 1
-  maxSize: 8
+  speed: 1.25
+  maxSize: 10
   damage: 35
   enemyDamageMultiplier: 1
   explosionChunk: {fileID: 2411517689099871107, guid: afe97a17306b9cc48824e500692bb9ac,
@@ -507,7 +507,7 @@ MonoBehaviour:
   harmless: 0
   lowQuality: 1
   speed: 2.5
-  maxSize: 10
+  maxSize: 12
   damage: 0
   enemyDamageMultiplier: 0
   explosionChunk: {fileID: 0}

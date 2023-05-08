@@ -141,24 +141,24 @@ namespace WafflesWeapons.Weapons
             {
                 cooldown -= Time.deltaTime;
 
+                if (Gun.OnAltFireReleased() && detonateTime >= DETONATE_AT)
+                {
+                    detonateTime = 0;
+
+                    if (GetComponent<WeaponIdentifier>().delay == 0)
+                    {
+                        cooldown = 0.5f;
+                        foreach (StickyBombBehaviour sbb in FindObjectsOfType<StickyBombBehaviour>())
+                        {
+                            sbb.GetComponent<Projectile>().CreateExplosionEffect();
+                            GameObject.Destroy(sbb.gameObject);
+                        }
+                    }
+                }
+
                 if (Gun.OnAltFireHeld() && Charges != 0)
                 {
                     detonateTime += Time.deltaTime * (Charges == 4 ? 2 : 1);
-
-                    if (detonateTime >= DETONATE_AT)
-                    {
-                        detonateTime = 0;
-
-                        if (GetComponent<WeaponIdentifier>().delay == 0)
-                        {
-                            cooldown = 0.5f;
-                            foreach (StickyBombBehaviour sbb in FindObjectsOfType<StickyBombBehaviour>())
-                            {
-                                sbb.GetComponent<Projectile>().CreateExplosionEffect();
-                                GameObject.Destroy(sbb.gameObject);
-                            }
-                        }
-                    }
                 } 
                 else
                 {

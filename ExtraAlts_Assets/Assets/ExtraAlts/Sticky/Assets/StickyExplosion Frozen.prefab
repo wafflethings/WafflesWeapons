@@ -507,7 +507,7 @@ MonoBehaviour:
   harmless: 0
   lowQuality: 1
   speed: 3
-  maxSize: 12.5
+  maxSize: 14
   damage: 0
   enemyDamageMultiplier: 0
   explosionChunk: {fileID: 0}

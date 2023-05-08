@@ -179,6 +179,11 @@ namespace WafflesWeapons.Weapons
 
         public void Update()
         {
+            if (ULTRAKILL.Cheats.NoWeaponCooldown.NoCooldown)
+            {
+                Charge();
+            }
+
             if (Gun.OnFireHeld() && rev.shootReady && rev.gc.activated && rev.gunReady)
             {
                 if ((rev.altVersion && WeaponCharges.Instance.revaltpickupcharges[rev.gunVariation] == 0) || !rev.altVersion)
