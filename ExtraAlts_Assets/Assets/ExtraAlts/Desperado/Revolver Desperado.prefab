@@ -4990,6 +4990,8 @@ MonoBehaviour:
   PerfectStepDecrease: 0.84
   PerfectCurrentDamage: 0
   BadBeam: {fileID: 1659085721669404, guid: bde08464fb6a18348b594c9a5a681883, type: 3}
+  AlertOnEnter: {fileID: 1673117908876384, guid: e957fe1ee5352c74a8ff68a78ffc86b5,
+    type: 3}
   slider: {fileID: 3636560325626237052}
   left: {fileID: 4137050473714765297}
   right: {fileID: 281341002990452883}

@@ -164,6 +164,7 @@ namespace WafflesWeapons.Weapons
         public GameObject BadBeam;
 
         [Header("Sliders")]
+        public GameObject AlertOnEnter;
         public Slider slider;
         public Slider left;
         public Slider right;
@@ -205,13 +206,24 @@ namespace WafflesWeapons.Weapons
 
             if (shouldMove)
             {
+                Debug.Log($"{goingRight} gr, {leftLimit} {rightLimit} {currentSlider}");
                 if (goingRight)
                 {
+                    if (currentSlider < leftLimit && currentSlider + sliderSpeed * Time.deltaTime >= leftLimit)
+                    {
+                        Instantiate(AlertOnEnter, NewMovement.Instance.transform.position, Quaternion.identity);
+                    }
+
                     currentSlider += sliderSpeed * Time.deltaTime;
                 }
                 else
                 {
                     currentSlider -= sliderSpeed * Time.deltaTime;
+
+                    if (currentSlider > rightLimit && currentSlider - sliderSpeed * Time.deltaTime <= rightLimit)
+                    {
+                        Instantiate(AlertOnEnter, NewMovement.Instance.transform.position, Quaternion.identity);
+                    }
                 }
 
                 if ((currentSlider > 1 && goingRight) || (currentSlider < 0 && !goingRight))
