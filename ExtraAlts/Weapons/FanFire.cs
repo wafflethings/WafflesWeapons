@@ -1,41 +1,19 @@
 ﻿using Atlas.Modules.Guns;
 using HarmonyLib;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace WafflesWeapons.Weapons
 {
     public class FanFire : Gun
     {
-        public static Sprite Icon;
-        public static Sprite IconGlow;
-        public static Sprite IconAlt;
-        public static Sprite IconGlowAlt;
-        public static Texture2D[] NumberToTexture;
-        public static GameObject FanShot;
+        public static GameObject Fan;
+        public static GameObject FanAlt;
 
         public static void LoadAssets()
         {
-            Icon = Core.Assets.LoadAsset<Sprite>("FanFire.png");
-            IconGlow = Core.Assets.LoadAsset<Sprite>("FanFire Glow.png");
-            IconAlt = Core.Assets.LoadAsset<Sprite>("Fan Alt.png");
-            IconGlowAlt = Core.Assets.LoadAsset<Sprite>("Fan Alt Glow.png");
-            NumberToTexture = new Texture2D[]
-            {
-                Core.Assets.LoadAsset<Texture2D>("dice_0.png"),
-                Core.Assets.LoadAsset<Texture2D>("dice_1.png"),
-                Core.Assets.LoadAsset<Texture2D>("dice_2.png"),
-                Core.Assets.LoadAsset<Texture2D>("dice_3.png"),
-                Core.Assets.LoadAsset<Texture2D>("dice_4.png"),
-                Core.Assets.LoadAsset<Texture2D>("dice_5.png"),
-                Core.Assets.LoadAsset<Texture2D>("dice_6.png")
-            };
-            FanShot = Core.Assets.LoadAsset<GameObject>("FanShot.prefab");
+            Fan = Core.Assets.LoadAsset<GameObject>("Revolver Fan.prefab");
+            FanAlt = Core.Assets.LoadAsset<GameObject>("Alternative Revolver Fan.prefab");
             Core.Harmony.PatchAll(typeof(FanFire));
         }
 
@@ -44,40 +22,18 @@ namespace WafflesWeapons.Weapons
             base.Create(parent);
 
             GameObject thing;
-
             if (Enabled() == 2)
             {
-                thing = GameObject.Instantiate(GunSetter.Instance.revolverPierce[1], parent);
+                thing = GameObject.Instantiate(FanAlt, parent);
             }
             else
             {
-                thing = GameObject.Instantiate(GunSetter.Instance.revolverPierce[0], parent);
+                thing = GameObject.Instantiate(Fan, parent);
             }
 
-            var rev = thing.GetComponent<Revolver>();
-            rev.screenMR.material.color = ColorBlindSettings.Instance.variationColors[4];
-            rev.gunVariation = 4;
-            rev.revolverBeamSuper = FanShot;
-
-            var ico = thing.GetComponent<WeaponIcon>();
-            ico.variationColor = 4;
-            if (rev.altVersion)
-            {
-                ico.glowIcon = IconGlowAlt;
-                ico.weaponIcon = IconAlt;
-            }
-            else
-            {
-                ico.glowIcon = IconGlow;
-                ico.weaponIcon = Icon;
-            }
-
-            thing.AddComponent<FanFireBehaviour>();
-
-            thing.name = "FanFire Revolver";
-
+            FanFireBehaviour.BeamsUsed.Clear();
+            OrderInSlot = GunSetter.Instance.CheckWeaponOrder("rev")[3];
             StyleHUD.Instance.weaponFreshness.Add(thing, 10);
-
             return thing;
         }
 
@@ -101,12 +57,13 @@ namespace WafflesWeapons.Weapons
             {
                 FanFireBehaviour ffb;
 
-                if (currentHit.collider != null)
+                if (currentHit.collider != null && !FanFireBehaviour.BeamsUsed.Contains(__instance))
                 {
+                    FanFireBehaviour.BeamsUsed.Add(__instance);
                     float amount = 0.5f;
                     if (__instance.sourceWeapon.TryGetComponent(out ffb))
                     {
-                        amount = 0.25f;
+                        amount = 1f;
                     }
 
                     if (__instance.beamType == BeamType.Revolver && FanFireBehaviour.Charge < 6 &&
@@ -206,145 +163,73 @@ namespace WafflesWeapons.Weapons
             new GameObject().AddComponent<CoinCollector>().coin = coin.gameObject;
             coin.CancelInvoke("GetDeleted");
         }
+    }
 
-        public class FanFireBehaviour : MonoBehaviour
+    public class FanFireBehaviour : MonoBehaviour
+    {
+        private Revolver rev;
+        [HideInInspector] public static float Charge = 0;
+        [HideInInspector] public float Damage = 0;
+        private bool CanFan = true;
+        public Texture2D[] NumberToTexture;
+        public static List<RevolverBeam> BeamsUsed = new List<RevolverBeam>();
+
+        public void Start()
         {
-            private Revolver rev;
-            public static float Charge = 0;
-            public float Damage = 0;
-            private bool CanFan = true;
+            rev = GetComponent<Revolver>();
+            rev.screenMR.material.color = ColorBlindSettings.Instance.variationColors[4];
+        }
 
-            public void Start()
+        public void Update()
+        {
+            rev.pierceShotCharge = 0;
+            rev.screenMR.material.SetTexture("_MainTex", NumberToTexture[(int)Charge]);
+
+            if (Gun.OnFireHeld() && rev.shootReady && rev.gc.activated && rev.gunReady)
             {
-                rev = GetComponent<Revolver>();
-            }
-
-            public void Update()
-            {
-                rev.screenMR.material.SetTexture("_MainTex", NumberToTexture[(int)Charge]);
-
-                if (OnFireHeld() && rev.shootReady && rev.gc.activated)
+                if ((rev.altVersion && WeaponCharges.Instance.revaltpickupcharges[rev.gunVariation] == 0) || !rev.altVersion)
                 {
-                    if ((rev.altVersion && WeaponCharges.Instance.revaltpickupcharges[rev.gunVariation] == 0) || !rev.altVersion)
-                    {
-                        Shoot();
-                    }
-                }
-
-                if (OnAltFire() && CanFan)
-                {
-                    Damage = 0;
-                    Charge = (int)Charge;
-                    CanFan = false;
-                    float delay = GetComponent<WeaponIdentifier>().delay;
-                    Invoke("ResetFan", (((int)Charge-1) * 0.15f) + 1 + delay);
-                    for (int i = 0; i < (int)Charge; i++)
-                    {
-                        Damage = ((i + 1) * 0.25f) + 0.25f;
-                        Invoke("ShootFan", (i * 0.15f) + delay);
-                    }
+                    rev.Shoot();
                 }
             }
 
-            public void ResetFan()
+            if (Gun.OnAltFire() && CanFan)
             {
-                CanFan = true;
+                Damage = 0;
+                Charge = (int)Charge;
+                CanFan = false;
+                float delay = GetComponent<WeaponIdentifier>().delay;
+                Invoke("ResetFan", (((int)Charge - 1) * 0.15f) + 1 + delay);
+                for (int i = 0; i < (int)Charge; i++)
+                {
+                    Damage = ((i + 1) * 0.25f) + 0.25f;
+                    Invoke("ShootFan", (i * 0.15f) + delay);
+                }
+            }
+        }
+
+        public void ResetFan()
+        {
+            CanFan = true;
+        }
+
+        public void OnDisable()
+        {
+            CancelInvoke("ShootFan");
+        }
+
+        public void ShootFan()
+        {
+            if (gameObject.GetComponentInParent<DualWield>() == null)
+            {
+                Charge--;
             }
 
-            public void OnDisable()
-            {
-                CancelInvoke("ShootFan");
-            }
-
-            public void Shoot()
-            {
-                rev.cc.StopShake();
-                rev.shootReady = false;
-                rev.shootCharge = 0f;
-                if (rev.altVersion)
-                {
-                    WeaponCharges.Instance.revaltpickupcharges[rev.gunVariation] = 2f;
-                }
-
-                GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(rev.revolverBeam, rev.cc.transform.position, rev.cc.transform.rotation);
-                if (rev.targeter.CurrentTarget && rev.targeter.IsAutoAimed)
-                {
-                    gameObject.transform.LookAt(rev.targeter.CurrentTarget.bounds.center);
-                }
-                RevolverBeam component = gameObject.GetComponent<RevolverBeam>();
-                component.sourceWeapon = rev.gc.currentWeapon;
-                component.alternateStartPoint = rev.gunBarrel.transform.position;
-                component.gunVariation = rev.gunVariation;
-
-                if (rev.anim.GetCurrentAnimatorStateInfo(0).IsName("PickUp"))
-                {
-                    component.quickDraw = true;
-                }
-
-                rev.currentGunShot = UnityEngine.Random.Range(0, rev.gunShots.Length);
-                rev.gunAud.clip = rev.gunShots[rev.currentGunShot];
-                rev.gunAud.volume = 0.55f;
-                rev.gunAud.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
-                rev.gunAud.Play();
-                rev.cam.fieldOfView = rev.cam.fieldOfView + rev.cc.defaultFov / 40f;
-                //RumbleManager.Instance.SetVibrationTracked("rumble.gun.fire", base.gameObject);
-
-                if (!rev.altVersion)
-                {
-                    rev.cylinder.DoTurn();
-                }
-
-                rev.anim.SetFloat("RandomChance", UnityEngine.Random.Range(0f, 1f));
-                rev.anim.SetTrigger("Shoot");
-            }
-
-            public void ShootFan()
-            {
-                rev.cc.StopShake();
-                if (this.gameObject.GetComponentInParent<DualWield>() == null)
-                {
-                    Charge--;
-                }
-                rev.shootReady = false;
-                rev.shootCharge = 0f;
-                if (rev.altVersion)
-                {
-                    WeaponCharges.Instance.revaltpickupcharges[rev.gunVariation] = 2f;
-                }
-
-                GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(rev.revolverBeamSuper, rev.cc.transform.position, rev.cc.transform.rotation);
-                if (rev.targeter.CurrentTarget && rev.targeter.IsAutoAimed)
-                {
-                    gameObject.transform.LookAt(rev.targeter.CurrentTarget.bounds.center);
-                }
-
-                RevolverBeam component = gameObject.GetComponent<RevolverBeam>();
-                component.damage = Damage;
-                component.sourceWeapon = rev.gc.currentWeapon;
-                component.alternateStartPoint = rev.gunBarrel.transform.position;
-                component.gunVariation = rev.gunVariation;
-
-                if (rev.anim.GetCurrentAnimatorStateInfo(0).IsName("PickUp"))
-                {
-                    component.quickDraw = true;
-                }
-
-                rev.currentGunShot = UnityEngine.Random.Range(0, rev.gunShots.Length);
-                rev.gunAud.clip = rev.gunShots[rev.currentGunShot];
-                rev.gunAud.volume = 0.55f;
-                rev.gunAud.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
-                rev.gunAud.Play();
-                rev.cam.fieldOfView = rev.cam.fieldOfView + rev.cc.defaultFov / 40f;
-                //RumbleManager.Instance.SetVibrationTracked("rumble.gun.fire", base.gameObject);
-
-                if (!rev.altVersion)
-                {
-                    rev.cylinder.DoTurn();
-                }
-
-                rev.anim.SetFloat("RandomChance", UnityEngine.Random.Range(0f, 1f));
-                rev.anim.SetTrigger("Shoot");
-            }
+            GameObject original = rev.revolverBeam;
+            rev.revolverBeam = rev.revolverBeamSuper;
+            rev.revolverBeam.GetComponent<RevolverBeam>().damage = Damage;
+            rev.Shoot(1);
+            rev.revolverBeam = original;
         }
     }
 }

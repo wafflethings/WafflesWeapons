@@ -1,29 +1,16 @@
 ﻿using Atlas.Modules.Guns;
 using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace WafflesWeapons.Weapons
 {
     public class TacticalNuke : Gun
     {
-        public static Sprite Icon;
-        public static Sprite IconGlow;
-        public static GameObject HugeRocket;
+        public static GameObject NukeRl;
 
         public static void LoadAssets()
         {
-            Icon = Core.Assets.LoadAsset<Sprite>("Nuke.png");
-            IconGlow = Core.Assets.LoadAsset<Sprite>("Nuke Glow.png");
-            HugeRocket = Core.Assets.LoadAsset<GameObject>("HugeRocket.prefab");
-            HugeRocket.AddComponent<HomingRocket>();
-
+            NukeRl = Core.Assets.LoadAsset<GameObject>("Rocket Launcher SLF.prefab");
             Core.Harmony.PatchAll(typeof(TacticalNuke));
         }
 
@@ -31,20 +18,8 @@ namespace WafflesWeapons.Weapons
         {
             base.Create(parent);
 
-            GameObject thing = GameObject.Instantiate(GunSetter.Instance.rocketBlue[0], parent);
-
-            var rock = thing.GetComponent<RocketLauncher>();
-            rock.variation = 4;
-
-            var ico = thing.GetComponent<WeaponIcon>();
-            ico.variationColor = 4;
-            ico.glowIcon = IconGlow;
-            ico.weaponIcon = Icon;
-
-            thing.AddComponent<TacticalNukeBehaviour>();
-
-            thing.name = "Tactical Nuke Rocket";
-
+            GameObject thing = GameObject.Instantiate(NukeRl, parent);
+            OrderInSlot = GunSetter.Instance.CheckWeaponOrder("rock")[3];
             StyleHUD.Instance.weaponFreshness.Add(thing, 10);
 
             return thing;
@@ -64,8 +39,7 @@ namespace WafflesWeapons.Weapons
         [HarmonyPostfix]
         public static void IncreaseIfBig(Grenade __instance, bool harmless, bool super = false)
         {
-
-            if (!harmless && __instance.sourceWeapon.GetComponent<RocketLauncher>() != null)
+            if (!harmless && __instance.rocket)
             {
                 if (super)
                 {
@@ -89,78 +63,79 @@ namespace WafflesWeapons.Weapons
         {
             TacticalNukeBehaviour.WindUp = 4;
         }
+    }
 
-        public class TacticalNukeBehaviour : MonoBehaviour
+    public class TacticalNukeBehaviour : MonoBehaviour
+    {
+        private GunControl gc;
+        private RocketLauncher rock;
+        [HideInInspector] public static float WindUp = 0;
+        [HideInInspector] public static float MaxWind = 4;
+        float Target = 0;
+        public GameObject HugeRocket;
+
+        public void Start()
         {
-            private GunControl gc;
-            private RocketLauncher rock;
-            public static float WindUp = 0;
-            public static float MaxWind = 4;
-            float Target = 0;
+            gc = GunControl.Instance;
+            rock = GetComponent<RocketLauncher>();
+            WindUp = 0;
+        }
 
-            public void Start()
-            {
-                gc = GunControl.Instance;
-                WindUp = 0;
-            }
+        public void Update()
+        {
+            Target = Mathf.MoveTowards(Target, WindUp / MaxWind, Time.deltaTime * 5);
+            rock.timerArm.localRotation = Quaternion.Euler(0f, 0f, Mathf.Lerp(360f, 0f, Target));
+            rock.timerMeter.fillAmount = Target;
 
-            public void Update()
+            if (WindUp == MaxWind && Gun.OnAltFire() && gc.activated)
             {
-                if (rock == null)
+                foreach (TacticalNukeBehaviour tnb in FindObjectsOfType<TacticalNukeBehaviour>())
                 {
-                    rock = GetComponent<RocketLauncher>();
+                    tnb.Invoke("Shoot", tnb.GetComponent<WeaponIdentifier>().delay);
+
+                    WindUp = 0;
                 }
-
-                Target = Mathf.MoveTowards(Target, WindUp / MaxWind, Time.deltaTime * 5);
-                rock.timerArm.localRotation = Quaternion.Euler(0f, 0f, Mathf.Lerp(360f, 0f, Target));
-                rock.timerMeter.fillAmount = Target;
-
-                if (WindUp == MaxWind && OnAltFire() && gc.activated)
-                {
-                    foreach (TacticalNukeBehaviour tnb in FindObjectsOfType<TacticalNukeBehaviour>())
-                    {
-                        tnb.Invoke("Shoot", tnb.GetComponent<WeaponIdentifier>().delay);
-
-                        WindUp = 0;
-                    }
-                }
-            }
-
-            public void Shoot()
-            {
-                var old = rock.rocket;
-                rock.rocket = HugeRocket;
-                rock.Shoot();
-                rock.rocket = old;
             }
         }
 
-        public class HomingRocket : MonoBehaviour
+        public void Shoot()
         {
-            private LayerMask enemyLayerMask;
-            private LayerMask pierceLayerMask;
-            private LayerMask ignoreEnemyTrigger;
-            public void Start()
-            {
-                enemyLayerMask |= 1024;
-                enemyLayerMask |= 2048;
-                pierceLayerMask |= 256;
-                pierceLayerMask |= 16777216;
-                pierceLayerMask |= 67108864;
+            var old = rock.rocket;
+            rock.rocket = HugeRocket;
+            rock.Shoot();
+            rock.rocket = old;
+        }
+    }
 
-                ignoreEnemyTrigger = enemyLayerMask | pierceLayerMask;
-            }
+    public class HomingRocket : MonoBehaviour
+    {
+        private LayerMask enemyLayerMask;
+        private LayerMask pierceLayerMask;
+        private LayerMask ignoreEnemyTrigger;
+        public void Start()
+        {
+            enemyLayerMask |= 1024;
+            enemyLayerMask |= 2048;
+            pierceLayerMask |= 256;
+            pierceLayerMask |= 16777216;
+            pierceLayerMask |= 67108864;
 
-            public void Update()
+            ignoreEnemyTrigger = enemyLayerMask | pierceLayerMask;
+        }
+
+        public void Update()
+        {
+            if (GunControl.Instance.activated)
             {
-                if (GunControl.Instance.activated)
+                RaycastHit hit;
+
+                if (Physics.Raycast(CameraController.Instance.transform.position, CameraController.Instance.transform.forward, out hit, float.PositiveInfinity, ignoreEnemyTrigger))
                 {
-                    RaycastHit hit;
-
-                    if (Physics.Raycast(CameraController.Instance.transform.position, CameraController.Instance.transform.forward, out hit, float.PositiveInfinity, ignoreEnemyTrigger))
-                    {
-                        transform.LookAt(hit.point);
-                    }
+                    transform.LookAt(hit.point);
+                }
+                else
+                {
+                    transform.LookAt(CameraController.Instance.transform.forward * 10000);
                 }
             }
         }

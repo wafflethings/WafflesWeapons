@@ -1,28 +1,17 @@
 ﻿using Atlas.Modules.Guns;
 using HarmonyLib;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace WafflesWeapons.Weapons
 {
     public class Virtuous : Gun
     {
-        public static Sprite Icon;
-        public static Sprite IconGlow;
-        public static GameObject RailBeam;
-        public static GameObject VirtueBeam;
+        public static GameObject VirtueRail;
 
         public static void LoadAssets()
         {
-            Icon = Core.Assets.LoadAsset<Sprite>("rail virt.png");
-            IconGlow = Core.Assets.LoadAsset<Sprite>("rail virt glow.png");
-            RailBeam = Core.Assets.LoadAsset<GameObject>("VirtRail.prefab");
+            VirtueRail = Core.Assets.LoadAsset<GameObject>("Railcannon Virtuous.prefab");
             Core.Harmony.PatchAll(typeof(Virtuous));
         }
 
@@ -30,22 +19,8 @@ namespace WafflesWeapons.Weapons
         {
             base.Create(parent);
 
-            if (VirtueBeam == null)
-            {
-                VirtueBeam = AssetHelper.LoadPrefab("Assets/Prefabs/VirtueInsignia.prefab");
-            }
-
-            GameObject thing = GameObject.Instantiate(GunSetter.Instance.railCannon[0], parent);
-
-            var ico = thing.GetComponent<WeaponIcon>();
-            ico.variationColor = 3;
-            ico.glowIcon = IconGlow;
-            ico.weaponIcon = Icon;
-
-            thing.AddComponent<VirtuousBehaviour>();
-
-            thing.name = "Virtue Rail";
-
+            GameObject thing = GameObject.Instantiate(VirtueRail, parent);
+            OrderInSlot = GunSetter.Instance.CheckWeaponOrder("rock")[6];
             StyleHUD.Instance.weaponFreshness.Add(thing, 10);
 
             return thing;
@@ -78,13 +53,13 @@ namespace WafflesWeapons.Weapons
                         var eidid = currentHit.collider.gameObject.GetComponent<EnemyIdentifierIdentifier>();
                         if (eidid != null && !eidid.eid.dead)
                         {
-                            vb.CreateBeam(eidid.eid);
+                            vb.CreateBeam(eidid.eid.transform.position);
                         } 
                         else if (currentHit.collider.gameObject.layer == 8 || currentHit.collider.gameObject.layer == 24)
                         {
                             if (__instance.hitEids.Count == 0)
                             {
-                                vb.CreateSmallBeam(currentHit.point);
+                                vb.CreateBeam(currentHit.point, true);
                             }
                         }
                     }
@@ -117,94 +92,61 @@ namespace WafflesWeapons.Weapons
                 __instance.AddFreshness(sourceWeapon, num * 1f);
             }
         }
+    }
 
-        public class VirtueCannonBeam : MonoBehaviour
+    public class VirtueCannonBeam : MonoBehaviour
+    {
+        public GameObject MyGun;
+        public bool IsSmall = false;
+        public List<GameObject> Ignore = new List<GameObject>();
+
+        private void OnTriggerEnter(Collider other)
         {
-            public GameObject MyGun;
-            public bool IsSmall = false;
-            public List<GameObject> Ignore = new List<GameObject>();
-
-            private void OnTriggerEnter(Collider other)
+            if (other.gameObject.layer == 10 || other.gameObject.layer == 12)
             {
-                if (other.gameObject.layer == 10 || other.gameObject.layer == 12)
+                try
                 {
-                    try
+                    EnemyIdentifierIdentifier eid = null;
+                    if (other.gameObject.TryGetComponent(out eid))
                     {
-                        EnemyIdentifierIdentifier eid = null;
-                        if (other.gameObject.TryGetComponent(out eid))
+                        if (!Ignore.Contains(eid.eid.gameObject))
                         {
-                            if (!Ignore.Contains(eid.eid.gameObject))
+                            Ignore.Add(eid.eid.gameObject);
+                            if (!IsSmall)
                             {
-                                Ignore.Add(eid.eid.gameObject);
-                                if (!IsSmall)
-                                {
-                                    eid.eid.DeliverDamage(eid.gameObject, Vector3.up * 2500, other.gameObject.transform.position, 5, false, 0, MyGun);
-                                }
-                                else
-                                {
-                                    eid.eid.DeliverDamage(eid.gameObject, Vector3.up * 2500, other.gameObject.transform.position, 2, false, 0, MyGun);
-                                }
+                                eid.eid.DeliverDamage(eid.gameObject, Vector3.up * 2500, other.gameObject.transform.position, 5, false, 0, MyGun);
+                            }
+                            else
+                            {
+                                eid.eid.DeliverDamage(eid.gameObject, Vector3.up * 2500, other.gameObject.transform.position, 2, false, 0, MyGun);
                             }
                         }
                     }
-                    catch { } //whatever bruh
                 }
+                catch { } //whatever bruh
             }
         }
+    }
 
-        public class VirtuousBehaviour : MonoBehaviour
+    public class VirtuousBehaviour : MonoBehaviour
+    {
+        public GameObject VirtueBeam;
+        public GameObject VirtueBeamSmall;
+
+        public void CreateBeam(Vector3 pos, bool isSmall = false)
         {
-            public GunControl gc;
-            public Railcannon rai;
+            GameObject beam = Instantiate((isSmall ? VirtueBeamSmall : VirtueBeam), NewMovement.Instance.transform.position, Quaternion.identity);
+            var vi = beam.GetComponent<VirtueInsignia>();
+            vi.target = new GameObject().transform;
+            vi.target.transform.position = pos;
+            beam.ChildByName("Capsule").AddComponent<VirtueCannonBeam>().MyGun = gameObject;
+            StartCoroutine(DestroyVi(vi.target));
+        }
 
-            public void Start()
-            {
-                gc = GetComponentInParent<GunControl>();
-                rai = GetComponent<Railcannon>();
-
-                rai.variation = 3;
-                rai.beam = RailBeam;
-            }
-
-            public void Update()
-            {
-                if(rai == null)
-                {
-                    rai = GetComponent<Railcannon>();
-                }
-
-                if(OnFire())
-                {
-
-                }
-            }
-
-            public void CreateBeam(EnemyIdentifier eid)
-            {
-                GameObject beam = Instantiate(VirtueBeam, NewMovement.Instance.transform.position, Quaternion.identity);
-                var vi = beam.GetComponent<VirtueInsignia>();
-                vi.target = new GameObject().transform;
-                vi.target.transform.position = eid.transform.position;
-                beam.ChildByName("Capsule").AddComponent<VirtueCannonBeam>().MyGun = gameObject;
-                Core.Instance.StartCoroutine(DestroyVi(vi.target));
-            }
-
-            public void CreateSmallBeam(Vector3 pos)
-            {
-                GameObject beam = Instantiate(VirtueBeam, NewMovement.Instance.transform.position, Quaternion.identity);
-                beam.transform.localScale = Vector3.one;
-                var vi = beam.GetComponent<VirtueInsignia>();
-                vi.target = new GameObject().transform;
-                vi.target.transform.position = pos;
-                beam.ChildByName("Capsule").AddComponent<VirtueCannonBeam>().MyGun = gameObject;
-                Core.Instance.StartCoroutine(DestroyVi(vi.target));
-            }
-
-            public static System.Collections.IEnumerator DestroyVi(Transform t)
-            {
-                yield return new WaitForSeconds(5f);
-                Destroy(t.gameObject);
-            }
+        public static System.Collections.IEnumerator DestroyVi(Transform t)
+        {
+            yield return new WaitForSeconds(5f);
+            Destroy(t.gameObject);
         }
     }
 }
