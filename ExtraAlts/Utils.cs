@@ -31,12 +31,12 @@ namespace WafflesWeapons
         public static string ModDirectory()
         {
             // return Path.Combine(GameDirectory(), @"BepInEx\UMM Mods");
-            return Path.Combine(GameDirectory(), @"BepInEx\plugins");
+            return Path.Combine(GameDirectory(), "BepInEx", "plugins");
         }
 
         public static string ModPath()
         {
-            return Assembly.GetExecutingAssembly().Location.Substring(0, Assembly.GetExecutingAssembly().Location.LastIndexOf(@"\"));
+            return Assembly.GetExecutingAssembly().Location.Substring(0, Assembly.GetExecutingAssembly().Location.LastIndexOf(Path.DirectorySeparatorChar));
         }
     }
 
