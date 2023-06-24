@@ -1049,7 +1049,7 @@ GameObject:
   - component: {fileID: 872398435614915386}
   - component: {fileID: 6208084768075946721}
   m_Layer: 0
-  m_Name: Sticky Launcher
+  m_Name: Grenade Launcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1112,7 +1112,7 @@ GameObject:
   - component: {fileID: 8611626777238068331}
   - component: {fileID: 7640272216345587752}
   m_Layer: 0
-  m_Name: Sticky Launcher
+  m_Name: Grenade Launcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1405,7 +1405,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: STICKY LAUNCHER
+  m_Text: GRENADE LAUNCHER
 --- !u!1 &1747849261370715509
 GameObject:
   m_ObjectHideFlags: 0
@@ -2003,8 +2003,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: I am <color=orange>retarded</color>. There is already a sticky shotgun.
-    But I have no other ideas.
+  m_Text: Bounces two times then explodes. Explodes on collision. Maybe parriable?
 --- !u!1 &3454101333537901317
 GameObject:
   m_ObjectHideFlags: 0
@@ -2082,7 +2081,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Good at being replaced later because two of the same is lame as hell.
+  m_Text: Goes further, more damage, funny to ride, but has gravity.
 --- !u!1 &3956790790702820808
 GameObject:
   m_ObjectHideFlags: 0
@@ -5911,7 +5910,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'STICKY
+  m_Text: 'GRENADE
 
     LAUNCHER'
 --- !u!1 &9128713992399116384

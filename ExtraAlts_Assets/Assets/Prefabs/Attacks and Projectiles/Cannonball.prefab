@@ -2374,7 +2374,7 @@ MonoBehaviour:
   launched: 0
   breakEffect: {fileID: 6311402704591156762, guid: 391162be3ffd6fb47841cc738b8af8ab,
     type: 3}
-  damage: 3.5
+  damage: 5
   speed: 150
   parry: 0
   sisy: {fileID: 0}
@@ -2383,7 +2383,10 @@ MonoBehaviour:
   physicsCannonball: 1
   bounceSound: {fileID: 82678598401477236, guid: bcc45e9dc5795c3428f2fe0d832149c7,
     type: 3}
+  hitEnemies: []
   maxBounces: 1
+  hasBounced: 0
+  forceMaxSpeed: 0
   durability: 2
   interruptionExplosion: {fileID: 166480979879108960, guid: 53b49583a4a1db643b3ae64c1da94687,
     type: 3}

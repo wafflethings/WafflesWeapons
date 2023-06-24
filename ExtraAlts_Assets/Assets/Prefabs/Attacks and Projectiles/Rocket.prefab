@@ -158,6 +158,7 @@ MonoBehaviour:
   useAudioLength: 0
   time: 30
   randomizer: 0
+  affectedByNoCooldowns: 1
 --- !u!114 &42067506732742231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -840,6 +841,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47c702fae161a0848b79b4d4fabaddf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  faceScreenInsteadOfCamera: 0
   speed: 0
   easeIn: 0
   overrideTarget: {fileID: 0}
@@ -2518,6 +2520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47c702fae161a0848b79b4d4fabaddf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  faceScreenInsteadOfCamera: 0
   speed: 0
   easeIn: 0
   overrideTarget: {fileID: 0}

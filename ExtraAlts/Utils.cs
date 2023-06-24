@@ -40,7 +40,7 @@ namespace WafflesWeapons
         }
     }
 
-    public static class GameObjectUtils
+    public static class UnityUtils
     {
         public static GameObject ChildByName(this GameObject from, string name)
         {
@@ -92,6 +92,11 @@ namespace WafflesWeapons
             }
 
             return children;
+        }
+
+        public static bool Contains(this LayerMask mask, int layer)
+        {
+            return mask == (mask | (1 << layer));
         }
     }
 

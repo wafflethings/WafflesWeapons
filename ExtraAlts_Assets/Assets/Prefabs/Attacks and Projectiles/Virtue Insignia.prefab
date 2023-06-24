@@ -1452,7 +1452,7 @@ GameObject:
   - component: {fileID: 9070749042387432011}
   - component: {fileID: 4354987094754525672}
   m_Layer: 23
-  m_Name: Virtue Insignia
+  m_Name: VirtueInsignia
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1497,6 +1497,8 @@ MonoBehaviour:
   windUpSpeedMultiplier: 2
   explosionLength: 1
   charges: 1
+  parentDrone: {fileID: 0}
+  otherParent: {fileID: 0}
   hadParent: 0
   predictive: 0
   noTracking: 0

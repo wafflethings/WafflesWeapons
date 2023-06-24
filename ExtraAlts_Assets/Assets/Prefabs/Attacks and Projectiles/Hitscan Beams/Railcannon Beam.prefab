@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 108671176238998922}
   - component: {fileID: -749992892284884318}
   m_Layer: 0
-  m_Name: RailcannonBeam
+  m_Name: Railcannon Beam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -179,17 +179,25 @@ MonoBehaviour:
   beamType: 1
   attributes: 02000000
   alternateStartPoint: {x: 0, y: 0, z: 0}
+  sourceWeapon: {fileID: 0}
   bodiesPierced: 0
   cc: {fileID: 0}
-  hitParticle: {fileID: 1159615047014080, guid: 3173b2f945cef4d40b860bd2bd95e934,
-    type: 3}
+  hitParticle:
+    m_AssetGUID: 3173b2f945cef4d40b860bd2bd95e934
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   bulletForce: 50000
   quickDraw: 0
   gunVariation: 0
   damage: 2
+  critDamageOverride: 0
+  screenshakeMultiplier: 1
   hitAmount: 999
   maxHitsPerTarget: 4
   noMuzzleflash: 0
+  ricochetAmount: 0
+  hasBeenRicocheter: 0
   ricochetSound: {fileID: 1673117908876384, guid: 993a4edafa3ab0a4baa6df2e7afa2949,
     type: 3}
   enemyHitSound: {fileID: 1673117908876384, guid: 866cbd6953efe244ab864779aab9d44e,
@@ -198,7 +206,12 @@ MonoBehaviour:
   ignoreEnemyType: 0
   deflected: 0
   strongAlt: 0
+  ultraRicocheter: 1
+  canHitProjectiles: 0
   hitEids: []
+  previouslyHitTransform: {fileID: 0}
+  aimAssist: 0
+  intentionalRicochet: 0
 --- !u!108 &108671176238998922
 Light:
   m_ObjectHideFlags: 0
@@ -272,7 +285,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c430053810d8d1048bc4d7fb17338dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useAudioLength: 0
   time: 5
+  randomizer: 0
+  affectedByNoCooldowns: 0
 --- !u!1 &1683785630827436
 GameObject:
   m_ObjectHideFlags: 0

@@ -59,6 +59,9 @@ namespace WafflesWeapons
 
             Desperado.LoadAssets();
             GunRegistry.Register(new Desperado());
+
+            Singularity.LoadAssets();
+            GunRegistry.Register(new Singularity());
         }
 
         [HarmonyPatch(typeof(LeaderboardController), nameof(LeaderboardController.SubmitCyberGrindScore))]
