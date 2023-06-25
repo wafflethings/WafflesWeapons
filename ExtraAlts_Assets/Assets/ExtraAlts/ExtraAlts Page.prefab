@@ -28367,8 +28367,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Press Alt Fire to <color=orange>launch</color> a BALL. \n\nIt bounces
-    on walls and attracts enemies when shot. Parrying will redirect it."
+  m_Text: 'Press Alt Fire to <color=orange>launch</color> a black hole.
+
+
+    It
+    bounces on walls and attracts enemies when shot. Parrying will redirect it.'
 --- !u!1 &3858078074317310218
 GameObject:
   m_ObjectHideFlags: 0

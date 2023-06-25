@@ -287,9 +287,9 @@ namespace WafflesWeapons.Weapons
                 }
 
                 transform.localPosition = new Vector3(rev.wpos.currentDefault.x + rev.pierceShotCharge / 250f *
-                    UnityEngine.Random.Range(-0.05f, 0.05f), rev.wpos.currentDefault.y + rev.pierceShotCharge / 250f *
-                    UnityEngine.Random.Range(-0.05f, 0.05f), rev.wpos.currentDefault.z + rev.pierceShotCharge / 250f *
-                    UnityEngine.Random.Range(-0.05f, 0.05f));
+                    Random.Range(-0.05f, 0.05f), rev.wpos.currentDefault.y + rev.pierceShotCharge / 250f *
+                    Random.Range(-0.05f, 0.05f), rev.wpos.currentDefault.z + rev.pierceShotCharge / 250f *
+                    Random.Range(-0.05f, 0.05f));
             }
 
             rev.cylinder.spinSpeed = rev.pierceShotCharge;

@@ -85,7 +85,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 500
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 500
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -300,8 +300,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 363f9da2b48872c47b34739af1c42c3e, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 637221a1d997265489f444adef0d2db4, type: 3}
+  m_Type: 2
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

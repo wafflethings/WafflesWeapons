@@ -73,15 +73,29 @@ namespace WafflesWeapons.Weapons
             }
         }
 
-        [HarmonyPatch(typeof(Coin), nameof(Coin.ReflectRevolver)), HarmonyPostfix]
-        public static void ReflectToBall(Coin __instance)
+        [HarmonyPatch(typeof(Coin), nameof(Coin.ReflectRevolver)), HarmonyPrefix]
+        public static bool ReflectToBall(Coin __instance)
         {
             SingularityBallBehaviour[] balls = GameObject.FindObjectsOfType<SingularityBallBehaviour>();
 
             if (balls.Length > 0)
             {
+                float closestCoin = float.MaxValue;
+                Vector3 nmPos = NewMovement.Instance.transform.position;
+
+                foreach (Coin coin in CoinList.Instance.revolverCoinsList)
+                {
+                    if (coin != __instance && (!coin.shot || coin.shotByEnemy))
+                    {
+                        if (closestCoin > Vector3.Distance(nmPos, coin.transform.position) 
+                            && !Physics.Raycast(nmPos, coin.transform.position - nmPos, out RaycastHit raycastHit, Vector3.Distance(nmPos, coin.transform.position) - 0.5f, __instance.lmask))
+                        {
+                            closestCoin = (coin.transform.position - nmPos).sqrMagnitude;
+                        }
+                    }
+                }
+
                 int closestIndex = -1;
-                float closestDistance = Mathf.Infinity;
                 for (int i = 0; i < balls.Length; i++)
                 {
                     Vector3 directionToTarget = balls[i].transform.position - __instance.transform.position;
@@ -91,7 +105,7 @@ namespace WafflesWeapons.Weapons
                         {
                             balls[i] = null;
                         }
-                        else if (directionToTarget.sqrMagnitude < closestDistance)
+                        else if (directionToTarget.sqrMagnitude < closestCoin)
                         {
                             closestIndex = i;
                         }
@@ -114,8 +128,17 @@ namespace WafflesWeapons.Weapons
                     }
                     beam.SetPosition(1, balls[closestIndex].transform.position);
                     balls[closestIndex].GetHit(beam.GetComponent<RevolverBeam>());
+
+                    __instance.GetComponent<SphereCollider>().enabled = false;
+                    __instance.hitTimes--;
+                    __instance.gameObject.SetActive(false);
+                    new GameObject().AddComponent<CoinCollector>().coin = __instance.gameObject;
+                    __instance.CancelInvoke("GetDeleted");
+                    return false;
                 }
             }
+
+            return true;
         }
 
         [HarmonyPatch(typeof(Bloodsplatter), nameof(Bloodsplatter.OnTriggerEnter)), HarmonyPostfix]
@@ -176,7 +199,7 @@ namespace WafflesWeapons.Weapons
 
     public class SingularityBehaviour : MonoBehaviour
     {
-        public const float HEALTH_NEEDED = 200;
+        public const float HEALTH_NEEDED = 400;
         public Slider slider;
         public GameObject ball;
         private Shotgun sho;
@@ -204,17 +227,26 @@ namespace WafflesWeapons.Weapons
 
         public void Update()
         {
-            if (Gun.OnAltFire() && charge >= HEALTH_NEEDED)
+            if (charge >= HEALTH_NEEDED)
             {
-                Instantiate(ball, cc.transform.position + cc.transform.forward, cc.transform.rotation);
-                charge -= HEALTH_NEEDED;
+                if (Gun.OnAltFire())
+                {
+                    Invoke("ShootBall", sho.wid.delay);
+                }
             }
 
-            slider.value = Mathf.MoveTowards(slider.value, charge, Time.deltaTime * 1000);
+            slider.value = Mathf.MoveTowards(slider.value, charge, Time.deltaTime * 2500);
             charge = Mathf.Clamp(charge, 0, HEALTH_NEEDED);
 
             //if (HookArm.Instance.state == HookState.Pulling)
                 //Singularity.GrabbedBall?.transform.LookAt(CameraController.Instance.transform);
+        }
+
+        public void ShootBall()
+        {
+            Instantiate(ball, cc.transform.position + cc.transform.forward, cc.transform.rotation);
+            sho.anim.SetTrigger("PumpFire");
+            charge -= HEALTH_NEEDED;
         }
     }
 
@@ -223,8 +255,12 @@ namespace WafflesWeapons.Weapons
         [Header("Function")]
         public float speed;
         public float maxTime;
+        public float drillInterval;
         private float elapsedTime;
         private List<EnemyIdentifier> eidsOnCooldown = new List<EnemyIdentifier>();
+        private List<Rigidbody> caughtList = new List<Rigidbody>();
+        private bool drilling = false;
+        private float drillCooldown;
         [Header("Visual")]
         public ParticleSystem suck;
         public GameObject lightning;
@@ -247,14 +283,78 @@ namespace WafflesWeapons.Weapons
                 DetectCollision(raycastHit.normal);
             }
 
-            if (maxTime <= elapsedTime)
+            if (transform.localScale == Vector3.zero)
             {
                 Instantiate(destroyEffect, transform.position, Quaternion.identity);
                 Destroy(gameObject);
                 return;
             }
+            else
+            {
+                if (maxTime <= elapsedTime)
+                {
+                    transform.localScale = Vector3.MoveTowards(transform.localScale, Vector3.zero, Time.deltaTime * 3);
+                }
+            }
 
             elapsedTime += Time.deltaTime;
+
+            if (drilling)
+            {
+                drillCooldown += Time.deltaTime;
+                if (drillCooldown > drillInterval)
+                {
+                    drillCooldown = 0;
+                    Implode(15);
+                }
+            }
+
+            if (caughtList.Count != 0)
+            {
+                List<Rigidbody> toRemove = new List<Rigidbody>();
+                foreach (Rigidbody rigidbody in caughtList)
+                {
+                    if (rigidbody == null)
+                    {
+                        toRemove.Add(rigidbody);
+                    }
+                    else
+                    {
+                        if (Vector3.Distance(rigidbody.transform.position, transform.position) < 9f)
+                        {
+                            rigidbody.transform.position = Vector3.MoveTowards(rigidbody.transform.position, transform.position, 3 * Time.deltaTime * (10f - Vector3.Distance(rigidbody.transform.position, base.transform.position)));
+                        }
+                        else
+                        {
+                            rigidbody.transform.position = Vector3.MoveTowards(rigidbody.transform.position, transform.position, 3 * Time.deltaTime);
+                        }
+                        if (Vector3.Distance(rigidbody.transform.position, transform.position) < 1f)
+                        {
+                            if (rigidbody.TryGetComponent(out CharacterJoint cj))
+                            {
+                                Destroy(cj);
+                            }
+                            rigidbody.GetComponent<Collider>().enabled = false;
+                        }
+                        if (Vector3.Distance(rigidbody.transform.position, transform.position) < 0.25f)
+                        {
+                            toRemove.Add(rigidbody);
+                            rigidbody.useGravity = false;
+                            rigidbody.velocity = Vector3.zero;
+                            rigidbody.isKinematic = true;
+                            rigidbody.transform.SetParent(transform);
+                            rigidbody.transform.localPosition = Vector3.zero;
+                        }
+                    }
+                }
+                if (toRemove.Count != 0)
+                {
+                    foreach (Rigidbody removeRb in toRemove)
+                    {
+                        caughtList.Remove(removeRb);
+                    }
+                }
+            }
         }
 
         public void DetectCollision(Vector3 normal)
@@ -265,14 +365,18 @@ namespace WafflesWeapons.Weapons
         public void GetHit(RevolverBeam beam)
         {
             TimeController.Instance.ParryFlash();
-            float multiplier = (beam.damage / 2);
-            Implode(20 * (multiplier > 1 ? multiplier : 1));
+            Implode(25 + (beam.damage / 2));
         }
 
         public void GetParried()
         {
             transform.forward = CameraController.Instance.transform.forward;
-            Implode(10);
+            Implode(15);
+
+            if (maxTime > elapsedTime)
+            {
+                elapsedTime -= 1;
+            }
         }
 
         public void OnTriggerEnter(Collider other)
@@ -291,15 +395,58 @@ namespace WafflesWeapons.Weapons
                     }
                 }
             }
+
+            if (other.TryGetComponent(out Harpoon harp) && !caughtList.Contains(other.transform.GetComponent<Rigidbody>()))
+            {
+                caughtList.Add(harp.rb);
+
+                Magnet mag = harp.GetComponentInChildren<Magnet>();
+                if (mag != null)
+                {
+                    mag.maxWeight *= 0.75f;
+                }
+
+                if (harp.drill)
+                {
+                    harp.rb.isKinematic = true;
+                    drilling = true;
+                }
+
+                harp.CancelInvoke("DestroyIfNotHit");
+            }
+
+            if (other.TryGetComponent(out Grenade gren) && !caughtList.Contains(other.GetComponent<Rigidbody>()))
+            {
+                caughtList.Add(other.GetComponent<Rigidbody>());
+            }
         }
 
         public void HurtEnemy(EnemyIdentifier eid)
         {
             if (!eidsOnCooldown.Contains(eid))
             {
+                Debug.Log("1");
+                bool wasDead = eid.dead;
+                Debug.Log("2");
                 StartCoroutine(AddAndRemove(eid));
+                Debug.Log("3");
                 eid.hitter = "singularity";
-                eid.DeliverDamage(eid.gameObject, rb.velocity, transform.position, 2.5f, false);
+                eid.DeliverDamage(eid.gameObject, rb.velocity, transform.position, 2.5f, false, 0, SingularityBehaviour.sbs[0].gameObject);
+                Debug.Log("4");
+
+                if (eid.dead && !wasDead)
+                {
+                    StyleCalculator.Instance.AddPoints(200, "<color=#b400ff>COMPRESSED</color>", eid, SingularityBehaviour.sbs[0].gameObject);
+                    AddRbs(eid);
+                }
+            }
+        }
+
+        public void AddRbs(EnemyIdentifier eid)
+        {
+            foreach (Rigidbody rb in eid.GetComponentsInChildren<Rigidbody>())
+            {
+                caughtList.Add(rb);
             }
         }
 
@@ -321,12 +468,15 @@ namespace WafflesWeapons.Weapons
             {
                 EnemyIdentifier eid = enemy.GetComponent<EnemyIdentifier>();
                 eid.hitter = "singularity_tendril";
+
                 float amount = 1;
                 if (eid.health < amount)
-                {
                     amount = eid.health - 0.1f;
-                }
+
                 eid.DeliverDamage(eid.gameObject, rb.velocity, eid.transform.position, amount, false);
+
+                if (eid.dead)
+                    AddRbs(eid);
 
                 if (enemy.TryGetComponent(out Rigidbody enemyRb))
                 {
@@ -335,19 +485,18 @@ namespace WafflesWeapons.Weapons
                     switch (eid.enemyClass)
                     {
                         case EnemyClass.Husk:
-                            eid.zombie.KnockBack(force);
+                            eid.zombie?.KnockBack(force);
                             break;
                         case EnemyClass.Machine:
-                            eid.machine.KnockBack(force);
+                            eid.machine?.KnockBack(force);
                             break;
                         case EnemyClass.Demon:
-                            eid.statue.KnockBack(force);
+                            eid.statue?.KnockBack(force);
                             break;
                         default:
                             enemyRb.AddForce(force, ForceMode.VelocityChange);
                             break;
                     }
-
                     enemyRb.velocity = (transform.position - enemy.transform.position).normalized * (6f * Vector3.Distance(transform.position, enemy.transform.position));
                 }
 
@@ -380,7 +529,7 @@ namespace WafflesWeapons.Weapons
 
         public void Update()
         {
-            if (enemy == null)
+            if (enemy == null || ball == null)
             {
                 Destroy(gameObject);
                 return;
