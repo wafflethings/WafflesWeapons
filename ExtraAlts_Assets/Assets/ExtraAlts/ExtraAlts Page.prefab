@@ -377,12 +377,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '<color=orange>Hold</color> Alt Fire to charge a downsized <color=orange>malicious</color>
-    beam.
+  m_Text: 'Fires a <color=orange>weak</color> beam at enemies.
 
 
-    Due to its somewhat <color=orange>low</color> damage output, the
-    beam is useful for <color=orange>movement</color>.'
+    Collisions will
+    spawn a virtue beam.'
 --- !u!1 &48116999969256203
 GameObject:
   m_ObjectHideFlags: 0
@@ -11872,7 +11871,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2664286175633871637
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19065,7 +19064,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MALEVOLENT
+  m_Text: VIRTUOUS
 --- !u!1 &2481827100327113734
 GameObject:
   m_ObjectHideFlags: 0
@@ -19782,7 +19781,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1189254304554785324
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19879,7 +19878,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   varPage: {fileID: 2596660037792581230}
   moneyText: {fileID: 3389334008834100170}
-  cost: 15000
+  cost: 250000
   costText: {fileID: 4627812164513800531}
   buyButton: {fileID: 9058958054239861266}
   buySound: {fileID: 1673117908876384, guid: 4b62b2cbf85cd72408936fd0f3b6e284, type: 3}
@@ -19888,7 +19887,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0e1c8a44341208e458f8977d8eee14fc, type: 3}
   - {fileID: 21300000, guid: 8f71f2711c6d0ef469ba7bf8619b3ff5, type: 3}
   alreadyOwned: 0
-  weaponName: newrev1
+  weaponName: rai5
   orderButtons: {fileID: 5857138213064183123}
 --- !u!1 &2598038115109438240
 GameObject:
@@ -23042,7 +23041,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a237fa4b2b1bfdb45ba9f4a4c1da73fb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: af33566a2350da14291bdf5b92e710fa, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -31167,7 +31166,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4574646812230648439
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33999,7 +33998,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3290718077836810503
 RectTransform:
   m_ObjectHideFlags: 0
@@ -34497,7 +34496,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2509804, g: 0.90588236, b: 1, a: 1}
+  m_Color: {r: 0.2509804, g: 0.5, b: 1, a: 1}
   m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -34527,7 +34526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hct: 0
   variationColor: 1
-  variationNumber: 0
+  variationNumber: 4
 --- !u!1 &4822106493375762232
 GameObject:
   m_ObjectHideFlags: 0
@@ -35293,7 +35292,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a237fa4b2b1bfdb45ba9f4a4c1da73fb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: af33566a2350da14291bdf5b92e710fa, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -45047,7 +45046,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 15,000<color=orange>P</color>
+  m_Text: 250,000<color=orange>P</color>
 --- !u!1 &6402827840207635607
 GameObject:
   m_ObjectHideFlags: 0
@@ -50934,7 +50933,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a237fa4b2b1bfdb45ba9f4a4c1da73fb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: af33566a2350da14291bdf5b92e710fa, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -62181,7 +62180,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MALEVOLENT
+  m_Text: VIRTUOUS
 --- !u!1 &9166526257078905583
 GameObject:
   m_ObjectHideFlags: 0

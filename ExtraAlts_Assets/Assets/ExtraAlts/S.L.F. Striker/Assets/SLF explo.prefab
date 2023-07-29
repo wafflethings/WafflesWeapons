@@ -115,6 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useAudioLength: 0
   time: 5
+  randomizer: 0
 --- !u!1 &166480979879108960
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,7 +145,7 @@ Transform:
   m_GameObject: {fileID: 166480979879108960}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 12, y: 12, z: 12}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_Children:
   - {fileID: 166480980646584871}
   - {fileID: 162411814068497898}
@@ -166,7 +167,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: a28ba0e640631bf43b58b3b8f88b7d7c, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.75
   m_Pitch: 0.8
   Loop: 0
   Mute: 0
@@ -273,6 +274,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultPitch: 0.5
   pitchVariation: 0.1
+  oneTime: 1
+  playOnEnable: 1
+  nailgunOverheatFix: 0
 --- !u!114 &4132020913173216833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,6 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useAudioLength: 0
   time: 10
+  randomizer: 0
 --- !u!114 &5751895285762501399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,11 +446,10 @@ MonoBehaviour:
   enemy: 0
   harmless: 0
   lowQuality: 0
-  speed: 1.5
-  maxSize: 15
-  damage: 50
+  speed: 4
+  maxSize: 6
+  damage: 15
   enemyDamageMultiplier: 1.2
-  playerDamageOverride: -1
   explosionChunk: {fileID: 2411517689099871107, guid: afe97a17306b9cc48824e500692bb9ac,
     type: 3}
   ignite: 1
@@ -455,9 +459,8 @@ MonoBehaviour:
   canHit: 0
   rocketExplosion: 0
   toIgnore: 
-  interruptedEnemy: {fileID: 0}
-  ultrabooster: 0
   unblockable: 0
+  electric: 0
 --- !u!54 &7928957002556782282
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -503,11 +506,10 @@ MonoBehaviour:
   enemy: 0
   harmless: 1
   lowQuality: 1
-  speed: 4
-  maxSize: 18
+  speed: 6
+  maxSize: 8
   damage: 0
   enemyDamageMultiplier: 0
-  playerDamageOverride: -1
   explosionChunk: {fileID: 0}
   ignite: 0
   friendlyFire: 0
@@ -516,9 +518,8 @@ MonoBehaviour:
   canHit: 0
   rocketExplosion: 0
   toIgnore: 
-  interruptedEnemy: {fileID: 0}
-  ultrabooster: 0
   unblockable: 0
+  electric: 0
 --- !u!1 &2940915359096411109
 GameObject:
   m_ObjectHideFlags: 0
@@ -10041,7 +10042,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ef2eea24396f95942941115674487c77, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

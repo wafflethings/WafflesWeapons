@@ -97,7 +97,7 @@ namespace WafflesWeapons.Weapons
         }
     }
 
-    public class StickyBehaviour : MonoBehaviour
+    public class StickyBehaviour : GunBehaviour<StickyBehaviour>
     {
         private GameObject og;
         private Shotgun sho;

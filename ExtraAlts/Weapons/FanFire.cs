@@ -1,5 +1,6 @@
 ﻿using Atlas.Modules.Guns;
 using HarmonyLib;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -55,23 +56,25 @@ namespace WafflesWeapons.Weapons
             // fuck it, we ball.
             try
             {
-                FanFireBehaviour ffb;
-
                 if (currentHit.collider != null && !FanFireBehaviour.BeamsUsed.Contains(__instance))
                 {
                     FanFireBehaviour.BeamsUsed.Add(__instance);
                     float amount = 0.5f;
-                    if (__instance.sourceWeapon.TryGetComponent(out ffb))
+                    if (__instance.sourceWeapon.GetComponent<FanFireBehaviour>() != null)
                     {
                         amount = 1f;
                     }
 
-                    if (__instance.beamType == BeamType.Revolver && FanFireBehaviour.Charge < 6 &&
+                    if (__instance.beamType == BeamType.Revolver &&
                         currentHit.collider.gameObject.GetComponent<EnemyIdentifierIdentifier>() != null &&
                         !currentHit.collider.gameObject.GetComponent<EnemyIdentifierIdentifier>().eid.dead &&
                         !__instance.gameObject.name.Contains("FanShot"))
                     {
-                        FanFireBehaviour.Charge += amount;
+                        foreach (FanFireBehaviour ffb in FanFireBehaviour.Instances)
+                        {
+                            ffb.Charge += amount;
+                        }
+                        WaffleWeaponCharges.Instance.FanRevCharge += amount;
                     }
                 }
             } catch { }
@@ -102,12 +105,6 @@ namespace WafflesWeapons.Weapons
             }
         }
 
-        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.MaxCharges))]
-        [HarmonyPostfix]
-        public static void MaxCharge()
-        {
-            FanFireBehaviour.Charge = 6;
-        }
 
         [HarmonyPatch(typeof(Coin), nameof(Coin.DelayedReflectRevolver))]
         [HarmonyPrefix]
@@ -165,12 +162,12 @@ namespace WafflesWeapons.Weapons
         }
     }
 
-    public class FanFireBehaviour : MonoBehaviour
+    public class FanFireBehaviour : GunBehaviour<FanFireBehaviour>
     {
         private Revolver rev;
-        [HideInInspector] public static float Charge = 0;
+        [HideInInspector] public float Charge = 0;
         [HideInInspector] public float Damage = 0;
-        private bool CanFan = true;
+        private bool fanning = false;
         public Texture2D[] NumberToTexture;
         public static List<RevolverBeam> BeamsUsed = new List<RevolverBeam>();
 
@@ -182,49 +179,69 @@ namespace WafflesWeapons.Weapons
 
         public void Update()
         {
+            if (ULTRAKILL.Cheats.NoWeaponCooldown.NoCooldown)
+            {
+                Charge = 6;
+            }
+            Charge = Mathf.Clamp(Charge, 0, 6);
+
             rev.pierceShotCharge = 0;
             rev.screenMR.material.SetTexture("_MainTex", NumberToTexture[(int)Charge]);
 
-            if (Gun.OnFireHeld() && rev.shootReady && rev.gc.activated && rev.gunReady)
+            if (Gun.OnFireHeld() && rev.shootReady && rev.gc.activated && rev.gunReady && !fanning)
             {
-                if ((rev.altVersion && WeaponCharges.Instance.revaltpickupcharges[rev.gunVariation] == 0) || !rev.altVersion)
+                if ((rev.altVersion && !fanning && WeaponCharges.Instance.revaltpickupcharges[rev.gunVariation] == 0) || !rev.altVersion)
                 {
                     rev.Shoot();
                 }
             }
 
-            if (Gun.OnAltFire() && CanFan)
+            if (Gun.OnAltFire() && !fanning)
             {
-                Damage = 0;
-                Charge = (int)Charge;
-                CanFan = false;
-                float delay = GetComponent<WeaponIdentifier>().delay;
-                Invoke("ResetFan", (((int)Charge - 1) * 0.15f) + 1 + delay);
-                for (int i = 0; i < (int)Charge; i++)
-                {
-                    Damage = ((i + 1) * 0.25f) + 0.25f;
-                    Invoke("ShootFan", (i * 0.15f) + delay);
-                }
+                StartCoroutine(DoFanning());
             }
         }
 
-        public void ResetFan()
+        public IEnumerator DoFanning()
         {
-            CanFan = true;
+            yield return rev.wid.delay;
+            Damage = 0;
+            fanning = true;
+            int startCharge = (int)Charge;
+
+            float timer = 0.25f;
+
+            for (int i = 0; i < startCharge; i++)
+            {
+                while (rev.altVersion ? timer < 0.25f && !Gun.OnFire() : timer < 0.15f)
+                {
+                    timer += Time.deltaTime;
+                    yield return null;
+                }
+                timer = 0;
+                yield return null;
+
+                Damage = ((i + 1) * 0.25f) + 0.25f;
+                ShootFan();
+            }
+
+            fanning = false;
+        }
+
+        public void OnEnable()
+        {
+            Charge = WaffleWeaponCharges.Instance.FanRevCharge;
         }
 
         public void OnDisable()
         {
+            WaffleWeaponCharges.Instance.FanRevCharge = Charge;
             CancelInvoke("ShootFan");
         }
 
         public void ShootFan()
         {
-            if (gameObject.GetComponentInParent<DualWield>() == null)
-            {
-                Charge--;
-            }
-
+            Charge--;
             GameObject original = rev.revolverBeam;
             rev.revolverBeam = rev.revolverBeamSuper;
             rev.revolverBeam.GetComponent<RevolverBeam>().damage = Damage;

@@ -41,26 +41,6 @@ namespace WafflesWeapons.Weapons
             return "sho5";
         }
 
-        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.Charge))]
-        [HarmonyPostfix]
-        public static void DoCharge(float amount)
-        {
-            foreach (SingularityBehaviour sb in SingularityBehaviour.sbs)
-            {
-                sb.charge += amount * 5;
-            }
-        }
-
-        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.MaxCharges))]
-        [HarmonyPostfix]
-        public static void MaxCharge()
-        {
-            foreach (SingularityBehaviour sb in SingularityBehaviour.sbs)
-            {
-                sb.charge = SingularityBehaviour.HEALTH_NEEDED;
-            }
-        }
-
         [HarmonyPatch(typeof(RevolverBeam), nameof(RevolverBeam.Shoot)), HarmonyPostfix]
         public static void ShootBall(RevolverBeam __instance)
         {
@@ -146,17 +126,22 @@ namespace WafflesWeapons.Weapons
         {
             if (__instance.ready && other.gameObject.CompareTag("Player"))
             {
-                foreach (SingularityBehaviour sb in SingularityBehaviour.sbs)
+                float charge = 0;
+                if (__instance.hpAmount < 50)
                 {
-                    if (__instance.hpAmount < 50)
-                    {
-                        sb.charge += __instance.hpAmount;
-                    }
-                    else
-                    {
-                        sb.charge += 50 + (__instance.hpAmount / 5);
-                    }
+                    charge += __instance.hpAmount;
                 }
+                else
+                {
+                    charge += 50 + (__instance.hpAmount / 5);
+                }
+
+                foreach (SingularityBehaviour sb in SingularityBehaviour.Instances)
+                {
+                    sb.charge += charge;
+                }
+
+                WaffleWeaponCharges.Instance.SingularityShoCharge += charge;
             }
         }
 
@@ -197,7 +182,7 @@ namespace WafflesWeapons.Weapons
         }
     }
 
-    public class SingularityBehaviour : MonoBehaviour
+    public class SingularityBehaviour : GunBehaviour<SingularityBehaviour>
     {
         public const float HEALTH_NEEDED = 400;
         public Slider slider;
@@ -205,41 +190,47 @@ namespace WafflesWeapons.Weapons
         private Shotgun sho;
         private CameraController cc;
         [HideInInspector] public float charge;
-        [HideInInspector] public static List<SingularityBehaviour> sbs = new List<SingularityBehaviour>();
 
         public void Start()
         {
             sho = GetComponent<Shotgun>();
             cc = CameraController.Instance;
             slider.maxValue = HEALTH_NEEDED;
-
-            for (int i = 0; i < sbs.Count; i++)
-            {
-                if (sbs[i] == null)
-                {
-                    sbs.RemoveAt(i);
-                }
-                i++;
-            }
-
-            sbs.Add(this);
         }
 
         public void Update()
         {
-            if (charge >= HEALTH_NEEDED)
+            if (ULTRAKILL.Cheats.NoWeaponCooldown.NoCooldown)
             {
-                if (Gun.OnAltFire())
-                {
-                    Invoke("ShootBall", sho.wid.delay);
-                }
+                charge = HEALTH_NEEDED;
             }
 
-            slider.value = Mathf.MoveTowards(slider.value, charge, Time.deltaTime * 2500);
-            charge = Mathf.Clamp(charge, 0, HEALTH_NEEDED);
+            if (sho.gc.enabled)
+            {
+                if (charge >= HEALTH_NEEDED)
+                {
+                    if (Gun.OnAltFire())
+                    {
+                        Invoke("ShootBall", sho.wid.delay);
+                    }
+                }
+
+                slider.value = Mathf.MoveTowards(slider.value, charge, Time.deltaTime * 2500);
+                charge = Mathf.Clamp(charge, 0, HEALTH_NEEDED);
+            }
 
             //if (HookArm.Instance.state == HookState.Pulling)
                 //Singularity.GrabbedBall?.transform.LookAt(CameraController.Instance.transform);
+        }
+
+        public void OnEnable()
+        {
+            charge = WaffleWeaponCharges.Instance.SingularityShoCharge;
+        }
+
+        public void OnDisable()
+        {
+            WaffleWeaponCharges.Instance.SingularityShoCharge = charge;
         }
 
         public void ShootBall()
@@ -425,18 +416,14 @@ namespace WafflesWeapons.Weapons
         {
             if (!eidsOnCooldown.Contains(eid))
             {
-                Debug.Log("1");
                 bool wasDead = eid.dead;
-                Debug.Log("2");
                 StartCoroutine(AddAndRemove(eid));
-                Debug.Log("3");
                 eid.hitter = "singularity";
-                eid.DeliverDamage(eid.gameObject, rb.velocity, transform.position, 2.5f, false, 0, SingularityBehaviour.sbs[0].gameObject);
-                Debug.Log("4");
+                eid.DeliverDamage(eid.gameObject, rb.velocity, transform.position, 2.5f, false, 0, SingularityBehaviour.Instances[0].gameObject);
 
                 if (eid.dead && !wasDead)
                 {
-                    StyleCalculator.Instance.AddPoints(200, "<color=#b400ff>COMPRESSED</color>", eid, SingularityBehaviour.sbs[0].gameObject);
+                    StyleCalculator.Instance.AddPoints(200, "<color=#b400ff>COMPRESSED</color>", eid, SingularityBehaviour.Instances[0].gameObject);
                     AddRbs(eid);
                 }
             }

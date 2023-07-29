@@ -1,6 +1,7 @@
 ﻿using Atlas.Modules.Guns;
 using HarmonyLib;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -95,12 +96,8 @@ namespace WafflesWeapons.Weapons
                             {
                                 db.PerfectCurrentDamage -= db.PerfectStepDecrease;
                                 Debug.Log("success getting in"); // make nearest check if its not the same enemy
-                                GameObject newBeam = GameObject.Instantiate(db.PerfectBeam, __instance.hit.transform.position, Quaternion.identity);
-                                newBeam.transform.LookAt(nearest);
-                                newBeam.GetComponent<AudioSource>().enabled = false;
-                                newBeam.GetComponentInChildren<SpriteRenderer>().enabled = false;
-                                newBeam.GetComponent<RevolverBeam>().sourceWeapon = __instance.sourceWeapon;
                                 __instance.lr.SetPosition(1, __instance.hit.transform.position);
+                                __instance.StartCoroutine(CreateNewBeam(db.PerfectBeam, __instance.hit.transform.position, eid));
                             }
                             Debug.Log("all done");
                         }
@@ -110,14 +107,18 @@ namespace WafflesWeapons.Weapons
             catch (Exception ex) { Debug.LogWarning(ex.ToString()); }
         }
 
-        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.Charge))]
-        [HarmonyPostfix]
-        public static void DoCharge(float amount)
+        public static IEnumerator CreateNewBeam(GameObject beam, Vector3 hitPos, EnemyIdentifier eid)
         {
-            foreach (DesperadoBehaviour desp in Guns)
-            {
-                desp.Charge();
-            }
+            yield return new WaitForSeconds(0.1f);
+
+            GameObject newBeam = GameObject.Instantiate(beam, hitPos, Quaternion.identity);
+            Debug.Log("created");
+            newBeam.transform.LookAt(UltrakillUtils.NearestEnemyPoint(hitPos, 1000, eid));
+            Debug.Log("looked");
+            newBeam.GetComponent<AudioSource>().enabled = false;
+            newBeam.GetComponentInChildren<SpriteRenderer>().enabled = false;
+            newBeam.GetComponent<RevolverBeam>().sourceWeapon = DesperadoBehaviour.Instances[0].gameObject;
+
         }
 
         [HarmonyPatch(typeof(Revolver), nameof(Revolver.Update))]
@@ -128,7 +129,7 @@ namespace WafflesWeapons.Weapons
         }
     }
 
-    public class DesperadoBehaviour : MonoBehaviour
+    public class DesperadoBehaviour : GunBehaviour<DesperadoBehaviour>
     {
         private Revolver rev;
         private float currentSlider = 0;
@@ -262,15 +263,11 @@ namespace WafflesWeapons.Weapons
 
         public void Update()
         {
-            if (ULTRAKILL.Cheats.NoWeaponCooldown.NoCooldown)
-            {
-                Charge();
-            }
-
             rev.pierceShotCharge = 0;
             
             if (rev.gc.activated)
             {
+                Charge();
                 slider.value = currentSlider;
 
                 if (rev.shootReady && rev.gunReady)

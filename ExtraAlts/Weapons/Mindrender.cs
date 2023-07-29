@@ -22,7 +22,6 @@ namespace WafflesWeapons.Weapons
         public override GameObject Create(Transform parent)
         {
             base.Create(parent);
-            MindrenderBehaviour.Charge = 0;
 
             GameObject thing;
             if (Enabled() == 2)
@@ -47,13 +46,6 @@ namespace WafflesWeapons.Weapons
         public override string Pref()
         {
             return "nai4";
-        }
-
-        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.MaxCharges))]
-        [HarmonyPostfix]
-        public static void MaxCharge()
-        {
-            MindrenderBehaviour.Charge = 1;
         }
 
         [HarmonyPatch(typeof(StyleCalculator), nameof(StyleCalculator.HitCalculator))]
@@ -104,17 +96,16 @@ namespace WafflesWeapons.Weapons
                     amount /= 3;
                 }
 
-                MindrenderBehaviour.Charge += amount;
-
-                if (MindrenderBehaviour.Charge > 1)
+                foreach (MindrenderBehaviour mr in MindrenderBehaviour.Instances)
                 {
-                    MindrenderBehaviour.Charge = 1;
+                    mr.Charge += amount;
+                    mr.Charge = Mathf.Clamp(mr.Charge, 0, MindrenderBehaviour.MAX_CHARGE);
                 }
             }
         }
     }
 
-    public class MindrenderBehaviour : MonoBehaviour
+    public class MindrenderBehaviour : GunBehaviour<MindrenderBehaviour>
     {
         public Slider ChargeSlider;
         [Header("Normal")]
@@ -128,10 +119,11 @@ namespace WafflesWeapons.Weapons
         private Nailgun nai;
         private GameObject curVis;
         private LineRenderer lr;
-        [HideInInspector] public static float Charge;
+        [HideInInspector] public float Charge;
 
         private LayerMask enemyLayerMask;
 
+        public const float MAX_CHARGE = 1;
         private const float BEAM_DAMAGE = 0.25f;
         private const float BEAM_MILLISECOND_DELAY = 50;
         private const float ALT_BALL_COST = 0.2f;
@@ -149,6 +141,11 @@ namespace WafflesWeapons.Weapons
 
         public void Update()
         {
+            if (ULTRAKILL.Cheats.NoWeaponCooldown.NoCooldown)
+            {
+                Charge = MAX_CHARGE;
+            }
+
             nai.heatSlider = null;
             ChargeSlider.value = Charge;
 

@@ -34,8 +34,10 @@
   <ItemGroup>
     <Compile Include="Core.cs" />
     <Compile Include="CustomColour.cs" />
+    <Compile Include="GunBehaviour.cs" />
     <Compile Include="Pages\CustomsPage.cs" />
     <Compile Include="Pages\ExtrasPage.cs" />
+    <Compile Include="WaffleWeaponCharges.cs" />
     <Compile Include="Weapons\Airblast.cs" />
     <Compile Include="Weapons\Desperado.cs" />
     <Compile Include="Weapons\Mindrender.cs" />

@@ -171,7 +171,6 @@ MonoBehaviour:
   maxSize: 5
   damage: 0
   enemyDamageMultiplier: 0
-  playerDamageOverride: -1
   explosionChunk: {fileID: 2411517689099871107, guid: afe97a17306b9cc48824e500692bb9ac,
     type: 3}
   ignite: 0
@@ -181,9 +180,8 @@ MonoBehaviour:
   canHit: 1
   rocketExplosion: 0
   toIgnore: 
-  interruptedEnemy: {fileID: 0}
-  ultrabooster: 0
   unblockable: 0
+  electric: 0
 --- !u!1 &6822426774031625903
 GameObject:
   m_ObjectHideFlags: 0
@@ -5075,7 +5073,6 @@ MonoBehaviour:
   maxSize: 15
   damage: 1
   enemyDamageMultiplier: 1
-  playerDamageOverride: -1
   explosionChunk: {fileID: 2411517689099871107, guid: afe97a17306b9cc48824e500692bb9ac,
     type: 3}
   ignite: 0
@@ -5085,9 +5082,8 @@ MonoBehaviour:
   canHit: 2
   rocketExplosion: 0
   toIgnore: 
-  interruptedEnemy: {fileID: 0}
-  ultrabooster: 0
   unblockable: 0
+  electric: 0
 --- !u!1 &8372594674787698020
 GameObject:
   m_ObjectHideFlags: 0
@@ -5198,6 +5194,7 @@ GameObject:
   - component: {fileID: 7333957800347153568}
   - component: {fileID: 8459660434720215677}
   - component: {fileID: 6271575275434043359}
+  - component: {fileID: -4259629273851921997}
   m_Layer: 23
   m_Name: NailBlast
   m_TagString: Untagged
@@ -5335,6 +5332,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultPitch: 1
   pitchVariation: 0.25
+  oneTime: 1
+  playOnEnable: 1
+  nailgunOverheatFix: 0
 --- !u!114 &5704363967343149835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5349,6 +5349,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useAudioLength: 0
   time: 10
+  randomizer: 0
 --- !u!114 &4155922675248944733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5392,11 +5393,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91b56878c4cfc52449c04fce4d1d6c10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sourceWeapon: {fileID: 0}
   speed: 50
   turnSpeed: 0
   speedRandomizer: 0
   explosionEffect: {fileID: 0}
   damage: 0
+  enemyDamageMultiplier: 1
   friendly: 0
   playerBullet: 1
   bulletType: airblast
@@ -5406,17 +5409,18 @@ MonoBehaviour:
   explosive: 0
   bigExplosion: 0
   homingType: 0
+  turningSpeedMultiplier: 1
   target: {fileID: 0}
+  predictiveHomingMultiplier: 0
   hittingPlayer: 0
   boosted: 0
   undeflectable: 0
-  lmask:
-    serializedVersion: 2
-    m_Bits: 0
   keepTrail: 0
   strong: 0
   spreaded: 0
   precheckForCollisions: 0
+  canHitCoin: 0
+  ignoreExplosions: 0
 --- !u!54 &7333957800347153568
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5544,6 +5548,19 @@ MonoBehaviour:
   amount: 5
   oneTime: 1
   continuous: 0
+--- !u!114 &-4259629273851921997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8372594675519314986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 578770225, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
 --- !u!1 &8374419071119423514
 GameObject:
   m_ObjectHideFlags: 0
@@ -5659,6 +5676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useAudioLength: 0
   time: 5
+  randomizer: 0
 --- !u!1001 &4938317601887225248
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -33,7 +33,7 @@ namespace WafflesWeapons.Weapons
 
         public override string Pref()
         {
-            return "rai3";
+            return "rai5";
         }
 
         [HarmonyPatch(typeof(RevolverBeam), nameof(RevolverBeam.ExecuteHits))]
@@ -128,7 +128,7 @@ namespace WafflesWeapons.Weapons
         }
     }
 
-    public class VirtuousBehaviour : MonoBehaviour
+    public class VirtuousBehaviour : GunBehaviour<VirtuousBehaviour>
     {
         public GameObject VirtueBeam;
         public GameObject VirtueBeamSmall;

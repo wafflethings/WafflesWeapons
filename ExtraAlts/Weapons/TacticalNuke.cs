@@ -37,65 +37,98 @@ namespace WafflesWeapons.Weapons
 
         [HarmonyPatch(typeof(Grenade), nameof(Grenade.Explode))]
         [HarmonyPostfix]
-        public static void IncreaseIfBig(Grenade __instance, bool harmless, bool super = false)
+        public static void IncreaseIfBig(Grenade __instance, bool harmless, bool super = false, GameObject exploderWeapon = null)
         {
-            if (!harmless && __instance.rocket)
+            if (!harmless && __instance.rocket && exploderWeapon == null && __instance.GetComponent<HomingRocket>()) //null is if it is exploded by an enemy
             {
+                float change = 0;
                 if (super)
                 {
-                    TacticalNukeBehaviour.WindUp += 2f;
+                    change += 2f;
                 }
                 else
                 {
-                    TacticalNukeBehaviour.WindUp += 1f;
+                    change += 1f;
                 }
 
-                if (TacticalNukeBehaviour.WindUp > TacticalNukeBehaviour.MaxWind)
+                foreach (TacticalNukeBehaviour tnb in TacticalNukeBehaviour.Instances)
                 {
-                    TacticalNukeBehaviour.WindUp = TacticalNukeBehaviour.MaxWind;
+                    tnb.WindUp += change;
                 }
-            }
-        }
 
-        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.MaxCharges))]
-        [HarmonyPostfix]
-        public static void MaxCharge()
-        {
-            TacticalNukeBehaviour.WindUp = 4;
+                WaffleWeaponCharges.Instance.SLFCharge += change;
+            }
         }
     }
 
-    public class TacticalNukeBehaviour : MonoBehaviour
+    public class TacticalNukeBehaviour : GunBehaviour<TacticalNukeBehaviour>
     {
         private GunControl gc;
         private RocketLauncher rock;
-        [HideInInspector] public static float WindUp = 0;
+        [HideInInspector] public float WindUp = 0;
         [HideInInspector] public static float MaxWind = 4;
         float Target = 0;
         public GameObject HugeRocket;
+        public AudioSource ChargeUp;
+        private float HeldTime;
 
         public void Start()
         {
             gc = GunControl.Instance;
             rock = GetComponent<RocketLauncher>();
-            WindUp = 0;
         }
 
         public void Update()
         {
-            Target = Mathf.MoveTowards(Target, WindUp / MaxWind, Time.deltaTime * 5);
-            rock.timerArm.localRotation = Quaternion.Euler(0f, 0f, Mathf.Lerp(360f, 0f, Target));
-            rock.timerMeter.fillAmount = Target;
-
-            if (WindUp == MaxWind && Gun.OnAltFire() && gc.activated)
+            if (ULTRAKILL.Cheats.NoWeaponCooldown.NoCooldown)
             {
-                foreach (TacticalNukeBehaviour tnb in FindObjectsOfType<TacticalNukeBehaviour>())
-                {
-                    tnb.Invoke("Shoot", tnb.GetComponent<WeaponIdentifier>().delay);
+                WindUp = MaxWind;
+            }
 
-                    WindUp = 0;
+            if (WindUp > MaxWind)
+            {
+                WindUp = MaxWind;
+            }
+
+            Target = Mathf.MoveTowards(Target, WindUp / MaxWind, Time.deltaTime * 5);
+            rock.timerArm.localRotation = Quaternion.Euler(0f, 0f, Mathf.Lerp(360f, 0f, Target - HeldTime / MaxWind));
+            rock.timerMeter.fillAmount = Target - HeldTime / MaxWind;
+
+            if (gc.activated)
+            {
+                if (Gun.OnAltFireReleased())
+                {
+                    if ((int)HeldTime >= 1)
+                    {
+                        rock.anim.speed *= 10;
+                        for (int i = 0; i < 2 * (int)HeldTime; i++)
+                        {
+                            Invoke("Shoot", rock.wid.delay + (i * 0.15f));
+                        }
+                        rock.anim.speed /= 10;
+                        WindUp -= (int)HeldTime;
+                    }
+                }
+
+                if (Gun.OnAltFireHeld())
+                {
+                    HeldTime = Mathf.MoveTowards(HeldTime, WindUp, Time.deltaTime * MaxWind);
+                }
+                else
+                {
+                    HeldTime = Mathf.MoveTowards(HeldTime, 0, Time.deltaTime * MaxWind * 2);
                 }
             }
+        }
+
+        public void OnEnable()
+        {
+            WindUp = WaffleWeaponCharges.Instance.SLFCharge;
+        }
+
+        public void OnDisable()
+        {
+            WaffleWeaponCharges.Instance.SLFCharge = WindUp;
         }
 
         public void Shoot()
@@ -128,15 +161,21 @@ namespace WafflesWeapons.Weapons
             if (GunControl.Instance.activated)
             {
                 RaycastHit hit;
+                Quaternion oldRot = transform.rotation;
+                Quaternion newRot;
 
                 if (Physics.Raycast(CameraController.Instance.transform.position, CameraController.Instance.transform.forward, out hit, float.PositiveInfinity, ignoreEnemyTrigger))
                 {
                     transform.LookAt(hit.point);
+                    newRot = transform.rotation;
                 }
                 else
                 {
                     transform.LookAt(CameraController.Instance.transform.forward * 10000);
+                    newRot = transform.rotation;
                 }
+
+                transform.rotation = Quaternion.RotateTowards(oldRot, newRot, Time.deltaTime * 720);
             }
         }
     }

@@ -25,7 +25,8 @@ namespace WafflesWeapons.Weapons
             if (Enabled() == 2)
             {
                 thing = GameObject.Instantiate(AirSaw, parent);
-            } else
+            }
+            else
             {
                 thing = GameObject.Instantiate(AirNail, parent);
             }
@@ -55,71 +56,54 @@ namespace WafflesWeapons.Weapons
                 eid.GetComponent<Rigidbody>().AddForce(__instance.transform.forward * (__instance.sawblade ? -15 / __instance.hitAmount : -15f), ForceMode.VelocityChange);
             }
         }
-
-        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.Charge))]
-        [HarmonyPostfix]
-        public static void DoCharge(float amount)
-        {
-            if (AirblastBehaviour.gcc != null)
-            {
-                bool Touching = AirblastBehaviour.gcc.touchingGround;
-                float TimeMult = 0.05f;
-                float ShootMult = 0.25f;
-                if (Touching)
-                {
-                    TimeMult = 0.1f;
-                    ShootMult = 0.4f;
-                }
-
-                AirblastBehaviour.Charge += Time.deltaTime * TimeMult;
-                if (OnFireHeld())
-                {
-                    AirblastBehaviour.Charge += Time.deltaTime * ShootMult;
-                }
-                if (AirblastBehaviour.Charge > 1)
-                {
-                    AirblastBehaviour.Charge = 1;
-                }
-            }
-        }
-
-        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.MaxCharges))]
-        [HarmonyPostfix]
-        public static void MaxCharge()
-        {
-            AirblastBehaviour.Charge = 1;
-        }
     }
 
-    public class AirblastBehaviour : MonoBehaviour
+    public class AirblastBehaviour : GunBehaviour<AirblastBehaviour>
     {
         private GameObject MyBlast;
         private Nailgun nail;
-        [HideInInspector] public static float Charge;
-        [HideInInspector] public static GroundCheck gcc;
+        [HideInInspector] public float Charge;
+        [HideInInspector] public float ChargeLength;
         public GameObject sawbladeAirblast;
         public GameObject nailgunAirblast;
         public Slider chargeSlider;
+        public Slider holdLengthSlider;
         private float fireRate = 0;
 
         public void Start()
         {
-            gcc = FindObjectOfType<GroundCheck>();
             nail = GetComponent<Nailgun>();
             fireRate = nail.fireRate;
         }
 
         public void Update()
         {
-            nail.fireRate = fireRate;
+            if (ULTRAKILL.Cheats.NoWeaponCooldown.NoCooldown)
+            {
+                Charge = 1;
+            }
 
             if (nail.gc.activated)
             {
+                nail.fireRate = fireRate;
+                DoCharge();
+
                 nail.heatSlider = null;
                 chargeSlider.value = Charge;
+                holdLengthSlider.value = ChargeLength;
 
-                if (Charge == 1 && Gun.OnAltFire())
+                if (Charge >= 0.1f && Gun.OnAltFireHeld())
                 {
+                    ChargeLength = Mathf.MoveTowards(ChargeLength, Charge, Time.deltaTime);
+                }
+
+                if (Gun.OnAltFireReleased() && Charge >= 0.1f)
+                {
+                    if (ChargeLength < 0.1f)
+                    {
+                        ChargeLength = 0.1f;
+                    }
+
                     if (MyBlast == null)
                     {
                         CheckBlast();
@@ -136,10 +120,43 @@ namespace WafflesWeapons.Weapons
                     GameObject guh = GameObject.Instantiate(MyBlast, nail.cc.transform.position + nail.cc.transform.forward, rot);
                     if (!nail.altVersion)
                     {
-                        guh.ChildByName("PlayerLaunch").SetActive(!gcc.touchingGround);
+                        guh.ChildByName("PlayerLaunch").SetActive(!NewMovement.Instance.gc.touchingGround);
+
+                        foreach (Explosion ex in guh.GetComponentsInChildren<Explosion>(true))
+                        {
+                            ex.maxSize *= ChargeLength;
+                            ex.speed *= ChargeLength;
+                        }
+
+                        guh.GetComponentInChildren<ScaleNFade>().scaleSpeed *= ChargeLength;
                     }
-                    Charge = 0;
+                    else
+                    {
+                        guh.transform.localScale = new Vector3(ChargeLength, 15, ChargeLength);
+                    }
+
+                    Charge -= ChargeLength;
+                    ChargeLength = 0;
                 }
+            }
+        }
+
+        public void OnEnable()
+        {
+            Charge = WaffleWeaponCharges.Instance.AirblastCharge;
+        }
+
+        public void OnDisable()
+        {
+             WaffleWeaponCharges.Instance.AirblastCharge = Charge;
+        }
+
+        public void DoCharge()
+        {
+            Charge = Mathf.MoveTowards(Charge, 1, Time.deltaTime * (NewMovement.Instance.gc.touchingGround ? 0.1f : 0.05f));
+            if (Gun.OnFireHeld())
+            {
+                Charge = Mathf.MoveTowards(Charge, 1, Time.deltaTime * (NewMovement.Instance.gc.touchingGround ? 0.4f : 0.25f));
             }
         }
 
@@ -153,6 +170,16 @@ namespace WafflesWeapons.Weapons
             {
                 MyBlast = nailgunAirblast;
             }
+        }
+    }
+
+    public class AirblastBall : MonoBehaviour
+    {
+        public float speed;
+
+        public void Update()
+        {
+            transform.position += transform.forward * speed * Time.deltaTime;
         }
     }
 }

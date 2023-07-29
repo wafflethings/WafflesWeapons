@@ -90,20 +90,6 @@ namespace WafflesWeapons.Weapons
             return true;
         }
 
-        /* [HarmonyPatch(typeof(Punch), nameof(Punch.PunchSuccess))]
-        [HarmonyPrefix]
-        public static void SetStartRot(Punch __instance, out Quaternion __state)
-        {
-            __state = __instance.transform.parent.localRotation;
-        }
-
-        [HarmonyPatch(typeof(Punch), nameof(Punch.PunchSuccess))]
-        [HarmonyPostfix]
-        public static void SetEndRot(Punch __instance, Quaternion __state)
-        {
-            __instance.transform.parent.localRotation = __state;
-        } */
-
         [HarmonyPatch(typeof(FistControl), nameof(FistControl.UpdateFistIcon))]
         [HarmonyPostfix]
         public static void FixColour(FistControl __instance)
@@ -298,13 +284,6 @@ namespace WafflesWeapons.Weapons
                         }
                         else 
                         {
-                            NewMovement.Instance.rb.velocity = (NewMovement.Instance.rb.velocity * -0.5f);
-                            if (NewMovement.Instance.rb.velocity.y < 0)
-                            {
-                                Vector3 vel = NewMovement.Instance.rb.velocity;
-                                NewMovement.Instance.rb.velocity = new Vector3(vel.x, vel.y * -1, vel.z);
-                                Instantiate(LoaderGauntlet.curOne.DoinkSound, NewMovement.Instance.transform.position, Quaternion.identity);
-                            }
                             NewMovement.Instance.ForceAddAntiHP((int)(NewMovement.Instance.rb.velocity.magnitude * 0.5f), false, true);
                         }
                         CameraController.Instance.CameraShake(0.5f);

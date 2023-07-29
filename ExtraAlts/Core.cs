@@ -62,6 +62,8 @@ namespace WafflesWeapons
 
             Singularity.LoadAssets();
             GunRegistry.Register(new Singularity());
+
+            Harmony.PatchAll(typeof(WaffleWeaponCharges));
         }
 
         [HarmonyPatch(typeof(LeaderboardController), nameof(LeaderboardController.SubmitCyberGrindScore))]
