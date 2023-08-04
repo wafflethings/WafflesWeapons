@@ -1,0 +1,585 @@
+﻿using Atlas.Modules.Guns;
+using HarmonyLib;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
+
+namespace WafflesWeapons.Weapons
+{
+    public class Conductor : Gun
+    {
+        public static GameObject ConductorNail;
+        public static GameObject ConductorSaw;
+        public static GameObject MagnetZapEffect;
+        public static GameObject FullExplosion;
+        public static GameObject MagnetZap;
+
+        public static void LoadAssets()
+        {
+            ConductorNail = Core.Assets.LoadAsset<GameObject>("Nailgun Conductor.prefab");
+            ConductorSaw = Core.Assets.LoadAsset<GameObject>("Sawblade Launcher Conductor.prefab");
+            MagnetZapEffect = Core.Assets.LoadAsset<GameObject>("Magnet Zap Effect.prefab");
+            FullExplosion = Core.Assets.LoadAsset<GameObject>("Cond Full Explosion.prefab");
+            MagnetZap = Core.Assets.LoadAsset<GameObject>("Magnet Zap.prefab");
+            Core.Harmony.PatchAll(typeof(Conductor));
+        }
+
+        public override GameObject Create(Transform parent)
+        {
+            base.Create(parent);
+
+            GameObject thing;
+            if (Enabled() == 2)
+            {
+                thing = GameObject.Instantiate(ConductorSaw, parent);
+            }
+            else
+            {
+                thing = GameObject.Instantiate(ConductorNail, parent);
+            }
+
+            OrderInSlot = GunSetter.Instance.CheckWeaponOrder("nai")[3];
+            StyleHUD.Instance.weaponFreshness.Add(thing, 10);
+            return thing;
+        }
+
+        public override int Slot()
+        {
+            return 2;
+        }
+
+        public override string Pref()
+        {
+            return "nai3";
+        }
+
+        [HarmonyPatch(typeof(RevolverBeam), nameof(RevolverBeam.ExecuteHits)), HarmonyPostfix]
+        public static void StunHitEnemies(RevolverBeam __instance, RaycastHit currentHit)
+        {
+            if (__instance.sourceWeapon == null)
+            {
+                return;
+            }
+
+            if (currentHit.transform != null && __instance.sourceWeapon.TryGetComponent(out ConductorBehaviour c) && currentHit.transform.GetComponentInParent<EnemyIdentifierIdentifier>())
+            {
+                EnemyIdentifier eid = currentHit.transform.GetComponentInParent<EnemyIdentifierIdentifier>().eid;
+                if (eid != null)
+                {
+                    Stunner.EnsureAndStun(eid, c.LastCharge * 1.5f);
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(RevolverBeam), nameof(RevolverBeam.ExecuteHits)), HarmonyPrefix]
+        public static void EditHitProjectiles(RevolverBeam __instance, RaycastHit currentHit)
+        {
+            if (__instance.sourceWeapon?.GetComponent<ConductorBehaviour>() == null)
+            {
+                return;
+            }
+
+            if (currentHit.transform != null && currentHit.transform.gameObject.layer == 14 && 
+                currentHit.transform.gameObject.TryGetComponent(out Projectile projectile) && (projectile.speed != 0f || projectile.decorative))
+            {
+                TimeController.Instance.ParryFlash();
+                projectile.transform.forward = CameraController.Instance.transform.forward;
+                projectile.friendly = true;
+                projectile.homingType = HomingType.None;
+                projectile.explosionEffect = FullExplosion;
+
+                if (projectile.TryGetComponent(out Rigidbody rb))
+                {
+                    rb.useGravity = false;
+                }
+
+                if (projectile.speed < 50)
+                {
+                    projectile.speed = 50;
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(Explosion), nameof(Explosion.Collide)), HarmonyPrefix]
+        public static void StunEnemiesHitByExplosion(Explosion __instance, Collider other)
+        {
+            //Debug.Log("wataflip");
+            if (__instance.canHit == AffectedSubjects.PlayerOnly || __instance.GetComponent<StunExplosion>() == null)
+            {
+                return;
+            }
+
+            List<EnemyIdentifier> alrHitEids = new List<EnemyIdentifier>();
+            foreach (Collider col in __instance.hitColliders)
+            {
+                if (col != null && col.TryGetComponent(out EnemyIdentifierIdentifier eidid) && eidid.eid != null)
+                {
+                    alrHitEids.Add(eidid.eid);
+                }
+            }
+
+            if (other.gameObject.layer == 10 || other.gameObject.layer == 11)
+            {
+                EnemyIdentifierIdentifier eidid = other.GetComponentInParent<EnemyIdentifierIdentifier>();
+                if (eidid != null && eidid.eid != null && !alrHitEids.Contains(eidid.eid))
+                {
+                    Stunner.EnsureAndStun(eidid.eid, 1);
+                }
+            }
+        }
+
+        private static MethodInfo m_Breakable_Break = typeof(Breakable).GetMethod("Break");
+        private static MethodInfo m_Conductor_BreakReplacement = typeof(Conductor).GetMethod("BreakReplacement");
+
+        [HarmonyPatch(typeof(RevolverBeam), nameof(RevolverBeam.PiercingShotCheck)), HarmonyTranspiler]
+        public static IEnumerable<CodeInstruction> ReplaceBreak(IEnumerable<CodeInstruction> instructions)
+        {
+            foreach (CodeInstruction instruction in instructions)
+            {
+                if (instruction.opcode == OpCodes.Callvirt && instruction.OperandIs(m_Breakable_Break))
+                {
+                    yield return new CodeInstruction(OpCodes.Ldarg_0);
+                    yield return new CodeInstruction(OpCodes.Call, m_Conductor_BreakReplacement);
+                }
+                else
+                {
+                    yield return instruction;
+                }
+            }
+        }
+
+        public static void BreakReplacement(Breakable breakable, RevolverBeam revolverBeam)
+        {
+            Debug.Log($"BreakReplacement called! Breakable {breakable}, RevolverBeam {revolverBeam}.");
+
+            if (revolverBeam.sourceWeapon.TryGetComponent(out ConductorBehaviour cb))
+            {
+                breakable.StartCoroutine(MagnetElecEffect(breakable.transform));
+
+                Debug.Log("Source has CB");
+
+                float length = cb.LastCharge * 20f;
+
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy").Where(enemy => !enemy.GetComponent<EnemyIdentifier>().dead && 
+                    Vector3.Distance(enemy.transform.position, breakable.transform.position) <= length).ToArray();
+
+                Debug.Log($"{enemies.Length} enemies in {length} radius");
+
+                foreach (GameObject enemy in enemies)
+                {
+                    EnemyIdentifier eid = enemy.GetComponent<EnemyIdentifier>();
+                    eid.hitterAttributes.Add(HitterAttribute.Electricity);
+                    eid.DeliverDamage(eid.gameObject, Vector3.zero, eid.transform.position, 1, false);
+                    Stunner.EnsureAndStun(eid, 1);
+
+                    SingularityBallLightning sbl = GameObject.Instantiate(MagnetZap).GetComponent<SingularityBallLightning>();
+                    sbl.enemy = eid.weakPoint ? eid.weakPoint : enemy;
+                    sbl.ball = breakable.gameObject;
+                }
+
+                TimeController.Instance.ParryFlash();
+            }
+            else
+            {
+                breakable.Break();
+            }
+        }
+
+        public static IEnumerator MagnetElecEffect(Transform t)
+        {
+            GameObject effect = GameObject.Instantiate(MagnetZapEffect, t);
+            effect.transform.localPosition = Vector3.zero;
+            effect.transform.rotation = t.rotation;
+
+            yield return new WaitForSeconds(1);
+
+            effect.GetComponent<ParticleSystem>().Stop();
+        }
+
+        private static MethodInfo m_Grenade_Explode = typeof(Grenade).GetMethod("Explode");
+        private static MethodInfo m_Conductor_ExplodeReplacement = typeof(Conductor).GetMethod("ExplodeReplacement");
+
+        [HarmonyPatch(typeof(RevolverBeam), nameof(RevolverBeam.ExecuteHits)), HarmonyTranspiler]
+        public static IEnumerable<CodeInstruction> ReplaceExplode(IEnumerable<CodeInstruction> instructions)
+        {
+            foreach (CodeInstruction instruction in instructions)
+            {
+                if (instruction.opcode == OpCodes.Callvirt && instruction.OperandIs(m_Grenade_Explode))
+                {
+                    yield return new CodeInstruction(OpCodes.Ldarg_0);
+                    yield return new CodeInstruction(OpCodes.Call, m_Conductor_ExplodeReplacement);
+                }
+                else
+                {
+                    yield return instruction;
+                }
+            }
+        }
+
+        public static void ExplodeReplacement(Grenade grenade, bool big, bool harmless, bool super, float sizeMultiplier, bool ultrabooster, GameObject exploderWeapon, RevolverBeam revolverBeam)
+        {
+            Debug.Log($"ExplodeReplacement called! Grenade {grenade}, RevolverBeam {revolverBeam}.");
+
+            if (revolverBeam.sourceWeapon.TryGetComponent(out ConductorBehaviour cb))
+            {
+                if (grenade.harmlessExplosion != FullExplosion)
+                {
+                    GameObject effect = GameObject.Instantiate(MagnetZapEffect, grenade.transform);
+                    effect.transform.localScale *= 1.5f;
+                    ParticleSystem.EmissionModule emit = effect.GetComponent<ParticleSystem>().emission;
+                    emit.rateOverTimeMultiplier *= 2;
+
+                    if (grenade.rocket)
+                    {
+                        grenade.rocketSpeed *= 2f;
+                    }
+                }
+
+                grenade.harmlessExplosion = FullExplosion;
+                grenade.explosion = FullExplosion;
+                grenade.superExplosion = FullExplosion;
+            }
+            else
+            {
+                grenade.Explode(big, harmless, super, sizeMultiplier, ultrabooster, exploderWeapon);
+            }
+        }
+    }
+
+    public class StunExplosion : MonoBehaviour
+    {
+        // this is just a flag, custom tags dont work :3
+    }
+
+    public class Stunner : MonoBehaviour
+    {
+        bool stunned;
+        EnemyIdentifier eid;
+        float timeLeft;
+        List<GameObject> stunGlows = new List<GameObject>();
+
+        public static void EnsureAndStun(EnemyIdentifier eid, float charge)
+        {
+            if (eid.GetComponent<Stunner>() == null)
+            {
+                eid.gameObject.AddComponent<Stunner>();
+            }
+
+            eid.GetComponent<Stunner>().Stun(charge);
+        }
+
+        public void Stun(float charge)
+        {
+            timeLeft += charge;
+
+            if (!stunned)
+            {
+                StartCoroutine(StunRoutine());
+            }
+        }
+
+        private IEnumerator StunRoutine()
+        {
+            if (eid == null)
+            {
+                eid = GetComponent<EnemyIdentifier>();
+            }
+
+            if (eid != null)
+            {
+                Debug.Log("inside");
+
+                bool isLevi = GetComponentInChildren<LeviathanHead>(true) != null && GetComponentInChildren<LeviathanTail>(true) != null;
+
+                /*EnemyIdentifierIdentifier[] eidids = eid.GetComponentsInChildren<EnemyIdentifierIdentifier>();
+                foreach (EnemyIdentifierIdentifier eidid in eidids)
+                {
+                    GameObject stunGlow = GameObject.Instantiate<GameObject>(Conductor.StunEffect, eidid.transform.position, eidid.transform.rotation);
+                    stunGlow.AddComponent<Follow>().target = eidid.gameObject.transform; //cant set parent bc then scale changes :3
+
+                    stunGlows.Add(stunGlow);
+                }*/
+
+                stunned = true;
+
+                float oldSpeedBuff = eid.speedBuffModifier;
+                eid.speedBuffModifier = 0;
+
+                Animator anim = eid.GetComponentInChildren<Animator>();
+                Rigidbody rb = eid.GetComponent<Rigidbody>();
+                NavMeshAgent nma = eid.GetComponent<NavMeshAgent>();
+
+                float oldAnimSpeed = 0;
+                if (anim)
+                {
+                    oldAnimSpeed = anim.speed;
+                    anim.speed = 0;
+                }
+
+                bool usedGrav = false;
+                bool wasKine = false;
+                if (rb && !isLevi)
+                {
+                    usedGrav = rb.useGravity;
+                    wasKine = rb.isKinematic;
+                    rb.useGravity = true;
+                    rb.isKinematic = false;
+                }
+
+                bool nmaEnabled = true;
+                if (nma)
+                {
+                    nmaEnabled = nma.enabled;
+                    nma.enabled = false;
+                }
+
+                Debug.Log("after nma");
+
+                Dictionary<MonoBehaviour, bool> state = new Dictionary<MonoBehaviour, bool>();
+                List<MonoBehaviour> mbs = GetEnemyScript(eid);
+                foreach (MonoBehaviour mb in mbs)
+                {
+                    state.Add(mb, mb.enabled);
+                    Debug.Log(mb);
+                    mb.enabled = false;
+                }
+
+                while (timeLeft >= 0)
+                {
+                    timeLeft -= Time.deltaTime;
+                    yield return null;
+                }
+
+                foreach (MonoBehaviour mb in mbs)
+                {
+                    mb.enabled = state[mb];
+                }
+
+                if (eid)
+                {
+                    eid.speedBuffModifier = oldSpeedBuff;
+                }
+
+                if (anim)
+                {
+                    anim.speed = oldAnimSpeed;
+                }
+
+                if (nma)
+                {
+                    nma.enabled = nmaEnabled;
+                }
+
+                if (rb && !isLevi)
+                {
+                    rb.useGravity = usedGrav;
+                    rb.isKinematic = wasKine;
+                }
+
+                stunned = false;
+
+                foreach (GameObject stunGlow in stunGlows)
+                {
+                    stunGlow.GetComponent<ParticleSystem>().Stop();
+                }
+            }
+            yield return null;
+        }
+
+        public static List<MonoBehaviour> GetEnemyScript(EnemyIdentifier eid)
+        {
+            Type[] types = { typeof(ZombieMelee), typeof(ZombieProjectiles), typeof(Stalker), typeof(Sisyphus), typeof(Ferryman),
+                             typeof(SwordsMachine), typeof(Drone), typeof(DroneFlesh), typeof(Streetcleaner), typeof(V2), typeof(Mindflayer),
+                             typeof(Turret), typeof(SpiderBody), typeof(StatueBoss), typeof(Mass), typeof(Idol), typeof(Gabriel), typeof(GabrielSecond),
+                             typeof(CancerousRodent), typeof(Mandalore), typeof(FleshPrison), typeof(MinosPrime), typeof(SisyphusPrime),
+                             typeof(MinosArm), typeof(MinosBoss), typeof(Parasite), typeof(LeviathanHead), typeof(LeviathanTail)};
+
+            Dictionary<Type, MonoBehaviour> allComps = new Dictionary<Type, MonoBehaviour>();
+
+            foreach (MonoBehaviour mb in eid.gameObject.GetComponentsInChildren<MonoBehaviour>())
+            {
+                Type type = mb.GetType();
+                if (allComps.ContainsKey(type))
+                {
+                    allComps.Add(type, mb);
+                }
+            }
+
+            List<MonoBehaviour> mbs = new List<MonoBehaviour>();
+            foreach (Type type in types)
+            {
+                if (allComps.ContainsKey(type))
+                {
+                    mbs.Add(allComps[type]);
+                }
+            }
+
+            return mbs;
+        }
+    }
+
+    public class ConductorBehaviour : GunBehaviour<ConductorBehaviour>
+    {
+        private Nailgun nail;
+        [HideInInspector] public float Charge;
+        [HideInInspector] public float ChargeLength;
+        [HideInInspector] public float LastCharge;
+        public GameObject Beam;
+        public Slider ChargeSlider;
+        public Slider HoldLengthSlider;
+        public AudioSource ChargeSound;
+        public AudioSource ShootSound;
+        public AudioSource FinishChargeSound;
+        public MeshRenderer[] Barrels;
+        public Material NormalBarrelHeat;
+        public Material BlueBarrelHeat;
+        public ParticleSystem ElecParticles;
+        public Color ShootColour;
+        public Color ElecColour;
+        private float fireRate = 0;
+        private float cooldown = 0;
+
+        public void Start()
+        {
+            nail = GetComponent<Nailgun>();
+            fireRate = nail.fireRate;
+            SetBarrelsOrange();
+        }
+
+        public void Update()
+        {
+            if (ULTRAKILL.Cheats.NoWeaponCooldown.NoCooldown)
+            {
+                Charge = 1;
+            }
+
+            if (nail.gc.activated)
+            {
+                nail.fireRate = fireRate;
+                cooldown = Mathf.MoveTowards(cooldown, 0, Time.deltaTime);
+                Charge = Mathf.MoveTowards(Charge, 1, Time.deltaTime * 0.1f);
+
+                nail.heatSlider = null;
+                ChargeSlider.value = Charge;
+                HoldLengthSlider.value = ChargeLength == 0 ? 0 : ChargeLength + (1 - Charge);
+
+                if (cooldown == 0)
+                {
+                    if (Charge >= 0.1f && Gun.OnAltFireHeld())
+                    {
+                        nail.heatUp = ChargeLength;
+                        nail.spinSpeed = 250f + nail.heatUp * 2250f;
+                        SetBarrelsBlue();
+
+                        nail.canShoot = false;
+                        if (ChargeLength < 1)
+                        {
+                            ChargeLength = Mathf.MoveTowards(ChargeLength, Charge, Time.deltaTime / 1.5f);
+                            if (ChargeLength == 1)
+                            {
+                                FinishChargeSound.Play();
+                            }
+                        }
+                        if (!ChargeSound.isPlaying)
+                        {
+                            ChargeSound.Play();
+                        }
+                        ChargeSound.pitch = 0.5f + ChargeLength;
+                        CameraController.Instance.CameraShake(ChargeLength * 0.25f);
+                    }
+                    else
+                    {
+                        nail.canShoot = true;
+                    }
+
+                    if (Gun.OnAltFireReleased() && Charge >= 0.1f)
+                    {
+                        LastCharge = ChargeLength;
+                        if (ChargeLength <= 0.1f)
+                        {
+                            ChargeLength = 0.1f;
+                        }
+
+                        ChargeSound.Stop();
+                        ShootSound.Play();
+
+                        if (ChargeLength < 0.1f)
+                        {
+                            ChargeLength = 0.1f;
+                        }
+
+                        nail.anim.SetTrigger("Shoot");
+                        CameraController.Instance.CameraShake(2 * ChargeLength);
+
+                        RevolverBeam beam = GameObject.Instantiate(Beam, nail.cc.transform.position + nail.cc.transform.forward, nail.cc.transform.rotation).GetComponent<RevolverBeam>();
+                        if (ChargeLength == 1)
+                        {
+                            beam.hitParticle = Conductor.FullExplosion;
+                            foreach (Explosion e in beam.hitParticle.GetComponentsInChildren<Explosion>(true))
+                            {
+                                e.sourceWeapon = gameObject;
+                            }
+                        }
+                        beam.alternateStartPoint = nail.shootPoints[0].transform.position;
+                        beam.damage *= ChargeLength;
+                        beam.sourceWeapon = gameObject;
+                        beam.enemyLayerMask |= (1 << 14); // have to add the Projectile layer, but can't use rb.canHitProjectiles as it will cause the sharpshooter behaviour
+                        foreach (LineRenderer lr in beam.GetComponentsInChildren<LineRenderer>())
+                        {
+                            lr.startWidth *= 2 * ChargeLength;
+                        }
+
+                        Charge -= ChargeLength;
+                        ChargeLength = 0;
+                        cooldown = 0.25f;
+
+                        SetBarrelsOrange();
+                    }
+                }
+            }
+        }
+
+        public void SetBarrelsOrange()
+        {
+            foreach (MeshRenderer mr in Barrels)
+            {
+                mr.material = NormalBarrelHeat;
+                Light light = mr.TryGetComponent(out Light l) ? l : mr.transform.parent.GetComponentInChildren<Light>();
+                light.color = ShootColour;
+            }
+
+            ParticleSystem.EmissionModule em = ElecParticles.emission;
+            em.rateOverTime = 0;
+        }
+
+        public void SetBarrelsBlue()
+        {
+            foreach (MeshRenderer mr in Barrels)
+            {
+                mr.material = BlueBarrelHeat;
+                Light light = mr.TryGetComponent(out Light l) ? l : mr.transform.parent.GetComponentInChildren<Light>();
+                light.color = ElecColour;
+            }
+
+            ParticleSystem.EmissionModule em = ElecParticles.emission;
+            em.rateOverTime = ChargeLength * 100;
+        }
+
+        public void OnEnable()
+        {
+            ChargeLength = 0;
+            Charge = WaffleWeaponCharges.Instance.ConductorCharge;
+        }
+
+        public void OnDisable()
+        {
+            WaffleWeaponCharges.Instance.ConductorCharge = Charge;
+        }
+    }
+}

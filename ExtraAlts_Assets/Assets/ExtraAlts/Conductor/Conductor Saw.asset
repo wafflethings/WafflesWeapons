@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b54c259edfc531c428007970a94e4360, type: 3}
-  m_Name: Airblast Saw
+  m_Name: Conductor Saw
   m_EditorClassIdentifier: 
-  weaponName: Airblast Sawblade Launcher
+  weaponName: Conductor Sawblade Launcher
   icon: {fileID: 21300000, guid: 4a6c1438df86b254b9aea823445dafd9, type: 3}
   glowIcon: {fileID: 21300000, guid: 763294df6c1b1034b9b6279048b54759, type: 3}
   variationColor: 0

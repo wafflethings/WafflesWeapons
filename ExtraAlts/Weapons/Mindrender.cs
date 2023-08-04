@@ -1,6 +1,7 @@
 ﻿using Atlas.Modules.Guns;
 using HarmonyLib;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -80,7 +81,7 @@ namespace WafflesWeapons.Weapons
         {
             if (eidid != null && eidid.eid != null && !eidid.eid.dead)
             {
-                float amount = 0;
+                float amount;
 
                 if (__instance.sawblade)
                 {
@@ -116,6 +117,8 @@ namespace WafflesWeapons.Weapons
         private const float DrainRate = 0.25f;
 
         private bool Shooting = false;
+        private bool ShrinkingBeam = false;
+        private float holdLength;
         private Nailgun nai;
         private GameObject curVis;
         private LineRenderer lr;
@@ -160,17 +163,23 @@ namespace WafflesWeapons.Weapons
 
             if (nai.gc.activated)
             {
-                if (Charge <= 0)
-                {
-                    Charge = 0;
-                    Stop();
-                }
-
                 if (!nai.altVersion)
                 {
                     if (Shooting)
                     {
-                        if (nai.wid.delay == 0)
+                        if (Gun.OnAltFireHeld())
+                        {
+                            holdLength += Time.deltaTime;
+                            nai.heatUp = holdLength;
+                            nai.spinSpeed = 250f + nai.heatUp * 2250f;
+                        }
+
+                        if (!Gun.OnAltFireHeld() || Charge <= 0)
+                        {
+                            Stop();
+                        }
+
+                        if (nai.wid.delay == 0 && !ShrinkingBeam)
                         {
                             Charge -= DrainRate * Time.deltaTime;
                         }
@@ -262,7 +271,13 @@ namespace WafflesWeapons.Weapons
                     }
                     else
                     {
-                        if (Charge > 0.05f && Gun.OnAltFire())
+                        if (nai.heatUp != 0)
+                        {
+                            nai.heatUp = Mathf.MoveTowards(nai.heatUp, 0, Time.deltaTime * 5);
+                            nai.spinSpeed = 250f + nai.heatUp * 2250f;
+                        }
+
+                        if (Charge > 0.05f && Gun.OnAltFireHeld() && !Shooting && curVis == null) //curVis == null makes sure the beam has been destroyed before firing
                         {
                             curVis = Instantiate(VisualBeam, nai.shootPoints[0].transform);
                             lr = curVis.GetComponent<LineRenderer>();
@@ -324,17 +339,60 @@ namespace WafflesWeapons.Weapons
 
         public void OnDisable()
         {
-            Stop();
+            Stop(true);
         }
 
-        public void Stop()
+        public void Stop(bool instant = false)
         {
             if (Shooting)
             {
-                Shooting = false;
-                Destroy(curVis);
-                Charge = 0;
+                if (!instant)
+                {
+                    StartCoroutine(FadeOutAndDestroy());
+                } else
+                {
+                    Shooting = false;
+                    Destroy(curVis);
+                    holdLength = 0;
+                }
             }
+        }
+
+        public IEnumerator FadeOutAndDestroy()
+        {
+            ShrinkingBeam = true;
+            if (curVis != null)
+            {
+                ParticleSystem[] systems = curVis.GetComponentsInChildren<ParticleSystem>();
+                AudioSource ass = curVis.GetComponent<AudioSource>();
+                LineRenderer lr = curVis.GetComponent<LineRenderer>();
+
+                while (ass != null && ass.volume > 0)
+                {
+                    ass.volume = Mathf.MoveTowards(ass.volume, 0, Time.deltaTime * 2);
+                    lr.startWidth = Mathf.MoveTowards(lr.startWidth, 0, Time.deltaTime * 2);
+
+                    foreach (ParticleSystem ps in systems)
+                    {
+                        try
+                        {
+                            Color colour = ps.startColor;
+                            colour.a = Mathf.MoveTowards(colour.a, 0, Time.deltaTime * 8);
+                            ps.startColor = colour; // i know its deprecated but the new system is fucking garbage so i literally do NOT care
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.LogWarning("dumbass particlesystem bullshit go: " + ex.ToString());
+                        }
+                    }
+                    yield return null;
+                }
+                Destroy(curVis);
+            }
+
+            Shooting = false;
+            ShrinkingBeam = false;
+            holdLength = 0;
         }
     }
 

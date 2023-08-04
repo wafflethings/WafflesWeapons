@@ -29094,12 +29094,12 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Press Alt Fire to fire a gust of wind that charges <color=orange>over
-    time</color>, more on the ground.
+  m_Text: 'Hold Alt Fire to charge a beam that <color=orange>stuns</color> enemies.
 
 
-    Launches projectiles and enemies, and
-    <color=orange>you</color> if in the air.'
+    When
+    at max charge, the beam will <color=orange>explode</color> with a stunning explosion
+    for each hit.'
 --- !u!1 &3914024537301889269
 GameObject:
   m_ObjectHideFlags: 0
@@ -39634,7 +39634,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: AIRBLAST
+  m_Text: CONDUCTOR
 --- !u!1 &5556357855809278554
 GameObject:
   m_ObjectHideFlags: 0
@@ -46980,7 +46980,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: AIRBLAST
+  m_Text: CONDUCTOR
 --- !u!1 &6743779097322594695
 GameObject:
   m_ObjectHideFlags: 0

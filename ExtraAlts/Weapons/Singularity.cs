@@ -259,6 +259,7 @@ namespace WafflesWeapons.Weapons
         public GameObject destroyEffect;
 
         private Rigidbody rb;
+        private RevolverBeam lastBeam;
 
         public void Start()
         {
@@ -355,8 +356,9 @@ namespace WafflesWeapons.Weapons
 
         public void GetHit(RevolverBeam beam)
         {
-            TimeController.Instance.ParryFlash();
+            lastBeam = beam;
             Implode(25 + (beam.damage / 2));
+            TimeController.Instance.ParryFlash();
         }
 
         public void GetParried()
@@ -406,7 +408,7 @@ namespace WafflesWeapons.Weapons
                 harp.CancelInvoke("DestroyIfNotHit");
             }
 
-            if (other.TryGetComponent(out Grenade gren) && !caughtList.Contains(other.GetComponent<Rigidbody>()))
+            if ((other.TryGetComponent(out Grenade gren) || other.TryGetComponent(out Projectile proj)) && !caughtList.Contains(other.GetComponent<Rigidbody>()))
             {
                 caughtList.Add(other.GetComponent<Rigidbody>());
             }
@@ -461,6 +463,11 @@ namespace WafflesWeapons.Weapons
                     amount = eid.health - 0.1f;
 
                 eid.DeliverDamage(eid.gameObject, rb.velocity, eid.transform.position, amount, false);
+
+                if (lastBeam.sourceWeapon.GetComponent<ConductorBehaviour>() != null)
+                {
+                    Stunner.EnsureAndStun(eid, lastBeam.damage / 3);
+                }
 
                 if (eid.dead)
                     AddRbs(eid);

@@ -39,8 +39,8 @@ namespace WafflesWeapons
             Malevolent.LoadAssets();
             GunRegistry.Register(new Malevolent());
 
-            Airblast.LoadAssets();
-            GunRegistry.Register(new Airblast());
+            Conductor.LoadAssets();
+            GunRegistry.Register(new Conductor());
 
             LoaderGauntlet.LoadAssets();
             GunRegistry.Register(new LoaderGauntlet());

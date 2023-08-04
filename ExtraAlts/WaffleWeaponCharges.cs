@@ -18,7 +18,7 @@ namespace WafflesWeapons
 
         public float SingularityShoCharge = 0;
 
-        public float AirblastCharge = 0;
+        public float ConductorCharge = 0;
 
         public float SLFCharge = 0;
 
@@ -26,7 +26,7 @@ namespace WafflesWeapons
         {
             MalRevCharge = Mathf.MoveTowards(MalRevCharge, 100, 20 * (MalAlt ? 0.5f : 1) * amount);
             SingularityShoCharge = Mathf.MoveTowards(SingularityShoCharge, SingularityBehaviour.HEALTH_NEEDED, 5 * amount);
-            AirblastCharge = Mathf.MoveTowards(AirblastCharge, 1, Time.deltaTime * (NewMovement.Instance.gc.touchingGround ? 0.1f : 0.05f));
+            ConductorCharge = Mathf.MoveTowards(ConductorCharge, 1, Time.deltaTime * 0.1f);
         }
 
         [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.Charge)), HarmonyPostfix]
