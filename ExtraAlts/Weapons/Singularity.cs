@@ -466,7 +466,7 @@ namespace WafflesWeapons.Weapons
 
                 if (lastBeam.sourceWeapon.GetComponent<ConductorBehaviour>() != null)
                 {
-                    Stunner.EnsureAndStun(eid, lastBeam.damage / 3);
+                    Stunner.EnsureAndStun(eid, lastBeam.damage / 2);
                 }
 
                 if (eid.dead)

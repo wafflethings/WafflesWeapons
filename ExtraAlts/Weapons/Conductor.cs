@@ -164,23 +164,27 @@ namespace WafflesWeapons.Weapons
 
                 Debug.Log("Source has CB");
 
-                float length = cb.LastCharge * 20f;
+                float length = cb.LastCharge * 30f;
 
                 GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy").Where(enemy => !enemy.GetComponent<EnemyIdentifier>().dead && 
                     Vector3.Distance(enemy.transform.position, breakable.transform.position) <= length).ToArray();
 
                 Debug.Log($"{enemies.Length} enemies in {length} radius");
 
-                foreach (GameObject enemy in enemies)
+                if (enemies.Length > 0)
                 {
-                    EnemyIdentifier eid = enemy.GetComponent<EnemyIdentifier>();
-                    eid.hitterAttributes.Add(HitterAttribute.Electricity);
-                    eid.DeliverDamage(eid.gameObject, Vector3.zero, eid.transform.position, 1, false);
-                    Stunner.EnsureAndStun(eid, 1);
+                    foreach (GameObject enemy in enemies)
+                    {
+                        EnemyIdentifier eid = enemy.GetComponent<EnemyIdentifier>();
+                        eid.hitterAttributes.Add(HitterAttribute.Electricity);
+                        eid.DeliverDamage(eid.gameObject, Vector3.zero, eid.transform.position, revolverBeam.damage, false);
+                        Stunner.EnsureAndStun(eid, 1);
 
-                    SingularityBallLightning sbl = GameObject.Instantiate(MagnetZap).GetComponent<SingularityBallLightning>();
-                    sbl.enemy = eid.weakPoint ? eid.weakPoint : enemy;
-                    sbl.ball = breakable.gameObject;
+                        SingularityBallLightning sbl = GameObject.Instantiate(MagnetZap).GetComponent<SingularityBallLightning>();
+                        sbl.enemy = eid.weakPoint ? eid.weakPoint : enemy;
+                        sbl.ball = breakable.gameObject;
+                    }
+                    StyleCalculator.Instance.AddPoints(50 * enemies.Length, $"<color=cyan>GROUNDED</color> x{enemies.Length}", enemies[0].GetComponent<EnemyIdentifier>(), revolverBeam.sourceWeapon);
                 }
 
                 TimeController.Instance.ParryFlash();
@@ -308,19 +312,27 @@ namespace WafflesWeapons.Weapons
 
                 stunned = true;
 
-                float oldSpeedBuff = eid.speedBuffModifier;
-                eid.speedBuffModifier = 0;
-
                 Animator anim = eid.GetComponentInChildren<Animator>();
                 Rigidbody rb = eid.GetComponent<Rigidbody>();
                 NavMeshAgent nma = eid.GetComponent<NavMeshAgent>();
 
-                float oldAnimSpeed = 0;
                 if (anim)
                 {
-                    oldAnimSpeed = anim.speed;
-                    anim.speed = 0;
+                    anim.enabled = false;
                 }
+
+                if (nma)
+                {
+                    nma.enabled = false;
+                }
+
+                List<MonoBehaviour> mbs = GetEnemyScript(eid);
+                foreach (MonoBehaviour mb in mbs)
+                {
+                    mb.enabled = false;
+                }
+
+                eid.enabled = false;
 
                 bool usedGrav = false;
                 bool wasKine = false;
@@ -332,49 +344,28 @@ namespace WafflesWeapons.Weapons
                     rb.isKinematic = false;
                 }
 
-                bool nmaEnabled = true;
-                if (nma)
-                {
-                    nmaEnabled = nma.enabled;
-                    nma.enabled = false;
-                }
-
-                Debug.Log("after nma");
-
-                Dictionary<MonoBehaviour, bool> state = new Dictionary<MonoBehaviour, bool>();
-                List<MonoBehaviour> mbs = GetEnemyScript(eid);
-                foreach (MonoBehaviour mb in mbs)
-                {
-                    state.Add(mb, mb.enabled);
-                    Debug.Log(mb);
-                    mb.enabled = false;
-                }
-
                 while (timeLeft >= 0)
                 {
                     timeLeft -= Time.deltaTime;
                     yield return null;
                 }
 
-                foreach (MonoBehaviour mb in mbs)
-                {
-                    mb.enabled = state[mb];
-                }
-
-                if (eid)
-                {
-                    eid.speedBuffModifier = oldSpeedBuff;
-                }
-
                 if (anim)
                 {
-                    anim.speed = oldAnimSpeed;
+                    anim.enabled = true;
                 }
 
                 if (nma)
                 {
-                    nma.enabled = nmaEnabled;
+                    nma.enabled = true;
                 }
+
+                foreach (MonoBehaviour mb in mbs)
+                {
+                    mb.enabled = true;
+                }
+
+                eid.enabled = true;
 
                 if (rb && !isLevi)
                 {
@@ -405,7 +396,7 @@ namespace WafflesWeapons.Weapons
             foreach (MonoBehaviour mb in eid.gameObject.GetComponentsInChildren<MonoBehaviour>())
             {
                 Type type = mb.GetType();
-                if (allComps.ContainsKey(type))
+                if (!allComps.ContainsKey(type))
                 {
                     allComps.Add(type, mb);
                 }
