@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 using UnityEngine;
 using WafflesWeapons.Weapons;
 
-namespace WafflesWeapons
+namespace WafflesWeapons.Components
 {
     public class WaffleWeaponCharges : MonoSingleton<WaffleWeaponCharges>
     {
         public float FanRevCharge = 0;
 
-        public bool MalAlt;
+        public bool MalAlt => MalevolentBehaviour.Instances.Count > 0 ? (MalevolentBehaviour.Instances[0].rev?.altVersion ?? false) : false;
         public float MalRevCharge = 0;
 
         public float SingularityShoCharge = 0;
@@ -33,6 +33,12 @@ namespace WafflesWeapons
         public static void ChargeWW(float amount)
         {
             Instance.Charge(amount);
+        }
+
+        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.MaxCharges))]
+        public static void MaxChargesWW()
+        {
+            Instance.ConductorCharge = 1;
         }
     }
 }

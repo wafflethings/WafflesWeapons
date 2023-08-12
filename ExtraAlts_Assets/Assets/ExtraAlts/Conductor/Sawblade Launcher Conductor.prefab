@@ -338,7 +338,8 @@ MonoBehaviour:
   Charge: 0
   ChargeLength: 0
   LastCharge: 0
-  Beam: {fileID: 1659085721669404, guid: fc563481eb89e97449c843b4307b5ab4, type: 3}
+  Beam: {fileID: 0}
+  Saw: {fileID: 152350782664307047, guid: 4b32593abc472e1489cba276e8a4cb34, type: 3}
   ChargeSlider: {fileID: 1567226326599725658}
   HoldLengthSlider: {fileID: 4525113322828295770}
   ChargeSound: {fileID: 5309430990258143223}

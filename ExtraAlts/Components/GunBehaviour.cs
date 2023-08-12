@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace WafflesWeapons
+namespace WafflesWeapons.Components
 {
     public class GunBehaviour<T> : GunBehaviour where T : GunBehaviour<T>
     {

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons
 {
@@ -13,10 +14,9 @@ namespace WafflesWeapons.Weapons
     {
         public static GameObject SingularityShotgun;
 
-        public static void LoadAssets()
+        static Singularity()
         {
             SingularityShotgun = Core.Assets.LoadAsset<GameObject>("Shotgun Singularity.prefab");
-
             Core.Harmony.PatchAll(typeof(Singularity));
         }
 
@@ -250,7 +250,7 @@ namespace WafflesWeapons.Weapons
         private float elapsedTime;
         private List<EnemyIdentifier> eidsOnCooldown = new List<EnemyIdentifier>();
         private List<Rigidbody> caughtList = new List<Rigidbody>();
-        private bool drilling = false;
+        private int drills = 0;
         private float drillCooldown;
         [Header("Visual")]
         public ParticleSystem suck;
@@ -285,16 +285,51 @@ namespace WafflesWeapons.Weapons
             {
                 if (maxTime <= elapsedTime)
                 {
+                    float oldX = transform.localScale.x;
                     transform.localScale = Vector3.MoveTowards(transform.localScale, Vector3.zero, Time.deltaTime * 3);
+
+                    if (oldX > 0.1f && transform.localScale.x <= 0.1f)
+                    {
+                        int i = 0;
+                        foreach (EnemyIdentifierIdentifier eidid in GetComponentsInChildren<EnemyIdentifierIdentifier>())
+                        {
+                            if (i % 2 == 0) //prob a better way to do this but its 2am and im eepy :3
+                            {
+                                eidid.eid.hitter = "enemy";
+                                eidid.eid.DeliverDamage(eidid.gameObject, Vector3.zero, eidid.gameObject.transform.position, 25f, false);
+                            }
+                            i++;
+                        }
+
+                        foreach (Breakable breakable in GetComponentsInChildren<Breakable>())
+                        {
+                            breakable.Break();
+                        }
+
+                        foreach (Projectile proj in GetComponentsInChildren<Projectile>())
+                        {
+                            proj.TimeToDie();
+                        }
+
+                        foreach (Grenade gren in GetComponentsInChildren<Grenade>())
+                        {
+                            gren.Explode();
+                        }
+
+                        foreach (Cannonball c in GetComponentsInChildren<Cannonball>())
+                        {
+                            c.Explode();
+                        }
+                    }
                 }
             }
 
             elapsedTime += Time.deltaTime;
 
-            if (drilling)
+            if (drills > 0)
             {
                 drillCooldown += Time.deltaTime;
-                if (drillCooldown > drillInterval)
+                if (drillCooldown > drillInterval / drills)
                 {
                     drillCooldown = 0;
                     Implode(15);
@@ -402,15 +437,31 @@ namespace WafflesWeapons.Weapons
                 if (harp.drill)
                 {
                     harp.rb.isKinematic = true;
-                    drilling = true;
+                    drills++;
                 }
 
                 harp.CancelInvoke("DestroyIfNotHit");
             }
 
-            if ((other.TryGetComponent(out Grenade gren) || other.TryGetComponent(out Projectile proj)) && !caughtList.Contains(other.GetComponent<Rigidbody>()))
+            Projectile proj = null;
+            Cannonball c = null;
+
+            if ((other.GetComponent<Grenade>() || other.TryGetComponent(out proj) || 
+                (other.TryGetComponent(out c) && c.physicsCannonball)) && !caughtList.Contains(other.GetComponent<Rigidbody>()))
             {
-                caughtList.Add(other.GetComponent<Rigidbody>());
+                Rigidbody rb = other.GetComponent<Rigidbody>();
+
+                if (proj || c)
+                {
+                    rb.useGravity = false;
+                }
+
+                if (proj)
+                {
+                    proj.undeflectable = true;
+                }
+
+                caughtList.Add(rb);
             }
         }
 
@@ -464,10 +515,18 @@ namespace WafflesWeapons.Weapons
 
                 eid.DeliverDamage(eid.gameObject, rb.velocity, eid.transform.position, amount, false);
 
-                if (lastBeam.sourceWeapon.GetComponent<ConductorBehaviour>() != null)
+                SingularityBallLightning sbl;
+                if (lastBeam?.sourceWeapon.GetComponent<ConductorBehaviour>() != null)
                 {
                     Stunner.EnsureAndStun(eid, lastBeam.damage / 2);
+                    sbl = Instantiate(Conductor.MagnetZap).GetComponent<SingularityBallLightning>();
                 }
+                else
+                {
+                    sbl = Instantiate(lightning).GetComponent<SingularityBallLightning>();
+                }
+                sbl.enemy = enemy;
+                sbl.ball = gameObject;
 
                 if (eid.dead)
                     AddRbs(eid);
@@ -493,13 +552,9 @@ namespace WafflesWeapons.Weapons
                     }
                     enemyRb.velocity = (transform.position - enemy.transform.position).normalized * (6f * Vector3.Distance(transform.position, enemy.transform.position));
                 }
-
-                SingularityBallLightning sbl = Instantiate(lightning).GetComponent<SingularityBallLightning>();
-                sbl.enemy = enemy;
-                sbl.ball = gameObject;
             }
 
-            Projectile[] projectiles = FindObjectsOfType<Projectile>().Where(proj => Vector3.Distance(gameObject.transform.position, proj.gameObject.transform.position) <= length).ToArray();
+            Projectile[] projectiles = FindObjectsOfType<Projectile>().Where(proj => !proj.rb.useGravity && Vector3.Distance(gameObject.transform.position, proj.gameObject.transform.position) <= length).ToArray();
 
             foreach (Projectile projectile in projectiles)
             {

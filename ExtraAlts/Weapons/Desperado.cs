@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons
 {
@@ -15,7 +16,7 @@ namespace WafflesWeapons.Weapons
         public static GameObject DespAlt;
         public static List<DesperadoBehaviour> Guns = new List<DesperadoBehaviour>();
 
-        public static void LoadAssets()
+        static Desperado()
         {
             Desp = Core.Assets.LoadAsset<GameObject>("Revolver Desperado.prefab");
             DespAlt = Core.Assets.LoadAsset<GameObject>("Alternative Revolver Desperado.prefab");
@@ -116,9 +117,11 @@ namespace WafflesWeapons.Weapons
             newBeam.transform.LookAt(UltrakillUtils.NearestEnemyPoint(hitPos, 1000, eid));
             Debug.Log("looked");
             newBeam.GetComponent<AudioSource>().enabled = false;
+            Debug.Log("sr");
             newBeam.GetComponentInChildren<SpriteRenderer>().enabled = false;
+            Debug.Log("sw");
             newBeam.GetComponent<RevolverBeam>().sourceWeapon = DesperadoBehaviour.Instances[0].gameObject;
-
+            Debug.Log(":3");
         }
 
         [HarmonyPatch(typeof(Revolver), nameof(Revolver.Update))]
@@ -165,7 +168,7 @@ namespace WafflesWeapons.Weapons
         public GameObject BadBeam;
 
         [Header("Sliders")]
-        public GameObject AlertOnEnter;
+        public AudioSource SoundEffect;
         public Slider slider;
         public Slider left;
         public Slider right;
@@ -207,24 +210,24 @@ namespace WafflesWeapons.Weapons
 
             if (shouldMove)
             {
+                if (!SoundEffect.isPlaying)
+                {
+                    SoundEffect.Play();
+                }
+                SoundEffect.pitch = 1 - GetProximityToBar();
+                if (SoundEffect.pitch == 1)
+                {
+                    SoundEffect.pitch = 2;
+                }
+
                 Debug.Log($"{goingRight} gr, {leftLimit} {rightLimit} {currentSlider}");
                 if (goingRight)
                 {
-                    if (currentSlider < leftLimit && currentSlider + sliderSpeed * Time.deltaTime >= leftLimit)
-                    {
-                        Instantiate(AlertOnEnter, NewMovement.Instance.transform.position, Quaternion.identity);
-                    }
-
                     currentSlider += sliderSpeed * Time.deltaTime;
                 }
                 else
                 {
                     currentSlider -= sliderSpeed * Time.deltaTime;
-
-                    if (currentSlider > rightLimit && currentSlider - sliderSpeed * Time.deltaTime <= rightLimit)
-                    {
-                        Instantiate(AlertOnEnter, NewMovement.Instance.transform.position, Quaternion.identity);
-                    }
                 }
 
                 if ((currentSlider > 1 && goingRight) || (currentSlider < 0 && !goingRight))
@@ -253,6 +256,11 @@ namespace WafflesWeapons.Weapons
             }
             else
             {
+                if (SoundEffect.isPlaying)
+                {
+                    SoundEffect.Stop();
+                }
+
                 sliderSpeed += toAdd;
                 toAdd = 0;
                 sliderSpeed -= speedDecayRate * Time.deltaTime;
@@ -315,6 +323,17 @@ namespace WafflesWeapons.Weapons
             perfectBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size * 200);
             left.value = leftLimit;
             right.value = rightLimit;
+        }
+
+        public float GetProximityToBar()
+        {
+            if (currentSlider > leftLimit && currentSlider < rightLimit)
+            {
+                return 0;
+            }
+
+            float closest = Mathf.Abs(currentSlider - leftLimit) < Mathf.Abs(currentSlider - rightLimit) ? leftLimit : rightLimit;
+            return Mathf.Abs(currentSlider - closest);
         }
     }
 }

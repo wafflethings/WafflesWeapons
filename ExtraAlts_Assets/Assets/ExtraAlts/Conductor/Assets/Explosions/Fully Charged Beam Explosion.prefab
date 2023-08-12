@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 4132020913173216833}
   - component: {fileID: 5751895285762501399}
   m_Layer: 23
-  m_Name: Cond Full Explosion
+  m_Name: Fully Charged Beam Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -430,6 +430,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.22360685
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1899332978264117446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166480980646559239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1627965930, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7042091600184645563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -461,18 +473,6 @@ MonoBehaviour:
   toIgnore: 
   unblockable: 0
   electric: 1
---- !u!114 &1899332978264117446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 166480980646559239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 950140947, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &7928957002556782282
 Rigidbody:
   m_ObjectHideFlags: 0

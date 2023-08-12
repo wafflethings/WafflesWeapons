@@ -9,6 +9,7 @@ using System.Reflection.Emit;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons
 {
@@ -18,14 +19,20 @@ namespace WafflesWeapons.Weapons
         public static GameObject ConductorSaw;
         public static GameObject MagnetZapEffect;
         public static GameObject FullExplosion;
+        public static GameObject SawExplosion;
+        public static GameObject RocketExplosion;
+        public static GameObject HitProjectileExplosion;
         public static GameObject MagnetZap;
 
-        public static void LoadAssets()
+        static Conductor()
         {
             ConductorNail = Core.Assets.LoadAsset<GameObject>("Nailgun Conductor.prefab");
             ConductorSaw = Core.Assets.LoadAsset<GameObject>("Sawblade Launcher Conductor.prefab");
             MagnetZapEffect = Core.Assets.LoadAsset<GameObject>("Magnet Zap Effect.prefab");
-            FullExplosion = Core.Assets.LoadAsset<GameObject>("Cond Full Explosion.prefab");
+            FullExplosion = Core.Assets.LoadAsset<GameObject>("Fully Charged Beam Explosion.prefab");
+            SawExplosion = Core.Assets.LoadAsset<GameObject>("Fully Charged Saw Explosion.prefab");
+            RocketExplosion = Core.Assets.LoadAsset<GameObject>("Shot Rocket Explosion.prefab");
+            HitProjectileExplosion = Core.Assets.LoadAsset<GameObject>("Shot Projectile Explosion.prefab");
             MagnetZap = Core.Assets.LoadAsset<GameObject>("Magnet Zap.prefab");
             Core.Harmony.PatchAll(typeof(Conductor));
         }
@@ -72,7 +79,21 @@ namespace WafflesWeapons.Weapons
                 EnemyIdentifier eid = currentHit.transform.GetComponentInParent<EnemyIdentifierIdentifier>().eid;
                 if (eid != null)
                 {
-                    Stunner.EnsureAndStun(eid, c.LastCharge * 1.5f);
+                    Stunner.EnsureAndStun(eid, c.LastCharge * (eid.GetComponent<BossIdentifier>() ? 1 : 2));
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(Nail), nameof(Nail.HitEnemy)), HarmonyPostfix]
+        public static void StunSaws(Nail __instance, EnemyIdentifierIdentifier eidid)
+        {
+            if (__instance.GetComponent<StunTag>() && EnemyHitTracker.CheckAndHit(__instance.gameObject, eidid.eid))
+            {
+                Stunner.EnsureAndStun(eidid.eid, __instance.damage / 4);
+
+                if (__instance.sawBounceEffect == SawExplosion)
+                {
+                    GameObject.Instantiate(__instance.sawBounceEffect, __instance.transform.position, __instance.transform.rotation);
                 }
             }
         }
@@ -92,7 +113,7 @@ namespace WafflesWeapons.Weapons
                 projectile.transform.forward = CameraController.Instance.transform.forward;
                 projectile.friendly = true;
                 projectile.homingType = HomingType.None;
-                projectile.explosionEffect = FullExplosion;
+                projectile.explosionEffect = HitProjectileExplosion;
 
                 if (projectile.TryGetComponent(out Rigidbody rb))
                 {
@@ -109,27 +130,17 @@ namespace WafflesWeapons.Weapons
         [HarmonyPatch(typeof(Explosion), nameof(Explosion.Collide)), HarmonyPrefix]
         public static void StunEnemiesHitByExplosion(Explosion __instance, Collider other)
         {
-            //Debug.Log("wataflip");
-            if (__instance.canHit == AffectedSubjects.PlayerOnly || __instance.GetComponent<StunExplosion>() == null)
+            if (__instance.canHit == AffectedSubjects.PlayerOnly || __instance.GetComponent<StunTag>() == null)
             {
                 return;
-            }
-
-            List<EnemyIdentifier> alrHitEids = new List<EnemyIdentifier>();
-            foreach (Collider col in __instance.hitColliders)
-            {
-                if (col != null && col.TryGetComponent(out EnemyIdentifierIdentifier eidid) && eidid.eid != null)
-                {
-                    alrHitEids.Add(eidid.eid);
-                }
             }
 
             if (other.gameObject.layer == 10 || other.gameObject.layer == 11)
             {
                 EnemyIdentifierIdentifier eidid = other.GetComponentInParent<EnemyIdentifierIdentifier>();
-                if (eidid != null && eidid.eid != null && !alrHitEids.Contains(eidid.eid))
+                if (eidid != null && eidid.eid != null && EnemyHitTracker.CheckAndHit(__instance.gameObject, eidid.eid, 0.5f))
                 {
-                    Stunner.EnsureAndStun(eidid.eid, 1);
+                    Stunner.EnsureAndStun(eidid.eid, 0.5f);
                 }
             }
         }
@@ -210,7 +221,7 @@ namespace WafflesWeapons.Weapons
         private static MethodInfo m_Conductor_ExplodeReplacement = typeof(Conductor).GetMethod("ExplodeReplacement");
 
         [HarmonyPatch(typeof(RevolverBeam), nameof(RevolverBeam.ExecuteHits)), HarmonyTranspiler]
-        public static IEnumerable<CodeInstruction> ReplaceExplode(IEnumerable<CodeInstruction> instructions)
+        public static IEnumerable<CodeInstruction> ReplaceGrenadeExplode(IEnumerable<CodeInstruction> instructions)
         {
             foreach (CodeInstruction instruction in instructions)
             {
@@ -232,7 +243,7 @@ namespace WafflesWeapons.Weapons
 
             if (revolverBeam.sourceWeapon.TryGetComponent(out ConductorBehaviour cb))
             {
-                if (grenade.harmlessExplosion != FullExplosion)
+                if (grenade.harmlessExplosion != RocketExplosion)
                 {
                     GameObject effect = GameObject.Instantiate(MagnetZapEffect, grenade.transform);
                     effect.transform.localScale *= 1.5f;
@@ -245,9 +256,9 @@ namespace WafflesWeapons.Weapons
                     }
                 }
 
-                grenade.harmlessExplosion = FullExplosion;
-                grenade.explosion = FullExplosion;
-                grenade.superExplosion = FullExplosion;
+                grenade.harmlessExplosion = RocketExplosion;
+                grenade.explosion = RocketExplosion;
+                grenade.superExplosion = RocketExplosion;
             }
             else
             {
@@ -256,7 +267,7 @@ namespace WafflesWeapons.Weapons
         }
     }
 
-    public class StunExplosion : MonoBehaviour
+    public class StunTag : MonoBehaviour
     {
         // this is just a flag, custom tags dont work :3
     }
@@ -297,10 +308,8 @@ namespace WafflesWeapons.Weapons
 
             if (eid != null)
             {
-                Debug.Log("inside");
-
                 bool isLevi = GetComponentInChildren<LeviathanHead>(true) != null && GetComponentInChildren<LeviathanTail>(true) != null;
-
+                bool shouldntGrav = (eid.enemyType == EnemyType.MaliciousFace || eid.enemyType == EnemyType.Cerberus) || isLevi;
                 /*EnemyIdentifierIdentifier[] eidids = eid.GetComponentsInChildren<EnemyIdentifierIdentifier>();
                 foreach (EnemyIdentifierIdentifier eidid in eidids)
                 {
@@ -309,7 +318,7 @@ namespace WafflesWeapons.Weapons
 
                     stunGlows.Add(stunGlow);
                 }*/
-
+;
                 stunned = true;
 
                 Animator anim = eid.GetComponentInChildren<Animator>();
@@ -336,7 +345,7 @@ namespace WafflesWeapons.Weapons
 
                 bool usedGrav = false;
                 bool wasKine = false;
-                if (rb && !isLevi)
+                if (rb && !shouldntGrav)
                 {
                     usedGrav = rb.useGravity;
                     wasKine = rb.isKinematic;
@@ -362,12 +371,18 @@ namespace WafflesWeapons.Weapons
 
                 foreach (MonoBehaviour mb in mbs)
                 {
-                    mb.enabled = true;
+                    if (mb != null)
+                    {
+                        mb.enabled = true;
+                    }
                 }
 
-                eid.enabled = true;
+                if (eid)
+                {
+                    eid.enabled = true;
+                }
 
-                if (rb && !isLevi)
+                if (rb && !shouldntGrav)
                 {
                     rb.useGravity = usedGrav;
                     rb.isKinematic = wasKine;
@@ -377,7 +392,7 @@ namespace WafflesWeapons.Weapons
 
                 foreach (GameObject stunGlow in stunGlows)
                 {
-                    stunGlow.GetComponent<ParticleSystem>().Stop();
+                    stunGlow.GetComponent<ParticleSystem>()?.Stop();
                 }
             }
             yield return null;
@@ -422,6 +437,7 @@ namespace WafflesWeapons.Weapons
         [HideInInspector] public float ChargeLength;
         [HideInInspector] public float LastCharge;
         public GameObject Beam;
+        public GameObject Saw;
         public Slider ChargeSlider;
         public Slider HoldLengthSlider;
         public AudioSource ChargeSound;
@@ -435,6 +451,11 @@ namespace WafflesWeapons.Weapons
         public Color ElecColour;
         private float fireRate = 0;
         private float cooldown = 0;
+
+        public void MaxCharge()
+        {
+            Charge = 1;
+        }
 
         public void Start()
         {
@@ -508,22 +529,45 @@ namespace WafflesWeapons.Weapons
                         nail.anim.SetTrigger("Shoot");
                         CameraController.Instance.CameraShake(2 * ChargeLength);
 
-                        RevolverBeam beam = GameObject.Instantiate(Beam, nail.cc.transform.position + nail.cc.transform.forward, nail.cc.transform.rotation).GetComponent<RevolverBeam>();
-                        if (ChargeLength == 1)
+                        if (!nail.altVersion)
                         {
-                            beam.hitParticle = Conductor.FullExplosion;
-                            foreach (Explosion e in beam.hitParticle.GetComponentsInChildren<Explosion>(true))
+                            RevolverBeam beam = GameObject.Instantiate(Beam, nail.cc.transform.position + nail.cc.transform.forward, nail.cc.transform.rotation).GetComponent<RevolverBeam>();
+                            if (ChargeLength == 1)
                             {
-                                e.sourceWeapon = gameObject;
+                                beam.hitParticle = Conductor.FullExplosion;
+                                foreach (Explosion e in beam.hitParticle.GetComponentsInChildren<Explosion>(true))
+                                {
+                                    e.sourceWeapon = gameObject;
+                                }
                             }
-                        }
-                        beam.alternateStartPoint = nail.shootPoints[0].transform.position;
-                        beam.damage *= ChargeLength;
-                        beam.sourceWeapon = gameObject;
-                        beam.enemyLayerMask |= (1 << 14); // have to add the Projectile layer, but can't use rb.canHitProjectiles as it will cause the sharpshooter behaviour
-                        foreach (LineRenderer lr in beam.GetComponentsInChildren<LineRenderer>())
+                            beam.alternateStartPoint = nail.shootPoints[0].transform.position;
+                            beam.damage *= ChargeLength;
+                            beam.sourceWeapon = gameObject;
+                            beam.enemyLayerMask |= (1 << 14); // have to add the Projectile layer, but can't use rb.canHitProjectiles as it will cause the sharpshooter behaviour
+                            foreach (LineRenderer lr in beam.GetComponentsInChildren<LineRenderer>())
+                            {
+                                lr.startWidth *= 2 * ChargeLength;
+                            }
+                        } 
+                        else
                         {
-                            lr.startWidth *= 2 * ChargeLength;
+                            Nail saw = GameObject.Instantiate(Saw, nail.cc.transform.position, nail.cc.transform.rotation).GetComponent<Nail>();
+                            if (ChargeLength == 1)
+                            {
+                                saw.sawBounceEffect = Conductor.SawExplosion;
+                            }
+                            saw.damage *= ChargeLength;
+                            saw.weaponType = nail.projectileVariationTypes[nail.variation];
+                            saw.sourceWeapon = gameObject;
+                            saw.ForceCheckSawbladeRicochet();
+                            saw.sourceWeapon = gameObject;
+                            saw.rb.velocity = saw.transform.forward * 200;
+                            saw.transform.forward = CameraController.Instance.transform.forward;
+
+                            Vector3 newScale = Vector3.one * 0.1f * ChargeLength * 2;
+                            newScale.y = 0.1f;
+                            saw.transform.localScale = newScale;
+                            saw.transform.position -= transform.forward * ChargeLength * 2;
                         }
 
                         Charge -= ChargeLength;

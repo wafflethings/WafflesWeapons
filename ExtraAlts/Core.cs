@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using Atlas.Modules.Terminal;
 using Atlas.Modules.Guns;
+using WafflesWeapons.Components;
 
 namespace WafflesWeapons
 {
@@ -33,34 +34,15 @@ namespace WafflesWeapons
             TerminalPageRegistry.RegisterPage(typeof(CustomsPage));
             //TerminalPageRegistry.RegisterPage(typeof(ExtrasPage));
 
-            FanFire.LoadAssets();
             GunRegistry.Register(new FanFire());
-
-            Malevolent.LoadAssets();
             GunRegistry.Register(new Malevolent());
-
-            Conductor.LoadAssets();
             GunRegistry.Register(new Conductor());
-
-            LoaderGauntlet.LoadAssets();
             GunRegistry.Register(new LoaderGauntlet());
-
-            Virtuous.LoadAssets();
             GunRegistry.Register(new Virtuous());
-
-            Sticky.LoadAssets();
             GunRegistry.Register(new Sticky());
-
-            TacticalNuke.LoadAssets();
             GunRegistry.Register(new TacticalNuke());
-
-            Mindrender.LoadAssets();
             GunRegistry.Register(new Mindrender());
-
-            Desperado.LoadAssets();
             GunRegistry.Register(new Desperado());
-
-            Singularity.LoadAssets();
             GunRegistry.Register(new Singularity());
 
             Harmony.PatchAll(typeof(WaffleWeaponCharges));

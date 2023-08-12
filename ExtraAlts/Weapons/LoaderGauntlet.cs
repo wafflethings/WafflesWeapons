@@ -7,19 +7,19 @@ namespace WafflesWeapons.Weapons
 {
     public class LoaderGauntlet : Fist
     {
-        public static GameObject esArm;
+        public static GameObject EsArm;
         public static LoaderBehaviour curOne;
 
-        public static void LoadAssets()
+        static LoaderGauntlet()
         {
-            esArm = Core.Assets.LoadAsset<GameObject>("Arm Earthshatter.prefab");
+            EsArm = Core.Assets.LoadAsset<GameObject>("Arm Earthshatter.prefab");
             Core.Harmony.PatchAll(typeof(LoaderGauntlet));
         }
 
         public override GameObject Create(Transform parent)
         {
             base.Create(parent);
-            GameObject thing = GameObject.Instantiate(esArm, parent);
+            GameObject thing = GameObject.Instantiate(EsArm, parent);
             return thing;
         }
 
@@ -361,8 +361,6 @@ namespace WafflesWeapons.Weapons
 
         public void Update()
         {
-            Debug.Log($"{anim.GetCurrentAnimatorClipInfo(0)[0].clip.name} of {anim.GetCurrentAnimatorClipInfo(0).Length}");
-            // pu.ready = false;
             pu.anim = anim;
 
             // should be 100 at finish
@@ -378,9 +376,9 @@ namespace WafflesWeapons.Weapons
                 }
 
                 transform.localPosition = new Vector3(
-                    StartPos.x + Charge / 10 * UnityEngine.Random.Range(-0.01f, 0.01f),
-                    StartPos.y + Charge / 10 * UnityEngine.Random.Range(-0.01f, 0.01f),
-                    StartPos.z + Charge / 10 * UnityEngine.Random.Range(-0.01f, 0.01f));
+                    StartPos.x + Charge / 10 * Random.Range(-0.01f, 0.01f),
+                    StartPos.y + Charge / 10 * Random.Range(-0.01f, 0.01f),
+                    StartPos.z + Charge / 10 * Random.Range(-0.01f, 0.01f));
 
                 float ChargePreAdd = Charge;
 

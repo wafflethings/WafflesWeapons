@@ -3,6 +3,7 @@ using HarmonyLib;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons
 {
@@ -11,7 +12,7 @@ namespace WafflesWeapons.Weapons
         public static GameObject Fan;
         public static GameObject FanAlt;
 
-        public static void LoadAssets()
+        static FanFire()
         {
             Fan = Core.Assets.LoadAsset<GameObject>("Revolver Fan.prefab");
             FanAlt = Core.Assets.LoadAsset<GameObject>("Alternative Revolver Fan.prefab");
@@ -213,7 +214,7 @@ namespace WafflesWeapons.Weapons
 
             for (int i = 0; i < startCharge; i++)
             {
-                while (rev.altVersion ? timer < 0.25f && !Gun.OnFire() : timer < 0.15f)
+                while ((rev.altVersion ? timer < 0.25f && !Gun.OnFire() : timer < 0.15f) || !GunControl.Instance.activated)
                 {
                     timer += Time.deltaTime;
                     yield return null;
@@ -236,6 +237,7 @@ namespace WafflesWeapons.Weapons
         public void OnDisable()
         {
             WaffleWeaponCharges.Instance.FanRevCharge = Charge;
+            fanning = false;
             CancelInvoke("ShootFan");
         }
 

@@ -2,6 +2,7 @@
 using HarmonyLib;
 using System.Collections.Generic;
 using UnityEngine;
+using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons
 {
@@ -10,7 +11,7 @@ namespace WafflesWeapons.Weapons
         public static GameObject Mal;
         public static GameObject MalAlt;
 
-        public static void LoadAssets()
+        static Malevolent()
         {
             Mal = Core.Assets.LoadAsset<GameObject>("Revolver Malevolent.prefab");
             MalAlt = Core.Assets.LoadAsset<GameObject>("Alternative Revolver Malevolent.prefab");
@@ -25,12 +26,10 @@ namespace WafflesWeapons.Weapons
             if (Enabled() == 2)
             {
                 thing = GameObject.Instantiate(MalAlt, parent);
-                WaffleWeaponCharges.Instance.MalAlt = true;
             }
             else
             {
                 thing = GameObject.Instantiate(Mal, parent);
-                WaffleWeaponCharges.Instance.MalAlt = false;
             }
 
             OrderInSlot = GunSetter.Instance.CheckWeaponOrder("rev")[4];

@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons
 {
@@ -13,7 +14,7 @@ namespace WafflesWeapons.Weapons
         public static GameObject RendNail;
         public static GameObject RendSaw;
 
-        public static void LoadAssets()
+        static Mindrender()
         {
             RendNail = Core.Assets.LoadAsset<GameObject>("Nailgun Mindrender.prefab");
             RendSaw = Core.Assets.LoadAsset<GameObject>("Sawblade Launcher Mindrender.prefab");
@@ -85,7 +86,7 @@ namespace WafflesWeapons.Weapons
 
                 if (__instance.sawblade)
                 {
-                    amount = 0.0125f;
+                    amount = 0.05f;
                 }
                 else
                 {
@@ -127,7 +128,7 @@ namespace WafflesWeapons.Weapons
         private LayerMask enemyLayerMask;
 
         public const float MAX_CHARGE = 1;
-        private const float BEAM_DAMAGE = 0.25f;
+        private const float BEAM_DAMAGE = 0.45f;
         private const float BEAM_MILLISECOND_DELAY = 50;
         private const float ALT_BALL_COST = 0.2f;
         private const float ALT_BALL_RATE = 0.175f;
@@ -376,9 +377,11 @@ namespace WafflesWeapons.Weapons
                     {
                         try
                         {
-                            Color colour = ps.startColor;
+                            ParticleSystem.MainModule main = ps.main;
+
+                            Color colour = main.startColor.color;
                             colour.a = Mathf.MoveTowards(colour.a, 0, Time.deltaTime * 8);
-                            ps.startColor = colour; // i know its deprecated but the new system is fucking garbage so i literally do NOT care
+                            main.startColor = colour;
                         }
                         catch (Exception ex)
                         {

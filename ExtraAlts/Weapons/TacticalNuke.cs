@@ -1,6 +1,7 @@
 ﻿using Atlas.Modules.Guns;
 using HarmonyLib;
 using UnityEngine;
+using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons
 {
@@ -8,7 +9,7 @@ namespace WafflesWeapons.Weapons
     {
         public static GameObject NukeRl;
 
-        public static void LoadAssets()
+        static TacticalNuke()
         {
             NukeRl = Core.Assets.LoadAsset<GameObject>("Rocket Launcher SLF.prefab");
             Core.Harmony.PatchAll(typeof(TacticalNuke));
@@ -39,17 +40,9 @@ namespace WafflesWeapons.Weapons
         [HarmonyPostfix]
         public static void IncreaseIfBig(Grenade __instance, bool harmless, bool super = false, GameObject exploderWeapon = null)
         {
-            if (!harmless && __instance.rocket && exploderWeapon == null && __instance.GetComponent<HomingRocket>()) //null is if it is exploded by an enemy
+            if (!harmless && __instance.rocket && exploderWeapon == null && !__instance.GetComponent<HomingRocket>()) //null is if it is exploded by an enemy
             {
-                float change = 0;
-                if (super)
-                {
-                    change += 2f;
-                }
-                else
-                {
-                    change += 1f;
-                }
+                float change = super ? 2 : 1;
 
                 foreach (TacticalNukeBehaviour tnb in TacticalNukeBehaviour.Instances)
                 {
