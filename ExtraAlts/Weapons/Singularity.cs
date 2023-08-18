@@ -354,7 +354,7 @@ namespace WafflesWeapons.Weapons
                     {
                         if (Vector3.Distance(rigidbody.transform.position, transform.position) < 9f)
                         {
-                            rigidbody.transform.position = Vector3.MoveTowards(rigidbody.transform.position, transform.position, 3 * Time.deltaTime * (10f - Vector3.Distance(rigidbody.transform.position, base.transform.position)));
+                            rigidbody.transform.position = Vector3.MoveTowards(rigidbody.transform.position, transform.position, 3 * Time.deltaTime * (10f - Vector3.Distance(rigidbody.transform.position, transform.position)));
                         }
                         else
                         {
@@ -451,22 +451,26 @@ namespace WafflesWeapons.Weapons
             Projectile proj = null;
             Cannonball c = null;
 
-            if ((other.GetComponent<Grenade>() || other.TryGetComponent(out proj) || 
-                (other.TryGetComponent(out c) && c.physicsCannonball)) && !caughtList.Contains(other.GetComponent<Rigidbody>()))
+            if ((other.GetComponent<Grenade>() || other.TryGetComponent(out proj) ||  (other.TryGetComponent(out c) && c.physicsCannonball)) && 
+                !caughtList.Contains(other.GetComponent<Rigidbody>()))
             {
                 Rigidbody rb = other.GetComponent<Rigidbody>();
 
-                if (proj || c)
+                if (!rb.isKinematic)
                 {
-                    rb.useGravity = false;
-                }
+                    if (c)
+                    {
+                        rb.useGravity = false;
+                    }
 
-                if (proj)
-                {
-                    proj.undeflectable = true;
-                }
+                    if (proj)
+                    {
+                        rb.useGravity = false;
+                        proj.undeflectable = true;
+                    }
 
-                caughtList.Add(rb);
+                    caughtList.Add(rb);
+                }
             }
         }
 
@@ -559,7 +563,7 @@ namespace WafflesWeapons.Weapons
                 }
             }
 
-            Projectile[] projectiles = FindObjectsOfType<Projectile>().Where(proj => !proj.rb.useGravity && Vector3.Distance(gameObject.transform.position, proj.gameObject.transform.position) <= length).ToArray();
+            Projectile[] projectiles = FindObjectsOfType<Projectile>().Where(proj => !proj.rb.useGravity && !proj.GetComponent<StickyBombBehaviour>() && !caughtList.Contains(proj.rb) && Vector3.Distance(gameObject.transform.position, proj.gameObject.transform.position) <= length).ToArray();
 
             foreach (Projectile projectile in projectiles)
             {

@@ -852,7 +852,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 822df8dc4092fe2418c2b4ea9a12c446,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 38d8db43d1c4d1845a3f7bb6bc5e269e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: a471b918007e3114ea7e5a688867a3af, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.4
   m_Pitch: 1
@@ -992,6 +992,7 @@ MonoBehaviour:
   WindUp: 0
   HugeRocket: {fileID: 249651459, guid: b01e2b060dc5e474dacca400b50ac0ed, type: 3}
   ChargeUp: {fileID: 4087277716100791169}
+  Click: {fileID: 1673117908876384, guid: 9daea8f0f55fa5d47a85ada016051666, type: 3}
 --- !u!114 &8737453521952016446
 MonoBehaviour:
   m_ObjectHideFlags: 0

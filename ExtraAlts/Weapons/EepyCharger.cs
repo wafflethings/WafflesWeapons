@@ -184,14 +184,17 @@ namespace WafflesWeapons.Weapons
         [HideInInspector] public float WindUp = 0;
         public GameObject HugeRocket;
         public AudioSource ChargeUp;
+        public GameObject Click;
         private GunControl gc;
         private RocketLauncher rock;
         private float HeldTime;
+        private WeaponPos wpos;
 
         public void Start()
         {
             gc = GunControl.Instance;
             rock = GetComponent<RocketLauncher>();
+            wpos = GetComponent<WeaponPos>();
         }
 
         public void Update()
@@ -208,20 +211,42 @@ namespace WafflesWeapons.Weapons
 
             if (gc.activated)
             {
+                transform.localPosition = new Vector3(
+                    wpos.defaultPos.x + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f),
+                    wpos.defaultPos.y + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f),
+                    wpos.defaultPos.z + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f));
+
                 if (Gun.OnAltFireReleased() && HeldTime > 0.125f)
                 {
                     StartCoroutine(Shoot(HeldTime, rock.wid.delay));
+                    CameraController.Instance.CameraShake(2f);
                     WindUp -= HeldTime;
                 }
 
-                if (Gun.OnAltFireHeld())
+                if (Gun.OnAltFireHeld() && WindUp > 0.125f)
                 {
+                    float oldValue = HeldTime;
                     HeldTime = Mathf.MoveTowards(HeldTime, WindUp, Time.deltaTime);
-                    
+                    ChargeUp.pitch = 1 + HeldTime;
+
+                    if (!ChargeUp.isPlaying)
+                    {
+                        ChargeUp.Play();
+                    }
+
+                    if (oldValue < 1 && HeldTime == 1)
+                    {
+                        Instantiate(Click, NewMovement.Instance.transform.position, Quaternion.identity);
+                    }
                 }
                 else
                 {
                     HeldTime = Mathf.MoveTowards(HeldTime, 0, Time.deltaTime * 2);
+
+                    if (ChargeUp.isPlaying)
+                    {
+                        ChargeUp.Stop();
+                    }
                 }
             }
         }
@@ -256,6 +281,7 @@ namespace WafflesWeapons.Weapons
 
     public class HomingRocket : MonoBehaviour
     {
+        public GameObject ToIgnore;
         private LayerMask enemyLayerMask;
         private LayerMask pierceLayerMask;
         private LayerMask ignoreEnemyTrigger;
@@ -278,6 +304,9 @@ namespace WafflesWeapons.Weapons
                 Quaternion oldRot = transform.rotation;
                 Quaternion newRot;
 
+                int oldLayer = ToIgnore.layer;
+                ToIgnore.layer = 2; //ignore raycast;
+
                 if (Physics.Raycast(CameraController.Instance.transform.position, CameraController.Instance.transform.forward, out RaycastHit hit, float.PositiveInfinity, ignoreEnemyTrigger))
                 {
                     transform.LookAt(hit.point);
@@ -288,6 +317,8 @@ namespace WafflesWeapons.Weapons
                     transform.LookAt(CameraController.Instance.transform.forward * 10000);
                     newRot = transform.rotation;
                 }
+
+                ToIgnore.layer = oldLayer;
 
                 transform.rotation = Quaternion.RotateTowards(oldRot, newRot, Time.deltaTime * 360 * 4);
             }

@@ -16,6 +16,7 @@ namespace WafflesWeapons.Components
         public bool MalAlt => MalevolentBehaviour.Instances.Count > 0 ? (MalevolentBehaviour.Instances[0].rev?.altVersion ?? false) : false;
         public float MalRevCharge = 0;
 
+        public float DemoShoCooldown;
         public float SingularityShoCharge = 0;
 
         public float ConductorCharge = 0;
@@ -25,6 +26,7 @@ namespace WafflesWeapons.Components
         public void Charge(float amount)
         {
             MalRevCharge = Mathf.MoveTowards(MalRevCharge, 100, 20 * (MalAlt ? 0.5f : 1) * amount);
+            DemoShoCooldown = Mathf.MoveTowards(DemoShoCooldown, 0, Time.deltaTime);
             SingularityShoCharge = Mathf.MoveTowards(SingularityShoCharge, SingularityBehaviour.HEALTH_NEEDED, 5 * amount);
             ConductorCharge = Mathf.MoveTowards(ConductorCharge, 1, Time.deltaTime * 0.1f);
         }

@@ -108,6 +108,16 @@ namespace WafflesWeapons.Weapons
             detonateSlider.maxValue = DETONATE_AT;
         }
 
+        public void OnEnable()
+        {
+            cooldown = WaffleWeaponCharges.Instance.DemoShoCooldown;
+        }
+
+        public void OnDisable()
+        {
+            WaffleWeaponCharges.Instance.DemoShoCooldown = cooldown;
+        }
+
         public void FireSticky()
         {
             GameObject silly = Instantiate(StickyBomb, sho.cc.transform.position + (sho.cc.transform.forward * 0.5f), Quaternion.identity);
@@ -129,7 +139,7 @@ namespace WafflesWeapons.Weapons
                     Charges = 0;
                 }
 
-                cooldown -= Time.deltaTime;
+                cooldown = Mathf.MoveTowards(cooldown, 0, Time.deltaTime);
 
                 if (Gun.OnAltFireReleased() && detonateTime >= DETONATE_AT)
                 {
@@ -163,7 +173,7 @@ namespace WafflesWeapons.Weapons
                 {
                     if (Charges < 4)
                     {
-                        if (cooldown <= 0)
+                        if (cooldown == 0)
                         {
                             float Delay = GetComponent<WeaponIdentifier>().delay;
                             cooldown = 0.25f;
