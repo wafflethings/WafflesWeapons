@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Atlas.Modules.Terminal;
 using Atlas.Modules.Guns;
 using WafflesWeapons.Components;
+using System.Reflection.Emit;
 
 namespace WafflesWeapons
 {
@@ -40,7 +41,7 @@ namespace WafflesWeapons
             GunRegistry.Register(new LoaderGauntlet());
             GunRegistry.Register(new Virtuous());
             GunRegistry.Register(new Sticky());
-            GunRegistry.Register(new TacticalNuke());
+            GunRegistry.Register(new EepyCharger());
             GunRegistry.Register(new Mindrender());
             GunRegistry.Register(new Desperado());
             GunRegistry.Register(new Singularity());

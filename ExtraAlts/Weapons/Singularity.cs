@@ -320,6 +320,11 @@ namespace WafflesWeapons.Weapons
                         {
                             c.Explode();
                         }
+
+                        foreach (EventOnDestroy e in GetComponentsInChildren<EventOnDestroy>())
+                        {
+                            e.OnDestroy();
+                        }
                     }
                 }
             }
@@ -518,7 +523,7 @@ namespace WafflesWeapons.Weapons
                 SingularityBallLightning sbl;
                 if (lastBeam?.sourceWeapon.GetComponent<ConductorBehaviour>() != null)
                 {
-                    Stunner.EnsureAndStun(eid, lastBeam.damage / 2);
+                    Stunner.EnsureAndStun(eid, lastBeam.damage / 4);
                     sbl = Instantiate(Conductor.MagnetZap).GetComponent<SingularityBallLightning>();
                 }
                 else

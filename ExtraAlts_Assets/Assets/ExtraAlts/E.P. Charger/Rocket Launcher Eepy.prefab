@@ -218,7 +218,7 @@ MonoBehaviour:
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
-  m_FillClockwise: 1
+  m_FillClockwise: 0
   m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
@@ -956,7 +956,7 @@ GameObject:
   - component: {fileID: 4057780468874806355}
   - component: {fileID: 5776409200454906232}
   m_Layer: 2
-  m_Name: Rocket Launcher SLF
+  m_Name: Rocket Launcher Eepy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -986,10 +986,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8737453521952016444}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1862677182, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
+  m_Script: {fileID: 2001170134, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WindUp: 0
   HugeRocket: {fileID: 249651459, guid: b01e2b060dc5e474dacca400b50ac0ed, type: 3}
+  ChargeUp: {fileID: 4087277716100791169}
 --- !u!114 &8737453521952016446
 MonoBehaviour:
   m_ObjectHideFlags: 0

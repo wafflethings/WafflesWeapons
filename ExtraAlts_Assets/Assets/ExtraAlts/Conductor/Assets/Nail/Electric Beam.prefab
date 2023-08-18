@@ -189,7 +189,7 @@ MonoBehaviour:
   bulletForce: 500
   quickDraw: 0
   gunVariation: 0
-  damage: 2
+  damage: 5
   critDamageOverride: 0
   screenshakeMultiplier: 1
   hitAmount: 9999

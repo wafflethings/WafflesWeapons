@@ -79,7 +79,7 @@ namespace WafflesWeapons.Weapons
                 EnemyIdentifier eid = currentHit.transform.GetComponentInParent<EnemyIdentifierIdentifier>().eid;
                 if (eid != null)
                 {
-                    Stunner.EnsureAndStun(eid, c.LastCharge * (eid.GetComponent<BossIdentifier>() ? 1 : 2));
+                    Stunner.EnsureAndStun(eid, c.LastCharge * StunMult(eid));
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace WafflesWeapons.Weapons
         {
             if (__instance.GetComponent<StunTag>() && EnemyHitTracker.CheckAndHit(__instance.gameObject, eidid.eid))
             {
-                Stunner.EnsureAndStun(eidid.eid, __instance.damage / 4);
+                Stunner.EnsureAndStun(eidid.eid, (__instance.damage / 3) * StunMult(eidid.eid));
 
                 if (__instance.sawBounceEffect == SawExplosion)
                 {
@@ -140,7 +140,7 @@ namespace WafflesWeapons.Weapons
                 EnemyIdentifierIdentifier eidid = other.GetComponentInParent<EnemyIdentifierIdentifier>();
                 if (eidid != null && eidid.eid != null && EnemyHitTracker.CheckAndHit(__instance.gameObject, eidid.eid, 0.5f))
                 {
-                    Stunner.EnsureAndStun(eidid.eid, 0.5f);
+                    Stunner.EnsureAndStun(eidid.eid, 1 * StunMult(eidid.eid));
                 }
             }
         }
@@ -189,7 +189,7 @@ namespace WafflesWeapons.Weapons
                         EnemyIdentifier eid = enemy.GetComponent<EnemyIdentifier>();
                         eid.hitterAttributes.Add(HitterAttribute.Electricity);
                         eid.DeliverDamage(eid.gameObject, Vector3.zero, eid.transform.position, revolverBeam.damage, false);
-                        Stunner.EnsureAndStun(eid, 1);
+                        Stunner.EnsureAndStun(eid, 1 * StunMult(eid));
 
                         SingularityBallLightning sbl = GameObject.Instantiate(MagnetZap).GetComponent<SingularityBallLightning>();
                         sbl.enemy = eid.weakPoint ? eid.weakPoint : enemy;
@@ -264,6 +264,11 @@ namespace WafflesWeapons.Weapons
             {
                 grenade.Explode(big, harmless, super, sizeMultiplier, ultrabooster, exploderWeapon);
             }
+        }
+
+        public static float StunMult(EnemyIdentifier eid)
+        {
+            return (eid.GetComponent<BossIdentifier>() ? 0.65f : 1.25f);
         }
     }
 

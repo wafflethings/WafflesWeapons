@@ -32576,7 +32576,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: S.L.F. STRIKER
+  m_Text: E.P. CHARGER
 --- !u!1 &4487145639453867587
 GameObject:
   m_ObjectHideFlags: 0
@@ -42707,12 +42707,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Press Alt Fire to <color=orange>launch</color> a powerful rocket for 4
-    charges.
+  m_Text: 'Hold Alt Fire to launch a powerful, <color=orange>piercing</color> rocket.
 
 
-    Hitting an enemy with any RL will charge it up by 1, or 2 if an
-    airshot.'
+    Charge
+    length affects damage, speed, and size.'
 --- !u!1 &6052885406908938412
 GameObject:
   m_ObjectHideFlags: 0
@@ -47280,7 +47279,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: S.L.F. STRIKER
+  m_Text: E.P. CHARGER
 --- !u!1 &6830017407466899103
 GameObject:
   m_ObjectHideFlags: 0

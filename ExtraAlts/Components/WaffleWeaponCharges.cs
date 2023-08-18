@@ -20,7 +20,7 @@ namespace WafflesWeapons.Components
 
         public float ConductorCharge = 0;
 
-        public float SLFCharge = 0;
+        public float EepyCharge = 0;
 
         public void Charge(float amount)
         {
