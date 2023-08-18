@@ -285,6 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -689,6 +690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -851,8 +853,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: I'm 14 and don't have a job, give me money so I can commision models, and
-    <color=orange>get early update access</color>.
+  m_Text: I'm not old enough to get a job, give me money so I can commision models,
+    and <color=orange>get early update access</color>.
 --- !u!1 &3133477825665394983
 GameObject:
   m_ObjectHideFlags: 0
@@ -1010,6 +1012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -1251,6 +1254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -1626,6 +1630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}
@@ -2037,6 +2042,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2561b8c02d38d884ca20076f798adee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivated: 0
   failure: 0
   clickSound: {fileID: 1673117908876384, guid: b433c919446768d4a9e64494c6bfd084, type: 3}
   failSound: {fileID: 0}

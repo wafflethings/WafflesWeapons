@@ -2,12 +2,12 @@
 
 A mod that adds custom variants to ULTRAKILL, including new arms.
 
-### [Please give me money so I can afford to commision more models.](https://www.patreon.com/bePatron?u=90279900)
-I'm 14, so it's not like I can get a job and earn it myself.
+### [Please give me money so I can afford to commision more models.](https://www.patreon.com/Waff1e)
+I'm not old enough to get a job, so it's not like I can get one and earn it myself.
 You'll also get early access to updates.
 
 ## Gameplay
-[![](https://markdown-videos.deta.dev/youtube/kCemM-W9_XA)](https://youtu.be/watch?v=kCemM-W9_XA)
+[![](https://github.com/wafflethings/WafflesWeapons/assets/60797216/4d23c808-5acc-479f-8596-af6212512de4)](https://youtu.be/watch?v=kCemM-W9_XA)
 
 ## Weapons
 
