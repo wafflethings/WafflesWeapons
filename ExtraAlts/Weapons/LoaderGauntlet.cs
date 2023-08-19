@@ -297,8 +297,8 @@ namespace WafflesWeapons.Weapons
 
     public class LoaderBehaviour : MonoBehaviour
     {
-        public const float ChargeSpeedMult = 1.5f * 1.125f;
-        public const float FastChargeSpeedMult = 2.5f * 1.125f;
+        public const float ChargeSpeedMult = 6f / 100 * 45; // 35% of 6, old one was 1.5f * 1.125f which is roughly 28%;
+        public const float FastChargeSpeedMult = 6f / 100 * 60; // 50% of 6, old one was  2.5f * 1.125f which is roughly 46%;
 
         private Vector3 StartPos;
         private NewMovement nm;
@@ -384,15 +384,12 @@ namespace WafflesWeapons.Weapons
 
                 if (Charge < 4)
                 {
-                    if (Charge < 2 && Charge + (Time.deltaTime * 3) >= 2)
+                    Debug.Log(FastChargeSpeedMult);
+
+                    if (Charge < 2 && Charge + (Time.deltaTime * FastChargeSpeedMult) >= 2)
                     {
                         cc.CameraShake(1.5f);
                         Instantiate(Click, nm.transform.position, Quaternion.identity);
-                    }
-
-                    if (Charge < 2)
-                    {
-                        Charge += Time.deltaTime * ChargeSpeedMult;
                     }
 
                     Charge += Time.deltaTime * FastChargeSpeedMult;
@@ -459,7 +456,7 @@ namespace WafflesWeapons.Weapons
                 LoaderArmCollisionHandler.Instance.CanCharge = false;
                 LoaderArmCollisionHandler.Instance.BadCoins.Clear();
 
-                nm.rb.AddForce((cc.transform.forward * nm.walkSpeed * Charge) / 70, ForceMode.VelocityChange);
+                nm.rb.AddForce((cc.transform.forward * nm.walkSpeed * Charge) / 125, ForceMode.VelocityChange);
                 Charge = 0;
                 anim.SetBool("Midflight", true);
             }

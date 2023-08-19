@@ -81,7 +81,11 @@ namespace WafflesWeapons.Weapons
         {
             Physics.IgnoreCollision(gren.GetComponent<Collider>(), col);
             yield return new WaitForSeconds(0.5f);
-            Physics.IgnoreCollision(gren.GetComponent<Collider>(), col, false);
+
+            if (gren != null && col != null)
+            {
+                Physics.IgnoreCollision(gren.GetComponent<Collider>(), col, false);
+            }
         }
 
         private static MethodInfo m_Object_Destroy = typeof(UnityEngine.Object).GetMethod(nameof(UnityEngine.Object.Destroy), new Type[] { typeof(UnityEngine.Object) } );
@@ -139,10 +143,13 @@ namespace WafflesWeapons.Weapons
 
         public static void ScaleRocket(RocketLauncher launcher, GameObject rocket)
         {
-            if (launcher.GetComponent<EepyChargerBehaviour>() != null)
+            if (launcher?.GetComponent<EepyChargerBehaviour>() != null)
             {
-                rocket.GetComponent<EepyRocket>().Charge = EepyChargerBehaviour.PreviousHeldTime;
-                rocket.transform.localScale *= 0.25f + (rocket.GetComponent<EepyRocket>().Charge * 0.75f);
+                if (rocket.TryGetComponent(out EepyRocket eepy))
+                {
+                    eepy.Charge = EepyChargerBehaviour.PreviousHeldTime;
+                    rocket.transform.localScale *= 0.25f + (eepy.Charge * 0.75f);
+                }
             }
         }
 
@@ -170,9 +177,12 @@ namespace WafflesWeapons.Weapons
         {
             if (grenade.TryGetComponent(out EepyRocket eepy))
             {
-                explosion.transform.localScale *= 0.25f + (eepy.Charge * 0.75f);
-                Explosion explo = explosion.GetComponentsInChildren<Explosion>().Where(x => x.damage > 0).First();
-                explo.damage = (int)(explo.damage * (0.25f + (eepy.Charge * 0.75f)));
+                foreach (Explosion explo in explosion.GetComponentsInChildren<Explosion>())
+                {
+                    explo.damage = (int)(explo.damage * (0.5f + (eepy.Charge * 0.5f)));
+                    explosion.transform.localScale *= 0.25f + (eepy.Charge * 0.75f);
+                    explo.maxSize *= 0.25f + (eepy.Charge * 0.75f);
+                }
             }
         }
     }
@@ -212,9 +222,9 @@ namespace WafflesWeapons.Weapons
             if (gc.activated)
             {
                 transform.localPosition = new Vector3(
-                    wpos.defaultPos.x + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f),
-                    wpos.defaultPos.y + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f),
-                    wpos.defaultPos.z + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f));
+                    wpos.currentDefault.x + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f),
+                    wpos.currentDefault.y + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f),
+                    wpos.currentDefault.z + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f));
 
                 if (Gun.OnAltFireReleased() && HeldTime > 0.125f)
                 {
@@ -270,7 +280,7 @@ namespace WafflesWeapons.Weapons
             GameObject old = rock.rocket;
 
             rock.rocket = HugeRocket;
-            hugeGrenade.rocketSpeed = 25f + heldTime * (hugeGrenade.rocketSpeed);
+            //hugeGrenade.rocketSpeed = 25f + heldTime * (hugeGrenade.rocketSpeed);
             PreviousHeldTime = heldTime;
             rock.Shoot();
 
