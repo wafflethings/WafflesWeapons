@@ -442,11 +442,9 @@ namespace WafflesWeapons.Weapons
                     nm.ridingRocket.transform.rotation = cc.transform.rotation;
                 }
 
-                if (FindObjectOfType<GroundCheck>().touchingGround)
+                if (nm.gc.touchingGround)
                 {
-                    nm.jumpPower /= 3f;
                     nm.Jump();
-                    nm.jumpPower *= 3;
                 }
 
                 Instantiate(Release);

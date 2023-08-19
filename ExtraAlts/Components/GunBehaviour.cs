@@ -9,7 +9,20 @@ namespace WafflesWeapons.Components
 {
     public class GunBehaviour<T> : GunBehaviour where T : GunBehaviour<T>
     {
-        public static List<T> Instances { get; private set; } = new List<T>();
+        public static List<T> Instances
+        {
+            get
+            {
+                _instances.RemoveAll(x => x == null);
+                return _instances;
+            }
+
+            private set
+            {
+                _instances = value;
+            }
+        }
+        private static List<T> _instances = new List<T>();
 
         public void Awake()
         {

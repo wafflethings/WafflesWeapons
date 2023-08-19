@@ -75,12 +75,9 @@ namespace WafflesWeapons.Weapons
                 bool hitEnemy = __instance.hit.collider.gameObject.GetComponent<EnemyIdentifierIdentifier>() != null ||
                     __instance.hit.collider.gameObject.GetComponent<EnemyIdentifier>() != null;
 
-                Debug.Log($"hit {__instance.hit.collider.gameObject} => {hitEnemy}");
-
-                DesperadoBehaviour db;
                 if (hitEnemy)
                 {
-                    if (__instance.sourceWeapon.TryGetComponent(out db))
+                    if (__instance.sourceWeapon.TryGetComponent(out DesperadoBehaviour db))
                     {
                         if (__instance.gameObject.name.StartsWith("BouncyDesperado"))
                         {
@@ -90,17 +87,14 @@ namespace WafflesWeapons.Weapons
                                 eid = __instance.hit.collider.gameObject.GetComponent<EnemyIdentifierIdentifier>().eid;
                             }
 
-                            Debug.Log("checking nearest");
                             Vector3 nearest = UltrakillUtils.NearestEnemyPoint(__instance.hit.transform.position, 1000, eid);
                             Debug.Log($"{db.PerfectCurrentDamage} - {db.PerfectStepDecrease} = {db.PerfectCurrentDamage - db.PerfectStepDecrease}");
-                            if (nearest != __instance.hit.transform.position && db.PerfectCurrentDamage - db.PerfectStepDecrease > 0)
+                            db.PerfectCurrentDamage -= db.PerfectStepDecrease;
+                            if (nearest != __instance.hit.transform.position && db.PerfectCurrentDamage > 0)
                             {
-                                db.PerfectCurrentDamage -= db.PerfectStepDecrease;
-                                Debug.Log("success getting in"); // make nearest check if its not the same enemy
                                 __instance.lr.SetPosition(1, __instance.hit.transform.position);
-                                __instance.StartCoroutine(CreateNewBeam(db.PerfectBeam, __instance.hit.transform.position, eid));
+                                __instance.StartCoroutine(CreateNewBeam(db.PerfectBeam, __instance.hit.transform.position, eid, db.PerfectCurrentDamage));
                             }
-                            Debug.Log("all done");
                         }
                     }
                 }
@@ -108,19 +102,16 @@ namespace WafflesWeapons.Weapons
             catch (Exception ex) { Debug.LogWarning(ex.ToString()); }
         }
 
-        public static IEnumerator CreateNewBeam(GameObject beam, Vector3 hitPos, EnemyIdentifier eid)
+        public static IEnumerator CreateNewBeam(GameObject beam, Vector3 hitPos, EnemyIdentifier eid, float dmg)
         {
             yield return new WaitForSeconds(0.1f);
 
             GameObject newBeam = GameObject.Instantiate(beam, hitPos, Quaternion.identity);
-            Debug.Log("created");
             newBeam.transform.LookAt(UltrakillUtils.NearestEnemyPoint(hitPos, 1000, eid));
-            Debug.Log("looked");
             newBeam.GetComponent<AudioSource>().enabled = false;
-            Debug.Log("sr");
             newBeam.GetComponentInChildren<SpriteRenderer>().enabled = false;
-            Debug.Log("sw");
             newBeam.GetComponent<RevolverBeam>().sourceWeapon = DesperadoBehaviour.Instances[0].gameObject;
+            newBeam.GetComponent<RevolverBeam>().damage = dmg;
             Debug.Log(":3");
         }
 
@@ -220,7 +211,6 @@ namespace WafflesWeapons.Weapons
                     SoundEffect.pitch = 2;
                 }
 
-                Debug.Log($"{goingRight} gr, {leftLimit} {rightLimit} {currentSlider}");
                 if (goingRight)
                 {
                     currentSlider += sliderSpeed * Time.deltaTime;
