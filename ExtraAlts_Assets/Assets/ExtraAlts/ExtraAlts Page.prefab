@@ -20135,17 +20135,19 @@ MonoBehaviour:
     such high voltages that their systems break temporarily.\n\n<color=orange>STRATEGY:</color>\n-
     As stunned enemies are unable to dodge, they are susceptible to further stunning
     attacks. Effective use can lock them in a stunned state.\n\n- Stunned enemies
-    are affected by gravity, making aerial enemies easier to reach.\n\n- When a rocket
-    is shot with the nailgun's beam, it will become faster, and explode in a blue
-    explosion that stuns.\n\n- When a core is shot with the nailgun's beam, it will
-    explode in a blue explosion that stuns.\n\n- When a projectile is shot with the
-    nailgun's beam, it will face where the user is looking - as if it was parried
-    - and explode in a blue explosion that stuns. \n\n- When a magnet or singularity
-    is shot with the beam, all enemies in a nearby radius will be stunned, and receive
-    damage.\n\n- The sawblade launcher's stunning saws are especially effective with
-    magnets, as they can hit an enemy several times.\n\n- At full charge, both the
-    nailgun's beam and sawblade launcher's saws will explode on contact with enemies
-    or the environment. These explosions can stun many enemies at a time. "
+    are affected by gravity, making aerial enemies easier to reach.\n\n- The nailgun's
+    stunning beam stuns for longer and does more damage based on charge.\n\n- When
+    a rocket is shot with the nailgun's beam, it will become faster, and explode
+    in a blue explosion that stuns.\n\n- When a core is shot with the nailgun's beam,
+    it will explode in a blue explosion that stuns.\n\n- When a projectile is shot
+    with the nailgun's beam, it will face where the user is looking - as if it was
+    parried - and explode in a blue explosion that stuns. \n\n- When a magnet or
+    singularity is shot with the beam, all enemies in a nearby radius will be stunned,
+    and receive damage.\n\n- The sawblade launcher's stunning saws are larger, deal
+    more damage, and stun for longer, based on charge.\n\n- They are especially effective
+    with magnets, as they can hit an enemy several times.\n\n- At full charge, both
+    the nailgun's beam and sawblade launcher's saws will explode on contact with
+    enemies or the environment. These explosions can stun many enemies at a time. "
 --- !u!114 &6493329107546242671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52909,11 +52911,12 @@ MonoBehaviour:
     uses the energy from an unstable, experimental plasma, hence the name E.P. While
     this has the advantage of being able to detonate multiple times, it must be charged
     with the chemical reactions of other rockets.\n\n<color=orange>STRATEGY:</color>\n-
-    Although costly, E.P. rockets are very powerful. As they are not destroyed until
-    they hit the environment, a skilled user could obtain several of these homing
-    rockets at once.\n\n- The process of charging the rockets can be made faster
-    with airshots - where normal shots only charge the gauge by one, airshots charge
-    it by two.\n\n- Revolvers with fast fire rates, such as the <color=orange>FAN
+    E.P. rockets have are larger, have larger explosions, and deal more damage, based
+    on charge.\n\n- Although costly, E.P. rockets are very powerful. As they are
+    not destroyed until they hit the environment, a skilled user could obtain several
+    of these homing rockets at once.\n\n- The process of charging the rockets can
+    be made faster with airshots - where normal shots only charge the gauge by one,
+    airshots charge it by two.\n\n- Revolvers with fast fire rates, such as the <color=orange>FAN
     FIRE</color> or <color=orange>MALEVOLENT</color>, are especially useful, as they
     will cause several detonations in a short space of time.\n\n- As they home to
     where you are looking, E.P. rockets will be more effective in open areas, where
@@ -56380,8 +56383,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: 0}
-  m_SizeDelta: {x: -0.00012207031, y: 978}
+  m_AnchoredPosition: {x: -0.000061035156, y: 0.000061035156}
+  m_SizeDelta: {x: -0.00012207031, y: 1078}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &279880696027274695
 CanvasRenderer:
@@ -56454,6 +56457,11 @@ MonoBehaviour:
     -
     While riding a rocket, it will be launched, rather than you. Its speed will increase
     dramatically, and it will turn to where you are looking.
+
+
+    -Hitting the floor
+    with enough speed from an Earthshatter dash creates a shockwave, which is bigger
+    with velocity.
 
 
 
@@ -69635,7 +69643,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 7762395291436683878}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.28629857
+  m_Size: 0.25974026
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -69878,7 +69886,7 @@ RectTransform:
   m_Father: {fileID: 887389812669367046}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.7137014}
+  m_AnchorMin: {x: 0, y: 0.74025977}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}

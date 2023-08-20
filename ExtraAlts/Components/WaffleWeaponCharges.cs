@@ -37,10 +37,14 @@ namespace WafflesWeapons.Components
             Instance.Charge(amount);
         }
 
-        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.MaxCharges))]
+        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.MaxCharges)), HarmonyPostfix]
         public static void MaxChargesWW()
         {
             Instance.ConductorCharge = 1;
+            Instance.MalRevCharge = 100;
+            Instance.EepyCharge = 1;
+            Instance.FanRevCharge = 6;
+            Instance.SingularityShoCharge = SingularityBehaviour.HEALTH_NEEDED;
         }
     }
 }

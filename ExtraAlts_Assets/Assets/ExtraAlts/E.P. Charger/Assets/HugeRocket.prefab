@@ -79,7 +79,7 @@ MonoBehaviour:
     type: 3}
   enemy: 0
   rocket: 1
-  rocketSpeed: 75
+  rocketSpeed: 50
   freezeEffect: {fileID: 6270649301386768346}
   playerRiding: 0
   playerRideSound: {fileID: 1673117908876384, guid: 4dbac887b48167449bcb859426445d0c,
