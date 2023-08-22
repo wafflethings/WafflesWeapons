@@ -29,7 +29,7 @@ If you aren't using r2mm, you will also seperately have to install [AtlasLib](ht
 
 - [Desperado](https://www.youtube.com/watch?v=ZiyRmELVCvY): when you shoot at the right timing, releases a beam that bounces between enemies. The alt is more generous, but weaker.
 
-![image](https://user-images.githubusercontent.com/60797216/236852605-7daea5b0-0cbb-4de1-9734-6f6a38490b56.png)
+  ![image](https://user-images.githubusercontent.com/60797216/236852605-7daea5b0-0cbb-4de1-9734-6f6a38490b56.png)
 
 ### Shotguns
 - [Demolitionist](https://www.youtube.com/watch?v=6PuebUdcj88): shoots parriable sticky bombs on alt fire.
@@ -48,7 +48,7 @@ If you aren't using r2mm, you will also seperately have to install [AtlasLib](ht
 
 - [Mindrender](https://www.youtube.com/watch?v=5m13hpRKb1g): shoots nails in bursts, charging up a mindflayer beam on hit. The alt releases homing orbs.
 
-![image](https://user-images.githubusercontent.com/60797216/236852500-256cca05-728f-4676-a0e6-6ea309e07615.png)
+  ![image](https://user-images.githubusercontent.com/60797216/236852500-256cca05-728f-4676-a0e6-6ea309e07615.png)
 
 ### Railcannons
 - [Virtuous](https://www.youtube.com/watch?v=nHnhYhKlSLs): creates a virtue beam on every enemy hit. Creates a smaller one when it hits the ground.
@@ -63,9 +63,9 @@ If you aren't using r2mm, you will also seperately have to install [AtlasLib](ht
 ### Arms
 - [Earthshatter](https://www.youtube.com/watch?v=or7XYmoIZfE): hold F to charge, and release to launch yourself. Hurts enemies on contact, and can parry coins. 
 
-![image](https://user-images.githubusercontent.com/60797216/226169594-fafe841b-d9fa-4800-8198-a7e964af8b33.png)
+  ![image](https://user-images.githubusercontent.com/60797216/226169594-fafe841b-d9fa-4800-8198-a7e964af8b33.png)
 
-<sup>Model by [Hydraxous](https://github.com/Hydraxous) and [Fat Tony](https://github.com/The-DoomMan), detailed credits are in the terminal.</sup>
+  <sup>Model by [Hydraxous](https://github.com/Hydraxous) and [Fat Tony](https://github.com/The-DoomMan), detailed credits are in the terminal.</sup>
 
 ## Dev Setup
 
