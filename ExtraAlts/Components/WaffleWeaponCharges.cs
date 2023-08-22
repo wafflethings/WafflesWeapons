@@ -20,6 +20,7 @@ namespace WafflesWeapons.Components
         public float SingularityShoCharge = 0;
 
         public float ConductorCharge = 0;
+        public float MindrenderCharge = 0;
 
         public float EepyCharge = 0;
 
@@ -41,6 +42,7 @@ namespace WafflesWeapons.Components
         public static void MaxChargesWW()
         {
             Instance.ConductorCharge = 1;
+            Instance.MindrenderCharge = 1;
             Instance.MalRevCharge = 100;
             Instance.EepyCharge = 1;
             Instance.FanRevCharge = 6;

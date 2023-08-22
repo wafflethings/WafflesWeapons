@@ -165,11 +165,6 @@ namespace WafflesWeapons.Weapons
             list.Add(new CodeInstruction(OpCodes.Call, m_EepyCharger_AffectExplosion));
             list.Add(new CodeInstruction(OpCodes.Ret)); // add the ret back
 
-            foreach (CodeInstruction inst in list)
-            {
-                Debug.Log(inst);
-            }
-
             return list;
         }
 

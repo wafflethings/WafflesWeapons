@@ -100,8 +100,8 @@ namespace WafflesWeapons.Weapons
 
                 foreach (MindrenderBehaviour mr in MindrenderBehaviour.Instances)
                 {
-                    mr.Charge += amount;
-                    mr.Charge = Mathf.Clamp(mr.Charge, 0, MindrenderBehaviour.MAX_CHARGE);
+                    mr.Charge = Mathf.MoveTowards(mr.Charge, MindrenderBehaviour.MAX_CHARGE, amount);
+                    WaffleWeaponCharges.Instance.MindrenderCharge = Mathf.MoveTowards(WaffleWeaponCharges.Instance.MindrenderCharge, MindrenderBehaviour.MAX_CHARGE, amount);
                 }
             }
         }
@@ -141,6 +141,17 @@ namespace WafflesWeapons.Weapons
             enemyLayerMask |= 1024;
             enemyLayerMask |= 2048;
             nai = GetComponent<Nailgun>();
+        }
+
+        public void OnEnable()
+        {
+            Charge = WaffleWeaponCharges.Instance.MindrenderCharge;
+        }
+
+        public void OnDisable()
+        {
+            WaffleWeaponCharges.Instance.MindrenderCharge = Charge;
+            Stop(true);
         }
 
         public void Update()
@@ -336,11 +347,6 @@ namespace WafflesWeapons.Weapons
             nai.anim.SetTrigger("SuperShoot");
             NewMovement.Instance.rb.AddForce(CameraController.Instance.transform.forward * -750 * Time.deltaTime, ForceMode.VelocityChange);
             CameraController.Instance.CameraShake(0.25f);
-        }
-
-        public void OnDisable()
-        {
-            Stop(true);
         }
 
         public void Stop(bool instant = false)

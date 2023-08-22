@@ -188,7 +188,8 @@ namespace WafflesWeapons.Weapons
                     {
                         EnemyIdentifier eid = enemy.GetComponent<EnemyIdentifier>();
                         eid.hitterAttributes.Add(HitterAttribute.Electricity);
-                        eid.DeliverDamage(eid.gameObject, Vector3.zero, eid.transform.position, revolverBeam.damage, false);
+                        eid.hitter = "magnet_zap";
+                        eid.DeliverDamage(eid.gameObject, Vector3.zero, eid.transform.position, revolverBeam.damage, false, 0, ConductorBehaviour.Instances[0].gameObject);
                         Stunner.EnsureAndStun(eid, 1 * StunMult(eid));
 
                         SingularityBallLightning sbl = GameObject.Instantiate(MagnetZap).GetComponent<SingularityBallLightning>();

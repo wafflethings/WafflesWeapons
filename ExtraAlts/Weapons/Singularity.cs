@@ -310,7 +310,7 @@ namespace WafflesWeapons.Weapons
                     if (oldX > 0.1f && transform.localScale.x <= 0.1f)
                     {
                         int i = 0;
-                        foreach (EnemyIdentifierIdentifier eidid in GetComponentsInChildren<EnemyIdentifierIdentifier>())
+                        foreach (EnemyIdentifierIdentifier eidid in GetComponentsInChildren<EnemyIdentifierIdentifier>().Where(eidid => eidid.eid != null))
                         {
                             if (i % 2 == 0) //prob a better way to do this but its 2am and im eepy :3
                             {
@@ -416,7 +416,7 @@ namespace WafflesWeapons.Weapons
         public void GetHit(RevolverBeam beam)
         {
             lastBeam = beam;
-            Implode(25 + (beam.damage / 2));
+            Implode(25 + (beam.damage * beam.maxHitsPerTarget / 2));
             TimeController.Instance.ParryFlash();
         }
 
@@ -530,21 +530,29 @@ namespace WafflesWeapons.Weapons
             GameObject effect = Instantiate(implodeEffect);
             effect.GetComponent<Follow>().target = gameObject.transform;
 
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy").Where(enemy => !enemy.GetComponent<EnemyIdentifier>().dead && Vector3.Distance(enemy.transform.position, transform.position) <= length).ToArray();
-
-            foreach (GameObject enemy in enemies)
+            foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
             {
+                if (Vector3.Distance(enemy.transform.position, transform.position) >= length)
+                {
+                    break;
+                }
+
+                if (enemy?.GetComponent<EnemyIdentifier>()?.dead ?? false)
+                {
+                    break;
+                }
+
                 EnemyIdentifier eid = enemy.GetComponent<EnemyIdentifier>();
                 eid.hitter = "singularity_tendril";
 
-                float amount = 1;
+                float amount = 2;
                 if (eid.health < amount)
                     amount = eid.health - 0.1f;
 
                 eid.DeliverDamage(eid.gameObject, rb.velocity, eid.transform.position, amount, false);
 
                 SingularityBallLightning sbl;
-                if (lastBeam?.sourceWeapon.GetComponent<ConductorBehaviour>() != null)
+                if (lastBeam?.sourceWeapon?.GetComponent<ConductorBehaviour>() != null)
                 {
                     Stunner.EnsureAndStun(eid, lastBeam.damage / 4);
                     sbl = Instantiate(Conductor.MagnetZap).GetComponent<SingularityBallLightning>();
@@ -557,7 +565,9 @@ namespace WafflesWeapons.Weapons
                 sbl.ball = gameObject;
 
                 if (eid.dead)
+                {
                     AddRbs(eid);
+                }
 
                 if (enemy.TryGetComponent(out Rigidbody enemyRb))
                 {
@@ -582,10 +592,29 @@ namespace WafflesWeapons.Weapons
                 }
             }
 
-            Projectile[] projectiles = FindObjectsOfType<Projectile>().Where(proj => !proj.rb.useGravity && !proj.GetComponent<StickyBombBehaviour>() && !caughtList.Contains(proj.rb) && Vector3.Distance(gameObject.transform.position, proj.gameObject.transform.position) <= length).ToArray();
-
-            foreach (Projectile projectile in projectiles)
+            foreach (Projectile projectile in FindObjectsOfType<Projectile>())
             {
+                if (caughtList.Contains(projectile.rb))
+                {
+                    break;
+                }
+
+
+                if (projectile.rb?.useGravity ?? true)
+                {
+                    break;
+                }
+
+                if (Vector3.Distance(gameObject.transform.position, projectile.gameObject.transform.position) >= length)
+                {
+                    break;
+                }
+
+                if (projectile.GetComponent<StickyBombBehaviour>())
+                {
+                    break;
+                }
+
                 projectile.transform.LookAt(gameObject.transform);
                 projectile.speed /= 2;
 
@@ -612,8 +641,8 @@ namespace WafflesWeapons.Weapons
                 return;
             }
 
-            lr.SetPosition(0, ball.transform.position);
-            lr.SetPosition(1, enemy.transform.position);
+            lr?.SetPosition(0, ball?.transform.position ?? lr.GetPosition(0));
+            lr?.SetPosition(1, enemy?.transform.position ?? lr.GetPosition(1));
         }
     }
 }

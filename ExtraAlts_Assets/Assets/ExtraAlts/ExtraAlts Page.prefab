@@ -20143,11 +20143,12 @@ MonoBehaviour:
     with the nailgun's beam, it will face where the user is looking - as if it was
     parried - and explode in a blue explosion that stuns. \n\n- When a magnet or
     singularity is shot with the beam, all enemies in a nearby radius will be stunned,
-    and receive damage.\n\n- The sawblade launcher's stunning saws are larger, deal
-    more damage, and stun for longer, based on charge.\n\n- They are especially effective
-    with magnets, as they can hit an enemy several times.\n\n- At full charge, both
-    the nailgun's beam and sawblade launcher's saws will explode on contact with
-    enemies or the environment. These explosions can stun many enemies at a time. "
+    and receive damage. This scales with the beam's charge.\n\n- The sawblade launcher's
+    stunning saws are larger, deal more damage, and stun for longer, based on charge.\n\n-
+    They are especially effective with magnets, as they can hit an enemy several
+    times.\n\n- At full charge, both the nailgun's beam and sawblade launcher's saws
+    will explode on contact with enemies or the environment. These explosions can
+    stun many enemies at a time. "
 --- !u!114 &6493329107546242671
 MonoBehaviour:
   m_ObjectHideFlags: 0
