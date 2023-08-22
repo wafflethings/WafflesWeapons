@@ -3,7 +3,7 @@
 A mod that adds custom variants to ULTRAKILL, including new arms.
 
 ### [Please give me money so I can afford to commision more models.](https://www.patreon.com/Waff1e)
-I'm not old enough to get a job, so it's not like I can get one and earn it myself.
+I'm not old enough to get a job, so it's not like I can earn it myself.
 You'll also get early access to updates.
 
 ## Gameplay
