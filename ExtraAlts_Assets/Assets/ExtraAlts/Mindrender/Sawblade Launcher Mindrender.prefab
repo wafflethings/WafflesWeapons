@@ -173,6 +173,7 @@ MonoBehaviour:
   ChargeSlider: {fileID: 1567226326599725658}
   VisualBeam: {fileID: 0}
   Ball: {fileID: 1673923770524476, guid: 4a20d6f6faf384f45a4740ccaf8f1475, type: 3}
+  Charge: 0
 --- !u!114 &2244635360822582419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1206,7 +1207,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4f04cb5256e8f594aad0d8b0c6f8b53c, type: 2}
+  - {fileID: 2100000, guid: 22a57de58042d924e8407fad7734bc10, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

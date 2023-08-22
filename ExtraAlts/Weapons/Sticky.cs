@@ -2,6 +2,7 @@
 using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
+using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons
 {
@@ -9,10 +10,9 @@ namespace WafflesWeapons.Weapons
     {
         public static GameObject StickyShotgun;
 
-        public static void LoadAssets()
+        static Sticky()
         {
             StickyShotgun = Core.Assets.LoadAsset<GameObject>("Shotgun Sticky.prefab");
-
             Core.Harmony.PatchAll(typeof(Sticky));
         }
 
@@ -49,7 +49,7 @@ namespace WafflesWeapons.Weapons
             {
                 if (!__instance.boosted)
                 {
-                    return !(other.gameObject.layer == 8 || other.gameObject.layer == 24);
+                    return !(other.gameObject.layer == 8 || other.gameObject.layer == 24 || (other.gameObject.GetComponentInParent<StickyBombBehaviour>()?.Frozen ?? false));
                 }
             }
             return true;
@@ -80,24 +80,9 @@ namespace WafflesWeapons.Weapons
             }
             return true;
         }
-
-
-        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.Charge))]
-        [HarmonyPostfix]
-        public static void DoCharge(float amount)
-        {
-
-        }
-
-        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.MaxCharges))]
-        [HarmonyPostfix]
-        public static void MaxCharge()
-        {
-            StickyBehaviour.Charges = 0;
-        }
     }
 
-    public class StickyBehaviour : MonoBehaviour
+    public class StickyBehaviour : GunBehaviour<StickyBehaviour>
     {
         private GameObject og;
         private Shotgun sho;
@@ -123,6 +108,16 @@ namespace WafflesWeapons.Weapons
             detonateSlider.maxValue = DETONATE_AT;
         }
 
+        public void OnEnable()
+        {
+            cooldown = WaffleWeaponCharges.Instance.DemoShoCooldown;
+        }
+
+        public void OnDisable()
+        {
+            WaffleWeaponCharges.Instance.DemoShoCooldown = cooldown;
+        }
+
         public void FireSticky()
         {
             GameObject silly = Instantiate(StickyBomb, sho.cc.transform.position + (sho.cc.transform.forward * 0.5f), Quaternion.identity);
@@ -139,7 +134,12 @@ namespace WafflesWeapons.Weapons
         {
             if (sho.gc.activated)
             {
-                cooldown -= Time.deltaTime;
+                if (ULTRAKILL.Cheats.NoWeaponCooldown.NoCooldown)
+                {
+                    Charges = 0;
+                }
+
+                cooldown = Mathf.MoveTowards(cooldown, 0, Time.deltaTime);
 
                 if (Gun.OnAltFireReleased() && detonateTime >= DETONATE_AT)
                 {
@@ -147,7 +147,8 @@ namespace WafflesWeapons.Weapons
 
                     if (GetComponent<WeaponIdentifier>().delay == 0)
                     {
-                        cooldown = 0.5f;
+                        sho.anim.SetTrigger("Fire");
+                        cooldown = 1.35f;
                         foreach (StickyBombBehaviour sbb in FindObjectsOfType<StickyBombBehaviour>())
                         {
                             sbb.GetComponent<Projectile>().CreateExplosionEffect();
@@ -172,10 +173,10 @@ namespace WafflesWeapons.Weapons
                 {
                     if (Charges < 4)
                     {
-                        if (cooldown <= 0)
+                        if (cooldown == 0)
                         {
                             float Delay = GetComponent<WeaponIdentifier>().delay;
-                            cooldown = 0.1f;
+                            cooldown = 0.25f;
                             Invoke("FireSticky", Delay);
 
                             if (Delay == 0)
@@ -196,12 +197,11 @@ namespace WafflesWeapons.Weapons
         [HideInInspector] public bool Frozen = false;
         [HideInInspector] public StickyBehaviour myBehaviour;
         public GameObject FrozenExplosion;
+        public Collider NonTriggerCollider;
 
         public void Start()
         {
-            // :3
-            // it has the collider that isnt a trigger
-            Physics.IgnoreCollision(NewMovement.Instance.GetComponent<Collider>(), gameObject.ChildByName(":3").GetComponent<Collider>());
+            Physics.IgnoreCollision(NewMovement.Instance.GetComponent<Collider>(), NonTriggerCollider);
 
             GetComponent<Rigidbody>().AddForce(CameraController.Instance.transform.forward * 12f +
                (NewMovement.Instance.ridingRocket ? MonoSingleton<NewMovement>.Instance.ridingRocket.rb.velocity : NewMovement.Instance.rb.velocity)
@@ -223,7 +223,7 @@ namespace WafflesWeapons.Weapons
 
         public void OnTriggerEnter(Collider c)
         {
-            if (c.gameObject.layer == 8 || c.gameObject.layer == 24)
+            if (c.gameObject.layer == 8 || c.gameObject.layer == 24 || (c.GetComponent<StickyBombBehaviour>()?.Frozen ?? false))
             {
                 transform.parent = c.transform;
                 Frozen = true;

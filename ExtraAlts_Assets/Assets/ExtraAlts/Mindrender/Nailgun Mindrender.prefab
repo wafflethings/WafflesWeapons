@@ -409,6 +409,7 @@ MonoBehaviour:
   VisualBeam: {fileID: 2379724718263898343, guid: 38d02d33554d0ed4099001e4e0e62efb,
     type: 3}
   Ball: {fileID: 0}
+  Charge: 0
 --- !u!114 &2244635360822582419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -735,7 +736,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 75e079c4428f53d4ab9732f446afbeef, type: 2}
+  - {fileID: 2100000, guid: 22a57de58042d924e8407fad7734bc10, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1194,7 +1195,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 75e079c4428f53d4ab9732f446afbeef, type: 2}
+  - {fileID: 2100000, guid: 22a57de58042d924e8407fad7734bc10, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

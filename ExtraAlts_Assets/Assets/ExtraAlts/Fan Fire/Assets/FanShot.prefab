@@ -103,8 +103,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 49d9afdb0d6ecc145ac7a430584d115a, type: 3}
-  m_Color: {r: 1, g: 0.7838195, b: 0.514151, a: 1}
+  m_Sprite: {fileID: 21300000, guid: bd7f67f0669d923489a3fdbc4a2ebeab, type: 3}
+  m_Color: {r: 0.3066038, g: 0.5389461, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -227,7 +227,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.6117647, b: 0.09019608, a: 1}
+      key0: {r: 0.4764151, g: 0.65185726, b: 1, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -290,6 +290,7 @@ MonoBehaviour:
   hitAmount: 1
   maxHitsPerTarget: 1
   noMuzzleflash: 0
+  ricochetAmount: 0
   ricochetSound: {fileID: 1673117908876384, guid: 993a4edafa3ab0a4baa6df2e7afa2949,
     type: 3}
   enemyHitSound: {fileID: 1673117908876384, guid: 866cbd6953efe244ab864779aab9d44e,
@@ -299,6 +300,7 @@ MonoBehaviour:
   deflected: 0
   strongAlt: 1
   ultraRicocheter: 1
+  canHitProjectiles: 0
 --- !u!108 &108102121302046306
 Light:
   m_ObjectHideFlags: 0
@@ -310,7 +312,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 0.61960787, b: 0.14509805, a: 1}
+  m_Color: {r: 0.2509804, g: 0.5019608, b: 1, a: 1}
   m_Intensity: 20
   m_Range: 10
   m_SpotAngle: 30
@@ -445,8 +447,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 49d9afdb0d6ecc145ac7a430584d115a, type: 3}
-  m_Color: {r: 1, g: 0.6862745, b: 0.5882353, a: 1}
+  m_Sprite: {fileID: 21300000, guid: bd7f67f0669d923489a3fdbc4a2ebeab, type: 3}
+  m_Color: {r: 0.41037738, g: 0.622273, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

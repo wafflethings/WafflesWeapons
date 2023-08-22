@@ -5198,6 +5198,7 @@ GameObject:
   - component: {fileID: 7648391647658853013}
   - component: {fileID: -432875801092384957}
   - component: {fileID: 2174769853674726272}
+  - component: {fileID: 4564271308709657791}
   m_Layer: 13
   m_Name: Railcannon Virtuous
   m_TagString: Untagged
@@ -5248,7 +5249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e59d306a5292416439390a31420b1c02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  variation: 3
+  variation: 5
   beam: {fileID: 1659085721669404, guid: 60664c2b1fcda824f83a618b60bf430d, type: 3}
   shootPoint: {fileID: 6550905323193537559}
   fullCharge: {fileID: 6422642056922351659}
@@ -5403,6 +5404,19 @@ MonoBehaviour:
   delay: 0
   speedMultiplier: 1
   duplicate: 0
+--- !u!114 &4564271308709657791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2839418682670593059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -127227072, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  variationColorReal: 5
 --- !u!114 &2545923519959315346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6860,15 +6874,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b5867c660181c84da6c6d0830dfb492, type: 3}
---- !u!1 &5469356711213867004 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6745568304476511497, guid: 2b5867c660181c84da6c6d0830dfb492,
-    type: 3}
-  m_PrefabInstance: {fileID: 1619638151649280757}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2513420309724877278 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3790740219211191083, guid: 2b5867c660181c84da6c6d0830dfb492,
+    type: 3}
+  m_PrefabInstance: {fileID: 1619638151649280757}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5980965709560179183 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 2b5867c660181c84da6c6d0830dfb492,
     type: 3}
   m_PrefabInstance: {fileID: 1619638151649280757}
   m_PrefabAsset: {fileID: 0}
@@ -6908,15 +6922,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1619638151649280757}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &5980965709560179183 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 2b5867c660181c84da6c6d0830dfb492,
-    type: 3}
-  m_PrefabInstance: {fileID: 1619638151649280757}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2664552673614937309 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3639041382411894312, guid: 2b5867c660181c84da6c6d0830dfb492,
+    type: 3}
+  m_PrefabInstance: {fileID: 1619638151649280757}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5469356711213867004 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6745568304476511497, guid: 2b5867c660181c84da6c6d0830dfb492,
     type: 3}
   m_PrefabInstance: {fileID: 1619638151649280757}
   m_PrefabAsset: {fileID: 0}

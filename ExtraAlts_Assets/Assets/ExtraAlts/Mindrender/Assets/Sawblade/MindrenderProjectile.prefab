@@ -122,7 +122,7 @@ MonoBehaviour:
   speedRandomizer: 0
   explosionEffect: {fileID: 1360906160305310, guid: 6d8e98ef22ab7ac4f932320c61da4315,
     type: 3}
-  damage: 7.5
+  damage: 12.5
   enemyDamageMultiplier: 1
   friendly: 1
   playerBullet: 1

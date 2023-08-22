@@ -4996,7 +4996,7 @@ MonoBehaviour:
   maxSpeed: 5
   minSpeed: 1.5
   speedDecayRate: 0.5
-  PerfectIncrease: 0.75
+  PerfectIncrease: 0.5
   BadIncrease: 1
   shouldMove: 0
   PerfectBeam: {fileID: 7895760926372804384, guid: 33d094ccb9b2fdb44818de8a80f4c2ce,
@@ -5005,8 +5005,7 @@ MonoBehaviour:
   PerfectStepDecrease: 0.5
   PerfectCurrentDamage: 0
   BadBeam: {fileID: 1659085721669404, guid: 04aacb573449f47459783f645c557466, type: 3}
-  AlertOnEnter: {fileID: 1673117908876384, guid: e957fe1ee5352c74a8ff68a78ffc86b5,
-    type: 3}
+  SoundEffect: {fileID: 4778549618896887374}
   slider: {fileID: 3890915350084829340}
   left: {fileID: 4530946408088444177}
   right: {fileID: 319580316835467379}
@@ -5219,6 +5218,12 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 1257370286964786768, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
+--- !u!82 &4778549618896887374 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7452731483583547556, guid: b9695ea8fec32c641825aa09df97bf6b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2683505750758872810}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3890915350084829340 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1207796645741762166, guid: b9695ea8fec32c641825aa09df97bf6b,

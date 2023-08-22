@@ -466,7 +466,7 @@ AnimatorStateMachine:
     m_Position: {x: -200, y: 150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6445482686554801251}
-    m_Position: {x: 450, y: -180, z: 0}
+    m_Position: {x: 420, y: -180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7054150208876910470}
     m_Position: {x: 280, y: 110, z: 0}
@@ -685,7 +685,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Armature|ES_Charge
-  m_Speed: 1.125
+  m_Speed: 1.25
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 4807868067988332512}

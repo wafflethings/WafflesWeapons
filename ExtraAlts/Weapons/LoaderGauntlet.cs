@@ -7,19 +7,19 @@ namespace WafflesWeapons.Weapons
 {
     public class LoaderGauntlet : Fist
     {
-        public static GameObject esArm;
+        public static GameObject EsArm;
         public static LoaderBehaviour curOne;
 
-        public static void LoadAssets()
+        static LoaderGauntlet()
         {
-            esArm = Core.Assets.LoadAsset<GameObject>("Arm Earthshatter.prefab");
+            EsArm = Core.Assets.LoadAsset<GameObject>("Arm Earthshatter.prefab");
             Core.Harmony.PatchAll(typeof(LoaderGauntlet));
         }
 
         public override GameObject Create(Transform parent)
         {
             base.Create(parent);
-            GameObject thing = GameObject.Instantiate(esArm, parent);
+            GameObject thing = GameObject.Instantiate(EsArm, parent);
             return thing;
         }
 
@@ -89,20 +89,6 @@ namespace WafflesWeapons.Weapons
 
             return true;
         }
-
-        /* [HarmonyPatch(typeof(Punch), nameof(Punch.PunchSuccess))]
-        [HarmonyPrefix]
-        public static void SetStartRot(Punch __instance, out Quaternion __state)
-        {
-            __state = __instance.transform.parent.localRotation;
-        }
-
-        [HarmonyPatch(typeof(Punch), nameof(Punch.PunchSuccess))]
-        [HarmonyPostfix]
-        public static void SetEndRot(Punch __instance, Quaternion __state)
-        {
-            __instance.transform.parent.localRotation = __state;
-        } */
 
         [HarmonyPatch(typeof(FistControl), nameof(FistControl.UpdateFistIcon))]
         [HarmonyPostfix]
@@ -298,13 +284,6 @@ namespace WafflesWeapons.Weapons
                         }
                         else 
                         {
-                            NewMovement.Instance.rb.velocity = (NewMovement.Instance.rb.velocity * -0.5f);
-                            if (NewMovement.Instance.rb.velocity.y < 0)
-                            {
-                                Vector3 vel = NewMovement.Instance.rb.velocity;
-                                NewMovement.Instance.rb.velocity = new Vector3(vel.x, vel.y * -1, vel.z);
-                                Instantiate(LoaderGauntlet.curOne.DoinkSound, NewMovement.Instance.transform.position, Quaternion.identity);
-                            }
                             NewMovement.Instance.ForceAddAntiHP((int)(NewMovement.Instance.rb.velocity.magnitude * 0.5f), false, true);
                         }
                         CameraController.Instance.CameraShake(0.5f);
@@ -318,8 +297,8 @@ namespace WafflesWeapons.Weapons
 
     public class LoaderBehaviour : MonoBehaviour
     {
-        public const float ChargeSpeedMult = 1.5f * 1.125f;
-        public const float FastChargeSpeedMult = 2.5f * 1.125f;
+        public const float ChargeSpeedMult = 6f / 100 * 45; // 35% of 6, old one was 1.5f * 1.125f which is roughly 28%;
+        public const float FastChargeSpeedMult = 6f / 100 * 60; // 50% of 6, old one was  2.5f * 1.125f which is roughly 46%;
 
         private Vector3 StartPos;
         private NewMovement nm;
@@ -382,8 +361,6 @@ namespace WafflesWeapons.Weapons
 
         public void Update()
         {
-            Debug.Log($"{anim.GetCurrentAnimatorClipInfo(0)[0].clip.name} of {anim.GetCurrentAnimatorClipInfo(0).Length}");
-            // pu.ready = false;
             pu.anim = anim;
 
             // should be 100 at finish
@@ -399,23 +376,20 @@ namespace WafflesWeapons.Weapons
                 }
 
                 transform.localPosition = new Vector3(
-                    StartPos.x + Charge / 10 * UnityEngine.Random.Range(-0.01f, 0.01f),
-                    StartPos.y + Charge / 10 * UnityEngine.Random.Range(-0.01f, 0.01f),
-                    StartPos.z + Charge / 10 * UnityEngine.Random.Range(-0.01f, 0.01f));
+                    StartPos.x + Charge / 10 * Random.Range(-0.01f, 0.01f),
+                    StartPos.y + Charge / 10 * Random.Range(-0.01f, 0.01f),
+                    StartPos.z + Charge / 10 * Random.Range(-0.01f, 0.01f));
 
                 float ChargePreAdd = Charge;
 
                 if (Charge < 4)
                 {
-                    if (Charge < 2 && Charge + (Time.deltaTime * 3) >= 2)
+                    Debug.Log(FastChargeSpeedMult);
+
+                    if (Charge < 2 && Charge + (Time.deltaTime * FastChargeSpeedMult) >= 2)
                     {
                         cc.CameraShake(1.5f);
                         Instantiate(Click, nm.transform.position, Quaternion.identity);
-                    }
-
-                    if (Charge < 2)
-                    {
-                        Charge += Time.deltaTime * ChargeSpeedMult;
                     }
 
                     Charge += Time.deltaTime * FastChargeSpeedMult;
@@ -468,11 +442,9 @@ namespace WafflesWeapons.Weapons
                     nm.ridingRocket.transform.rotation = cc.transform.rotation;
                 }
 
-                if (FindObjectOfType<GroundCheck>().touchingGround)
+                if (nm.gc.touchingGround)
                 {
-                    nm.jumpPower /= 3f;
                     nm.Jump();
-                    nm.jumpPower *= 3;
                 }
 
                 Instantiate(Release);
@@ -482,7 +454,7 @@ namespace WafflesWeapons.Weapons
                 LoaderArmCollisionHandler.Instance.CanCharge = false;
                 LoaderArmCollisionHandler.Instance.BadCoins.Clear();
 
-                nm.rb.AddForce((cc.transform.forward * nm.walkSpeed * Charge) / 70, ForceMode.VelocityChange);
+                nm.rb.AddForce((cc.transform.forward * nm.walkSpeed * Charge) / 125, ForceMode.VelocityChange);
                 Charge = 0;
                 anim.SetBool("Midflight", true);
             }

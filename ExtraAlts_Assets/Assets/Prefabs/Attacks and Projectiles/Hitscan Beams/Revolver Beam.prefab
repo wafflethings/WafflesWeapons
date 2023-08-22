@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 108102121302046306}
   - component: {fileID: -6263661578256977158}
   m_Layer: 0
-  m_Name: RevolverBeam
+  m_Name: Revolver Beam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -276,18 +276,25 @@ MonoBehaviour:
   beamType: 0
   attributes: 
   alternateStartPoint: {x: 0, y: 0, z: 0}
+  sourceWeapon: {fileID: 0}
   bodiesPierced: 0
   cc: {fileID: 0}
-  hitParticle: {fileID: 1159615047014080, guid: d12ef73242e46ed4e93036ef4037e3ee,
-    type: 3}
+  hitParticle:
+    m_AssetGUID: d12ef73242e46ed4e93036ef4037e3ee
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   bulletForce: 5000
   quickDraw: 0
   gunVariation: 0
   damage: 1
   critDamageOverride: 0
+  screenshakeMultiplier: 1
   hitAmount: 1
   maxHitsPerTarget: 1
   noMuzzleflash: 0
+  ricochetAmount: 0
+  hasBeenRicocheter: 0
   ricochetSound: {fileID: 1673117908876384, guid: 993a4edafa3ab0a4baa6df2e7afa2949,
     type: 3}
   enemyHitSound: {fileID: 1673117908876384, guid: 866cbd6953efe244ab864779aab9d44e,
@@ -297,7 +304,11 @@ MonoBehaviour:
   deflected: 0
   strongAlt: 0
   ultraRicocheter: 0
+  canHitProjectiles: 0
   hitEids: []
+  previouslyHitTransform: {fileID: 0}
+  aimAssist: 0
+  intentionalRicochet: 0
 --- !u!108 &108102121302046306
 Light:
   m_ObjectHideFlags: 0
@@ -374,3 +385,4 @@ MonoBehaviour:
   useAudioLength: 0
   time: 5
   randomizer: 0
+  affectedByNoCooldowns: 0

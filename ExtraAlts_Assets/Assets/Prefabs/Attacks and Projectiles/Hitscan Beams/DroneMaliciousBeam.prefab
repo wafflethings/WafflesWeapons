@@ -178,18 +178,25 @@ MonoBehaviour:
   beamType: 3
   attributes: 
   alternateStartPoint: {x: 0, y: 0, z: 0}
+  sourceWeapon: {fileID: 0}
   bodiesPierced: 0
   cc: {fileID: 0}
-  hitParticle: {fileID: 166480979879108960, guid: 53b49583a4a1db643b3ae64c1da94687,
-    type: 3}
+  hitParticle:
+    m_AssetGUID: 53b49583a4a1db643b3ae64c1da94687
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   bulletForce: 50000
   quickDraw: 0
   gunVariation: 0
   damage: 2
   critDamageOverride: 0
+  screenshakeMultiplier: 1
   hitAmount: 1
   maxHitsPerTarget: 1
   noMuzzleflash: 1
+  ricochetAmount: 0
+  hasBeenRicocheter: 0
   ricochetSound: {fileID: 1673117908876384, guid: 993a4edafa3ab0a4baa6df2e7afa2949,
     type: 3}
   enemyHitSound: {fileID: 1673117908876384, guid: 866cbd6953efe244ab864779aab9d44e,
@@ -198,7 +205,12 @@ MonoBehaviour:
   ignoreEnemyType: 1
   deflected: 0
   strongAlt: 0
+  ultraRicocheter: 1
+  canHitProjectiles: 0
   hitEids: []
+  previouslyHitTransform: {fileID: 0}
+  aimAssist: 0
+  intentionalRicochet: 0
 --- !u!108 &108671176238998922
 Light:
   m_ObjectHideFlags: 0

@@ -32,14 +32,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Components\EnemyHitTracker.cs" />
     <Compile Include="Core.cs" />
-    <Compile Include="CustomColour.cs" />
+    <Compile Include="Components\CustomColour.cs" />
+    <Compile Include="Components\GunBehaviour.cs" />
     <Compile Include="Pages\CustomsPage.cs" />
     <Compile Include="Pages\ExtrasPage.cs" />
-    <Compile Include="Weapons\Airblast.cs" />
+    <Compile Include="Components\WaffleWeaponCharges.cs" />
+    <Compile Include="Weapons\Conductor.cs" />
     <Compile Include="Weapons\Desperado.cs" />
     <Compile Include="Weapons\Mindrender.cs" />
-    <Compile Include="Weapons\TacticalNuke.cs" />
+    <Compile Include="Weapons\Singularity.cs" />
+    <Compile Include="Weapons\EepyCharger.cs" />
     <Compile Include="Weapons\Sticky.cs" />
     <Compile Include="Weapons\Virtuous.cs" />
     <Compile Include="Weapons\LoaderGauntlet.cs" />

@@ -9,6 +9,8 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using Atlas.Modules.Terminal;
 using Atlas.Modules.Guns;
+using WafflesWeapons.Components;
+using System.Reflection.Emit;
 
 namespace WafflesWeapons
 {
@@ -33,32 +35,18 @@ namespace WafflesWeapons
             TerminalPageRegistry.RegisterPage(typeof(CustomsPage));
             //TerminalPageRegistry.RegisterPage(typeof(ExtrasPage));
 
-            FanFire.LoadAssets();
             GunRegistry.Register(new FanFire());
-
-            Malevolent.LoadAssets();
             GunRegistry.Register(new Malevolent());
-
-            Airblast.LoadAssets();
-            GunRegistry.Register(new Airblast());
-
-            LoaderGauntlet.LoadAssets();
+            GunRegistry.Register(new Conductor());
             GunRegistry.Register(new LoaderGauntlet());
-
-            Virtuous.LoadAssets();
             GunRegistry.Register(new Virtuous());
-
-            Sticky.LoadAssets();
             GunRegistry.Register(new Sticky());
-
-            TacticalNuke.LoadAssets();
-            GunRegistry.Register(new TacticalNuke());
-
-            Mindrender.LoadAssets();
+            GunRegistry.Register(new EepyCharger());
             GunRegistry.Register(new Mindrender());
-
-            Desperado.LoadAssets();
             GunRegistry.Register(new Desperado());
+            GunRegistry.Register(new Singularity());
+
+            Harmony.PatchAll(typeof(WaffleWeaponCharges));
         }
 
         [HarmonyPatch(typeof(LeaderboardController), nameof(LeaderboardController.SubmitCyberGrindScore))]

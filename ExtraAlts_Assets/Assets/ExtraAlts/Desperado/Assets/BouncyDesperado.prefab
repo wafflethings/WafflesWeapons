@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 869fb0f6aba8e9a47bd311275e91c041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beamType: 0
+  beamType: 1
   attributes: 
   alternateStartPoint: {x: 0, y: 0, z: 0}
   sourceWeapon: {fileID: 0}
@@ -162,6 +162,7 @@ MonoBehaviour:
   hitAmount: 1
   maxHitsPerTarget: 1
   noMuzzleflash: 0
+  ricochetAmount: 0
   ricochetSound: {fileID: 1673117908876384, guid: 993a4edafa3ab0a4baa6df2e7afa2949,
     type: 3}
   enemyHitSound: {fileID: 1673117908876384, guid: 866cbd6953efe244ab864779aab9d44e,
@@ -171,6 +172,7 @@ MonoBehaviour:
   deflected: 0
   strongAlt: 0
   ultraRicocheter: 1
+  canHitProjectiles: 0
 --- !u!108 &7788016285493173686
 Light:
   m_ObjectHideFlags: 0

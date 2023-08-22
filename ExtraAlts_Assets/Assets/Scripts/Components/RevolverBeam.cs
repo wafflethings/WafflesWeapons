@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System;
 using Sandbox;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public enum BeamType
 {
@@ -33,6 +34,7 @@ public class RevolverBeam : MonoBehaviour
 	public int maxHitsPerTarget;
 	public bool noMuzzleflash;
 
+	public int ricochetAmount = 0;
 	public GameObject ricochetSound;
 	public GameObject enemyHitSound;
 	public bool fake;
@@ -41,6 +43,7 @@ public class RevolverBeam : MonoBehaviour
 	public bool deflected;
 	public bool strongAlt;
 	public bool ultraRicocheter = true;
+	public bool canHitProjectiles;
 
 	 
 	void Start() { }
@@ -51,4 +54,5 @@ public class RevolverBeam : MonoBehaviour
 	void HitSomething(RaycastHit hit) { }
 	void PiercingShotOrder() { }
 	void PiercingShotCheck() { }
-	public void ExecuteHits(RaycastHit currentHit) { }}
+	public void ExecuteHits(RaycastHit currentHit) { }
+	void RicochetAimAssist(GameObject beam, bool aimAtHead = false) { }}

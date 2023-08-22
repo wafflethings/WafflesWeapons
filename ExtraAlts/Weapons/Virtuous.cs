@@ -2,6 +2,7 @@
 using HarmonyLib;
 using System.Collections.Generic;
 using UnityEngine;
+using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons
 {
@@ -9,7 +10,7 @@ namespace WafflesWeapons.Weapons
     {
         public static GameObject VirtueRail;
 
-        public static void LoadAssets()
+        static Virtuous()
         {
             VirtueRail = Core.Assets.LoadAsset<GameObject>("Railcannon Virtuous.prefab");
             Core.Harmony.PatchAll(typeof(Virtuous));
@@ -33,7 +34,7 @@ namespace WafflesWeapons.Weapons
 
         public override string Pref()
         {
-            return "rai3";
+            return "rai5";
         }
 
         [HarmonyPatch(typeof(RevolverBeam), nameof(RevolverBeam.ExecuteHits))]
@@ -128,7 +129,7 @@ namespace WafflesWeapons.Weapons
         }
     }
 
-    public class VirtuousBehaviour : MonoBehaviour
+    public class VirtuousBehaviour : GunBehaviour<VirtuousBehaviour>
     {
         public GameObject VirtueBeam;
         public GameObject VirtueBeamSmall;

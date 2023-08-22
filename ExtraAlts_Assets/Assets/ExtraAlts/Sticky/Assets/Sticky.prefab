@@ -220,6 +220,7 @@ GameObject:
   - component: {fileID: 82314698960798828}
   - component: {fileID: 108397942718247896}
   - component: {fileID: -9171735465645961016}
+  - component: {fileID: 4327801739351880036}
   m_Layer: 14
   m_Name: Sticky
   m_TagString: Untagged
@@ -320,6 +321,7 @@ MonoBehaviour:
   myBehaviour: {fileID: 0}
   FrozenExplosion: {fileID: 166480979879108960, guid: eff13f7e1bb292444bf4ec78ffe9c156,
     type: 3}
+  NonTriggerCollider: {fileID: 6173676405502673343}
 --- !u!114 &114897106014039746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -653,6 +655,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkFrequency: 3
+--- !u!114 &4327801739351880036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673923770524476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74b9f1b982bbf3143b3dbc45dc0d601b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dontDestroy: 0
 --- !u!1 &653136285018910921
 GameObject:
   m_ObjectHideFlags: 0

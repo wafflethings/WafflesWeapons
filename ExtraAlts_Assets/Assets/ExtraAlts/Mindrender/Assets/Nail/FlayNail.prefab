@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourceWeapon: {fileID: 0}
-  damage: 0.125
+  damage: 0.2
   environmentHitSound: {fileID: 8300000, guid: fcf0d9d409f057141a8be5cf02e0b29a, type: 3}
   enemyHitSound: {fileID: 8300000, guid: 075a64ff58624ae408516bc371f48c55, type: 3}
   zapMaterial: {fileID: 2100000, guid: 079a645b54b50f744879c7142c506a01, type: 2}

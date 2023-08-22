@@ -299,7 +299,7 @@ MonoBehaviour:
   enemy: 0
   safeEnemyType: 0
   sawblade: 1
-  hitAmount: 3.9
+  hitAmount: 2.9
   sawBreakEffect: {fileID: 6311402704591156762, guid: d057d5ed03ca9da408aa9963a6870247,
     type: 3}
   sawBounceEffect: {fileID: 1021317207713928, guid: b4f4a1a33699633478af8ba143e6c3b2,

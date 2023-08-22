@@ -4990,8 +4990,7 @@ MonoBehaviour:
   PerfectStepDecrease: 0.84
   PerfectCurrentDamage: 0
   BadBeam: {fileID: 1659085721669404, guid: bde08464fb6a18348b594c9a5a681883, type: 3}
-  AlertOnEnter: {fileID: 1673117908876384, guid: e957fe1ee5352c74a8ff68a78ffc86b5,
-    type: 3}
+  SoundEffect: {fileID: 5032833277618917038}
   slider: {fileID: 3636560325626237052}
   left: {fileID: 4137050473714765297}
   right: {fileID: 281341002990452883}
@@ -5291,6 +5290,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
+--- !u!82 &5032833277618917038 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7452731483583547556, guid: b9695ea8fec32c641825aa09df97bf6b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2501007418954319370}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3636560325626237052 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1207796645741762166, guid: b9695ea8fec32c641825aa09df97bf6b,

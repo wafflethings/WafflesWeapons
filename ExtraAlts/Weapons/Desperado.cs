@@ -1,10 +1,12 @@
 ﻿using Atlas.Modules.Guns;
 using HarmonyLib;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons
 {
@@ -14,7 +16,7 @@ namespace WafflesWeapons.Weapons
         public static GameObject DespAlt;
         public static List<DesperadoBehaviour> Guns = new List<DesperadoBehaviour>();
 
-        public static void LoadAssets()
+        static Desperado()
         {
             Desp = Core.Assets.LoadAsset<GameObject>("Revolver Desperado.prefab");
             DespAlt = Core.Assets.LoadAsset<GameObject>("Alternative Revolver Desperado.prefab");
@@ -73,12 +75,9 @@ namespace WafflesWeapons.Weapons
                 bool hitEnemy = __instance.hit.collider.gameObject.GetComponent<EnemyIdentifierIdentifier>() != null ||
                     __instance.hit.collider.gameObject.GetComponent<EnemyIdentifier>() != null;
 
-                Debug.Log($"hit {__instance.hit.collider.gameObject} => {hitEnemy}");
-
-                DesperadoBehaviour db;
                 if (hitEnemy)
                 {
-                    if (__instance.sourceWeapon.TryGetComponent(out db))
+                    if (__instance.sourceWeapon.TryGetComponent(out DesperadoBehaviour db))
                     {
                         if (__instance.gameObject.name.StartsWith("BouncyDesperado"))
                         {
@@ -88,21 +87,14 @@ namespace WafflesWeapons.Weapons
                                 eid = __instance.hit.collider.gameObject.GetComponent<EnemyIdentifierIdentifier>().eid;
                             }
 
-                            Debug.Log("checking nearest");
                             Vector3 nearest = UltrakillUtils.NearestEnemyPoint(__instance.hit.transform.position, 1000, eid);
                             Debug.Log($"{db.PerfectCurrentDamage} - {db.PerfectStepDecrease} = {db.PerfectCurrentDamage - db.PerfectStepDecrease}");
-                            if (nearest != __instance.hit.transform.position && db.PerfectCurrentDamage - db.PerfectStepDecrease > 0)
+                            db.PerfectCurrentDamage -= db.PerfectStepDecrease;
+                            if (nearest != __instance.hit.transform.position && db.PerfectCurrentDamage > 0)
                             {
-                                db.PerfectCurrentDamage -= db.PerfectStepDecrease;
-                                Debug.Log("success getting in"); // make nearest check if its not the same enemy
-                                GameObject newBeam = GameObject.Instantiate(db.PerfectBeam, __instance.hit.transform.position, Quaternion.identity);
-                                newBeam.transform.LookAt(nearest);
-                                newBeam.GetComponent<AudioSource>().enabled = false;
-                                newBeam.GetComponentInChildren<SpriteRenderer>().enabled = false;
-                                newBeam.GetComponent<RevolverBeam>().sourceWeapon = __instance.sourceWeapon;
                                 __instance.lr.SetPosition(1, __instance.hit.transform.position);
+                                __instance.StartCoroutine(CreateNewBeam(db.PerfectBeam, __instance.hit.transform.position, eid, db.PerfectCurrentDamage));
                             }
-                            Debug.Log("all done");
                         }
                     }
                 }
@@ -110,14 +102,17 @@ namespace WafflesWeapons.Weapons
             catch (Exception ex) { Debug.LogWarning(ex.ToString()); }
         }
 
-        [HarmonyPatch(typeof(WeaponCharges), nameof(WeaponCharges.Charge))]
-        [HarmonyPostfix]
-        public static void DoCharge(float amount)
+        public static IEnumerator CreateNewBeam(GameObject beam, Vector3 hitPos, EnemyIdentifier eid, float dmg)
         {
-            foreach (DesperadoBehaviour desp in Guns)
-            {
-                desp.Charge();
-            }
+            yield return new WaitForSeconds(0.1f);
+
+            GameObject newBeam = GameObject.Instantiate(beam, hitPos, Quaternion.identity);
+            newBeam.transform.LookAt(UltrakillUtils.NearestEnemyPoint(hitPos, 1000, eid));
+            newBeam.GetComponent<AudioSource>().enabled = false;
+            newBeam.GetComponentInChildren<SpriteRenderer>().enabled = false;
+            newBeam.GetComponent<RevolverBeam>().sourceWeapon = DesperadoBehaviour.Instances[0].gameObject;
+            newBeam.GetComponent<RevolverBeam>().damage = dmg;
+            Debug.Log(":3");
         }
 
         [HarmonyPatch(typeof(Revolver), nameof(Revolver.Update))]
@@ -128,7 +123,7 @@ namespace WafflesWeapons.Weapons
         }
     }
 
-    public class DesperadoBehaviour : MonoBehaviour
+    public class DesperadoBehaviour : GunBehaviour<DesperadoBehaviour>
     {
         private Revolver rev;
         private float currentSlider = 0;
@@ -164,7 +159,7 @@ namespace WafflesWeapons.Weapons
         public GameObject BadBeam;
 
         [Header("Sliders")]
-        public GameObject AlertOnEnter;
+        public AudioSource SoundEffect;
         public Slider slider;
         public Slider left;
         public Slider right;
@@ -206,24 +201,23 @@ namespace WafflesWeapons.Weapons
 
             if (shouldMove)
             {
-                Debug.Log($"{goingRight} gr, {leftLimit} {rightLimit} {currentSlider}");
+                if (!SoundEffect.isPlaying)
+                {
+                    SoundEffect.Play();
+                }
+                SoundEffect.pitch = 1 - GetProximityToBar();
+                if (SoundEffect.pitch == 1)
+                {
+                    SoundEffect.pitch = 2;
+                }
+
                 if (goingRight)
                 {
-                    if (currentSlider < leftLimit && currentSlider + sliderSpeed * Time.deltaTime >= leftLimit)
-                    {
-                        Instantiate(AlertOnEnter, NewMovement.Instance.transform.position, Quaternion.identity);
-                    }
-
                     currentSlider += sliderSpeed * Time.deltaTime;
                 }
                 else
                 {
                     currentSlider -= sliderSpeed * Time.deltaTime;
-
-                    if (currentSlider > rightLimit && currentSlider - sliderSpeed * Time.deltaTime <= rightLimit)
-                    {
-                        Instantiate(AlertOnEnter, NewMovement.Instance.transform.position, Quaternion.identity);
-                    }
                 }
 
                 if ((currentSlider > 1 && goingRight) || (currentSlider < 0 && !goingRight))
@@ -252,6 +246,11 @@ namespace WafflesWeapons.Weapons
             }
             else
             {
+                if (SoundEffect.isPlaying)
+                {
+                    SoundEffect.Stop();
+                }
+
                 sliderSpeed += toAdd;
                 toAdd = 0;
                 sliderSpeed -= speedDecayRate * Time.deltaTime;
@@ -262,15 +261,11 @@ namespace WafflesWeapons.Weapons
 
         public void Update()
         {
-            if (ULTRAKILL.Cheats.NoWeaponCooldown.NoCooldown)
-            {
-                Charge();
-            }
-
             rev.pierceShotCharge = 0;
             
             if (rev.gc.activated)
             {
+                Charge();
                 slider.value = currentSlider;
 
                 if (rev.shootReady && rev.gunReady)
@@ -318,6 +313,17 @@ namespace WafflesWeapons.Weapons
             perfectBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size * 200);
             left.value = leftLimit;
             right.value = rightLimit;
+        }
+
+        public float GetProximityToBar()
+        {
+            if (currentSlider > leftLimit && currentSlider < rightLimit)
+            {
+                return 0;
+            }
+
+            float closest = Mathf.Abs(currentSlider - leftLimit) < Mathf.Abs(currentSlider - rightLimit) ? leftLimit : rightLimit;
+            return Mathf.Abs(currentSlider - closest);
         }
     }
 }
