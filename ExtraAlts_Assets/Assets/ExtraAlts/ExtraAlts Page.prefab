@@ -34827,11 +34827,12 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Press Alt Fire to <color=orange>launch</color> a black hole.
+  m_Text: 'Press Alt Fire to <color=orange>launch</color> a black hole, charged with
+    blood.
 
 
-    It
-    bounces on walls and attracts enemies when shot. Parrying will redirect it.'
+    It bounces on walls and attracts enemies when shot. Parrying will
+    redirect it.'
 --- !u!1 &3858078074317310218
 GameObject:
   m_ObjectHideFlags: 0
@@ -58230,6 +58231,10 @@ MonoBehaviour:
     <color=orange>STRATEGY:</color>
 
     -
+    The gun charges with blood. You need 400 HP worth of blood to fill the gauge.
+
+
+    -
     Although it is slow, the singularity is extremely powerful, dealing large amounts
     of damage on contact.
 
@@ -58240,21 +58245,21 @@ MonoBehaviour:
 
     -
     Shooting it with a hitscan beam causes it to implode, sucking in all nearby enemies
-    and projectiles. Coins will hit it as well.
+    and projectiles. Coins will hit it as well. Implosions are larger with stronger
+    beams.
 
 
-    - Magnets, cores, rockets,
-    and other projectiles like sticky mines and those fired by enemies, will all
-    be trapped by the singularity. They will continue to function as they usually
-    do.
+    - Magnets, cores, rockets, and other projectiles like sticky mines
+    and those fired by enemies, will all be trapped by the singularity. They will
+    continue to function as they usually do.
 
 
-    - When a screwdriver drill is in the singularity, it will cause an
-    implosion every 0.75 seconds.
+    - When a screwdriver drill is
+    in the singularity, it will cause an implosion every 0.75 seconds.
 
 
-    - At the end of the singularity''s life,
-    everything inside of it will explode.'
+    - At
+    the end of the singularity''s life, everything inside of it will explode.'
 --- !u!114 &3863599338742510039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77724,7 +77729,8 @@ MonoBehaviour:
 
 
     -
-    They can be detonated in mid air for mobility.'
+    They can be detonated at any time by holding Alt Fire, then releasing. This can
+    be done mid air for mobility.'
 --- !u!114 &216713324577904340
 MonoBehaviour:
   m_ObjectHideFlags: 0

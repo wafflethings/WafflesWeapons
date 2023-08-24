@@ -48,10 +48,11 @@ namespace WafflesWeapons.Weapons
             if (!harmless && __instance.rocket && exploderWeapon == null && !__instance.GetComponent<HomingRocket>()) //null is if it is exploded by an enemy
             {
                 float change = super ? 2 : 1;
+                change /= EepyChargerBehaviour.ChargeDivide;
 
                 foreach (EepyChargerBehaviour epc in EepyChargerBehaviour.Instances)
                 {
-                    epc.WindUp += change / EepyChargerBehaviour.ChargeDivide;
+                    epc.WindUp += change;
                 }
 
                 WaffleWeaponCharges.Instance.EepyCharge += change;

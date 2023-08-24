@@ -218,6 +218,47 @@ namespace WafflesWeapons.Weapons
             effect.GetComponent<ParticleSystem>().Stop();
         }
 
+        private static MethodInfo m_Conductor_InstantiateReplacement = typeof(Conductor).GetMethod("InstantiateReplacement");
+
+        [HarmonyPatch(typeof(RevolverBeam), nameof(RevolverBeam.PiercingShotCheck)), HarmonyTranspiler]
+        public static IEnumerable<CodeInstruction> DisableHitParticle(IEnumerable<CodeInstruction> instructions)
+        {
+            foreach (CodeInstruction instruction in instructions)
+            {
+                if (instruction.operand != null && instruction.operand.GetType().IsSubclassOf(typeof(MethodInfo)))
+                {
+                    Debug.Log(((MethodInfo)instruction.operand).Name);
+
+                    if (((MethodInfo)instruction.operand).Name == "Instantiate")
+                    {
+                        yield return new CodeInstruction(OpCodes.Ldarg_0);
+                        instruction.operand = m_Conductor_InstantiateReplacement;
+                        Debug.LogError("REPLACED");
+                    }
+                }
+
+                if (instruction.operand != null)
+                {
+                    Debug.Log(instruction.operand.GetType());
+                    Debug.Log(instruction.operand.GetType().IsSubclassOf(typeof(MethodInfo)));
+                }
+                yield return instruction;
+            }
+        }
+
+        public static GameObject InstantiateReplacement(GameObject gameObject, Vector3 position, Quaternion rotation, RevolverBeam rb)
+        {
+            Debug.Log($"Instantiate Replacement: {gameObject} @ {position} {rotation}");
+
+            if (rb.sourceWeapon != null && rb.sourceWeapon.GetComponent<ConductorBehaviour>() && rb.hitList[rb.enemiesPierced].rrhit.collider.GetComponent<Nail>())
+            {
+                Debug.Log("Not instantiating, is particle.");
+                return null;
+            }
+
+            return UnityEngine.Object.Instantiate(gameObject, position, rotation);
+        } 
+
         private static MethodInfo m_Grenade_Explode = typeof(Grenade).GetMethod("Explode");
         private static MethodInfo m_Conductor_ExplodeReplacement = typeof(Conductor).GetMethod("ExplodeReplacement");
 
