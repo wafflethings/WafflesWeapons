@@ -233,15 +233,9 @@ namespace WafflesWeapons.Weapons
                     {
                         yield return new CodeInstruction(OpCodes.Ldarg_0);
                         instruction.operand = m_Conductor_InstantiateReplacement;
-                        Debug.LogError("REPLACED");
                     }
                 }
 
-                if (instruction.operand != null)
-                {
-                    Debug.Log(instruction.operand.GetType());
-                    Debug.Log(instruction.operand.GetType().IsSubclassOf(typeof(MethodInfo)));
-                }
                 yield return instruction;
             }
         }

@@ -41,6 +41,7 @@
     <Compile Include="Components\WaffleWeaponCharges.cs" />
     <Compile Include="Weapons\Conductor.cs" />
     <Compile Include="Weapons\Desperado.cs" />
+    <Compile Include="Weapons\FerryOar.cs" />
     <Compile Include="Weapons\Mindrender.cs" />
     <Compile Include="Weapons\Singularity.cs" />
     <Compile Include="Weapons\EepyCharger.cs" />

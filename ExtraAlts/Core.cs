@@ -14,7 +14,7 @@ using System.Reflection.Emit;
 
 namespace WafflesWeapons
 {
-    [BepInPlugin("waffle.ultrakill.extraalts", "Waffle's Weapons", "1.0.1")]
+    [BepInPlugin("waffle.ultrakill.extraalts", "Waffle's Weapons", "1.2.4")]
     public class Core : BaseUnityPlugin
     {
         public static Harmony Harmony = new Harmony("waffle.ultrakill.extraalts");
@@ -32,9 +32,10 @@ namespace WafflesWeapons
             Assets = AssetBundle.LoadFromFile(Path.Combine(PathUtils.ModPath(), "redrevolver.bundle"));
             Harmony.PatchAll(typeof(Core));
 
-            TerminalPageRegistry.RegisterPage(typeof(CustomsPage));
+            TerminalPageRegistry.RegisterPage(typeof(CustomsPage), 1);
             //TerminalPageRegistry.RegisterPage(typeof(ExtrasPage));
 
+            /*
             GunRegistry.Register(new FanFire());
             GunRegistry.Register(new Malevolent());
             GunRegistry.Register(new Conductor());
@@ -45,6 +46,8 @@ namespace WafflesWeapons
             GunRegistry.Register(new Mindrender());
             GunRegistry.Register(new Desperado());
             GunRegistry.Register(new Singularity());
+            */
+            GunRegistry.Register(new FerryOar());
 
             Harmony.PatchAll(typeof(WaffleWeaponCharges));
         }

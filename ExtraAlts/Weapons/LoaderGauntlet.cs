@@ -96,12 +96,9 @@ namespace WafflesWeapons.Weapons
         {
             try
             {
-                if (GameObject.FindObjectOfType<LoaderBehaviour>() != null)
+                if (__instance.currentArmObject.GetComponent<LoaderBehaviour>() != null)
                 {
-                    if (__instance.currentArmObject == GameObject.FindObjectOfType<LoaderBehaviour>().gameObject)
-                    {
-                        __instance.fistIcon.color = ColorBlindSettings.Instance.variationColors[5];
-                    }
+                    __instance.fistIcon.color = ColorBlindSettings.Instance.variationColors[5];
                 }
             }
             catch
