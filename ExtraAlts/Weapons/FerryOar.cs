@@ -262,7 +262,7 @@ namespace WafflesWeapons.Weapons
             }
 
             Debug.Log("magni " + NewMovement.Instance.rb.velocity.magnitude);
-            boomerang.Speed = 50 + (NewMovement.Instance.rb.velocity.magnitude);
+            boomerang.Speed = 75 + (NewMovement.Instance.rb.velocity.magnitude * 20f);
         }
     }
 
@@ -282,28 +282,29 @@ namespace WafflesWeapons.Weapons
             _startPos = transform.position;
             _startPlayerPos = PlayerTracker.Instance.PredictPlayerPosition(2);
             _startPlayerPos.y = Target.y;
+            _lastPoint = _startPos;
 
             Quaternion rotation = transform.rotation;
             transform.LookAt(Target);
-            Target += transform.forward * 5f;
             transform.rotation = rotation;
         }
 
         public void Update()
         {
-            RotateThing.transform.rotation *= Quaternion.Euler(0, 720 * Time.deltaTime, 0);
             if (!_done)
             {
-                List<Vector3> curvePoints = BezierCurve.PointList3(new List<Vector3>() { _startPos, Target, _startPlayerPos });
+                Vector3 midPoint = ((_startPos + Target) / 2) + (Vector3.up * 5);
+                List<Vector3> curvePoints = BezierCurve.PointList3(new List<Vector3>() { _startPos, midPoint, Target });
                 _currentPoint = curvePoints.IndexOf(ClosestPoint(_lastPoint, curvePoints)) + 1;
+
                 if (_currentPoint == -1 || _currentPoint > curvePoints.Count)
                 {
                     _currentPoint = curvePoints.Count;
                 }
-                GetComponent<LineRenderer>().positionCount = curvePoints.Count;
-                GetComponent<LineRenderer>().SetPositions(curvePoints.ToArray());
 
-                Debug.Log($"{_currentPoint + 1} of {curvePoints.Count}");
+                //GetComponent<LineRenderer>().positionCount = curvePoints.Count;
+                //GetComponent<LineRenderer>().SetPositions(curvePoints.ToArray());
+
                 if (_currentPoint + 1 < curvePoints.Count)
                 {
                     transform.LookAt(curvePoints[_currentPoint + 1]);
