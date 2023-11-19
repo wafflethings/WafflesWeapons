@@ -2,6 +2,7 @@
 using HarmonyLib;
 using System.Collections.Generic;
 using UnityEngine;
+using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons
 {
@@ -292,7 +293,7 @@ namespace WafflesWeapons.Weapons
         }
     }
 
-    public class LoaderBehaviour : MonoBehaviour
+    public class LoaderBehaviour : GunBehaviour<LoaderBehaviour>
     {
         public const float ChargeSpeedMult = 6f / 100 * 45; // 35% of 6, old one was 1.5f * 1.125f which is roughly 28%;
         public const float FastChargeSpeedMult = 6f / 100 * 60; // 50% of 6, old one was  2.5f * 1.125f which is roughly 46%;

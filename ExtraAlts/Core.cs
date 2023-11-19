@@ -32,22 +32,25 @@ namespace WafflesWeapons
             Assets = AssetBundle.LoadFromFile(Path.Combine(PathUtils.ModPath(), "redrevolver.bundle"));
             Harmony.PatchAll(typeof(Core));
 
-            TerminalPageRegistry.RegisterPage(typeof(CustomsPage), 1);
+            TerminalPageRegistry.RegisterPage(typeof(CustomsPage));
             //TerminalPageRegistry.RegisterPage(typeof(ExtrasPage));
 
-            /*
             GunRegistry.Register(new FanFire());
             GunRegistry.Register(new Malevolent());
-            GunRegistry.Register(new Conductor());
-            GunRegistry.Register(new LoaderGauntlet());
-            GunRegistry.Register(new Virtuous());
-            GunRegistry.Register(new Sticky());
-            GunRegistry.Register(new EepyCharger());
-            GunRegistry.Register(new Mindrender());
             GunRegistry.Register(new Desperado());
+
+            GunRegistry.Register(new Sticky());
             GunRegistry.Register(new Singularity());
-            */
+
+            GunRegistry.Register(new Conductor());
+            GunRegistry.Register(new Mindrender());
+
+            GunRegistry.Register(new Virtuous());
+
+            GunRegistry.Register(new EepyCharger());
+
             GunRegistry.Register(new FerryOar());
+            GunRegistry.Register(new LoaderGauntlet());
 
             Harmony.PatchAll(typeof(WaffleWeaponCharges));
         }
