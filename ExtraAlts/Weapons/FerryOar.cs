@@ -356,7 +356,6 @@ namespace WafflesWeapons.Weapons
             if (HitSomething)
             {
                 _bouncesLeft = 1;
-                Debug.Log("HAS BOUNCES??");
             }
         }
 
@@ -463,9 +462,6 @@ namespace WafflesWeapons.Weapons
             if (_bouncesLeft > 0)
             {
                 _bouncesLeft--;
-                Vector3 oarToPlayer = NewMovement.Instance.transform.position - transform.position;
-                oarToPlayer.y = NewMovement.Instance.transform.position.y;
-                oarToPlayer.Normalize();
 
                 Vector3 defaultReturn = CameraController.Instance.transform.position + CameraController.Instance.transform.forward * 2;
 
@@ -480,12 +476,12 @@ namespace WafflesWeapons.Weapons
                     Target = defaultReturn;
                 }
 
-                Vector3 midPoint = ((transform.position + Target) / 2) + (Vector3.up * 5);
+                Vector3 midPoint = ((transform.position + Target) / 2) + (Vector3.up * 10);
                 if (midPoint.y < NewMovement.Instance.transform.position.y)
                 {
                     midPoint.y = NewMovement.Instance.transform.position.y;
                 }
-                _curvePoints = BezierCurve.PointList3(new List<Vector3>() { transform.position, midPoint, Target });
+                _curvePoints = BezierCurve.PointList3(new List<Vector3> { transform.position, midPoint, Target });
 
                 _speedMult = 0.5f + Vector3.Distance(Target, transform.position) / 75 + (_parriesDone * 0.1f);
                 _targetSpeedMult = 0.5f + Vector3.Distance(Target, transform.position) / 75 + (_parriesDone * 0.1f);
