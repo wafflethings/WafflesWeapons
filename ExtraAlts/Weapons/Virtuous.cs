@@ -3,6 +3,7 @@ using HarmonyLib;
 using System.Collections.Generic;
 using UnityEngine;
 using WafflesWeapons.Components;
+using WafflesWeapons.Utils;
 
 namespace WafflesWeapons.Weapons
 {
@@ -140,7 +141,7 @@ namespace WafflesWeapons.Weapons
             var vi = beam.GetComponent<VirtueInsignia>();
             vi.target = new GameObject().transform;
             vi.target.transform.position = pos;
-            beam.ChildByName("Capsule").AddComponent<VirtueCannonBeam>().MyGun = gameObject;
+            beam.GetChild("Capsule").AddComponent<VirtueCannonBeam>().MyGun = gameObject;
             StartCoroutine(DestroyVi(vi.target));
         }
 

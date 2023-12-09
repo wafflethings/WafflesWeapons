@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WafflesWeapons.Components;
+using WafflesWeapons.Utils;
 
 namespace WafflesWeapons.Weapons
 {

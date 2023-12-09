@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using WafflesWeapons.Components;
+using WafflesWeapons.Utils;
 
 namespace WafflesWeapons.Weapons
 {

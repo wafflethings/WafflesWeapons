@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,9 +10,16 @@ namespace WafflesWeapons.Components
 {
     public class EnemyHitTracker : MonoBehaviour
     {
-        public static bool CheckAndHit(GameObject obj, EnemyIdentifier eid, float cooldown = -1)
+        /// <summary>
+        /// Returns true if this object didn't hit the enemy in a time period.
+        /// </summary>
+        /// <param name="objectThatHit">The object that hit the enemy.</param>
+        /// <param name="eid">The enemy that was hit.</param>
+        /// <param name="cooldown">The time period.</param>
+        /// <returns></returns>
+        public static bool CheckAndHit(GameObject objectThatHit, EnemyIdentifier eid, float cooldown = -1)
         {
-            EnemyHitTracker eht = obj.TryGetComponent(out EnemyHitTracker e) ? e : obj.gameObject.AddComponent<EnemyHitTracker>();
+            EnemyHitTracker eht = objectThatHit.TryGetComponent(out EnemyHitTracker e) ? e : objectThatHit.gameObject.AddComponent<EnemyHitTracker>();
 
             bool doesntContain = !eht.Contains(eid);
             if (doesntContain)
@@ -27,22 +35,22 @@ namespace WafflesWeapons.Components
             return doesntContain;
         }
 
-        private List<EnemyIdentifier> enemies = new List<EnemyIdentifier>();
+        private readonly List<EnemyIdentifier> _enemies = new List<EnemyIdentifier>();
 
         public void AddEnemy(EnemyIdentifier eid)
         {
-            enemies.Add(eid);
+            _enemies.Add(eid);
         }
 
         public bool Contains(EnemyIdentifier eid)
         {
-            return enemies.Contains(eid);
+            return _enemies.Contains(eid);
         }
 
-        public System.Collections.IEnumerator RemoveAfterCooldown(EnemyIdentifier eid, float cooldown)
+        public IEnumerator RemoveAfterCooldown(EnemyIdentifier eid, float cooldown)
         {
             yield return new WaitForSeconds(cooldown);
-            enemies.Remove(eid);
+            _enemies.Remove(eid);
         }
     }
 }

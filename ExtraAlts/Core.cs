@@ -10,17 +10,17 @@ using System.Collections.Generic;
 using Atlas.Modules.Terminal;
 using Atlas.Modules.Guns;
 using WafflesWeapons.Components;
-using System.Reflection.Emit;
+using WafflesWeapons.Utils;
 
 namespace WafflesWeapons
 {
     [BepInPlugin("waffle.ultrakill.extraalts", "Waffle's Weapons", "1.2.4")]
     public class Core : BaseUnityPlugin
     {
-        public static Harmony Harmony = new Harmony("waffle.ultrakill.extraalts");
-        public static AssetBundle Assets;
+        public static readonly Harmony Harmony = new Harmony("waffle.ultrakill.extraalts");
+        public static readonly AssetBundle Assets = AssetBundle.LoadFromFile(Path.Combine(PathUtils.ModPath(), "redrevolver.bundle"));
 
-        public static Color[] NewColours =
+        private static readonly Color[] _newColours =
         {
             new Color(0.25f, 0.5f, 1), // dblue
             new Color(1, 0.5f, 0.25f), // orange
@@ -29,7 +29,6 @@ namespace WafflesWeapons
 
         public void Start()
         {
-            Assets = AssetBundle.LoadFromFile(Path.Combine(PathUtils.ModPath(), "redrevolver.bundle"));
             Harmony.PatchAll(typeof(Core));
 
             TerminalPageRegistry.RegisterPage(typeof(CustomsPage));
@@ -71,56 +70,38 @@ namespace WafflesWeapons
 
             return true;
         }
-
-        public static GameObject page;
-        public static GameObject tip;
-
-        [HarmonyPatch(typeof(ShopZone), nameof(ShopZone.Start))]
-        [HarmonyPrefix]
+        
+        [HarmonyPatch(typeof(ShopZone), nameof(ShopZone.Start)), HarmonyPrefix]
         public static void AddCredits(ShopZone __instance)
         {
-            if (__instance.gameObject.ChildByName("Canvas").ChildByName("Weapons") != null)
+            GameObject shopObject = __instance.gameObject;
+            
+            if (shopObject.GetChild("Canvas/Weapons") != null)
             {
-                tip = __instance.gameObject.ChildByName("Canvas").ChildByName("TipBox");
-                page = GameObject.Instantiate(Assets.LoadAsset<GameObject>("ExtraAlts Credits.prefab"));
-                page.transform.SetParent(__instance.gameObject.ChildByName("Canvas").transform, false);
+                GameObject page = Instantiate(Assets.LoadAsset<GameObject>("ExtraAlts Credits.prefab"), shopObject.GetChild("Canvas").transform);
                 page.transform.SetSiblingIndex(10);
+                page.GetComponent<CopyActiveState>().Target = shopObject.GetChild("Canvas/TipBox");
             }
         }
 
-        [HarmonyPatch(typeof(ShopZone), nameof(ShopZone.Update))]
-        [HarmonyPrefix]
-        public static void ToggleCredits(ShopZone __instance)
-        {
-            if (page != null)
-            {
-                page.SetActive(tip.activeSelf);
-            }
-        }
-
-        [HarmonyPatch(typeof(GunSetter), nameof(GunSetter.ResetWeapons))]
-        [HarmonyPrefix]
+        [HarmonyPatch(typeof(GunSetter), nameof(GunSetter.ResetWeapons)), HarmonyPrefix]
         public static void AddCustomColours()
         {
-            var col = ColorBlindSettings.Instance;
-            var SillyList = col.variationColors.ToList(); // :3
-            SillyList.AddRange(NewColours);
-
-            col.variationColors = SillyList.ToArray();
+            ColorBlindSettings.Instance.variationColors =
+                ColorBlindSettings.Instance.variationColors.AddRangeToArray(_newColours);
         }
 
-        [HarmonyPatch(typeof(GunSetter), nameof(GunSetter.Start))]
-        [HarmonyPrefix]
+        [HarmonyPatch(typeof(GunSetter), nameof(GunSetter.Start)), HarmonyPrefix]
         public static void FixCharges()
         {
             WeaponCharges.Instance.revaltpickupcharges = new float[7];
         }
 
-        [HarmonyPatch(typeof(Nailgun), nameof(Nailgun.Start))]
-        [HarmonyPostfix]
-        public static void AddNailProj(Nailgun __instance)
+        [HarmonyPatch(typeof(Nailgun), nameof(Nailgun.Start)), HarmonyPostfix]
+        public static void AddNailProjectileTypes(Nailgun __instance)
         {
-            __instance.projectileVariationTypes = new string[] {
+            __instance.projectileVariationTypes = new[] 
+            {
                 "nailgun0",
                 "nailgun1",
                 "nailgun2",
@@ -132,123 +113,15 @@ namespace WafflesWeapons
             };
         }
 
-        [HarmonyPatch(typeof(WeaponIcon), nameof(WeaponIcon.variationColor), MethodType.Getter)]
-        [HarmonyPrefix]
+        [HarmonyPatch(typeof(WeaponIcon), nameof(WeaponIcon.variationColor), MethodType.Getter), HarmonyPrefix]
         public static bool ReplaceColour(WeaponIcon __instance, ref int __result)
         {
-            if (__instance.GetComponent<CustomColour>() != null)
+            if (__instance.TryGetComponent(out CustomColour colour))
             {
-                __result = (int)__instance.GetComponent<CustomColour>().variationColorReal;
+                __result = (int)colour.variationColorReal;
                 return false;
             }
-            return true;
-        }
-
-        [HarmonyPatch(typeof(WeaponOrderController), nameof(WeaponOrderController.ChangeOrderNumber))]
-        [HarmonyPrefix]
-        public static bool ExtendOrderNumbers(WeaponOrderController __instance, int additive)
-        {
-            string[] legalVariations = { "rev", "sho", "nai", "rai", "rock" };
-
-            if (legalVariations.Contains(__instance.variationName))
-            {
-                int newCount = __instance.currentOrderNumber + additive;
-                if (newCount > 0 && newCount < 8)
-                {
-                    for (int i = 0; i < __instance.variationOrder.Length; i++)
-                    {
-                        if ((__instance.variationOrder[i] - '0') == newCount)
-                        {
-                            __instance.variationOrder = __instance.variationOrder.Replace(__instance.variationOrder[i], __instance.variationOrder[__instance.variationNumber]);
-                        }
-                    }
-                    __instance.variationOrder = __instance.variationOrder.Remove(__instance.variationNumber, 1);
-                    __instance.variationOrder = __instance.variationOrder.Insert(__instance.variationNumber, newCount.ToString());
-                    PrefsManager.Instance.SetString($"weapon.{__instance.variationName}.order", __instance.variationOrder.Substring(0, 4));
-                    PrefsManager.Instance.SetString($"weapon.{__instance.variationName}.order_secondhalf", __instance.variationOrder.Substring(4, 3));
-                    WeaponOrderController[] componentsInChildren = __instance.transform.parent.parent.parent.GetComponentsInChildren<WeaponOrderController>();
-                    for (int j = 0; j < componentsInChildren.Length; j++)
-                    {
-                        componentsInChildren[j].ResetValues();
-                    }
-                    GunSetter gunSetter = Object.FindObjectOfType<GunSetter>();
-                    gunSetter.ResetWeapons(false);
-                }
-
-                return false;
-            }
-
-            return true;
-        }
-
-        [HarmonyPatch(typeof(WeaponOrderController), nameof(WeaponOrderController.ResetValues))]
-        [HarmonyPrefix]
-        public static bool ResetSecondHalf(WeaponOrderController __instance)
-        {
-            string[] legalVariations = { "rev", "sho", "nai", "rai", "rock" };
-
-            if (legalVariations.Contains(__instance.variationName))
-            {
-                if (!__instance.text)
-                {
-                    __instance.text = __instance.GetComponentInChildren<Text>();
-                }
-
-                if (__instance.revolver)
-                {
-                    __instance.variationOrder = PrefsManager.Instance.GetString($"weapon.{__instance.variationName}.order", "1324");
-                }
-                else
-                {
-                    __instance.variationOrder = PrefsManager.Instance.GetString($"weapon.{__instance.variationName}.order", "1234");
-                }
-                __instance.variationOrder += PrefsManager.Instance.GetString($"weapon.{__instance.variationName}.order_secondhalf", "567");
-
-                __instance.currentOrderNumber = (__instance.variationOrder[__instance.variationNumber] - '0');
-                __instance.text.text = (__instance.variationOrder[__instance.variationNumber].ToString() ?? "");
-                Debug.Log("Order in WeaponOrderController: " + __instance.variationOrder);
-
-                return false;
-            }
-
-            return true;
-        }
-
-        [HarmonyPatch(typeof(GunSetter), nameof(GunSetter.CheckWeaponOrder))]
-        [HarmonyPrefix]
-        public static bool CheckOrderFixer(string weaponType, ref List<int> __result)
-        {
-            string[] legalVariations = { "rev", "sho", "nai", "rai", "rock" };
-
-            if (legalVariations.Contains(weaponType))
-            {
-                string defaultSlots = "1234567";
-                if (weaponType == "rev")
-                {
-                    defaultSlots = "1324567";
-                }
-
-                string slots = PrefsManager.Instance.GetString($"weapon.{weaponType}.order", defaultSlots.Substring(0, 4));
-                slots += PrefsManager.Instance.GetString($"weapon.{weaponType}.order_secondhalf", defaultSlots.Substring(4, 3));
-
-                if (slots.Length != 7)
-                {
-                    Debug.LogError("Faulty WeaponOrder: " + weaponType);
-                    slots = defaultSlots;
-                    PrefsManager.Instance.SetString($"weapon.{weaponType}.order", defaultSlots.Substring(0, 4));
-                    PrefsManager.Instance.SetString($"weapon.{weaponType}.order_secondhalf", defaultSlots.Substring(4, 3));
-                }
-
-                List<int> list = new List<int>();
-                for (int i = 0; i < slots.Length; i++)
-                {
-                    list.Add((slots[i] - '0'));
-                }
-                __result = list;
-
-                return false;
-            }
-
+            
             return true;
         }
     }

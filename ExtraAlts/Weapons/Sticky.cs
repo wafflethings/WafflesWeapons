@@ -3,6 +3,7 @@ using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
 using WafflesWeapons.Components;
+using WafflesWeapons.Utils;
 
 namespace WafflesWeapons.Weapons
 {
@@ -233,7 +234,7 @@ namespace WafflesWeapons.Weapons
                 GetComponent<Projectile>().explosionEffect = FrozenExplosion;
                 Destroy(GetComponent<RemoveOnTime>());
                 Invoke("Kinematic", 0.01f);
-                Destroy(gameObject.ChildByName("ChargeEffect"));
+                Destroy(gameObject.GetChild("ChargeEffect"));
             }
 
             if (Frozen)
