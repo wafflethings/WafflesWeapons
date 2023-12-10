@@ -1,11 +1,8 @@
 ﻿using Atlas.Modules.Guns;
 using HarmonyLib;
-using System.Collections.Generic;
 using UnityEngine;
-using WafflesWeapons.Components;
-using WafflesWeapons.Utils;
 
-namespace WafflesWeapons.Weapons
+namespace WafflesWeapons.Weapons.Virtuous
 {
     public class Virtuous : Gun
     {
@@ -93,62 +90,6 @@ namespace WafflesWeapons.Weapons
 
                 __instance.AddFreshness(sourceWeapon, num * 1f);
             }
-        }
-    }
-
-    public class VirtueCannonBeam : MonoBehaviour
-    {
-        public GameObject MyGun;
-        public bool IsSmall = false;
-        public List<GameObject> Ignore = new List<GameObject>();
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.layer == 10 || other.gameObject.layer == 12)
-            {
-                try
-                {
-                    EnemyIdentifierIdentifier eid = null;
-                    if (other.gameObject.TryGetComponent(out eid))
-                    {
-                        if (!Ignore.Contains(eid.eid.gameObject))
-                        {
-                            Ignore.Add(eid.eid.gameObject);
-                            if (!IsSmall)
-                            {
-                                eid.eid.DeliverDamage(eid.gameObject, Vector3.up * 2500, other.gameObject.transform.position, 5, false, 0, MyGun);
-                            }
-                            else
-                            {
-                                eid.eid.DeliverDamage(eid.gameObject, Vector3.up * 2500, other.gameObject.transform.position, 2, false, 0, MyGun);
-                            }
-                        }
-                    }
-                }
-                catch { } //whatever bruh
-            }
-        }
-    }
-
-    public class VirtuousBehaviour : GunBehaviour<VirtuousBehaviour>
-    {
-        public GameObject VirtueBeam;
-        public GameObject VirtueBeamSmall;
-
-        public void CreateBeam(Vector3 pos, bool isSmall = false)
-        {
-            GameObject beam = Instantiate((isSmall ? VirtueBeamSmall : VirtueBeam), NewMovement.Instance.transform.position, Quaternion.identity);
-            var vi = beam.GetComponent<VirtueInsignia>();
-            vi.target = new GameObject().transform;
-            vi.target.transform.position = pos;
-            beam.GetChild("Capsule").AddComponent<VirtueCannonBeam>().MyGun = gameObject;
-            StartCoroutine(DestroyVi(vi.target));
-        }
-
-        public static System.Collections.IEnumerator DestroyVi(Transform t)
-        {
-            yield return new WaitForSeconds(5f);
-            Destroy(t.gameObject);
         }
     }
 }

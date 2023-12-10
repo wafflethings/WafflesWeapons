@@ -1,95 +1,9 @@
 ﻿using Atlas.Modules.Guns;
-using HarmonyLib;
-using System.Collections.Generic;
 using UnityEngine;
 using WafflesWeapons.Components;
 
-namespace WafflesWeapons.Weapons
+namespace WafflesWeapons.Weapons.Malevolent
 {
-    public class Malevolent : Gun
-    {
-        public static GameObject Mal;
-        public static GameObject MalAlt;
-
-        static Malevolent()
-        {
-            Mal = Core.Assets.LoadAsset<GameObject>("Revolver Malevolent.prefab");
-            MalAlt = Core.Assets.LoadAsset<GameObject>("Alternative Revolver Malevolent.prefab");
-            Core.Harmony.PatchAll(typeof(Malevolent));
-        }
-
-        public override GameObject Create(Transform parent)
-        {
-            base.Create(parent);
-
-            GameObject thing;
-            if (Enabled() == 2)
-            {
-                thing = GameObject.Instantiate(MalAlt, parent);
-            }
-            else
-            {
-                thing = GameObject.Instantiate(Mal, parent);
-            }
-
-            OrderInSlot = GunSetter.Instance.CheckWeaponOrder("rev")[4];
-            StyleHUD.Instance.weaponFreshness.Add(thing, 10);
-            return thing;
-        }
-
-        public override int Slot()
-        {
-            return 0;
-        }
-
-        public override string Pref()
-        {
-            return "rev4";
-        }
-
-        [HarmonyPatch(typeof(StyleHUD), nameof(StyleHUD.DecayFreshness))]
-        [HarmonyPostfix]
-        public static void StyleMult(StyleHUD __instance, GameObject sourceWeapon, string pointID, bool boss)
-        {
-            if (sourceWeapon.GetComponent<MalevolentBehaviour>() != null)
-            {
-                var dict = __instance.weaponFreshness;
-                if (!dict.ContainsKey(sourceWeapon))
-                {
-                    return;
-                }
-                float num = __instance.freshnessDecayPerMove;
-                if (__instance.freshnessDecayMultiplierDict.ContainsKey(pointID))
-                {
-                    num *= __instance.freshnessDecayMultiplierDict[pointID];
-                }
-                if (boss)
-                {
-                    num *= __instance.bossFreshnessDecayMultiplier;
-                }
-
-                if(pointID == "ultrakill.explosionhit")
-                {
-                    num *= 0.33f;
-                } else
-                {
-                    num *= 0.5f;
-                }
-
-                __instance.AddFreshness(sourceWeapon, num);
-            }
-        }
-
-        public static List<MalevolentBehaviour> Guns = new List<MalevolentBehaviour>();
-
-        [HarmonyPatch(typeof(Revolver), nameof(Revolver.Update))]
-        [HarmonyPrefix] // i blame hakita
-        public static bool AAAAAAAAAAAAAAAA(Revolver __instance)
-        {
-            return __instance.gunVariation != 5;
-        }
-    }
-
     public class MalevolentBehaviour : GunBehaviour<MalevolentBehaviour>
     {
         public Revolver rev;
@@ -99,7 +13,7 @@ namespace WafflesWeapons.Weapons
             rev = GetComponent<Revolver>();
             rev.screenAud = rev.screenMR.gameObject.GetComponent<AudioSource>();
             rev.screenMR.material.color = ColorBlindSettings.Instance.variationColors[5];
-            Malevolent.Guns.Add(this);
+            Weapons.Malevolent.Guns.Add(this);
         }
 
         public void Update()
@@ -115,7 +29,8 @@ namespace WafflesWeapons.Weapons
 
                 if (Gun.OnFireHeld() && rev.shootReady && rev.gunReady)
                 {
-                    if ((rev.altVersion && WeaponCharges.Instance.revaltpickupcharges[rev.gunVariation] == 0) || !rev.altVersion)
+                    if ((rev.altVersion && WeaponCharges.Instance.revaltpickupcharges[rev.gunVariation] == 0) ||
+                        !rev.altVersion)
                     {
                         float delay = GetComponent<WeaponIdentifier>().delay;
                         if (!rev.altVersion)
@@ -144,7 +59,8 @@ namespace WafflesWeapons.Weapons
                 rev.ceaud.pitch = rev.pierceShotCharge * 0.005f;
                 rev.celight.range = rev.pierceShotCharge * 0.01f;
 
-                if (Gun.OnAltFireReleased() && rev.pierceReady && rev.shootReady && rev.pierceShotCharge == 100f && rev.gunReady)
+                if (Gun.OnAltFireReleased() && rev.pierceReady && rev.shootReady && rev.pierceShotCharge == 100f &&
+                    rev.gunReady)
                 {
                     Invoke("Shoot2", rev.wid.delay);
                 }
@@ -242,8 +158,8 @@ namespace WafflesWeapons.Weapons
         {
             rev.Shoot(2);
             rev.wc.rev2charge += (rev.altVersion ? 300 : 100); // hakita's code is pretty bad.
-                                                               // instead of checking if it is the sharpshooter revolver, it checks if it isnt the piercer.
-                                                               // there's no way not to make it subtract, so i just add it back. this code hurts me.
+            // instead of checking if it is the sharpshooter revolver, it checks if it isnt the piercer.
+            // there's no way not to make it subtract, so i just add it back. this code hurts me.
         }
 
         public void MaxCharge()

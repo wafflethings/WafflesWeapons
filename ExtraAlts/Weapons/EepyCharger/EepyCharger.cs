@@ -1,15 +1,15 @@
-﻿using Atlas.Modules.Guns;
-using HarmonyLib;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using Atlas.Modules.Guns;
+using HarmonyLib;
 using UnityEngine;
 using WafflesWeapons.Components;
 
-namespace WafflesWeapons.Weapons
+namespace WafflesWeapons.Weapons.EepyCharger
 {
     public class EepyCharger : Gun
     {
@@ -181,158 +181,5 @@ namespace WafflesWeapons.Weapons
                 }
             }
         }
-    }
-
-    public class EepyChargerBehaviour : GunBehaviour<EepyChargerBehaviour>
-    {
-        public static float PreviousHeldTime;
-        public static float ChargeDivide = 4;
-        [HideInInspector] public float WindUp = 0;
-        public GameObject HugeRocket;
-        public AudioSource ChargeUp;
-        public GameObject Click;
-        private GunControl gc;
-        private RocketLauncher rock;
-        private float HeldTime;
-        private WeaponPos wpos;
-
-        public void Start()
-        {
-            gc = GunControl.Instance;
-            rock = GetComponent<RocketLauncher>();
-            wpos = GetComponent<WeaponPos>();
-        }
-
-        public void Update()
-        {
-            if (ULTRAKILL.Cheats.NoWeaponCooldown.NoCooldown)
-            {
-                WindUp = 1;
-            }
-
-            WindUp = Mathf.Clamp(WindUp, 0, 1);
-
-            rock.timerMeter.fillAmount = WindUp - HeldTime;
-            rock.timerArm.localRotation = Quaternion.Euler(0f, 0f, 360 * (WindUp - HeldTime));
-
-            if (gc.activated)
-            {
-                transform.localPosition = new Vector3(
-                    wpos.currentDefault.x + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f),
-                    wpos.currentDefault.y + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f),
-                    wpos.currentDefault.z + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f));
-
-                if (Gun.OnAltFireReleased() && HeldTime > 0.125f)
-                {
-                    StartCoroutine(Shoot(HeldTime, rock.wid.delay));
-                    CameraController.Instance.CameraShake(2f);
-                    WindUp -= HeldTime;
-                }
-
-                if (Gun.OnAltFireHeld() && WindUp > 0.125f)
-                {
-                    float oldValue = HeldTime;
-                    HeldTime = Mathf.MoveTowards(HeldTime, WindUp, Time.deltaTime);
-                    ChargeUp.pitch = 1 + HeldTime;
-
-                    if (!ChargeUp.isPlaying)
-                    {
-                        ChargeUp.Play();
-                    }
-
-                    if (oldValue < 1 && HeldTime == 1)
-                    {
-                        Instantiate(Click, NewMovement.Instance.transform.position, Quaternion.identity);
-                    }
-                }
-                else
-                {
-                    HeldTime = Mathf.MoveTowards(HeldTime, 0, Time.deltaTime * 2);
-
-                    if (ChargeUp.isPlaying)
-                    {
-                        ChargeUp.Stop();
-                    }
-                }
-            }
-        }
-
-        public void OnEnable()
-        {
-            WindUp = WaffleWeaponCharges.Instance.EepyCharge;
-        }
-
-        public void OnDisable()
-        {
-            WaffleWeaponCharges.Instance.EepyCharge = WindUp;
-        }
-
-        public IEnumerator Shoot(float heldTime, float time)
-        {
-            yield return new WaitForSeconds(time);
-
-            Grenade hugeGrenade = HugeRocket.GetComponent<Grenade>();
-            float startSpeed = hugeGrenade.rocketSpeed;
-            GameObject old = rock.rocket;
-
-            rock.rocket = HugeRocket;
-            //hugeGrenade.rocketSpeed = 25f + heldTime * (hugeGrenade.rocketSpeed);
-            PreviousHeldTime = heldTime;
-            rock.Shoot();
-
-            hugeGrenade.rocketSpeed = startSpeed;
-            rock.rocket = old;
-        }
-    }
-
-    public class HomingRocket : MonoBehaviour
-    {
-        public GameObject ToIgnore;
-        private LayerMask enemyLayerMask;
-        private LayerMask pierceLayerMask;
-        private LayerMask ignoreEnemyTrigger;
-
-        public void Start()
-        {
-            enemyLayerMask |= 1024;
-            enemyLayerMask |= 2048;
-            pierceLayerMask |= 256;
-            pierceLayerMask |= 16777216;
-            pierceLayerMask |= 67108864;
-
-            ignoreEnemyTrigger = enemyLayerMask | pierceLayerMask;
-        }
-
-        public void Update()
-        {
-            if (GunControl.Instance.activated)
-            {
-                Quaternion oldRot = transform.rotation;
-                Quaternion newRot;
-
-                int oldLayer = ToIgnore.layer;
-                ToIgnore.layer = 2; //ignore raycast;
-
-                if (Physics.Raycast(CameraController.Instance.transform.position, CameraController.Instance.transform.forward, out RaycastHit hit, float.PositiveInfinity, ignoreEnemyTrigger))
-                {
-                    transform.LookAt(hit.point);
-                    newRot = transform.rotation;
-                }
-                else
-                {
-                    transform.LookAt(CameraController.Instance.transform.forward * 10000);
-                    newRot = transform.rotation;
-                }
-
-                ToIgnore.layer = oldLayer;
-
-                transform.rotation = Quaternion.RotateTowards(oldRot, newRot, Time.deltaTime * 360 * 4);
-            }
-        }
-    }
-
-    public class EepyRocket : MonoBehaviour
-    {
-        [HideInInspector] public float Charge;
     }
 }

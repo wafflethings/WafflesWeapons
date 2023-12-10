@@ -504,7 +504,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7784342121016347673}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1376481921, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
+  m_Script: {fileID: -823533491, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OarInHand: {fileID: 2746692652657236079}

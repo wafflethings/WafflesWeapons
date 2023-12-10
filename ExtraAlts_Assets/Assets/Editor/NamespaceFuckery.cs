@@ -93,7 +93,7 @@ public class NamespaceFuckery : EditorWindow
                     {
                         if (comp.GetType().Namespace != null)
                         {
-                            if (comp.GetType().Namespace.Contains(Original))
+                            if (comp.GetType().Namespace.Contains(Original) && comp.GetType().Name == ScriptName)
                             {
                                 Debug.Log($"there is a {comp.GetType().Namespace} on {everything.name}");
 
@@ -150,10 +150,19 @@ public class NamespaceFuckery : EditorWindow
                             Debug.Log(comp.GetType().Namespace);
                             if (comp.GetType().Namespace.Contains(Original))
                             {
-                                Debug.Log($"there is a {comp.GetType().Namespace} on {everything.name}");
+                                if (comp.GetType().Name == ScriptName)
+                                {
+                                    Debug.Log($"there is a {comp.GetType().Namespace} on {everything.name}");
 
-                                if (!HashesToReplace.ContainsKey(FileIDUtil.Compute(comp.GetType().Namespace, comp.GetType().Name)))
-                                    HashesToReplace.Add(FileIDUtil.Compute(comp.GetType().Namespace, comp.GetType().Name), FileIDUtil.Compute(comp.GetType().Namespace.Replace(Original, New), comp.GetType().Name));
+                                    if (!HashesToReplace.ContainsKey(FileIDUtil.Compute(comp.GetType().Namespace,
+                                            comp.GetType().Name)))
+                                    {
+                                        HashesToReplace.Add(
+                                            FileIDUtil.Compute(comp.GetType().Namespace, comp.GetType().Name),
+                                            FileIDUtil.Compute(comp.GetType().Namespace.Replace(Original, New),
+                                                comp.GetType().Name));
+                                    }
+                                }
                             }
                         }
                     }
@@ -183,18 +192,22 @@ public class NamespaceFuckery : EditorWindow
             {
                 if (everything.GetType().Namespace.Contains(Original))
                 {
-                    Debug.Log("SO " + AssetDatabase.GetAssetPath(everything));
-                    string data = File.ReadAllText(AssetDatabase.GetAssetPath(everything));
-                    int original = FileIDUtil.Compute(everything.GetType().Namespace, everything.GetType().Name);
-                    int newOne = FileIDUtil.Compute(everything.GetType().Namespace.Replace(Original, New), everything.GetType().Name);
-
-                    while (data.Contains(original.ToString()))
+                    if (everything.GetType().Name == ScriptName)
                     {
-                        Debug.Log("CONTAINS");
-                        data = data.Replace(original.ToString(), newOne.ToString());
-                    }
+                        Debug.Log("SO " + AssetDatabase.GetAssetPath(everything));
+                        string data = File.ReadAllText(AssetDatabase.GetAssetPath(everything));
+                        int original = FileIDUtil.Compute(everything.GetType().Namespace, everything.GetType().Name);
+                        int newOne = FileIDUtil.Compute(everything.GetType().Namespace.Replace(Original, New),
+                            everything.GetType().Name);
 
-                    File.WriteAllText(AssetDatabase.GetAssetPath(everything), data);
+                        while (data.Contains(original.ToString()))
+                        {
+                            Debug.Log("CONTAINS");
+                            data = data.Replace(original.ToString(), newOne.ToString());
+                        }
+
+                        File.WriteAllText(AssetDatabase.GetAssetPath(everything), data);
+                    }
                 }
             }
         }
