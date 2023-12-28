@@ -4,43 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using Atlas.Modules.Guns;
+using AtlasLib.Utils;
+using AtlasLib.Weapons;
 using HarmonyLib;
 using UnityEngine;
+using WafflesWeapons.Assets;
 using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons.EepyCharger
 {
-    public class EepyCharger : Gun
+    [PatchThis($"{Plugin.GUID}.EepyCharger")]
+    public class EepyCharger : Weapon
     {
-        public static GameObject EepyRl;
+        public static WeaponAssets Assets;
 
         static EepyCharger()
         {
-            EepyRl = Core.Assets.LoadAsset<GameObject>("Rocket Launcher Eepy.prefab");
-            Core.Harmony.PatchAll(typeof(EepyCharger));
+            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Eepy Assets.asset");
         }
 
-        public override GameObject Create(Transform parent)
-        {
-            base.Create(parent);
-
-            GameObject thing = GameObject.Instantiate(EepyRl, parent);
-            OrderInSlot = GunSetter.Instance.CheckWeaponOrder("rock")[3];
-            StyleHUD.Instance.weaponFreshness.Add(thing, 10);
-
-            return thing;
-        }
-
-        public override int Slot()
-        {
-            return 4;
-        }
-
-        public override string Pref()
-        {
-            return "rock4";
-        }
+        public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");
 
         [HarmonyPatch(typeof(Grenade), nameof(Grenade.Explode)), HarmonyPostfix]
         public static void IncreaseIfBig(Grenade __instance, bool harmless, bool super = false, GameObject exploderWeapon = null)

@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using Atlas.Modules.Guns;
+using AtlasLib.Utils;
 using UnityEngine;
 using WafflesWeapons.Components;
 
@@ -44,14 +44,14 @@ namespace WafflesWeapons.Weapons.EepyCharger
                     wpos.currentDefault.y + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f),
                     wpos.currentDefault.z + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f));
 
-                if (Gun.OnAltFireReleased() && HeldTime > 0.125f)
+                if (Inputs.AltFireReleased && HeldTime > 0.125f)
                 {
                     StartCoroutine(Shoot(HeldTime, rock.wid.delay));
                     CameraController.Instance.CameraShake(2f);
                     WindUp -= HeldTime;
                 }
 
-                if (Gun.OnAltFireHeld() && WindUp > 0.125f)
+                if (Inputs.AltFireHeld && WindUp > 0.125f)
                 {
                     float oldValue = HeldTime;
                     HeldTime = Mathf.MoveTowards(HeldTime, WindUp, Time.deltaTime);

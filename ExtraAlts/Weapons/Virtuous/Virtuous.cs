@@ -1,39 +1,22 @@
-﻿using Atlas.Modules.Guns;
+﻿using AtlasLib.Utils;
+using AtlasLib.Weapons;
 using HarmonyLib;
 using UnityEngine;
+using WafflesWeapons.Assets;
 
 namespace WafflesWeapons.Weapons.Virtuous
 {
-    public class Virtuous : Gun
+    [PatchThis($"{Plugin.GUID}.Virtuous")]
+    public class Virtuous : Weapon
     {
-        public static GameObject VirtueRail;
+        public static WeaponAssets Assets;
 
         static Virtuous()
         {
-            VirtueRail = Core.Assets.LoadAsset<GameObject>("Railcannon Virtuous.prefab");
-            Core.Harmony.PatchAll(typeof(Virtuous));
+            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Virtuous Assets.asset");
         }
 
-        public override GameObject Create(Transform parent)
-        {
-            base.Create(parent);
-
-            GameObject thing = GameObject.Instantiate(VirtueRail, parent);
-            OrderInSlot = GunSetter.Instance.CheckWeaponOrder("rock")[6];
-            StyleHUD.Instance.weaponFreshness.Add(thing, 10);
-
-            return thing;
-        }
-
-        public override int Slot()
-        {
-            return 3;
-        }
-
-        public override string Pref()
-        {
-            return "rai5";
-        }
+        public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");
 
         [HarmonyPatch(typeof(RevolverBeam), nameof(RevolverBeam.ExecuteHits))]
         [HarmonyPrefix]

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using WafflesWeapons.Weapons.Conductor;
+using WafflesWeapons.Weapons.Sticky;
 
 namespace WafflesWeapons.Weapons.Singularity
 {
@@ -317,7 +319,7 @@ namespace WafflesWeapons.Weapons.Singularity
                 if (lastBeam?.sourceWeapon?.GetComponent<ConductorBehaviour>() != null)
                 {
                     Stunner.EnsureAndStun(eid, lastBeam.damage / 4);
-                    sbl = Instantiate(Conductor.MagnetZap).GetComponent<SingularityBallLightning>();
+                    sbl = Instantiate(Conductor.Conductor.Assets.GetAsset<GameObject>("MagnetZap")).GetComponent<SingularityBallLightning>();
                 }
                 else
                 {

@@ -1,4 +1,4 @@
-﻿using Atlas.Modules.Guns;
+﻿using AtlasLib.Utils;
 using UnityEngine;
 using WafflesWeapons.Components;
 
@@ -33,7 +33,7 @@ namespace WafflesWeapons.Weapons.LoaderGauntlet
             StartPos = transform.localPosition;
             CeSrc = Instantiate(ChargeSound, gameObject.transform).GetComponent<AudioSource>();
             Charge = 0;
-            Weapons.LoaderGauntlet.curOne = this;
+            LoaderGauntlet.curOne = this;
             anim.SetBool("Midflight", false);
         }
 
@@ -131,7 +131,7 @@ namespace WafflesWeapons.Weapons.LoaderGauntlet
             } 
 
             // cancel if released early
-            if (Fist.OnPunchReleased() && Charge <= 2f && LoaderArmCollisionHandler.Instance.CanCharge)
+            if (Inputs.PunchReleased && Charge <= 2f && LoaderArmCollisionHandler.Instance.CanCharge)
             {
                 if (anim.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Armature|ES_HookPunch")
                 {
@@ -140,7 +140,7 @@ namespace WafflesWeapons.Weapons.LoaderGauntlet
                 Charge = 0;
             }
 
-            if (LoaderArmCollisionHandler.Instance.CanCharge && Charge >= 2f && Fist.OnPunchReleased())
+            if (LoaderArmCollisionHandler.Instance.CanCharge && Charge >= 2f && Inputs.PunchReleased)
             {
                 anim.Play("Armature|ES_ChargeHold");
                 LoaderArmCollisionHandler.Instance.Charge = Charge;

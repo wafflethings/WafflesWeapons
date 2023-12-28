@@ -1,4 +1,4 @@
-﻿using Atlas.Modules.Guns;
+﻿using AtlasLib.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 using WafflesWeapons.Components;
@@ -50,7 +50,7 @@ namespace WafflesWeapons.Weapons.Desperado
         public void Start()
         {
             rev = GetComponent<Revolver>();
-            Weapons.Desperado.Guns.Add(this);
+            Desperado.Guns.Add(this);
         }
 
         public void OnEnable()
@@ -60,7 +60,7 @@ namespace WafflesWeapons.Weapons.Desperado
 
         public void OnDestroy()
         {
-            Weapons.Desperado.Guns.Remove(this);
+            Desperado.Guns.Remove(this);
         }
 
         public void Charge()
@@ -123,7 +123,7 @@ namespace WafflesWeapons.Weapons.Desperado
                         currentSlider = 0;
                     }
 
-                    shouldMove = Gun.OnAltFireHeld() && gameObject.activeInHierarchy;
+                    shouldMove = Inputs.AltFireHeld && gameObject.activeInHierarchy;
                 }
             }
             else
@@ -137,7 +137,7 @@ namespace WafflesWeapons.Weapons.Desperado
                 toAdd = 0;
                 sliderSpeed -= speedDecayRate * Time.deltaTime;
                 size += sizeGainRate * Time.deltaTime;
-                shouldMove = Gun.OnAltFireHeld() && gameObject.activeInHierarchy;
+                shouldMove = Inputs.AltFireHeld && gameObject.activeInHierarchy;
             }
         }
 
@@ -152,7 +152,7 @@ namespace WafflesWeapons.Weapons.Desperado
 
                 if (rev.shootReady && rev.gunReady)
                 {
-                    if (Gun.OnFireHeld())
+                    if (Inputs.FireHeld)
                     {
                         if ((rev.altVersion && WeaponCharges.Instance.revaltpickupcharges[rev.gunVariation] == 0) || !rev.altVersion)
                         {

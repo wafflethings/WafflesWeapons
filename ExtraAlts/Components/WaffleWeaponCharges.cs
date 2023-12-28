@@ -4,11 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AtlasLib.Utils;
 using UnityEngine;
 using WafflesWeapons.Weapons;
+using WafflesWeapons.Weapons.Malevolent;
+using WafflesWeapons.Weapons.Singularity;
 
 namespace WafflesWeapons.Components
 {
+    [PatchThis($"{Plugin.GUID}.WaffleWeaponCharges")]
     public class WaffleWeaponCharges : MonoSingleton<WaffleWeaponCharges>
     {
         public float FanRevCharge = 0;

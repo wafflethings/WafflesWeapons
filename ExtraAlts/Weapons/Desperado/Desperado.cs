@@ -1,54 +1,27 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Atlas.Modules.Guns;
+using AtlasLib.Utils;
+using AtlasLib.Weapons;
 using HarmonyLib;
 using UnityEngine;
+using WafflesWeapons.Assets;
 using WafflesWeapons.Utils;
 
 namespace WafflesWeapons.Weapons.Desperado
 {
-    public class Desperado : Gun
+    [PatchThis($"{Plugin.GUID}.Desperado")]
+    public class Desperado : Weapon
     {
-        public static GameObject Desp;
-        public static GameObject DespAlt;
+        public static WeaponAssets Assets;
         public static List<DesperadoBehaviour> Guns = new List<DesperadoBehaviour>();
 
         static Desperado()
         {
-            Desp = Core.Assets.LoadAsset<GameObject>("Revolver Desperado.prefab");
-            DespAlt = Core.Assets.LoadAsset<GameObject>("Alternative Revolver Desperado.prefab");
-            Core.Harmony.PatchAll(typeof(Desperado));
+            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Desperado Assets.asset");
         }
 
-        public override GameObject Create(Transform parent)
-        {
-            base.Create(parent);
-
-            GameObject thing;
-            if (Enabled() == 2)
-            {
-                thing = GameObject.Instantiate(DespAlt, parent);
-            }
-            else
-            {
-                thing = GameObject.Instantiate(Desp, parent);
-            }
-
-            OrderInSlot = GunSetter.Instance.CheckWeaponOrder("rev")[5];
-            StyleHUD.Instance.weaponFreshness.Add(thing, 10);
-            return thing;
-        }
-
-        public override int Slot()
-        {
-            return 0;
-        }
-
-        public override string Pref()
-        {
-            return "rev5";
-        }
+        public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");
 
         [HarmonyPatch(typeof(WalkingBob), nameof(WalkingBob.Update))]
         [HarmonyPostfix]

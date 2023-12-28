@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Atlas.Modules.Guns;
+using AtlasLib.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 using WafflesWeapons.Components;
@@ -81,14 +81,14 @@ namespace WafflesWeapons.Weapons.Mindrender
                 {
                     if (Shooting)
                     {
-                        if (Gun.OnAltFireHeld())
+                        if (Inputs.AltFireHeld)
                         {
                             holdLength += Time.deltaTime;
                             nai.heatUp = holdLength;
                             nai.spinSpeed = 250f + nai.heatUp * 2250f;
                         }
 
-                        if (!Gun.OnAltFireHeld() || Charge <= 0)
+                        if (!Inputs.AltFireHeld || Charge <= 0)
                         {
                             Stop();
                         }
@@ -191,7 +191,7 @@ namespace WafflesWeapons.Weapons.Mindrender
                             nai.spinSpeed = 250f + nai.heatUp * 2250f;
                         }
 
-                        if (Charge > 0.05f && Gun.OnAltFireHeld() && !Shooting && curVis == null) //curVis == null makes sure the beam has been destroyed before firing
+                        if (Charge > 0.05f && Inputs.AltFireHeld && !Shooting && curVis == null) //curVis == null makes sure the beam has been destroyed before firing
                         {
                             curVis = Instantiate(VisualBeam, nai.shootPoints[0].transform);
                             lr = curVis.GetComponent<LineRenderer>();
@@ -201,7 +201,7 @@ namespace WafflesWeapons.Weapons.Mindrender
                         }
 
                         nai.canShoot = false;
-                        if (Gun.OnFireHeld() && nai.fireCooldown == 0)
+                        if (Inputs.FireHeld && nai.fireCooldown == 0)
                         {
                             nai.fireCooldown = nai.fireRate;
                             for (int i = 0; i < 5; i++)
@@ -219,7 +219,7 @@ namespace WafflesWeapons.Weapons.Mindrender
                     }
                     else
                     {
-                        if (Charge > ALT_BALL_COST && Gun.OnAltFire())
+                        if (Charge > ALT_BALL_COST && Inputs.AltFirePressed)
                         {
                             Shooting = true;
 

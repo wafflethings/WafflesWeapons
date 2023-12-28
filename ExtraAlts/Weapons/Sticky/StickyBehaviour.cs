@@ -1,4 +1,4 @@
-﻿using Atlas.Modules.Guns;
+﻿using AtlasLib.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 using WafflesWeapons.Components;
@@ -64,7 +64,7 @@ namespace WafflesWeapons.Weapons.Sticky
 
                 cooldown = Mathf.MoveTowards(cooldown, 0, Time.deltaTime);
 
-                if (Gun.OnAltFireReleased() && detonateTime >= DETONATE_AT)
+                if (Inputs.AltFireReleased && detonateTime >= DETONATE_AT)
                 {
                     detonateTime = 0;
 
@@ -80,7 +80,7 @@ namespace WafflesWeapons.Weapons.Sticky
                     }
                 }
 
-                if (Gun.OnAltFireHeld() && Charges != 0)
+                if (Inputs.AltFireHeld && Charges != 0)
                 {
                     detonateTime += Time.deltaTime * (Charges == 4 ? 2 : 1);
                 } 
@@ -92,7 +92,7 @@ namespace WafflesWeapons.Weapons.Sticky
                 detonateSlider.value = detonateTime;
                 detonateTime = Mathf.Clamp(detonateTime, 0, DETONATE_AT);
 
-                if (Gun.OnAltFire())
+                if (Inputs.AltFirePressed)
                 {
                     if (Charges < 4)
                     {

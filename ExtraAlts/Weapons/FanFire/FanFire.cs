@@ -1,51 +1,23 @@
-﻿using Atlas.Modules.Guns;
+﻿using AtlasLib.Utils;
+using AtlasLib.Weapons;
 using HarmonyLib;
 using UnityEngine;
+using WafflesWeapons.Assets;
 using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons.FanFire
 {
-    public class FanFire : Gun
+    [PatchThis($"{Plugin.GUID}.FanFire")]
+    public class FanFire : Weapon
     {
-        public static GameObject Fan;
-        public static GameObject FanAlt;
+        public static WeaponAssets Assets;
 
         static FanFire()
         {
-            Fan = Core.Assets.LoadAsset<GameObject>("Revolver Fan.prefab");
-            FanAlt = Core.Assets.LoadAsset<GameObject>("Alternative Revolver Fan.prefab");
-            Core.Harmony.PatchAll(typeof(FanFire));
+            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Fan Fire Assets.asset");
         }
 
-        public override GameObject Create(Transform parent)
-        {
-            base.Create(parent);
-
-            GameObject thing;
-            if (Enabled() == 2)
-            {
-                thing = GameObject.Instantiate(FanAlt, parent);
-            }
-            else
-            {
-                thing = GameObject.Instantiate(Fan, parent);
-            }
-
-            FanFireBehaviour.BeamsUsed.Clear();
-            OrderInSlot = GunSetter.Instance.CheckWeaponOrder("rev")[3];
-            StyleHUD.Instance.weaponFreshness.Add(thing, 10);
-            return thing;
-        }
-
-        public override int Slot()
-        {
-            return 0;
-        }
-
-        public override string Pref()
-        {
-            return "rev3";
-        }
+        public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");
 
         [HarmonyPatch(typeof(RevolverBeam), nameof(RevolverBeam.ExecuteHits))]
         [HarmonyPrefix]

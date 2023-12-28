@@ -1,40 +1,22 @@
-﻿using Atlas.Modules.Guns;
+﻿using AtlasLib.Utils;
+using AtlasLib.Weapons;
 using HarmonyLib;
 using UnityEngine;
+using WafflesWeapons.Assets;
 
 namespace WafflesWeapons.Weapons.Sticky
 {
-    public class Sticky : Gun
+    [PatchThis($"{Plugin.GUID}.Sticky")]
+    public class Sticky : Weapon
     {
-        public static GameObject StickyShotgun;
+        public static WeaponAssets Assets;
 
         static Sticky()
         {
-            StickyShotgun = Core.Assets.LoadAsset<GameObject>("Shotgun Sticky.prefab");
-            Core.Harmony.PatchAll(typeof(Sticky));
+            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Sticky Assets.asset");
         }
 
-        public override GameObject Create(Transform parent)
-        {
-            base.Create(parent);
-            StickyBehaviour.Charges = 0;
-
-            GameObject thing = GameObject.Instantiate(StickyShotgun, parent);
-            OrderInSlot = GunSetter.Instance.CheckWeaponOrder("sho")[3];
-            StyleHUD.Instance.weaponFreshness.Add(thing, 10);
-
-            return thing;
-        }
-
-        public override int Slot()
-        {
-            return 1;
-        }
-
-        public override string Pref()
-        {
-            return "sho3";
-        }
+        public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");
 
         public static Collider _other;
 

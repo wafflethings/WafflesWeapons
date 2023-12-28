@@ -15,6 +15,7 @@ namespace WafflesWeapons.Weapons.Conductor
 
         public static void EnsureAndStun(EnemyIdentifier eid, float charge)
         {
+            charge *= eid.GetComponent<BossIdentifier>() ? 0.65f : 1.25f;
             if (eid.GetComponent<Stunner>() == null)
             {
                 eid.gameObject.AddComponent<Stunner>();

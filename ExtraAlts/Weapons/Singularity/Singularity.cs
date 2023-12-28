@@ -1,41 +1,24 @@
 ﻿using System;
-using Atlas.Modules.Guns;
+using AtlasLib.Utils;
+using AtlasLib.Weapons;
 using HarmonyLib;
 using UnityEngine;
+using WafflesWeapons.Assets;
 using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons.Singularity
 {
-    public class Singularity : Gun
+    [PatchThis($"{Plugin.GUID}.Singularity")]
+    public class Singularity : Weapon
     {
-        public static GameObject SingularityShotgun;
-
+        public static WeaponAssets Assets;
+        
         static Singularity()
         {
-            SingularityShotgun = Core.Assets.LoadAsset<GameObject>("Shotgun Singularity.prefab");
-            Core.Harmony.PatchAll(typeof(Singularity));
+            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Singularity Assets.asset");
         }
 
-        public override GameObject Create(Transform parent)
-        {
-            base.Create(parent);
-
-            GameObject thing = GameObject.Instantiate(SingularityShotgun, parent);
-            OrderInSlot = GunSetter.Instance.CheckWeaponOrder("sho")[5];
-            StyleHUD.Instance.weaponFreshness.Add(thing, 10);
-
-            return thing;
-        }
-
-        public override int Slot()
-        {
-            return 1;
-        }
-
-        public override string Pref()
-        {
-            return "sho5";
-        }
+        public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");
 
         [HarmonyPatch(typeof(RevolverBeam), nameof(RevolverBeam.Shoot)), HarmonyPostfix]
         public static void ShootBall(RevolverBeam __instance)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using AtlasLib.Utils;
+using UnityEngine;
 using WafflesWeapons.Components;
 using WafflesWeapons.Utils;
 
@@ -13,10 +14,11 @@ namespace WafflesWeapons.Weapons.Virtuous
         {
             GameObject beam = Instantiate((isSmall ? VirtueBeamSmall : VirtueBeam), NewMovement.Instance.transform.position, Quaternion.identity);
             var vi = beam.GetComponent<VirtueInsignia>();
-            vi.target = new GameObject().transform;
-            vi.target.transform.position = pos;
+            var t = new GameObject().transform;
+            vi.target = new EnemyTarget(t);
+            t.position = pos;
             beam.GetChild("Capsule").AddComponent<VirtueCannonBeam>().MyGun = gameObject;
-            StartCoroutine(DestroyVi(vi.target));
+            StartCoroutine(DestroyVi(vi.target.targetTransform));
         }
 
         public static System.Collections.IEnumerator DestroyVi(Transform t)

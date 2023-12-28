@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Atlas.Modules.Guns;
+using AtlasLib.Utils;
 using UnityEngine;
 using WafflesWeapons.Components;
 
@@ -32,7 +32,7 @@ namespace WafflesWeapons.Weapons.FanFire
             rev.pierceShotCharge = 0;
             rev.screenMR.material.SetTexture("_MainTex", NumberToTexture[(int)Charge]);
 
-            if (Gun.OnFireHeld() && rev.shootReady && rev.gc.activated && rev.gunReady && !fanning)
+            if (Inputs.FireHeld && rev.shootReady && rev.gc.activated && rev.gunReady && !fanning)
             {
                 if ((rev.altVersion && !fanning && WeaponCharges.Instance.revaltpickupcharges[rev.gunVariation] == 0) || !rev.altVersion)
                 {
@@ -40,7 +40,7 @@ namespace WafflesWeapons.Weapons.FanFire
                 }
             }
 
-            if (Gun.OnAltFire() && !fanning)
+            if (Inputs.AltFirePressed && !fanning)
             {
                 StartCoroutine(DoFanning());
             }
@@ -57,7 +57,7 @@ namespace WafflesWeapons.Weapons.FanFire
 
             for (int i = 0; i < startCharge; i++)
             {
-                while ((rev.altVersion ? timer < 0.25f && !Gun.OnFire() : timer < 0.15f) || !GunControl.Instance.activated)
+                while ((rev.altVersion ? timer < 0.25f && !Inputs.FirePressed : timer < 0.15f) || !GunControl.Instance.activated)
                 {
                     timer += Time.deltaTime;
                     yield return null;

@@ -1,5 +1,5 @@
-﻿using Atlas.Modules.Guns;
-using UnityEngine;
+﻿using UnityEngine;
+using AtlasLib.Utils;
 using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons.Malevolent
@@ -13,7 +13,7 @@ namespace WafflesWeapons.Weapons.Malevolent
             rev = GetComponent<Revolver>();
             rev.screenAud = rev.screenMR.gameObject.GetComponent<AudioSource>();
             rev.screenMR.material.color = ColorBlindSettings.Instance.variationColors[5];
-            Weapons.Malevolent.Guns.Add(this);
+            Malevolent.Guns.Add(this);
         }
 
         public void Update()
@@ -27,7 +27,7 @@ namespace WafflesWeapons.Weapons.Malevolent
 
                 Charge();
 
-                if (Gun.OnFireHeld() && rev.shootReady && rev.gunReady)
+                if (Inputs.FireHeld && rev.shootReady && rev.gunReady)
                 {
                     if ((rev.altVersion && WeaponCharges.Instance.revaltpickupcharges[rev.gunVariation] == 0) ||
                         !rev.altVersion)
@@ -59,7 +59,7 @@ namespace WafflesWeapons.Weapons.Malevolent
                 rev.ceaud.pitch = rev.pierceShotCharge * 0.005f;
                 rev.celight.range = rev.pierceShotCharge * 0.01f;
 
-                if (Gun.OnAltFireReleased() && rev.pierceReady && rev.shootReady && rev.pierceShotCharge == 100f &&
+                if (Inputs.AltFireReleased && rev.pierceReady && rev.shootReady && rev.pierceShotCharge == 100f &&
                     rev.gunReady)
                 {
                     Invoke("Shoot2", rev.wid.delay);
@@ -83,7 +83,7 @@ namespace WafflesWeapons.Weapons.Malevolent
                     }
                 }
 
-                if (Gun.OnAltFireHeld() && rev.shootReady && rev.pierceReady)
+                if (Inputs.AltFireHeld && rev.shootReady && rev.pierceReady)
                 {
                     rev.chargingPierce = true;
                     if (rev.pierceShotCharge + 175f * Time.deltaTime < 100f)

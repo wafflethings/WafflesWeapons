@@ -2,6 +2,7 @@
 using UnityEngine;
 using WafflesWeapons.Components;
 using WafflesWeapons.Utils;
+using AtlasLib.Utils;
 
 namespace WafflesWeapons.Weapons.FerryOar
 {

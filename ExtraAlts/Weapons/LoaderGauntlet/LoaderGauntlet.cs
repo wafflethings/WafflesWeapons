@@ -1,36 +1,23 @@
-﻿using Atlas.Modules.Guns;
+﻿using AtlasLib.Utils;
+using AtlasLib.Weapons;
 using HarmonyLib;
 using UnityEngine;
+using WafflesWeapons.Assets;
 
 namespace WafflesWeapons.Weapons.LoaderGauntlet
 {
-    public class LoaderGauntlet : Fist
+    [PatchThis($"{Plugin.GUID}.LoaderGauntlet")]
+    public class LoaderGauntlet : Weapon
     {
-        public static GameObject EsArm;
+        public static WeaponAssets Assets;
         public static LoaderBehaviour curOne;
 
         static LoaderGauntlet()
         {
-            EsArm = Core.Assets.LoadAsset<GameObject>("Arm Earthshatter.prefab");
-            Core.Harmony.PatchAll(typeof(LoaderGauntlet));
+            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Earthshatter Assets.asset");
         }
 
-        public override GameObject Create(Transform parent)
-        {
-            base.Create(parent);
-            GameObject thing = GameObject.Instantiate(EsArm, parent);
-            return thing;
-        }
-
-        public override int Slot()
-        {
-            return 2;
-        }
-
-        public override string Pref()
-        {
-            return "arm5";
-        }
+        public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");
 
         [HarmonyPatch(typeof(NewMovement), nameof(NewMovement.Start))]
         [HarmonyPostfix]

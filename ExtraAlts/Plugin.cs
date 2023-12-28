@@ -1,25 +1,36 @@
 ﻿using BepInEx;
-using WafflesWeapons.Pages;
-using WafflesWeapons.Weapons;
 using HarmonyLib;
 using System.IO;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
-using System.Collections.Generic;
-using Atlas.Modules.Terminal;
-using Atlas.Modules.Guns;
+using AtlasLib.Pages;
+using AtlasLib.Utils;
+using AtlasLib.Weapons;
 using WafflesWeapons.Components;
-using WafflesWeapons.Utils;
+using WafflesWeapons.Weapons.Conductor;
+using WafflesWeapons.Weapons.Desperado;
+using WafflesWeapons.Weapons.EepyCharger;
+using WafflesWeapons.Weapons.FanFire;
+using WafflesWeapons.Weapons.FerryOar;
+using WafflesWeapons.Weapons.LoaderGauntlet;
+using WafflesWeapons.Weapons.Malevolent;
+using WafflesWeapons.Weapons.Mindrender;
+using WafflesWeapons.Weapons.Singularity;
+using WafflesWeapons.Weapons.Sticky;
+using WafflesWeapons.Weapons.Virtuous;
+using WafflesWeapons.Pages;
 
 namespace WafflesWeapons
 {
-    [BepInPlugin("waffle.ultrakill.extraalts", "Waffle's Weapons", "1.2.4")]
-    public class Core : BaseUnityPlugin
+    [BepInPlugin(GUID, Name, Version)]
+    [BepInDependency(AtlasLib.Plugin.GUID)]
+    [PatchThis($"{GUID}.Plugin")]
+    public class Plugin : BaseUnityPlugin
     {
-        public static readonly Harmony Harmony = new Harmony("waffle.ultrakill.extraalts");
+        public const string Name = "Waffle's Weapons";
+        public const string GUID = "waffle.ultrakill.extraalts";
+        public const string Version = "1.2.4";
         public static readonly AssetBundle Assets = AssetBundle.LoadFromFile(Path.Combine(PathUtils.ModPath(), "redrevolver.bundle"));
-
+        
         private static readonly Color[] _newColours =
         {
             new Color(0.25f, 0.5f, 1), // dblue
@@ -29,29 +40,27 @@ namespace WafflesWeapons
 
         public void Start()
         {
-            Harmony.PatchAll(typeof(Core));
-
-            TerminalPageRegistry.RegisterPage(typeof(CustomsPage));
+            PatchThis.AddPatches();
+            
+            PageRegistry.Register(new CustomsPage());
             //TerminalPageRegistry.RegisterPage(typeof(ExtrasPage));
 
-            GunRegistry.Register(new FanFire());
-            GunRegistry.Register(new Malevolent());
-            GunRegistry.Register(new Desperado());
+            WeaponRegistry.Register(new FanFire());
+            WeaponRegistry.Register(new Malevolent());
+            WeaponRegistry.Register(new Desperado());
 
-            GunRegistry.Register(new Sticky());
-            GunRegistry.Register(new Singularity());
+            WeaponRegistry.Register(new Sticky());
+            WeaponRegistry.Register(new Singularity());
 
-            GunRegistry.Register(new Conductor());
-            GunRegistry.Register(new Mindrender());
+            WeaponRegistry.Register(new Conductor());
+            WeaponRegistry.Register(new Mindrender());
 
-            GunRegistry.Register(new Virtuous());
+            WeaponRegistry.Register(new Virtuous());
 
-            GunRegistry.Register(new EepyCharger());
+            WeaponRegistry.Register(new EepyCharger());
 
-            GunRegistry.Register(new FerryOar());
-            GunRegistry.Register(new LoaderGauntlet());
-
-            Harmony.PatchAll(typeof(WaffleWeaponCharges));
+            WeaponRegistry.Register(new FerryOar());
+            WeaponRegistry.Register(new LoaderGauntlet());
         }
 
         [HarmonyPatch(typeof(LeaderboardController), nameof(LeaderboardController.SubmitCyberGrindScore))]
@@ -59,9 +68,9 @@ namespace WafflesWeapons
         [HarmonyPrefix]
         public static bool DisableCG()
         {
-            foreach (Weapon weapon in GunRegistry.WeaponList)
+            foreach (Weapon weapon in WeaponRegistry.Weapons)
             {
-                if (weapon.Enabled() > 0)
+                if (weapon.Selection != WeaponSelection.Disabled)
                 {
                     Debug.Log("A weapon has been detected, disable CG ‼️");
                     return false;

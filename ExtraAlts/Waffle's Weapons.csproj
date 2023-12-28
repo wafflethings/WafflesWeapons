@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <LangVersion>10</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,9 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\WeaponAssets.cs" />
     <Compile Include="Components\CopyActiveState.cs" />
     <Compile Include="Components\EnemyHitTracker.cs" />
-    <Compile Include="Core.cs" />
+    <Compile Include="Plugin.cs" />
     <Compile Include="Components\CustomColour.cs" />
     <Compile Include="Components\GunBehaviour.cs" />
     <Compile Include="Pages\CustomsPage.cs" />
@@ -42,10 +44,14 @@
     <Compile Include="Components\WaffleWeaponCharges.cs" />
     <Compile Include="Utils\BezierCurve.cs" />
     <Compile Include="Utils\UltrakillUtils.cs" />
+    <Compile Include="Weapons\Conductor\Behaviours\StunExplosion.cs" />
+    <Compile Include="Weapons\Conductor\Behaviours\Stunner.cs" />
+    <Compile Include="Weapons\Conductor\Behaviours\StunProjectiles\IStunProjectile.cs" />
+    <Compile Include="Weapons\Conductor\Behaviours\StunProjectiles\StunBeam.cs" />
+    <Compile Include="Weapons\Conductor\Behaviours\StunProjectiles\StunSaw.cs" />
+    <Compile Include="Weapons\Conductor\Behaviours\StunRocket.cs" />
     <Compile Include="Weapons\Conductor\Conductor.cs" />
     <Compile Include="Weapons\Conductor\ConductorBehaviour.cs" />
-    <Compile Include="Weapons\Conductor\Stunner.cs" />
-    <Compile Include="Weapons\Conductor\StunTag.cs" />
     <Compile Include="Weapons\Desperado\Desperado.cs" />
     <Compile Include="Weapons\Desperado\DesperadoBehaviour.cs" />
     <Compile Include="Weapons\EepyCharger\EepyCharger.cs" />
@@ -85,8 +91,8 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>Libs\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Atlas">
-      <HintPath>Libs\Atlas.dll</HintPath>
+    <Reference Include="AtlasLib">
+      <HintPath>Libs\Misc\AtlasLib.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx">
       <HintPath>Libs\BepInEx\BepInEx.dll</HintPath>

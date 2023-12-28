@@ -1,22 +1,14 @@
-﻿using WafflesWeapons;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using Atlas.Modules.Terminal;
+﻿using UnityEngine;
+using AtlasLib.Pages;
 
 namespace WafflesWeapons.Pages
 {
     public class ExtrasPage : Page
     {
-        public ExtrasPage(GameObject go) : base(go)
+        public override void CreatePage(Transform parent)
         {
-            GameObject page = GameObject.Instantiate(Core.Assets.LoadAsset<GameObject>("ExtraAlts Alternate.prefab"));
-            page.transform.SetParent(go.transform, false);
-            page.SetActive(false);
-            Objects.Add(page);
+            base.CreatePage(parent);
+            Objects.Add(Object.Instantiate(Plugin.Assets.LoadAsset<GameObject>("ExtraAlts Alternate.prefab")));
         }
     }
 }

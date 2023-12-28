@@ -1,4 +1,4 @@
-﻿using Atlas.Modules.Guns;
+﻿using AtlasLib.Utils;
 using UnityEngine;
 using WafflesWeapons.Components;
 
@@ -97,7 +97,7 @@ namespace WafflesWeapons.Weapons.FerryOar
 
                 if (_hasSpear)
                 {
-                    if (Fist.OnPunchHeld())
+                    if (Inputs.PunchHeld)
                     {
                         _timeHeld += Time.deltaTime;
                     }

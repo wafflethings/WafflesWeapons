@@ -1,50 +1,23 @@
-﻿using Atlas.Modules.Guns;
+﻿using AtlasLib.Utils;
+using AtlasLib.Weapons;
 using HarmonyLib;
 using UnityEngine;
+using WafflesWeapons.Assets;
 using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons.Mindrender
 {
-    public class Mindrender : Gun
+    [PatchThis($"{Plugin.GUID}.Mindrender")]
+    public class Mindrender : Weapon
     {
-        public static GameObject RendNail;
-        public static GameObject RendSaw;
-
+        public static WeaponAssets Assets;
+        
         static Mindrender()
         {
-            RendNail = Core.Assets.LoadAsset<GameObject>("Nailgun Mindrender.prefab");
-            RendSaw = Core.Assets.LoadAsset<GameObject>("Sawblade Launcher Mindrender.prefab");
-            Core.Harmony.PatchAll(typeof(Mindrender));
+            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Mindrender Assets.asset");
         }
 
-        public override GameObject Create(Transform parent)
-        {
-            base.Create(parent);
-
-            GameObject thing;
-            if (Enabled() == 2)
-            {
-                thing = GameObject.Instantiate(RendSaw, parent);
-            }
-            else
-            {
-                thing = GameObject.Instantiate(RendNail, parent);
-            }
-
-            OrderInSlot = GunSetter.Instance.CheckWeaponOrder("nai")[4];
-            StyleHUD.Instance.weaponFreshness.Add(thing, 10);
-            return thing;
-        }
-
-        public override int Slot()
-        {
-            return 2;
-        }
-
-        public override string Pref()
-        {
-            return "nai4";
-        }
+        public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");
 
         [HarmonyPatch(typeof(StyleCalculator), nameof(StyleCalculator.HitCalculator))]
         [HarmonyPrefix]

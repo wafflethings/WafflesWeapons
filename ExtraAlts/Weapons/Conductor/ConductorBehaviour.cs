@@ -1,16 +1,15 @@
-﻿using Atlas.Modules.Guns;
+﻿using AtlasLib.Utils;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using WafflesWeapons.Components;
+using WafflesWeapons.Weapons.Conductor.StunProjectiles;
 
 namespace WafflesWeapons.Weapons.Conductor
 {
-public class ConductorBehaviour : GunBehaviour<ConductorBehaviour>
+    public class ConductorBehaviour : GunBehaviour<ConductorBehaviour>
     {
-        private Nailgun nail;
-        [HideInInspector] public float Charge;
-        [HideInInspector] public float ChargeLength;
-        [HideInInspector] public float LastCharge;
+        public Nailgun Nailgun;
         public GameObject Beam;
         public GameObject Saw;
         public Slider ChargeSlider;
@@ -24,18 +23,18 @@ public class ConductorBehaviour : GunBehaviour<ConductorBehaviour>
         public ParticleSystem ElecParticles;
         public Color ShootColour;
         public Color ElecColour;
-        private float fireRate = 0;
-        private float cooldown = 0;
+        private float _charge;
+        private float _chargeLength;
+        private float _cooldown;
 
         public void MaxCharge()
         {
-            Charge = 1;
+            _charge = 1;
         }
 
         public void Start()
         {
-            nail = GetComponent<Nailgun>();
-            fireRate = nail.fireRate;
+            Nailgun = GetComponent<Nailgun>();
             SetBarrelsOrange();
         }
 
@@ -43,116 +42,90 @@ public class ConductorBehaviour : GunBehaviour<ConductorBehaviour>
         {
             if (ULTRAKILL.Cheats.NoWeaponCooldown.NoCooldown)
             {
-                Charge = 1;
+                _charge = 1;
             }
 
-            if (nail.gc.activated)
+            if (Nailgun.gc.activated)
             {
-                nail.fireRate = fireRate;
-                cooldown = Mathf.MoveTowards(cooldown, 0, Time.deltaTime);
-                Charge = Mathf.MoveTowards(Charge, 1, Time.deltaTime * 0.1f);
+                Nailgun.currentFireRate = Nailgun.fireRate;
+                _cooldown = Mathf.MoveTowards(_cooldown, 0, Time.deltaTime);
+                _charge = Mathf.MoveTowards(_charge, 1, Time.deltaTime * 0.1f);
 
-                nail.heatSlider = null;
-                ChargeSlider.value = Charge;
-                HoldLengthSlider.value = ChargeLength == 0 ? 0 : ChargeLength + (1 - Charge);
+                Nailgun.heatSlider = null;
+                ChargeSlider.value = _charge;
+                HoldLengthSlider.value = _chargeLength == 0 ? 0 : _chargeLength + (1 - _charge);
 
-                if (cooldown == 0)
+                if (_cooldown == 0)
                 {
-                    if (Charge >= 0.1f && Gun.OnAltFireHeld())
+                    if (_charge >= 0.1f && Inputs.AltFireHeld)
                     {
-                        nail.heatUp = ChargeLength;
-                        nail.spinSpeed = 250f + nail.heatUp * 2250f;
-                        SetBarrelsBlue();
-
-                        nail.canShoot = false;
-                        if (ChargeLength < 1)
-                        {
-                            ChargeLength = Mathf.MoveTowards(ChargeLength, Charge, Time.deltaTime / 1.5f);
-                            if (ChargeLength == 1)
-                            {
-                                FinishChargeSound.Play();
-                            }
-                        }
-                        if (!ChargeSound.isPlaying)
-                        {
-                            ChargeSound.Play();
-                        }
-                        ChargeSound.pitch = 0.5f + ChargeLength;
-                        CameraController.Instance.CameraShake(ChargeLength * 0.25f);
+                        Held();
                     }
                     else
                     {
-                        nail.canShoot = true;
+                        Nailgun.canShoot = true;
                     }
 
-                    if (Gun.OnAltFireReleased() && Charge >= 0.1f)
+                    if (Inputs.AltFireReleased && _charge >= 0.1f)
                     {
-                        LastCharge = ChargeLength;
-                        if (ChargeLength <= 0.1f)
-                        {
-                            ChargeLength = 0.1f;
-                        }
-
-                        ChargeSound.Stop();
-                        ShootSound.Play();
-
-                        if (ChargeLength < 0.1f)
-                        {
-                            ChargeLength = 0.1f;
-                        }
-
-                        nail.anim.SetTrigger("Shoot");
-                        CameraController.Instance.CameraShake(2 * ChargeLength);
-
-                        if (!nail.altVersion)
-                        {
-                            RevolverBeam beam = GameObject.Instantiate(Beam, nail.cc.transform.position + nail.cc.transform.forward, nail.cc.transform.rotation).GetComponent<RevolverBeam>();
-                            if (ChargeLength == 1)
-                            {
-                                beam.hitParticle = Conductor.FullExplosion;
-                                foreach (Explosion e in beam.hitParticle.GetComponentsInChildren<Explosion>(true))
-                                {
-                                    e.sourceWeapon = gameObject;
-                                }
-                            }
-                            beam.alternateStartPoint = nail.shootPoints[0].transform.position;
-                            beam.damage *= ChargeLength;
-                            beam.sourceWeapon = gameObject;
-                            beam.enemyLayerMask |= (1 << 14); // have to add the Projectile layer, but can't use rb.canHitProjectiles as it will cause the sharpshooter behaviour
-                            foreach (LineRenderer lr in beam.GetComponentsInChildren<LineRenderer>())
-                            {
-                                lr.startWidth *= 2 * ChargeLength;
-                            }
-                        } 
-                        else
-                        {
-                            Nail saw = GameObject.Instantiate(Saw, nail.cc.transform.position, nail.cc.transform.rotation).GetComponent<Nail>();
-                            if (ChargeLength == 1)
-                            {
-                                saw.sawBounceEffect = Conductor.SawExplosion;
-                            }
-                            saw.damage *= ChargeLength;
-                            saw.weaponType = nail.projectileVariationTypes[nail.variation];
-                            saw.sourceWeapon = gameObject;
-                            saw.ForceCheckSawbladeRicochet();
-                            saw.sourceWeapon = gameObject;
-                            saw.rb.velocity = saw.transform.forward * 200;
-                            saw.transform.forward = CameraController.Instance.transform.forward;
-
-                            Vector3 newScale = Vector3.one * 0.1f * ChargeLength * 2;
-                            newScale.y = 0.1f;
-                            saw.transform.localScale = newScale;
-                            saw.transform.position -= transform.forward * ChargeLength * 2;
-                        }
-
-                        Charge -= ChargeLength;
-                        ChargeLength = 0;
-                        cooldown = 0.25f;
-
-                        SetBarrelsOrange();
+                        Shoot();
                     }
                 }
             }
+        }
+
+        private void Shoot()
+        {
+            if (_chargeLength <= 0.1f)
+            {
+                _chargeLength = 0.1f;
+            }
+
+            ChargeSound.Stop();
+            ShootSound.Play();
+
+            if (_chargeLength < 0.1f)
+            {
+                _chargeLength = 0.1f;
+            }
+
+            IStunProjectile projectile = Instantiate(Beam, Nailgun.cc.transform.position + Nailgun.cc.transform.forward, Nailgun.cc.transform.rotation)
+                .GetComponent<IStunProjectile>();
+            projectile.Initialize(this, _chargeLength);
+            
+            Nailgun.anim.SetTrigger("Shoot");
+            CameraController.Instance.CameraShake(2 * _chargeLength);
+
+            _charge -= _chargeLength;
+            _chargeLength = 0;
+            _cooldown = 0.25f;
+
+            SetBarrelsOrange();
+        }
+        
+        private void Held()
+        {
+            Nailgun.heatUp = _chargeLength;
+            Nailgun.spinSpeed = 250f + Nailgun.heatUp * 2250f;
+            Nailgun.canShoot = false;
+            
+            if (_chargeLength < 1)
+            {
+                _chargeLength = Mathf.MoveTowards(_chargeLength, _charge, Time.deltaTime / 1.5f);
+                if (_chargeLength == 1)
+                {
+                    FinishChargeSound.Play();
+                }
+            }
+            
+            if (!ChargeSound.isPlaying)
+            {
+                ChargeSound.Play();
+            }
+            
+            SetBarrelsBlue();
+            ChargeSound.pitch = 0.5f + _chargeLength;
+            CameraController.Instance.CameraShake(_chargeLength * 0.25f);
         }
 
         public void SetBarrelsOrange()
@@ -178,18 +151,18 @@ public class ConductorBehaviour : GunBehaviour<ConductorBehaviour>
             }
 
             ParticleSystem.EmissionModule em = ElecParticles.emission;
-            em.rateOverTime = ChargeLength * 100;
+            em.rateOverTime = _chargeLength * 100;
         }
 
         public void OnEnable()
         {
-            ChargeLength = 0;
-            Charge = WaffleWeaponCharges.Instance.ConductorCharge;
+            _chargeLength = 0;
+            _charge = WaffleWeaponCharges.Instance.ConductorCharge;
         }
 
         public void OnDisable()
         {
-            WaffleWeaponCharges.Instance.ConductorCharge = Charge;
+            WaffleWeaponCharges.Instance.ConductorCharge = _charge;
         }
     }
 }

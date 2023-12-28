@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using WafflesWeapons.Utils;
+using AtlasLib.Utils;
 
 namespace WafflesWeapons.Weapons.Sticky
 {

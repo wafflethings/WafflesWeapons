@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
+using AtlasLib.Utils;
 using UnityEngine;
-using WafflesWeapons.Utils;
 
 namespace WafflesWeapons.Components
 {

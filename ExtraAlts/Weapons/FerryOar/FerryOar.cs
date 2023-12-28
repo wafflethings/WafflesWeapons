@@ -1,58 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Atlas.Modules.Guns;
+using AtlasLib.Weapons;
+using AtlasLib.Utils;
 using HarmonyLib;
 using UnityEngine;
-using WafflesWeapons.Utils;
+using WafflesWeapons.Assets;
 
 namespace WafflesWeapons.Weapons.FerryOar
 {
-public class FerryOar : Fist
+    [PatchThis($"{Plugin.GUID}.FerryOar")]
+    public class FerryOar : Weapon
     {
-        public static GameObject Oar;
+        public static WeaponAssets Assets;
         public static GameObject LightningIndicator;
         public static GameObject LightningExplosion;
         public static GameObject ThrowableOar;
 
         static FerryOar()
         {
-            Oar = Core.Assets.LoadAsset<GameObject>("Arm Ferry.prefab");
-            LightningIndicator = Core.Assets.LoadAsset<GameObject>("Ferry Expose Indicator.prefab");
-            LightningExplosion = Core.Assets.LoadAsset<GameObject>("Ferry Lightning Explosion.prefab");
-            ThrowableOar = Core.Assets.LoadAsset<GameObject>("Ferry Throw Oar.prefab");
-            Core.Harmony.PatchAll(typeof(FerryOar));
+            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Ferry Oar Assets.asset");
+            LightningIndicator = Plugin.Assets.LoadAsset<GameObject>("Ferry Expose Indicator.prefab");
+            LightningExplosion = Plugin.Assets.LoadAsset<GameObject>("Ferry Lightning Explosion.prefab");
+            ThrowableOar = Plugin.Assets.LoadAsset<GameObject>("Ferry Throw Oar.prefab");
         }
 
-        public override GameObject Create(Transform parent)
-        {
-            base.Create(parent);
-            GameObject thing = GameObject.Instantiate(Oar, parent);
-            return thing;
-        }
-
-        public override int Slot()
-        {
-            return 1;
-        }
-
-        public override string Pref()
-        {
-            return "arm4";
-        }
-
-        [HarmonyPatch(typeof(Punch), nameof(Punch.BlastCheck)), HarmonyPrefix]
-        public static bool CancelBlast(Punch __instance)
-        {
-            LoaderBehaviour lb = __instance.GetComponent<LoaderBehaviour>();
-
-            if (lb != null)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
+        public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");
+        
         [HarmonyPatch(typeof(FistControl), nameof(FistControl.UpdateFistIcon)), HarmonyPostfix]
         public static void FixColour(FistControl __instance)
         {

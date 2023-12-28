@@ -1,4 +1,4 @@
-﻿using Atlas.Modules.Guns;
+﻿using AtlasLib.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 using WafflesWeapons.Components;
@@ -45,7 +45,7 @@ namespace WafflesWeapons.Weapons.Singularity
                         FullCharge.Play();
                     }
 
-                    if (Gun.OnAltFire())
+                    if (Inputs.AltFirePressed)
                     {
                         Invoke("ShootBall", sho.wid.delay);
                     }
