@@ -1,0 +1,12 @@
+[submodule "ExtraAlts_Assets/Assets/ULTRAKILL Prefabs"]
+	path = ExtraAlts_Assets/Assets/ULTRAKILL Prefabs
+	url = https://github.com/Tundra-Editor/Prefabs.git
+[submodule "ExtraAlts_Assets/Assets/AddressableAssetsData"]
+	path = ExtraAlts_Assets/Assets/AddressableAssetsData
+	url = https://github.com/Tundra-Editor/AddressableAssetsData.git
+[submodule "ExtraAlts_Assets/Assets/Components"]
+	path = ExtraAlts_Assets/Assets/Components
+	url = https://github.com/Tundra-Editor/Components.git
+[submodule "ExtraAlts_Assets/Assets/Common"]
+	path = ExtraAlts_Assets/Assets/Common
+	url = https://github.com/Tundra-Editor/Assets.git
