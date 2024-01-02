@@ -13,7 +13,7 @@ namespace WafflesWeapons.Weapons.Virtuous
 
         static Virtuous()
         {
-            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Virtuous Assets.asset");
+            Assets = AddressableManager.Load<WeaponAssets>("Assets/ExtraAlts/Virtuous/Virtuous Assets.asset");
         }
 
         public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");

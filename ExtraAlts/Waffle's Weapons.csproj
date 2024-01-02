@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\AddressableManager.cs" />
     <Compile Include="Assets\WeaponAssets.cs" />
     <Compile Include="Components\CopyActiveState.cs" />
     <Compile Include="Components\EnemyHitTracker.cs" />
@@ -123,6 +124,9 @@
     </Reference>
     <Reference Include="MonoMod.Utils">
       <HintPath>Libs\BepInEx\MonoMod.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Libs\Managed\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Unity.Addressables, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">

@@ -13,7 +13,7 @@ namespace WafflesWeapons.Weapons.Sticky
 
         static Sticky()
         {
-            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Sticky Assets.asset");
+            Assets = AddressableManager.Load<WeaponAssets>("Assets/ExtraAlts/Sticky/Sticky Assets.asset");
         }
 
         public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");

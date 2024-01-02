@@ -14,7 +14,7 @@ namespace WafflesWeapons.Weapons.FanFire
 
         static FanFire()
         {
-            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Fan Fire Assets.asset");
+            Assets = AddressableManager.Load<WeaponAssets>("Assets/ExtraAlts/Fan Fire/Fan Fire Assets.asset");
         }
 
         public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");

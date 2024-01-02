@@ -18,10 +18,10 @@ namespace WafflesWeapons.Weapons.FerryOar
 
         static FerryOar()
         {
-            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Ferry Oar Assets.asset");
-            LightningIndicator = Plugin.Assets.LoadAsset<GameObject>("Ferry Expose Indicator.prefab");
-            LightningExplosion = Plugin.Assets.LoadAsset<GameObject>("Ferry Lightning Explosion.prefab");
-            ThrowableOar = Plugin.Assets.LoadAsset<GameObject>("Ferry Throw Oar.prefab");
+            Assets = AddressableManager.Load<WeaponAssets>("Assets/ExtraAlts/Ferryman/Ferry Oar Assets.asset");
+            LightningIndicator = AddressableManager.Load<GameObject>("Assets/ExtraAlts/Ferryman/Assets/Ferry Expose Indicator.prefab");
+            LightningExplosion = AddressableManager.Load<GameObject>("Assets/ExtraAlts/Ferryman/Assets/Ferry Lightning Explosion.prefab");
+            ThrowableOar = AddressableManager.Load<GameObject>("Assets/ExtraAlts/Ferryman/Assets/Ferry Throw Oar.prefab");
         }
 
         public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");

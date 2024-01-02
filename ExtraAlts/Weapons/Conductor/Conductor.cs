@@ -17,13 +17,13 @@ namespace WafflesWeapons.Weapons.Conductor
         
         static Conductor()
         {
-            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Conductor Assets.asset");
+            Assets = AddressableManager.Load<WeaponAssets>("Assets/ExtraAlts/Conductor/Conductor Assets.asset");
             FullyChargedExplosion = Assets.GetAsset<GameObject>("FullyChargedExplosion");
             SawExplosion = Assets.GetAsset<GameObject>("SawExplosion");
             ShotProjectileExplosion = Assets.GetAsset<GameObject>("ShotProjectileExplosion");
             RocketExplosion = Assets.GetAsset<GameObject>("RocketExplosion");
             MagnetZap = Assets.GetAsset<GameObject>("MagnetZap");
-            MagnetZap = Assets.GetAsset<GameObject>("MagnetZapEffect");
+            MagnetZapEffect = Assets.GetAsset<GameObject>("MagnetZapEffect");
         }
 
         public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");

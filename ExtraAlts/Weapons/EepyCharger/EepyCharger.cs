@@ -20,7 +20,7 @@ namespace WafflesWeapons.Weapons.EepyCharger
 
         static EepyCharger()
         {
-            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Eepy Assets.asset");
+            Assets = AddressableManager.Load<WeaponAssets>("Assets/ExtraAlts/E.P. Charger/Eepy Assets.asset");
         }
 
         public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");

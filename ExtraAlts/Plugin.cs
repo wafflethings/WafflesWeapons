@@ -5,6 +5,7 @@ using UnityEngine;
 using AtlasLib.Pages;
 using AtlasLib.Utils;
 using AtlasLib.Weapons;
+using WafflesWeapons.Assets;
 using WafflesWeapons.Components;
 using WafflesWeapons.Weapons.Conductor;
 using WafflesWeapons.Weapons.Desperado;
@@ -29,7 +30,6 @@ namespace WafflesWeapons
         public const string Name = "Waffle's Weapons";
         public const string GUID = "waffle.ultrakill.extraalts";
         public const string Version = "1.2.4";
-        public static readonly AssetBundle Assets = AssetBundle.LoadFromFile(Path.Combine(PathUtils.ModPath(), "redrevolver.bundle"));
         
         private static readonly Color[] _newColours =
         {
@@ -41,6 +41,7 @@ namespace WafflesWeapons
         public void Start()
         {
             PatchThis.AddPatches();
+            AddressableManager.Setup();
             
             PageRegistry.Register(new CustomsPage());
             //TerminalPageRegistry.RegisterPage(typeof(ExtrasPage));
@@ -87,7 +88,7 @@ namespace WafflesWeapons
             
             if (shopObject.GetChild("Canvas/Weapons") != null)
             {
-                GameObject page = Instantiate(Assets.LoadAsset<GameObject>("ExtraAlts Credits.prefab"), shopObject.GetChild("Canvas").transform);
+                GameObject page = Instantiate(AddressableManager.Load<GameObject>("Assets/ExtraAlts/ExtraAlts Credits.prefab"), shopObject.GetChild("Canvas").transform);
                 page.transform.SetSiblingIndex(10);
                 page.GetComponent<CopyActiveState>().Target = shopObject.GetChild("Canvas/TipBox");
             }

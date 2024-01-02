@@ -18,7 +18,7 @@ namespace WafflesWeapons.Weapons.Desperado
 
         static Desperado()
         {
-            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Desperado Assets.asset");
+            Assets = AddressableManager.Load<WeaponAssets>("Assets/ExtraAlts/Desperado/Desperado Assets.asset");
         }
 
         public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");

@@ -14,7 +14,7 @@ namespace WafflesWeapons.Weapons.Mindrender
         
         static Mindrender()
         {
-            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Mindrender Assets.asset");
+            Assets = AddressableManager.Load<WeaponAssets>("Assets/ExtraAlts/Mindrender/Mindrender Assets.asset");
         }
 
         public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");

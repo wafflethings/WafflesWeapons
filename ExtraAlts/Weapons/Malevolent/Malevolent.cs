@@ -14,7 +14,7 @@ namespace WafflesWeapons.Weapons.Malevolent
         
         static Malevolent()
         {
-            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Malevolent Assets.asset");
+            Assets = AddressableManager.Load<WeaponAssets>("Assets/ExtraAlts/Malevolent/Malevolent Assets.asset");
         }
 
         public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");

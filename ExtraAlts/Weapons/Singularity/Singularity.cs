@@ -15,7 +15,7 @@ namespace WafflesWeapons.Weapons.Singularity
         
         static Singularity()
         {
-            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Singularity Assets.asset");
+            Assets = AddressableManager.Load<WeaponAssets>("Assets/ExtraAlts/Singularity/Singularity Assets.asset");
         }
 
         public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");

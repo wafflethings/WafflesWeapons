@@ -14,7 +14,7 @@ namespace WafflesWeapons.Weapons.LoaderGauntlet
 
         static LoaderGauntlet()
         {
-            Assets = Plugin.Assets.LoadAsset<WeaponAssets>("Earthshatter Assets.asset");
+            Assets = AddressableManager.Load<WeaponAssets>("Assets/ExtraAlts/Loader/Earthshatter Assets.asset");
         }
 
         public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");
