@@ -163,7 +163,8 @@ namespace WafflesWeapons.Weapons.LoaderGauntlet
                 LoaderArmCollisionHandler.Instance.CanCharge = false;
                 LoaderArmCollisionHandler.Instance.BadCoins.Clear();
 
-                nm.rb.AddForce((cc.transform.forward * nm.walkSpeed * Charge) / 125, ForceMode.VelocityChange);
+                float xzMagnitude = new Vector3(nm.rb.velocity.x, 0, nm.rb.velocity.z).magnitude;
+                nm.rb.velocity = ((xzMagnitude + 40) * Charge * 0.15f * cc.transform.forward);
                 Charge = 0;
                 anim.SetBool("Midflight", true);
             }

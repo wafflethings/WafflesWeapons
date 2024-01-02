@@ -15,6 +15,6 @@ MonoBehaviour:
   WeaponObjects:
   - {fileID: 8737453521952016444, guid: 300ce6b90f3a38c40b0cd04a7b8e0738, type: 3}
   WeaponType: 0
-  Id: rock4
+  Id: rock3
   Slot: 4
   UseFreshness: 1

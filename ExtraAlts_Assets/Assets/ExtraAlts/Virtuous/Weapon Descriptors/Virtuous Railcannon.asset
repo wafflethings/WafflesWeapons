@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b54c259edfc531c428007970a94e4360, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b56ff0d4ab949c7b3a35dbefe898d96, type: 3}
   m_Name: Virtuous Railcannon
   m_EditorClassIdentifier: 
   weaponName: Virtuous Railcannon
