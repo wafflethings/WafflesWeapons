@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: wafflesweapons_core
+  m_EditorClassIdentifier: 
+  m_GroupName: wafflesweapons_core
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 250ddedd268a90144a0225e177090581
+  m_SerializeEntries:
+  - m_GUID: 04b0d0a03002474428b16d0059d464bc
+    m_Address: Assets/ExtraAlts/Default Weapons.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7eab8a99a0afa5e48aa3655150d7211f
+    m_Address: Assets/ExtraAlts/ExtraAlts Alternate.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2a477e30c64421542a74eb5e9a9148fd
+    m_Address: Assets/ExtraAlts/ExtraAlts Credits.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f26bd83fd4170d5488f7ff45e230a9a5
+    m_Address: Assets/ExtraAlts/ExtraAlts Page Old.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4bc700818ab14ea4d91119bfd92300bb
+    m_Address: Assets/ExtraAlts/ExtraAlts Page.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 21a46dfea5bdae243bc5093848184b2a
+    m_Address: Assets/ExtraAlts/WW Variation Screen.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2a337ff27534e164b86034852d6c1576, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: d26ac0ccfbb3dea468f1b2b6019b854d, type: 2}

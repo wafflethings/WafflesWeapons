@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: eepycharger
+  m_EditorClassIdentifier: 
+  m_GroupName: eepycharger
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 1218c7d0444235b4697604a472b07bd3
+  m_SerializeEntries:
+  - m_GUID: 3ec1a04e944050b4eb445a00ebbf6c84
+    m_Address: Assets/ExtraAlts/Drill Rocket/Assets/Drill Rocket.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 49bfbc9c26a63dc40b41f325a5fce720
+    m_Address: Assets/ExtraAlts/Drill Rocket/Assets/Drill Wood.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e58f9538d72974f48960617fe925b7e9
+    m_Address: Assets/ExtraAlts/Drill Rocket/Assets/Gravity Drill.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5113d5e8e8cd3d94dbda5283eedb9bd4
+    m_Address: Assets/ExtraAlts/Drill Rocket/Drill Info.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3afcae019bcac0343b38091d220e29e8
+    m_Address: Assets/ExtraAlts/Drill Rocket/Rocket Launcher Drill.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bec1b4e72e3ba8a4aa9feebf383ae7c6
+    m_Address: Assets/ExtraAlts/Drill Rocket/Weapon Descriptors/Drill Rocket Launcher.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9daea8f0f55fa5d47a85ada016051666
+    m_Address: Assets/ExtraAlts/E.P. Charger/Assets/Eepy Click.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b01e2b060dc5e474dacca400b50ac0ed
+    m_Address: Assets/ExtraAlts/E.P. Charger/Assets/HugeRocket.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91d89e5e517009e419c2d3295f21542d
+    m_Address: Assets/ExtraAlts/E.P. Charger/Assets/Icons/Nuke Glow.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cdee476b004fe7c468c23f87e54d4ebe
+    m_Address: Assets/ExtraAlts/E.P. Charger/Assets/Icons/Nuke.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6ae3bb97f592287408599dd8fd3faefc
+    m_Address: Assets/ExtraAlts/E.P. Charger/Assets/Projectile 5.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4776fea104898204eb4f39826a8b4e3e
+    m_Address: Assets/ExtraAlts/E.P. Charger/Eepy Assets.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 791aa45500b561d419a6164c588146e2
+    m_Address: Assets/ExtraAlts/E.P. Charger/Eepy Info.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 300ce6b90f3a38c40b0cd04a7b8e0738
+    m_Address: Assets/ExtraAlts/E.P. Charger/Rocket Launcher Eepy.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 354968f8016b02146a2fb7b8eb08e69c
+    m_Address: Assets/ExtraAlts/E.P. Charger/Weapon Descriptors/E.P. Charger Rocket
+      Launcher.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2a337ff27534e164b86034852d6c1576, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: f7cd3610113c88d46a38d9e81378de69, type: 2}

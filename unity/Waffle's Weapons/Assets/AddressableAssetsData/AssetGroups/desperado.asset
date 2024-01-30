@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: desperado
+  m_EditorClassIdentifier: 
+  m_GroupName: desperado
+  m_Data:
+    m_SerializedData: []
+  m_GUID: d5cf28c69e753e64e9f603afc7535e86
+  m_SerializeEntries:
+  - m_GUID: f43e7879ebb11a04397f9281537b61b1
+    m_Address: Assets/ExtraAlts/Desperado/Alternative Revolver Desperado.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bde08464fb6a18348b594c9a5a681883
+    m_Address: Assets/ExtraAlts/Desperado/Assets/BadBeam Desp.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 04aacb573449f47459783f645c557466
+    m_Address: Assets/ExtraAlts/Desperado/Assets/BadBeamAlt Desp.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 33d094ccb9b2fdb44818de8a80f4c2ce
+    m_Address: Assets/ExtraAlts/Desperado/Assets/BouncyDesperado Alt.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 919ad6557f525534ab69e98da5f0efe2
+    m_Address: Assets/ExtraAlts/Desperado/Assets/BouncyDesperado.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e0222182f4f024e42bca424cdbc1ad44
+    m_Address: Assets/ExtraAlts/Desperado/Assets/DesperadoBeamParticle.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 541b2d2eeff4e304cb9e0bcb6c7f3633
+    m_Address: Assets/ExtraAlts/Desperado/Assets/FailSound.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c12b75246e65c04db9a1eab0d990ddb
+    m_Address: Assets/ExtraAlts/Desperado/Assets/Icons/Desp Alt Glow.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 58a67e3737cbcfd4b8f1d743dc899674
+    m_Address: Assets/ExtraAlts/Desperado/Assets/Icons/Desp Alt.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 598367c3c3584a745bf318a2961fe794
+    m_Address: Assets/ExtraAlts/Desperado/Assets/Icons/Desp Glow.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ffd3aca4368dd6549a8dbb65d9660987
+    m_Address: Assets/ExtraAlts/Desperado/Assets/Icons/Desp.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b9695ea8fec32c641825aa09df97bf6b
+    m_Address: Assets/ExtraAlts/Desperado/Assets/Railgunner Panel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 472582d303c399a48b59b817b01ba544
+    m_Address: Assets/ExtraAlts/Desperado/Desperado Assets.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e99063c231a40043a37090861057e1f
+    m_Address: Assets/ExtraAlts/Desperado/Desperado Info.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4cc694ccc5f703d40aaa0ae0deb40c85
+    m_Address: Assets/ExtraAlts/Desperado/Revolver Desperado.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 74a0bcb7d81cc4e44bda03b5da5c772d
+    m_Address: Assets/ExtraAlts/Desperado/Weapon Descriptors/Desperado Alt.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0937eb0620ed06a4198b120ecd1f2fc1
+    m_Address: Assets/ExtraAlts/Desperado/Weapon Descriptors/Desperado Revolver.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2a337ff27534e164b86034852d6c1576, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 4ead7ec6820dd8c4295147c6e220561b, type: 2}

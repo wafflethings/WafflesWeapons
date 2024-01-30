@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -324612391, guid: 69e79bf8c5e39674399e20dcf1228d2f, type: 3}
+  m_Name: Earthshatter Info
+  m_EditorClassIdentifier: 
+  WeaponObjects:
+  - {fileID: 7501530205940807340, guid: 3994d4c70e5daad41bfc4a4ae9a1dee5, type: 3}
+  WeaponType: 1
+  Id: arm5
+  Slot: 2
+  OrderInSlot: 1
+  UseFreshness: 0

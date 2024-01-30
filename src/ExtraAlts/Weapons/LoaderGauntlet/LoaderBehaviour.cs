@@ -4,7 +4,7 @@ using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons.LoaderGauntlet
 {
-    public class LoaderBehaviour : GunBehaviour<LoaderBehaviour>
+    public class LoaderBehaviour : MonoBehaviour
     {
         public const float ChargeSpeedMult = 6f / 100 * 45; // 35% of 6, old one was 1.5f * 1.125f which is roughly 28%;
         public const float FastChargeSpeedMult = 6f / 100 * 60; // 50% of 6, old one was  2.5f * 1.125f which is roughly 46%;
@@ -14,7 +14,8 @@ namespace WafflesWeapons.Weapons.LoaderGauntlet
         private CameraController cc;
         private static Punch pu;
         private AudioSource CeSrc;
-        [HideInInspector] public static float Charge;
+        public static float Charge;
+
 
         public Animator anim;
         public GameObject Click;
@@ -47,6 +48,7 @@ namespace WafflesWeapons.Weapons.LoaderGauntlet
 
         public void Punch()
         {
+
             pu.damage = 1.5f;
             pu.screenShakeMultiplier = 2f;
             pu.force = 50f;
@@ -62,7 +64,7 @@ namespace WafflesWeapons.Weapons.LoaderGauntlet
         private void ReadyToPunch_WithoutHolding()
         {
             pu.returnToOrigRot = true;
-            //this.holdingInput = false;
+//this.holdingInput = false;
             pu.ready = true;
             pu.alreadyBoostedProjectile = false;
             pu.ignoreDoublePunch = false;
@@ -72,7 +74,7 @@ namespace WafflesWeapons.Weapons.LoaderGauntlet
         {
             pu.anim = anim;
 
-            // should be 100 at finish
+// should be 100 at finish
             float CoolCharge = Charge * 100 / 6;
             CeSrc.volume = 0.3f + CoolCharge * 0.005f;
             CeSrc.pitch = 0.1f + (CoolCharge * 0.0125f);
@@ -127,16 +129,18 @@ namespace WafflesWeapons.Weapons.LoaderGauntlet
                 {
                     CeSrc.Stop();
                 }
-                anim.SetBool("Charging", false);
-            } 
 
-            // cancel if released early
+                anim.SetBool("Charging", false);
+            }
+
+// cancel if released early
             if (Inputs.PunchReleased && Charge <= 2f && LoaderArmCollisionHandler.Instance.CanCharge)
             {
                 if (anim.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Armature|ES_HookPunch")
                 {
                     // anim.Play("NewES Idle");
                 }
+
                 Charge = 0;
             }
 

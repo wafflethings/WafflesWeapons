@@ -41,12 +41,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Game
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5c42e96e0174e4149ad168961ee412b2
-    m_Address: Assets/Prefabs
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Game
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f53d12327d16b8c4cb8c0ddd759db126
     m_Address: Virtue Insignia
     m_ReadOnly: 0
@@ -62,6 +56,4 @@ MonoBehaviour:
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 2a337ff27534e164b86034852d6c1576, type: 2}
   m_SchemaSet:
-    m_Schemas:
-    - {fileID: 11400000, guid: b81b37b1538760e4990a9878eb801206, type: 2}
-    - {fileID: 11400000, guid: eb435f4094cba9f4c80c8b91efec781e, type: 2}
+    m_Schemas: []

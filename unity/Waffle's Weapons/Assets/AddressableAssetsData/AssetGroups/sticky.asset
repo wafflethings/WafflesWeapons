@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: sticky
+  m_EditorClassIdentifier: 
+  m_GroupName: sticky
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 96ff43ecd2b2e894b8ba9bd62ea15d7d
+  m_SerializeEntries:
+  - m_GUID: ae76b6d3a41728b408d62aa69d036558
+    m_Address: Assets/ExtraAlts/Sticky/Assets/Altar.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 939153c26f0dbf143a67d06c063326df
+    m_Address: Assets/ExtraAlts/Sticky/Assets/Icons/Sticky Ico Glow.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cdc6f214aa529af40b4ca8393aee8e28
+    m_Address: Assets/ExtraAlts/Sticky/Assets/Icons/Sticky Ico.pdn
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4485ee3839676f8419d1e8fb269e6d8f
+    m_Address: Assets/ExtraAlts/Sticky/Assets/Icons/Sticky Ico.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: af75fb1d96e234743886f416c0b464e2
+    m_Address: Assets/ExtraAlts/Sticky/Assets/Sticky Canvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 26b4eac23bccaf94b9e44e5f7139998e
+    m_Address: Assets/ExtraAlts/Sticky/Assets/sticky.obj
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7700b0a787266a74aa7cd44d2adc5488
+    m_Address: Assets/ExtraAlts/Sticky/Assets/Sticky.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eff13f7e1bb292444bf4ec78ffe9c156
+    m_Address: Assets/ExtraAlts/Sticky/Assets/StickyExplosion Frozen.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e266e087eba57c4478ef45c63056746f
+    m_Address: Assets/ExtraAlts/Sticky/Assets/StickyExplosion.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 634d528cf0b93124880ce4fdc02b1654
+    m_Address: Assets/ExtraAlts/Sticky/Shotgun Sticky.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 059370d7f8046d949839b238b7506e42
+    m_Address: Assets/ExtraAlts/Sticky/Sticky Assets.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a3cb6c78e6eada4c842e16462287e72
+    m_Address: Assets/ExtraAlts/Sticky/Sticky Info.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b8784c693afa9a64db1a966b0638fbd4
+    m_Address: Assets/ExtraAlts/Sticky/Weapon Descriptors/Demolitionist Shotgun.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2a337ff27534e164b86034852d6c1576, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 916b19fc93ae7f34fa1fb395cd7f9fe3, type: 2}

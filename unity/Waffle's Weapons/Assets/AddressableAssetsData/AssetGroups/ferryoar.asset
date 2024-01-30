@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: ferryoar
+  m_EditorClassIdentifier: 
+  m_GroupName: ferryoar
+  m_Data:
+    m_SerializedData: []
+  m_GUID: ec6c900c39e7ad045b66dfe378f7ab60
+  m_SerializeEntries:
+  - m_GUID: 959ddefc96d1fa34cb69c957659dba0f
+    m_Address: Assets/ExtraAlts/Ferryman/Arm Ferry OLD.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8508e0dc62feb4c4b9aad2cab2b624df
+    m_Address: Assets/ExtraAlts/Ferryman/Arm Ferry.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a2995ec46106a144f872823b89e26e9e
+    m_Address: Assets/ExtraAlts/Ferryman/Assets/BarrelHeat Blue Ferry.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8d43c20429022f249813bb65d4ea4c26
+    m_Address: Assets/ExtraAlts/Ferryman/Assets/darkblue-final.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0c8e6ad449d4bc6468376b75f76137a9
+    m_Address: Assets/ExtraAlts/Ferryman/Assets/darkblue-final.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 87a9c49dfbc3274458c2fed471c45cf9
+    m_Address: Assets/ExtraAlts/Ferryman/Assets/Ferry Expose Indicator.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b1b188e67e16c8d48943c6ebd4b73586
+    m_Address: Assets/ExtraAlts/Ferryman/Assets/Ferry Lightning Explosion.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 098a724f289fbe94c91b193773ddfce9
+    m_Address: Assets/ExtraAlts/Ferryman/Assets/Ferry Throw Oar.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 842ad154d5f523c4296079bdecd6d6f8
+    m_Address: Assets/ExtraAlts/Ferryman/Assets/FerrymanOar 1.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 57b78e32554f936429164f40b79ef946
+    m_Address: Assets/ExtraAlts/Ferryman/Assets/Idle.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 74e38455f4d85eb42874f907a0587bed
+    m_Address: Assets/ExtraAlts/Ferryman/Assets/Materials/T_DarkBlue.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 278f4ced9818ede4582dd249692eee7a
+    m_Address: Assets/ExtraAlts/Ferryman/Assets/MinosSearchLights Transparent.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0915f02f14930614d98d89b1d26fefad
+    m_Address: Assets/ExtraAlts/Ferryman/Assets/Shockwave.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d1ea4d9261b99084fb021b89b3734408
+    m_Address: Assets/ExtraAlts/Ferryman/Assets/T_DarkBlue.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f35be285bf629864f9749d001bfe2148
+    m_Address: Assets/ExtraAlts/Ferryman/Ferry Oar Assets.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 976937dab00adfa479bd42c36d0e5222
+    m_Address: Assets/ExtraAlts/Ferryman/Ferry Oar Info.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2a337ff27534e164b86034852d6c1576, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: a7d031a9772973643b45516f91dea378, type: 2}

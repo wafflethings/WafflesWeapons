@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: singularity
+  m_EditorClassIdentifier: 
+  m_GroupName: singularity
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 3b7f2f2880bfd1841a21f63b2b6d115e
+  m_SerializeEntries:
+  - m_GUID: 6ededdebb7aa645498875ff178142b56
+    m_Address: Assets/ExtraAlts/Singularity/Assets/circle.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eb81d3181d1b2be4195cc731c416c810
+    m_Address: Assets/ExtraAlts/Singularity/Assets/Icons/Singularity Ico Glow.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3ed3b8cc7cc608249a69e45b1ea3ecf9
+    m_Address: Assets/ExtraAlts/Singularity/Assets/Icons/Singularity Ico.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95a1a126895e9cd49b1b35e34c1b639b
+    m_Address: Assets/ExtraAlts/Singularity/Assets/LightningBolt 2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 637221a1d997265489f444adef0d2db4
+    m_Address: Assets/ExtraAlts/Singularity/Assets/meter 8.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e8c514e896ca06d478aca94fd7860c1e
+    m_Address: Assets/ExtraAlts/Singularity/Assets/meter 9.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bef48d1b705679646b9c45c59760c467
+    m_Address: Assets/ExtraAlts/Singularity/Assets/Singularity Ball.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ac58f1c86878e1d48a0174c1d8cd2d20
+    m_Address: Assets/ExtraAlts/Singularity/Assets/Singularity Canvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 288299b60641c4942910207cfe96dbf4
+    m_Address: Assets/ExtraAlts/Singularity/Assets/Singularity Effect Die.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c7f32c3cae888341ad7116eccf4b01a
+    m_Address: Assets/ExtraAlts/Singularity/Assets/Singularity Effect.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 07fa6c4ac4f39344c839253b466289e3
+    m_Address: Assets/ExtraAlts/Singularity/Shotgun Singularity.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 881a2cfb6f58ead4e9e67c92fc8434c6
+    m_Address: Assets/ExtraAlts/Singularity/Singularity Assets.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1ed23786def653c4f8468581857f83c9
+    m_Address: Assets/ExtraAlts/Singularity/Singularity Info.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e0e5f4f8cbb071f4f9cee0ff406dcbbe
+    m_Address: Assets/ExtraAlts/Singularity/Weapon Descriptors/Singularity Shotgun.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2a337ff27534e164b86034852d6c1576, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 4c282d8dde6860a448205a92aa22df38, type: 2}

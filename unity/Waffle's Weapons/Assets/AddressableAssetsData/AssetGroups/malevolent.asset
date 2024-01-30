@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: malevolent
+  m_EditorClassIdentifier: 
+  m_GroupName: malevolent
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 2ce5cb809e267f741a296316057b31e5
+  m_SerializeEntries:
+  - m_GUID: 0fd014bdf2b3a46418c6e6bee7fc5472
+    m_Address: Assets/ExtraAlts/Malevolent/Alternative Revolver Malevolent.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ed23c32a67fe8844b8637b21ff4d9c0c
+    m_Address: Assets/ExtraAlts/Malevolent/Assets/Icons/Malevolent Alt.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f461323765eff44ea1e1bd5fc2c1d9b
+    m_Address: Assets/ExtraAlts/Malevolent/Assets/Icons/Malevolent Glow Alt.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9f69b8b98ba5b0458604d324cdd9c99
+    m_Address: Assets/ExtraAlts/Malevolent/Assets/Icons/Malevolent Glow.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a237fa4b2b1bfdb45ba9f4a4c1da73fb
+    m_Address: Assets/ExtraAlts/Malevolent/Assets/Icons/Malevolent.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 43adbd89ad40e7b48a39bd67ecfadbaa
+    m_Address: Assets/ExtraAlts/Malevolent/Assets/Mal Revolver Beam Alternative.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3ac916197b76a1540a321b9046b8e59d
+    m_Address: Assets/ExtraAlts/Malevolent/Assets/Mal Revolver Beam.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a45271c883b2ea40bb04606615c00d3
+    m_Address: Assets/ExtraAlts/Malevolent/Assets/Malev Explo Alt.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4a06985f168e87e4892a73bf1992385e
+    m_Address: Assets/ExtraAlts/Malevolent/Assets/Malev Explo.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0d1bda76d1e7abf49b32606eacca9605
+    m_Address: Assets/ExtraAlts/Malevolent/Assets/MalevBeam Alt.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5315891e7acb7e94a98f089e06ddf764
+    m_Address: Assets/ExtraAlts/Malevolent/Assets/MalevBeam.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e5f8610671c3d3542ab8c05def59f8e4
+    m_Address: Assets/ExtraAlts/Malevolent/Malevolent Assets.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cf1db33fadbb7b141b462d25e36a97bb
+    m_Address: Assets/ExtraAlts/Malevolent/Malevolent Info.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e037e4944e98dc4498689f4721ab21a5
+    m_Address: Assets/ExtraAlts/Malevolent/Revolver Malevolent.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 08439d2dacadd0042abb96fdc11bb1b5
+    m_Address: Assets/ExtraAlts/Malevolent/Weapon Descriptors/Malevolent Alt.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 12b6d189c57beaa4c8994c587494c62b
+    m_Address: Assets/ExtraAlts/Malevolent/Weapon Descriptors/Malevolent Revolver.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2a337ff27534e164b86034852d6c1576, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 2a0caafc8f1d7ac44808e3922ba7c028, type: 2}

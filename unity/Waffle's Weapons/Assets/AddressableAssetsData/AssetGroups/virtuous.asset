@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: virtuous
+  m_EditorClassIdentifier: 
+  m_GroupName: virtuous
+  m_Data:
+    m_SerializedData: []
+  m_GUID: d8a8bc453581414448e99533a04dfeff
+  m_SerializeEntries:
+  - m_GUID: 5a314fe6f18a4664ea113d79a1355f83
+    m_Address: Assets/ExtraAlts/Virtuous/Assets/FullEffect.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f35041920037fba4889e74de381f94a5
+    m_Address: Assets/ExtraAlts/Virtuous/Assets/Icons/rail virt glow.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77c8ee845c9c6ac4eac4c6e7545e4f15
+    m_Address: Assets/ExtraAlts/Virtuous/Assets/Icons/rail virt with no rail.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72eb7d84b5242344ba445da1ae9ae50f
+    m_Address: Assets/ExtraAlts/Virtuous/Assets/Icons/rail virt.ai
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d82b0e3966dc4974099b4f37877b9749
+    m_Address: Assets/ExtraAlts/Virtuous/Assets/Icons/rail virt.pdn
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: af33566a2350da14291bdf5b92e710fa
+    m_Address: Assets/ExtraAlts/Virtuous/Assets/Icons/rail virt.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 864acc795740c3d4d8fc8d56a6c366ea
+    m_Address: Assets/ExtraAlts/Virtuous/Assets/RailcannonVirtuous.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 60664c2b1fcda824f83a618b60bf430d
+    m_Address: Assets/ExtraAlts/Virtuous/Assets/VirtRail.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7df45afdf4853ba45aa99d3687c1fd6b
+    m_Address: Assets/ExtraAlts/Virtuous/Assets/Virtue Beam Small.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 09b8b1b1840f68e45b17d36afc4ca780
+    m_Address: Assets/ExtraAlts/Virtuous/Assets/Virtue Beam.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: abdee0c44237c9247b18c670eafe257f
+    m_Address: Assets/ExtraAlts/Virtuous/Assets/VirtueHitParticles.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef53250d55f9a9d45b3f90db378ce900
+    m_Address: Assets/ExtraAlts/Virtuous/Railcannon Virtuous.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 76717cf006612aa4aa749b3cf2060698
+    m_Address: Assets/ExtraAlts/Virtuous/Virtuous Assets.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f245233c87ea6e7459a42b6586f16851
+    m_Address: Assets/ExtraAlts/Virtuous/Virtuous Info.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1747970e125fd7a45826193a611f6c05
+    m_Address: Assets/ExtraAlts/Virtuous/Weapon Descriptors/Virtuous Railcannon.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2a337ff27534e164b86034852d6c1576, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: e4bcb3e979e34664d9979648f5934ae3, type: 2}

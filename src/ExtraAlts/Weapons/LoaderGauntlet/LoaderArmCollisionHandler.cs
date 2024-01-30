@@ -23,7 +23,7 @@ namespace WafflesWeapons.Weapons.LoaderGauntlet
         //FromGround = the reset came from touching ground (not from coin)
         public void ResetDash(bool FromGround)
         {
-            LoaderGauntlet.curOne.anim.SetBool("Midflight", false);
+            //LoaderGauntlet.curOne.anim.SetBool("Midflight", false);
 
             if (FromGround)
             {

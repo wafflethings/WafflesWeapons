@@ -27,13 +27,12 @@ namespace WafflesWeapons.Weapons.Conductor.StunProjectiles
             
             if (chargeLength == 1)
             {
-                HudMessageReceiver.Instance.SendHudMessage("FIX ME :3");
-                //beam.hitParticle = FullyChargedExplosion;
-                //foreach (Explosion explosion in (beam.hitParticle.Asset as GameObject ?? beam.hitParticle.ToAsset()).GetComponentsInChildren<Explosion>(true))
-                //{
-                //    Debug.Log("setting to " + source);
-                //explosion.sourceWeapon = source.gameObject;
-                //}
+                beam.hitParticle = FullyChargedExplosion;
+                foreach (Explosion explosion in (beam.hitParticle.Asset as GameObject ?? beam.hitParticle.ToAsset()).GetComponentsInChildren<Explosion>(true))
+                {
+                    Debug.Log("setting to " + source);
+                    explosion.sourceWeapon = source.gameObject;
+                }
             }
             
             Debug.Log("1");

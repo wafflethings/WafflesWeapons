@@ -1,0 +1,145 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: mindrender
+  m_EditorClassIdentifier: 
+  m_GroupName: mindrender
+  m_Data:
+    m_SerializedData: []
+  m_GUID: c25da99119e099e45a3e5641ccd36cba
+  m_SerializeEntries:
+  - m_GUID: 22a57de58042d924e8407fad7734bc10
+    m_Address: Assets/ExtraAlts/Mindrender/Assets/BarrelHeat MR.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f384a05020176cd47b3f3ef55f03b290
+    m_Address: Assets/ExtraAlts/Mindrender/Assets/beam slider.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0bd38a891bc47a543ac6bd6ff367238c
+    m_Address: Assets/ExtraAlts/Mindrender/Assets/Icons/MIF glow.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 789e3cccf25db4f4ca06b15536cfc14e
+    m_Address: Assets/ExtraAlts/Mindrender/Assets/Icons/MIF ico.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0f8210b0c7e6a934680a99ce1b3d49d2
+    m_Address: Assets/ExtraAlts/Mindrender/Assets/Icons/MIF saw glow.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 005f0bb8bc0033d4f936be5852531492
+    m_Address: Assets/ExtraAlts/Mindrender/Assets/Icons/MIF saw.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7965077ac36c02242b407367e72083fa
+    m_Address: Assets/ExtraAlts/Mindrender/Assets/Nail/FlayNail.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd768528daa4dab4c9780c9aa23cd1dc
+    m_Address: Assets/ExtraAlts/Mindrender/Assets/Nail/NailMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b2271193c215e64b991c75fa0fc3b78
+    m_Address: Assets/ExtraAlts/Mindrender/Assets/Nail/RenderBeam.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c93b582a1376d84e8dabd58147e50c5
+    m_Address: Assets/ExtraAlts/Mindrender/Assets/Nail/RenderBeam.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 38d02d33554d0ed4099001e4e0e62efb
+    m_Address: Assets/ExtraAlts/Mindrender/Assets/Nail/VisualMIF.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3546390af0fc56648a3ee5f471c42835
+    m_Address: Assets/ExtraAlts/Mindrender/Assets/Sawblade/BallCircle.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c83b812b33c7cb741980479fa4759c66
+    m_Address: Assets/ExtraAlts/Mindrender/Assets/Sawblade/BallProjectile.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef4a2ca8df1e762498563b4bd9dbee6a
+    m_Address: Assets/ExtraAlts/Mindrender/Assets/Sawblade/FlaySaw.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4a20d6f6faf384f45a4740ccaf8f1475
+    m_Address: Assets/ExtraAlts/Mindrender/Assets/Sawblade/MindrenderProjectile.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ed00c894c71ad0f4b92075bcefdb7279
+    m_Address: Assets/ExtraAlts/Mindrender/Assets/Sawblade/Saw.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5cadac56fb99bb44eb1250776cbdb422
+    m_Address: Assets/ExtraAlts/Mindrender/Assets/Sawblade/SILLY SAW.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d8e98ef22ab7ac4f932320c61da4315
+    m_Address: Assets/ExtraAlts/Mindrender/Assets/Sawblade/SkullExplosion 4.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8d2a1d7a302fe7642ac1f367e633c316
+    m_Address: Assets/ExtraAlts/Mindrender/Mindrender Assets.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 39e19cafcb1101644b840ff9c024281f
+    m_Address: Assets/ExtraAlts/Mindrender/Mindrender Info.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6cf9e5755a104d5499ab1622805b444a
+    m_Address: Assets/ExtraAlts/Mindrender/Nailgun Mindrender.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6962bc744a9d1b42bcedf6369d06e11
+    m_Address: Assets/ExtraAlts/Mindrender/Sawblade Launcher Mindrender.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 70999835952a9e44b9ba6710a4623f2a
+    m_Address: Assets/ExtraAlts/Mindrender/Weapon Descriptors/Mindrender Nailgun.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 251cb2b1bd7caac48ab858564f98141e
+    m_Address: Assets/ExtraAlts/Mindrender/Weapon Descriptors/Mindrender Sawblade
+      Launcher.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2a337ff27534e164b86034852d6c1576, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 02be3700a4b957645be89304b6e2df32, type: 2}

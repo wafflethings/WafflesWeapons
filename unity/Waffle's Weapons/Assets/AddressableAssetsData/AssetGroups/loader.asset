@@ -1,0 +1,195 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: loader
+  m_EditorClassIdentifier: 
+  m_GroupName: loader
+  m_Data:
+    m_SerializedData: []
+  m_GUID: e3e75c38b678217478a46d2118c0690b
+  m_SerializeEntries:
+  - m_GUID: 3994d4c70e5daad41bfc4a4ae9a1dee5
+    m_Address: Assets/ExtraAlts/Loader/Arm Earthshatter.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 94a7c50e118f19b4eb675256b861fc43
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Final ES Assets/ES-final.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 10abdc0d969d09743bd00163b587a2e2
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Final ES Assets/ES-final.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0aff9073de0bd0548839b3a1282d09b2
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Final ES Assets/ESARMnew.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2cdafbb7d76d9104f97d5565ebaff38b
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Final ES Assets/NewES
+      Idle.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a74300d9018d8b49ac029b19293c950
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Final ES Assets/T_Loader.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d0b944f199eca3b4b96dc724d118cdb9
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Old ES/Anim/BasePosition.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: caa96a5c3ea86004ebc9c81ff71ee0bf
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Old ES/Anim/Charge.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7dc7ee3f4d29fb24690e98b39635acef
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Old ES/Anim/ChargeHold.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b0b8c43375b14c84aa9a96febce2eddf
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Old ES/Anim/EarthShatterAnimator.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c80c26b8f8bda1343985bbb56de0a363
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Old ES/Anim/Holding.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b12e7deb19d49dd4aa62332e155086d4
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Old ES/Anim/Idle.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 02832f95a8cffc84395bf158210b1747
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Old ES/Anim/Punch.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 495b65186a6cb3140ab398d2bd60c797
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Old ES/Anim/ShopIdle.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4148bb2e832e4ff419b93a47b41941db
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Old ES/Anim/ShopTap.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f167b8dc3c5c0f4095ae9c460d99368
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Old ES/EarthShatterMeshFinal.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ae13fb594f7e0724cb06555af9ad661b
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Old ES/ESARM.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ec29ac8db65daf4478fcdaa7df07d1b3
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Old ES/Tex/ESARM_Albedo.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 520e5ae76dc708c4c895655c21e6cf00
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Old ES/Tex/ESARM_Metallic.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4512fe71d71335045bccf8b3dae9ce71
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Old ES/Tex/ESARM_Normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2053e8f9cb951f749b8bac24ff108bdc
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Old ES/Tex/ESARM_Occlusion.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fec021253d51b7f4cad44aaec667a9d6
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Old ES/Tex/ESARM_Roughness.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e248b878bb4b5e742bb1fa3b3e97082b
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Prefabs/'''Dust'''.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d6c7d61a9c53cc4fac969a2415ef559
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Prefabs/ESARM_old.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f2d4684e11c28974998bfa1953d9d445
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Prefabs/Player.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91f4c115179fa3244a5f6d4642ec6b98
+    m_Address: Assets/ExtraAlts/Loader/Assets/EarthShatterArm/Prefabs/SkullBlue.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 31dff362bc662a04fa2b2a1044a3d0ed
+    m_Address: Assets/ExtraAlts/Loader/Assets/SoundBubbles/LoaderBell.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9ec25235e4b4274fb5f9dd8a8b73f5e
+    m_Address: Assets/ExtraAlts/Loader/Assets/SoundBubbles/LoaderCharge.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 98ade1b7199593b41bde0bf47c33e815
+    m_Address: Assets/ExtraAlts/Loader/Assets/SoundBubbles/LoaderDonk.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c1ae1822493f7064689fc4d8ceab33f0
+    m_Address: Assets/ExtraAlts/Loader/Assets/SoundBubbles/LoaderReady.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f562506901a73ec45b69d9db174c22b7
+    m_Address: Assets/ExtraAlts/Loader/Assets/SoundBubbles/LoaderRelease.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd2e6b36617664549a29868e721609fe
+    m_Address: Assets/ExtraAlts/Loader/Assets/SoundBubbles/SillyPunch.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 402015982d9bbf842878773ffa1978b1
+    m_Address: Assets/ExtraAlts/Loader/Earthshatter Assets.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9e831685c2657c74b84a8124fa0fc62d
+    m_Address: Assets/ExtraAlts/Loader/Earthshatter Info.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2a337ff27534e164b86034852d6c1576, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: acf53be01a0a4ac41bd9afc2a2137997, type: 2}
