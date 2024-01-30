@@ -1,12 +1,9 @@
-[submodule "ExtraAlts_Assets/Assets/ULTRAKILL Prefabs"]
-	path = ExtraAlts_Assets/Assets/ULTRAKILL Prefabs
+[submodule "unity/Waffle's Weapons/Assets/ULTRAKILL Prefabs"]
+	path = unity/Waffle's Weapons/Assets/ULTRAKILL Prefabs
 	url = https://github.com/Tundra-Editor/Prefabs.git
-[submodule "ExtraAlts_Assets/Assets/AddressableAssetsData"]
-	path = ExtraAlts_Assets/Assets/AddressableAssetsData
-	url = https://github.com/Tundra-Editor/AddressableAssetsData.git
-[submodule "ExtraAlts_Assets/Assets/Components"]
-	path = ExtraAlts_Assets/Assets/Components
-	url = https://github.com/Tundra-Editor/Components.git
-[submodule "ExtraAlts_Assets/Assets/Common"]
-	path = ExtraAlts_Assets/Assets/Common
+[submodule "unity/Waffle's Weapons/Assets/Common"]
+	path = unity/Waffle's Weapons/Assets/Common
 	url = https://github.com/Tundra-Editor/Assets.git
+[submodule "unity/Waffle's Weapons/Assets/Components"]
+	path = unity/Waffle's Weapons/Assets/Components
+	url = https://github.com/Tundra-Editor/Components.git

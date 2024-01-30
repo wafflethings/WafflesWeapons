@@ -8,6 +8,8 @@ RD /s /q "%cd%\Git"
 RD /s /q "%cd%\Scripts"
 
 git clone git@github.com:Tundra-Editor/AddressableAssetsData.git "Assets/AddressableAssetsData"
+RD /s /q "%cd%\Assets\AddressableAssetsData\.git"
+del "%cd%\Assets\AddressableAssetsData\.gitignore"
 
 git submodule add "https://github.com/Tundra-Editor/Prefabs.git" "Assets/ULTRAKILL Prefabs"
 git submodule add "https://github.com/Tundra-Editor/Assets.git" "Assets/Common"

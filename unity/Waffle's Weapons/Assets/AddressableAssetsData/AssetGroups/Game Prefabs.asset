@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Game Prefabs
+  m_EditorClassIdentifier: 
+  m_GroupName: Game Prefabs
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 1c9ef0c7fbaba1549b88547b5dfefbe7
+  m_SerializeEntries:
+  - m_GUID: 2f8e922d1c456f94ba799c3bbb8e8122
+    m_Address: Wrapped Shop
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 300c70ee7c0971c4bb2750e134eeab40
+    m_Address: Bonus Ghost
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 621bf60f3f973ea429a5649937f1c2c6
+    m_Address: Bonus
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 957ad893ffd351a4484f477925a48834
+    m_Address: FirstRoom Prime
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c42e96e0174e4149ad168961ee412b2
+    m_Address: Assets/Prefabs
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f53d12327d16b8c4cb8c0ddd759db126
+    m_Address: Virtue Insignia
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8bf9ccbf7adf9d948a47d809dad2b38b
+    m_Address: Assets/Particles
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2a337ff27534e164b86034852d6c1576, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: b81b37b1538760e4990a9878eb801206, type: 2}
+    - {fileID: 11400000, guid: eb435f4094cba9f4c80c8b91efec781e, type: 2}
