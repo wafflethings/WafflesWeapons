@@ -1,4 +1,5 @@
 .vs/
+.idea/
 /read.lock/
 SETUP (edit first).bat
 ExtraAlts_Assets/Assets/AssetBundles.meta
