@@ -156,8 +156,8 @@ namespace WafflesWeapons.Weapons.FerryOar
                 {
                     Target = defaultReturn;
                 }
-
-                Vector3 midPoint = ((transform.position + Target) / 2) + (Vector3.up * 10);
+                
+                Vector3 midPoint = ((transform.position + Target) / 2) + (Vector3.up * Vector3.Distance(NewMovement.Instance.transform.position, transform.position) / 7.5f);
                 if (midPoint.y < NewMovement.Instance.transform.position.y)
                 {
                     midPoint.y = NewMovement.Instance.transform.position.y;

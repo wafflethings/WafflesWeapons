@@ -17,4 +17,5 @@ MonoBehaviour:
   WeaponType: 0
   Id: sho5
   Slot: 1
+  OrderInSlot: 2
   UseFreshness: 1

@@ -6,6 +6,7 @@ using System.Reflection.Emit;
 using AtlasLib.Utils;
 using HarmonyLib;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using WafflesWeapons.Weapons.Singularity;
 
 namespace WafflesWeapons.Weapons.Conductor.StunProjectiles
@@ -13,6 +14,7 @@ namespace WafflesWeapons.Weapons.Conductor.StunProjectiles
     [PatchThis($"{Plugin.GUID}.StunBeam")]
     public class StunBeam : MonoBehaviour, IStunProjectile
     {
+        public AssetReferenceGameObject FullyChargedExplosion;
         [HideInInspector] public GameObject Source;
         [HideInInspector] public float ChargeLength;
         
@@ -25,24 +27,34 @@ namespace WafflesWeapons.Weapons.Conductor.StunProjectiles
             
             if (chargeLength == 1)
             {
-                HudMessageReceiver.Instance.SendHudMessage("full charge conductor is broken for violence (for now)");
-                //beam.hitParticle = Conductor.FullyChargedExplosion;
-                
-                //foreach (Explosion explosion in beam.hitParticle.GetComponentsInChildren<Explosion>(true))
+                HudMessageReceiver.Instance.SendHudMessage("FIX ME :3");
+                //beam.hitParticle = FullyChargedExplosion;
+                //foreach (Explosion explosion in (beam.hitParticle.Asset as GameObject ?? beam.hitParticle.ToAsset()).GetComponentsInChildren<Explosion>(true))
                 //{
-                //    explosion.sourceWeapon = source.gameObject;
+                //    Debug.Log("setting to " + source);
+                //explosion.sourceWeapon = source.gameObject;
                 //}
             }
             
+            Debug.Log("1");
             beam.alternateStartPoint = source.Nailgun.shootPoints[0].transform.position;
+            Debug.Log("2");
             beam.damage *= chargeLength;
             beam.sourceWeapon = source.gameObject;
+            Debug.Log("3");
             beam.enemyLayerMask |= (1 << 14); // have to add the Projectile layer, but can't use rb.canHitProjectiles as it will cause the sharpshooter behaviour
             
+            Debug.Log("what guh");
             foreach (LineRenderer lr in beam.GetComponentsInChildren<LineRenderer>())
             {
+                Debug.Log(lr);
                 lr.startWidth *= 2 * chargeLength;
             }
+        }
+
+        private GameObject GetExplosionObject()
+        {
+            return FullyChargedExplosion.Asset != null ? FullyChargedExplosion.Asset as GameObject : FullyChargedExplosion.LoadAssetAsync().Result;
         }
 
         public void HitEnemy(EnemyIdentifier enemy)

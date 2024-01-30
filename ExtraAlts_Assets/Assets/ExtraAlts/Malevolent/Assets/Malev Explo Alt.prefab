@@ -101,6 +101,7 @@ MonoBehaviour:
   scaleSpeed: 12
   fadeSpeed: 1
   dontDestroyOnZero: 0
+  lightUseIntensityInsteadOfRange: 0
 --- !u!114 &277748236377584052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,6 +116,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useAudioLength: 0
   time: 5
+  randomizer: 0
+  affectedByNoCooldowns: 0
 --- !u!1 &166480979879108960
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,6 +276,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultPitch: 0.5
   pitchVariation: 0.1
+  oneTime: 1
+  playOnEnable: 1
+  nailgunOverheatFix: 0
+  aud: {fileID: 0}
 --- !u!114 &4132020913173216833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,6 +294,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useAudioLength: 0
   time: 10
+  randomizer: 0
+  affectedByNoCooldowns: 0
 --- !u!114 &5751895285762501399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,7 +454,6 @@ MonoBehaviour:
   maxSize: 5
   damage: 30
   enemyDamageMultiplier: 0.25
-  playerDamageOverride: -1
   explosionChunk: {fileID: 2411517689099871107, guid: afe97a17306b9cc48824e500692bb9ac,
     type: 3}
   ignite: 1
@@ -455,9 +463,8 @@ MonoBehaviour:
   canHit: 0
   rocketExplosion: 0
   toIgnore: 
-  interruptedEnemy: {fileID: 0}
-  ultrabooster: 0
   unblockable: 0
+  electric: 0
 --- !u!54 &7928957002556782282
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -501,13 +508,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sourceWeapon: {fileID: 0}
   enemy: 0
-  harmless: 1
+  harmless: 0
   lowQuality: 1
   speed: 4
   maxSize: 7
   damage: 0
   enemyDamageMultiplier: 0
-  playerDamageOverride: -1
   explosionChunk: {fileID: 0}
   ignite: 0
   friendlyFire: 0
@@ -516,9 +522,8 @@ MonoBehaviour:
   canHit: 0
   rocketExplosion: 0
   toIgnore: 
-  interruptedEnemy: {fileID: 0}
-  ultrabooster: 0
   unblockable: 0
+  electric: 0
 --- !u!1 &2940915359096411109
 GameObject:
   m_ObjectHideFlags: 0

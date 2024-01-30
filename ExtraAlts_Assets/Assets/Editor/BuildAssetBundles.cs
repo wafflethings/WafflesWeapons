@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AtlasLib.Weapons;
 using WafflesWeapons.Assets;
 using Newtonsoft.Json;
 using UnityEditor;
@@ -158,21 +159,19 @@ namespace Assets.Editor
 				Directory.CreateDirectory(RESULT_PATH);
 			}
 
-			ValidateAddressables();
-			AddBundles();
-			
-			/*
 			// Save Data Info
 			Dictionary<string, List<string>> dataInfo = new Dictionary<string, List<string>>();
-			AddData<Scene>(dataInfo, "Assets/Delivery/Scenes");
-			AddData<EnemyGroup>(dataInfo, "Assets/Delivery/ScriptableObjects/EnemyGroups");
+			AddData<WeaponInfo>(dataInfo);
+			
+			ValidateAddressables();
+			AddBundles();
 
-			using (StreamWriter writer = new StreamWriter(File.OpenWrite($"{RESULT_PATH}/data.json")))
+			using (StreamWriter writer = new StreamWriter(File.Create($"{RESULT_PATH}/weapons.json")))
 			{
 				JsonSerializer serializer = new JsonSerializer();
 				serializer.Serialize(new JsonTextWriter(writer) { Formatting = Formatting.Indented }, dataInfo);
-			}*/
-			
+			}
+
 			Debug.LogWarning($"BUNDLE DATA: {AddressableManager.MonoScriptBundleName} {AddressableManager.AssetPathLocation}");
 			AddressableAssetSettings.BuildPlayerContent();
 			
@@ -194,13 +193,28 @@ namespace Assets.Editor
 			File.Copy(Path.Combine(libAddressables, "StandaloneWindows64", AddressableManager.MonoScriptBundleName), Path.Combine(RESULT_PATH, AddressableManager.MonoScriptBundleName), true);
 		}
 
-		private static void AddData<T>(Dictionary<string, List<string>> dataInfo, string assetsPath) {
+		private static void AddData<T>(Dictionary<string, List<string>> dataInfo) where T : UnityEngine.Object
+		{
 			List<string> value =
-							Directory.GetFiles(assetsPath)
-							.Where((path) => !path.EndsWith(".meta"))
+							FindAllPathsForFilesOfType<T>()
 							.Select((path) => path.Replace('\\', '/'))
 							.ToList();
 			dataInfo.Add(typeof(T).FullName, value);
+		}
+		
+		private static IEnumerable<string> FindAllPathsForFilesOfType<T>() where T : UnityEngine.Object
+		{
+			foreach (string path in Directory.GetFiles(Application.dataPath, "*.asset", SearchOption.AllDirectories))
+			{
+				string unityVersionWorkingDirectory = Directory.GetCurrentDirectory().Replace("\\", "/");
+				string realPath = Path.Combine(path.Replace("\\", "/").Replace(unityVersionWorkingDirectory + "/", ""));
+				Type type = AssetDatabase.LoadAssetAtPath<ScriptableObject>(realPath)?.GetType();
+
+				if (type == typeof(T))
+				{
+					yield return realPath;
+				}
+			}
 		}
 		
 		private static void AddBundles()

@@ -17,4 +17,5 @@ MonoBehaviour:
   WeaponType: 0
   Id: rai4
   Slot: 3
+  OrderInSlot: 1
   UseFreshness: 1

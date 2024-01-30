@@ -151,8 +151,11 @@ MonoBehaviour:
   alternateStartPoint: {x: 0, y: 0, z: 0}
   sourceWeapon: {fileID: 0}
   cc: {fileID: 0}
-  hitParticle: {fileID: 1159615047014080, guid: e0222182f4f024e42bca424cdbc1ad44,
-    type: 3}
+  hitParticle:
+    m_AssetGUID: e0222182f4f024e42bca424cdbc1ad44
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   bulletForce: 10000
   quickDraw: 0
   gunVariation: 0
@@ -249,6 +252,7 @@ MonoBehaviour:
   useAudioLength: 0
   time: 5
   randomizer: 0
+  affectedByNoCooldowns: 0
 --- !u!82 &22795725513820828
 AudioSource:
   m_ObjectHideFlags: 0

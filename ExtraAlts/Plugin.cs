@@ -33,35 +33,17 @@ namespace WafflesWeapons
         
         private static readonly Color[] _newColours =
         {
-            new Color(0.25f, 0.5f, 1), // dblue
-            new Color(1, 0.5f, 0.25f), // orange
-            new Color(0.7f, 0.25f, 1)  // purp
+            new(0.25f, 0.5f, 1), // dblue
+            new(1, 0.5f, 0.25f), // orange
+            new(0.7f, 0.25f, 1)  // purp
         };
 
         public void Start()
         {
             PatchThis.AddPatches();
             AddressableManager.Setup();
-            
             PageRegistry.Register(new CustomsPage());
-            //TerminalPageRegistry.RegisterPage(typeof(ExtrasPage));
-
-            WeaponRegistry.Register(new FanFire());
-            WeaponRegistry.Register(new Malevolent());
-            WeaponRegistry.Register(new Desperado());
-
-            WeaponRegistry.Register(new Sticky());
-            WeaponRegistry.Register(new Singularity());
-
-            WeaponRegistry.Register(new Conductor());
-            WeaponRegistry.Register(new Mindrender());
-
-            WeaponRegistry.Register(new Virtuous());
-
-            WeaponRegistry.Register(new EepyCharger());
-
-            WeaponRegistry.Register(new FerryOar());
-            WeaponRegistry.Register(new LoaderGauntlet());
+            //PageRegistry.Register(typeof(ExtrasPage));
         }
 
         [HarmonyPatch(typeof(LeaderboardController), nameof(LeaderboardController.SubmitCyberGrindScore))]

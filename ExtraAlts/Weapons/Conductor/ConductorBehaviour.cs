@@ -10,8 +10,7 @@ namespace WafflesWeapons.Weapons.Conductor
     public class ConductorBehaviour : GunBehaviour<ConductorBehaviour>
     {
         public Nailgun Nailgun;
-        public GameObject Beam;
-        public GameObject Saw;
+        public GameObject ChargeProjectile;
         public Slider ChargeSlider;
         public Slider HoldLengthSlider;
         public AudioSource ChargeSound;
@@ -89,7 +88,7 @@ namespace WafflesWeapons.Weapons.Conductor
                 _chargeLength = 0.1f;
             }
 
-            IStunProjectile projectile = Instantiate(Beam, Nailgun.cc.transform.position + Nailgun.cc.transform.forward, Nailgun.cc.transform.rotation)
+            IStunProjectile projectile = Instantiate(ChargeProjectile, Nailgun.cc.transform.position + Nailgun.cc.transform.forward, Nailgun.cc.transform.rotation)
                 .GetComponent<IStunProjectile>();
             projectile.Initialize(this, _chargeLength);
             

@@ -101,6 +101,7 @@ MonoBehaviour:
   scaleSpeed: 12
   fadeSpeed: 1
   dontDestroyOnZero: 0
+  lightUseIntensityInsteadOfRange: 0
 --- !u!114 &277748236377584052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +117,7 @@ MonoBehaviour:
   useAudioLength: 0
   time: 5
   randomizer: 0
+  affectedByNoCooldowns: 0
 --- !u!1 &166480979879108960
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,6 +279,7 @@ MonoBehaviour:
   oneTime: 1
   playOnEnable: 1
   nailgunOverheatFix: 0
+  aud: {fileID: 0}
 --- !u!114 &4132020913173216833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,6 +295,7 @@ MonoBehaviour:
   useAudioLength: 0
   time: 10
   randomizer: 0
+  affectedByNoCooldowns: 0
 --- !u!114 &5751895285762501399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,7 +443,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 166480980646559239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -770903825, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
+  m_Script: {fileID: -297225514, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &7042091600184645563

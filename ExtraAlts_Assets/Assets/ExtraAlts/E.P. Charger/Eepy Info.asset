@@ -17,4 +17,5 @@ MonoBehaviour:
   WeaponType: 0
   Id: rock3
   Slot: 4
+  OrderInSlot: 0
   UseFreshness: 1

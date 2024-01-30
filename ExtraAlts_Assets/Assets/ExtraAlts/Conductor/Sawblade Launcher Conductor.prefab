@@ -84,7 +84,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2809408443567700}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59b1c430c9fa4af4aa83a5607a86a98c, type: 3}
+  m_Script: {fileID: 11500000, guid: 4193d26e206666e47afa4847405c6aee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hct: 0
@@ -335,11 +335,9 @@ MonoBehaviour:
   m_Script: {fileID: -879012143, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Charge: 0
-  ChargeLength: 0
-  LastCharge: 0
-  Beam: {fileID: 0}
-  Saw: {fileID: 152350782664307047, guid: 4b32593abc472e1489cba276e8a4cb34, type: 3}
+  Nailgun: {fileID: 0}
+  ChargeProjectile: {fileID: 152350782664307047, guid: 4b32593abc472e1489cba276e8a4cb34,
+    type: 3}
   ChargeSlider: {fileID: 1567226326599725658}
   HoldLengthSlider: {fileID: 4525113322828295770}
   ChargeSound: {fileID: 5309430990258143223}

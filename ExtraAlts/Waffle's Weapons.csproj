@@ -55,6 +55,8 @@
     <Compile Include="Weapons\Conductor\ConductorBehaviour.cs" />
     <Compile Include="Weapons\Desperado\Desperado.cs" />
     <Compile Include="Weapons\Desperado\DesperadoBehaviour.cs" />
+    <Compile Include="Weapons\DrillRocket\Behaviours\DrillPrimary.cs" />
+    <Compile Include="Weapons\DrillRocket\DrillRocketBehaviour.cs" />
     <Compile Include="Weapons\EepyCharger\EepyCharger.cs" />
     <Compile Include="Weapons\EepyCharger\EepyChargerBehaviour.cs" />
     <Compile Include="Weapons\EepyCharger\EepyRocket.cs" />

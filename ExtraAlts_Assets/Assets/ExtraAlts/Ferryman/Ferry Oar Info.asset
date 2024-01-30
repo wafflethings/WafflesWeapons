@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Ferry Oar Info
   m_EditorClassIdentifier: 
   WeaponObjects:
-  - {fileID: 7784342121016347673, guid: 959ddefc96d1fa34cb69c957659dba0f, type: 3}
+  - {fileID: 1206539199704584063, guid: 8508e0dc62feb4c4b9aad2cab2b624df, type: 3}
   WeaponType: 1
   Id: arm4
   Slot: 1
+  OrderInSlot: 0
   UseFreshness: 0

@@ -18,4 +18,5 @@ MonoBehaviour:
   WeaponType: 0
   Id: rev5
   Slot: 0
+  OrderInSlot: 2
   UseFreshness: 1

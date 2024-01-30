@@ -1442,7 +1442,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: -18}
+  m_AnchoredPosition: {x: 0, y: -18}
   m_SizeDelta: {x: 400, y: 42}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &3814503154173433015
@@ -4160,6 +4160,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3551251092448008562}
     m_Modifications:
+    - target: {fileID: 239562868868135174, guid: 21a46dfea5bdae243bc5093848184b2a,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -100
+      objectReference: {fileID: 0}
+    - target: {fileID: 239562868868135174, guid: 21a46dfea5bdae243bc5093848184b2a,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -100
+      objectReference: {fileID: 0}
+    - target: {fileID: 239562868868135174, guid: 21a46dfea5bdae243bc5093848184b2a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 239562868868135174, guid: 21a46dfea5bdae243bc5093848184b2a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1042298606483599925, guid: 21a46dfea5bdae243bc5093848184b2a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -4189,6 +4209,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -120
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239968447292620140, guid: 21a46dfea5bdae243bc5093848184b2a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1280303766337146166, guid: 21a46dfea5bdae243bc5093848184b2a,
         type: 3}
@@ -4380,12 +4405,23 @@ PrefabInstance:
     - target: {fileID: 3899968248178050037, guid: 21a46dfea5bdae243bc5093848184b2a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -160
+      value: -120
       objectReference: {fileID: 0}
     - target: {fileID: 3961914935571122259, guid: 21a46dfea5bdae243bc5093848184b2a,
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5077341051090308323, guid: 21a46dfea5bdae243bc5093848184b2a,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 03d8f51a2f6986b4b9dc43eaafb4a055,
+        type: 3}
+    - target: {fileID: 5077341051090308323, guid: 21a46dfea5bdae243bc5093848184b2a,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.5824
       objectReference: {fileID: 0}
     - target: {fileID: 5136645424729181545, guid: 21a46dfea5bdae243bc5093848184b2a,
         type: 3}
@@ -4453,10 +4489,15 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -200
       objectReference: {fileID: 0}
+    - target: {fileID: 5920996318582048448, guid: 21a46dfea5bdae243bc5093848184b2a,
+        type: 3}
+      propertyPath: m_text
+      value: RIPTIDE
+      objectReference: {fileID: 0}
     - target: {fileID: 6367886557774782582, guid: 21a46dfea5bdae243bc5093848184b2a,
         type: 3}
       propertyPath: m_text
-      value: FERRY OAR?
+      value: RIPTIDE
       objectReference: {fileID: 0}
     - target: {fileID: 7028755520058347960, guid: 21a46dfea5bdae243bc5093848184b2a,
         type: 3}
@@ -4504,6 +4545,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 03d8f51a2f6986b4b9dc43eaafb4a055,
         type: 3}
+    - target: {fileID: 7852453905676146480, guid: 21a46dfea5bdae243bc5093848184b2a,
+        type: 3}
+      propertyPath: variationNumber
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8395721530846346495, guid: 21a46dfea5bdae243bc5093848184b2a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -4533,6 +4579,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -120
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402381437253185924, guid: 21a46dfea5bdae243bc5093848184b2a,
+        type: 3}
+      propertyPath: m_text
+      value: '<color=orange>Hold and release Punch</color> to throw a parriable <color=orange>oar</color>.
+
+
+        Every
+        third hit <color=orange>exposes</color> enemies, making them explode when
+        next hit.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21a46dfea5bdae243bc5093848184b2a, type: 3}
@@ -4814,12 +4870,22 @@ PrefabInstance:
     - target: {fileID: 1055101923101572961, guid: 21a46dfea5bdae243bc5093848184b2a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1834975023130164172, guid: 21a46dfea5bdae243bc5093848184b2a,
         type: 3}
       propertyPath: weaponName
       value: rock3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2497846487455739580, guid: 21a46dfea5bdae243bc5093848184b2a,
+        type: 3}
+      propertyPath: m_text
+      value: DRILL ROCKET
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945072644667312138, guid: 21a46dfea5bdae243bc5093848184b2a,
+        type: 3}
+      propertyPath: m_text
+      value: DRILL ROCKET
       objectReference: {fileID: 0}
     - target: {fileID: 3630240483845029494, guid: 21a46dfea5bdae243bc5093848184b2a,
         type: 3}
@@ -4949,7 +5015,7 @@ PrefabInstance:
     - target: {fileID: 3899968248178050037, guid: 21a46dfea5bdae243bc5093848184b2a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -120
+      value: -140
       objectReference: {fileID: 0}
     - target: {fileID: 3961914935571122259, guid: 21a46dfea5bdae243bc5093848184b2a,
         type: 3}
@@ -5058,6 +5124,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 22f4454b7ed2a55448711dba5e011738,
         type: 3}
+    - target: {fileID: 7764247037255005094, guid: 21a46dfea5bdae243bc5093848184b2a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21a46dfea5bdae243bc5093848184b2a, type: 3}
 --- !u!224 &3120019651878645167 stripped

@@ -47,14 +47,13 @@ namespace WafflesWeapons.Weapons.FerryOar
         {
             if (__instance.TryGetComponent(out FerryOarBehaviour fo))
             {
-                if (fo.CanPunch)
+                if (!fo.HasSpear)
                 {
                     return false;
                 }
-
+                
                 if (__instance.ready)
                 {
-                    // lb.anim.Play("Armature|ES_HookPunch", 0, 0);
                     fo.Punch();
                 }
             }
@@ -93,14 +92,21 @@ namespace WafflesWeapons.Weapons.FerryOar
             {
                 NewMovement nm = NewMovement.Instance;
 
+                if (__instance.hitSomething)
+                {
+                    return;
+                }
+
+                __instance.hitSomething = true;
+
                 Debug.Log("checking: " + target.gameObject.layer);
                 if (LayerMaskDefaults.Get(LMD.Environment).Contains(target.gameObject.layer) || (!nm.gc.touchingGround && LayerMaskDefaults.Get(LMD.Enemies).Contains(target.gameObject.layer)))
                 {
-                    nm.jumpPower /= 4;
+                    nm.jumpPower /= 8;
                     nm.Jump();
-                    nm.jumpPower *= 4;
+                    nm.jumpPower *= 8;
                     Debug.Log("jump");
-                    nm.rb.AddForce(-CameraController.Instance.transform.forward * 1000, ForceMode.Impulse);
+                    nm.rb.AddForce(-CameraController.Instance.transform.forward * 2500, ForceMode.Impulse);
                 }
             }
         }

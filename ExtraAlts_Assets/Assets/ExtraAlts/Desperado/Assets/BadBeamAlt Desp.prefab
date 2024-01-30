@@ -280,8 +280,11 @@ MonoBehaviour:
   alternateStartPoint: {x: 0, y: 0, z: 0}
   sourceWeapon: {fileID: 0}
   cc: {fileID: 0}
-  hitParticle: {fileID: 1159615047014080, guid: d12ef73242e46ed4e93036ef4037e3ee,
-    type: 3}
+  hitParticle:
+    m_AssetGUID: d12ef73242e46ed4e93036ef4037e3ee
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   bulletForce: 10000
   quickDraw: 0
   gunVariation: 0
@@ -291,6 +294,7 @@ MonoBehaviour:
   hitAmount: 2
   maxHitsPerTarget: 2
   noMuzzleflash: 0
+  ricochetAmount: 0
   ricochetSound: {fileID: 1673117908876384, guid: 993a4edafa3ab0a4baa6df2e7afa2949,
     type: 3}
   enemyHitSound: {fileID: 1673117908876384, guid: 866cbd6953efe244ab864779aab9d44e,
@@ -300,6 +304,7 @@ MonoBehaviour:
   deflected: 0
   strongAlt: 1
   ultraRicocheter: 1
+  canHitProjectiles: 0
 --- !u!108 &108102121302046306
 Light:
   m_ObjectHideFlags: 0
@@ -376,6 +381,7 @@ MonoBehaviour:
   useAudioLength: 0
   time: 5
   randomizer: 0
+  affectedByNoCooldowns: 0
 --- !u!114 &4206130108677335235
 MonoBehaviour:
   m_ObjectHideFlags: 0

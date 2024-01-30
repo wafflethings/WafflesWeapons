@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 114831412987382210}
   - component: {fileID: 108671176238998922}
   - component: {fileID: -749992892284884318}
+  - component: {fileID: 7193064743172128652}
   m_Layer: 0
   m_Name: Electric Beam
   m_TagString: Untagged
@@ -184,8 +185,11 @@ MonoBehaviour:
   alternateStartPoint: {x: 0, y: 0, z: 0}
   sourceWeapon: {fileID: 0}
   cc: {fileID: 0}
-  hitParticle: {fileID: 1159615047014080, guid: 78cb663656016c84eadf7f8cdd069399,
-    type: 3}
+  hitParticle:
+    m_AssetGUID: 78cb663656016c84eadf7f8cdd069399
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   bulletForce: 500
   quickDraw: 0
   gunVariation: 0
@@ -282,6 +286,26 @@ MonoBehaviour:
   useAudioLength: 0
   time: 5
   randomizer: 0
+  affectedByNoCooldowns: 0
+--- !u!114 &7193064743172128652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659085721669404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1934354749, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FullyChargedExplosion:
+    m_AssetGUID: b1b07f2ad5bdc4842af52f6d03ffc699
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  Source: {fileID: 0}
+  ChargeLength: 0
 --- !u!1 &1683785630827436
 GameObject:
   m_ObjectHideFlags: 0

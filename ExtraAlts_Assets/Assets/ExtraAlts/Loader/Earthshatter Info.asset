@@ -17,4 +17,5 @@ MonoBehaviour:
   WeaponType: 1
   Id: arm5
   Slot: 2
+  OrderInSlot: 1
   UseFreshness: 0

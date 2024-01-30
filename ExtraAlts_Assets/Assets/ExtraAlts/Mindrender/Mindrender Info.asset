@@ -18,4 +18,5 @@ MonoBehaviour:
   WeaponType: 0
   Id: nai4
   Slot: 2
+  OrderInSlot: 1
   UseFreshness: 1
