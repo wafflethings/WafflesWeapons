@@ -4180,6 +4180,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 557263453197648221, guid: 21a46dfea5bdae243bc5093848184b2a,
+        type: 3}
+      propertyPath: weaponName
+      value: arm6
+      objectReference: {fileID: 0}
     - target: {fileID: 1042298606483599925, guid: 21a46dfea5bdae243bc5093848184b2a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -4221,6 +4226,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 03d8f51a2f6986b4b9dc43eaafb4a055,
         type: 3}
+    - target: {fileID: 1834975023130164172, guid: 21a46dfea5bdae243bc5093848184b2a,
+        type: 3}
+      propertyPath: weaponName
+      value: arm4
+      objectReference: {fileID: 0}
     - target: {fileID: 1981094378487406450, guid: 21a46dfea5bdae243bc5093848184b2a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -4499,6 +4509,11 @@ PrefabInstance:
       propertyPath: m_text
       value: RIPTIDE
       objectReference: {fileID: 0}
+    - target: {fileID: 6534659243188493597, guid: 21a46dfea5bdae243bc5093848184b2a,
+        type: 3}
+      propertyPath: weaponName
+      value: arm7
+      objectReference: {fileID: 0}
     - target: {fileID: 7028755520058347960, guid: 21a46dfea5bdae243bc5093848184b2a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -4533,6 +4548,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 1.9999542
+      objectReference: {fileID: 0}
+    - target: {fileID: 7170365296153474310, guid: 21a46dfea5bdae243bc5093848184b2a,
+        type: 3}
+      propertyPath: weaponName
+      value: arm5
       objectReference: {fileID: 0}
     - target: {fileID: 7682565424674736954, guid: 21a46dfea5bdae243bc5093848184b2a,
         type: 3}

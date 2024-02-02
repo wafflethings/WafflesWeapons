@@ -26,6 +26,7 @@ namespace WafflesWeapons.Weapons.DrillRocket.Behaviours
         private Collider _collider;
         private Vector3 _frozenOffset;
         private float _currentSpeed;
+        private float _timeOutOfEnemy;
 
         private void Start()
         {
@@ -38,6 +39,13 @@ namespace WafflesWeapons.Weapons.DrillRocket.Behaviours
         {
             if (!Frozen)
             {
+                _timeOutOfEnemy += Time.deltaTime;
+
+                if (_timeOutOfEnemy > 30)
+                {
+                    Destroy(gameObject);
+                }
+                
                 _rigidbody.velocity = transform.forward * _currentSpeed;
             }
             else
@@ -62,11 +70,7 @@ namespace WafflesWeapons.Weapons.DrillRocket.Behaviours
             if (LayerMaskDefaults.Get(LMD.Environment).Contains(other.gameObject.layer))
             {
                 HitEnvironment();
-                return;
             }
-            
-            Explode(false, false,  SourceWeapon);
-            Destroy(gameObject);
         }
 
         private void HitEnemy(EnemyIdentifierIdentifier eidid)
@@ -75,9 +79,8 @@ namespace WafflesWeapons.Weapons.DrillRocket.Behaviours
             //StartCoroutine(SlowForTime());
             StickHarpoon(eidid);
             eid.hitter = "rocket";
-            eid.DeliverDamage(eidid.gameObject, _rigidbody.velocity.normalized, eidid.transform.position, 3, false, 0, SourceWeapon);
-            TimeController.Instance.HitStop(0.05f);
-            Explode(true, !eid.flying && (!eid.gce?.onGround ?? false), SourceWeapon);
+            eid.DeliverDamage(eidid.gameObject, _rigidbody.velocity.normalized, eidid.transform.position, 1, false, 0, SourceWeapon);
+            TimeController.Instance.HitStop(0.05f); 
         }
 
         private IEnumerator IgnoreEnemy(EnemyIdentifier eid)
@@ -99,17 +102,22 @@ namespace WafflesWeapons.Weapons.DrillRocket.Behaviours
 
         private void StickHarpoon(EnemyIdentifierIdentifier eidid)
         {
+            gameObject.layer = 2; //non raycast
             ChainsawSound.Play();
             transform.parent = eidid.transform;
             _rigidbody.isKinematic = true;
             _frozenOffset = transform.localPosition;
             GetComponent<Collider>().enabled = false;
+            _timeOutOfEnemy = 0;
             Frozen = true;
         }
 
         private void UnstickHarpoon()
         {
-            StartCoroutine(IgnoreEnemy(transform.GetComponentInParent<EnemyIdentifier>()));
+            gameObject.layer = 14; //projectile
+            EnemyIdentifier eid = transform.GetComponentInParent<EnemyIdentifier>();
+            Explode(true, !eid.flying && (!eid.gce?.onGround ?? false), SourceWeapon);
+            StartCoroutine(IgnoreEnemy(eid));
             ChainsawSound.Play();
             transform.parent = null;
             _rigidbody.isKinematic = false;
@@ -126,7 +134,7 @@ namespace WafflesWeapons.Weapons.DrillRocket.Behaviours
             }
             
             StartCoroutine(SlowForTime());
-            Explode(false, false, SourceWeapon);
+            // Explode(false, false, SourceWeapon);
         }
         
         public void Explode(bool hitEnemy, bool aerialHit, GameObject sourceWeapon = null)

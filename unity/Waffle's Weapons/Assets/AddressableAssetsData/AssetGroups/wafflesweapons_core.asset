@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: wafflesweapons_core
   m_Data:
     m_SerializedData: []
-  m_GUID: 250ddedd268a90144a0225e177090581
+  m_GUID: 84ef0fd4727bde146816c636ea2a96a4
   m_SerializeEntries:
   - m_GUID: 04b0d0a03002474428b16d0059d464bc
     m_Address: Assets/ExtraAlts/Default Weapons.prefab

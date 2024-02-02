@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: loader
   m_Data:
     m_SerializedData: []
-  m_GUID: e3e75c38b678217478a46d2118c0690b
+  m_GUID: 107f97a760c1bae44864caa2ad69e520
   m_SerializeEntries:
   - m_GUID: 3994d4c70e5daad41bfc4a4ae9a1dee5
     m_Address: Assets/ExtraAlts/Loader/Arm Earthshatter.prefab
