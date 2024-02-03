@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace WafflesWeapons.Weapons.Virtuous
-{
-    public class VirtueCannonBeam : MonoBehaviour
-    {
-        public GameObject MyGun;
-        public bool IsSmall = false;
-        public List<GameObject> Ignore = new List<GameObject>();
+namespace WafflesWeapons.Weapons.Virtuous;
 
-        private void OnTriggerEnter(Collider other)
-        {
+public class VirtueCannonBeam : MonoBehaviour
+{
+    public GameObject MyGun;
+    public bool IsSmall = false;
+    public List<GameObject> Ignore = new List<GameObject>();
+
+    private void OnTriggerEnter(Collider other)
+    {
             if (other.gameObject.layer == 10 || other.gameObject.layer == 12)
             {
                 try
@@ -35,5 +35,4 @@ namespace WafflesWeapons.Weapons.Virtuous
                 catch { } //whatever bruh
             }
         }
-    }
 }

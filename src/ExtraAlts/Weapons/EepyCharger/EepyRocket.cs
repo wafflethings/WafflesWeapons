@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
-namespace WafflesWeapons.Weapons.EepyCharger
+namespace WafflesWeapons.Weapons.EepyCharger;
+
+public class EepyRocket : MonoBehaviour
 {
-    public class EepyRocket : MonoBehaviour
-    {
-        [HideInInspector] public float Charge;
-    }
+    [HideInInspector] public float Charge;
 }

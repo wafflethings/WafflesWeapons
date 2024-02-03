@@ -4,149 +4,148 @@ using HarmonyLib;
 using UnityEngine;
 using WafflesWeapons.Assets;
 
-namespace WafflesWeapons.Weapons.LoaderGauntlet
+namespace WafflesWeapons.Weapons.LoaderGauntlet;
+
+[PatchThis($"{Plugin.GUID}.LoaderGauntlet")]
+public class LoaderGauntlet : Weapon
 {
-    [PatchThis($"{Plugin.GUID}.LoaderGauntlet")]
-    public class LoaderGauntlet : Weapon
+    public static WeaponAssets Assets;
+    public static LoaderBehaviour curOne;
+
+    static LoaderGauntlet()
     {
-        public static WeaponAssets Assets;
-        public static LoaderBehaviour curOne;
+        Assets = AddressableManager.Load<WeaponAssets>("Assets/ExtraAlts/Loader/Earthshatter Assets.asset");
+    }
 
-        static LoaderGauntlet()
+    public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");
+
+    [HarmonyPatch(typeof(NewMovement), nameof(NewMovement.Start))]
+    [HarmonyPostfix]
+    public static void AddLoaderCheck(NewMovement __instance)
+    {
+        __instance.gameObject.AddComponent<LoaderArmCollisionHandler>();
+    }
+
+    [HarmonyPatch(typeof(Punch), nameof(Punch.CoinFlip))]
+    [HarmonyPrefix]
+    public static bool CancelIfCharging(Punch __instance)
+    {
+        if (__instance.GetComponent<LoaderBehaviour>() != null && !__instance.holdingInput)
         {
-            Assets = AddressableManager.Load<WeaponAssets>("Assets/ExtraAlts/Loader/Earthshatter Assets.asset");
+            __instance.anim.SetTrigger("CoinFlip");
+            return false;
         }
 
-        public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");
+        return true;
+    }
 
-        [HarmonyPatch(typeof(NewMovement), nameof(NewMovement.Start))]
-        [HarmonyPostfix]
-        public static void AddLoaderCheck(NewMovement __instance)
+    [HarmonyPatch(typeof(Punch), nameof(Punch.PunchStart))]
+    [HarmonyPrefix]
+    public static bool LoaderPunch(Punch __instance)
+    {
+        LoaderBehaviour lb = __instance.GetComponent<LoaderBehaviour>();
+
+        if (lb != null)
         {
-            __instance.gameObject.AddComponent<LoaderArmCollisionHandler>();
-        }
-
-        [HarmonyPatch(typeof(Punch), nameof(Punch.CoinFlip))]
-        [HarmonyPrefix]
-        public static bool CancelIfCharging(Punch __instance)
-        {
-            if (__instance.GetComponent<LoaderBehaviour>() != null && !__instance.holdingInput)
-            {
-                __instance.anim.SetTrigger("CoinFlip");
-                return false;
-            }
-
-            return true;
-        }
-
-        [HarmonyPatch(typeof(Punch), nameof(Punch.PunchStart))]
-        [HarmonyPrefix]
-        public static bool LoaderPunch(Punch __instance)
-        {
-            LoaderBehaviour lb = __instance.GetComponent<LoaderBehaviour>();
-
-            if (lb != null)
-            {
-                if (LoaderArmCollisionHandler.Instance.MidCharge)
-                {
-                    return false;
-                }
-
-                if (__instance.ready)
-                {
-                    // lb.anim.Play("Armature|ES_HookPunch", 0, 0);
-                    lb.Punch();
-                }
-            }
-
-            return true;
-        }
-
-        [HarmonyPatch(typeof(Punch), nameof(Punch.BlastCheck))]
-        [HarmonyPrefix]
-        public static bool CancelBlast(Punch __instance)
-        {
-            LoaderBehaviour lb = __instance.GetComponent<LoaderBehaviour>();
-
-            if (lb != null)
+            if (LoaderArmCollisionHandler.Instance.MidCharge)
             {
                 return false;
             }
 
-            return true;
+            if (__instance.ready)
+            {
+                // lb.anim.Play("Armature|ES_HookPunch", 0, 0);
+                lb.Punch();
+            }
         }
 
-        [HarmonyPatch(typeof(FistControl), nameof(FistControl.UpdateFistIcon))]
-        [HarmonyPostfix]
-        public static void FixColour(FistControl __instance)
+        return true;
+    }
+
+    [HarmonyPatch(typeof(Punch), nameof(Punch.BlastCheck))]
+    [HarmonyPrefix]
+    public static bool CancelBlast(Punch __instance)
+    {
+        LoaderBehaviour lb = __instance.GetComponent<LoaderBehaviour>();
+
+        if (lb != null)
         {
-            try
-            {
-                if (__instance.currentArmObject.GetComponent<LoaderBehaviour>() != null)
-                {
-                    __instance.fistIcon.color = ColorBlindSettings.Instance.variationColors[5];
-                }
-            }
-            catch
-            {
-                Debug.LogError($"whar? {ColorBlindSettings.Instance.variationColors.Length}");
-            }
+            return false;
         }
 
-        [HarmonyPatch(typeof(Coin), nameof(Coin.Start))]
-        [HarmonyPostfix]
-        public static void CheckIfMadeWhenLaunching(Coin __instance)
+        return true;
+    }
+
+    [HarmonyPatch(typeof(FistControl), nameof(FistControl.UpdateFistIcon))]
+    [HarmonyPostfix]
+    public static void FixColour(FistControl __instance)
+    {
+        try
         {
-            if(LoaderArmCollisionHandler.Instance.MidCharge)
+            if (__instance.currentArmObject.GetComponent<LoaderBehaviour>() != null)
             {
-                LoaderArmCollisionHandler.Instance.BadCoins.Add(__instance);
+                __instance.fistIcon.color = ColorBlindSettings.Instance.variationColors[5];
             }
         }
-
-        [HarmonyPatch(typeof(NewMovement), nameof(NewMovement.Dodge))]
-        [HarmonyPostfix]
-        public static void StopOnDodge()
+        catch
         {
-            if (curOne != null && LoaderArmCollisionHandler.Instance != null)
-            {
-                LoaderArmCollisionHandler.Instance.MidCharge = false;
-                curOne.anim.SetBool("Midflight", false);
-            }
+            Debug.LogError($"whar? {ColorBlindSettings.Instance.variationColors.Length}");
         }
+    }
 
-
-        [HarmonyPatch(typeof(NewMovement), nameof(NewMovement.Slamdown))]
-        [HarmonyPostfix]
-        public static void StopOnSlam()
+    [HarmonyPatch(typeof(Coin), nameof(Coin.Start))]
+    [HarmonyPostfix]
+    public static void CheckIfMadeWhenLaunching(Coin __instance)
+    {
+        if(LoaderArmCollisionHandler.Instance.MidCharge)
         {
-            if (curOne != null && LoaderArmCollisionHandler.Instance != null)
-            {
-                LoaderArmCollisionHandler.Instance.MidCharge = false;
-                curOne.anim.SetBool("Midflight", false);
-            }
+            LoaderArmCollisionHandler.Instance.BadCoins.Add(__instance);
         }
+    }
 
-        [HarmonyPatch(typeof(NewMovement), nameof(NewMovement.WallJump))]
-        [HarmonyPostfix]
-        public static void StopOnWallJump()
+    [HarmonyPatch(typeof(NewMovement), nameof(NewMovement.Dodge))]
+    [HarmonyPostfix]
+    public static void StopOnDodge()
+    {
+        if (curOne != null && LoaderArmCollisionHandler.Instance != null)
         {
-            if (curOne != null && LoaderArmCollisionHandler.Instance != null)
-            {
-                LoaderArmCollisionHandler.Instance.MidCharge = false;
-                curOne.anim.SetBool("Midflight", false);
-            }
+            LoaderArmCollisionHandler.Instance.MidCharge = false;
+            curOne.anim.SetBool("Midflight", false);
         }
+    }
 
-        [HarmonyPatch(typeof(HookArm), nameof(HookArm.Update))]
-        [HarmonyPostfix]
-        public static void StopOnHook(HookArm __instance)
+
+    [HarmonyPatch(typeof(NewMovement), nameof(NewMovement.Slamdown))]
+    [HarmonyPostfix]
+    public static void StopOnSlam()
+    {
+        if (curOne != null && LoaderArmCollisionHandler.Instance != null)
         {
-            if (curOne != null && LoaderArmCollisionHandler.Instance != null && __instance.state == HookState.Caught)
-            {
-                LoaderArmCollisionHandler.Instance.MidCharge = false;
-                curOne.anim.SetBool("Midflight", false);
-            }
-
+            LoaderArmCollisionHandler.Instance.MidCharge = false;
+            curOne.anim.SetBool("Midflight", false);
         }
+    }
+
+    [HarmonyPatch(typeof(NewMovement), nameof(NewMovement.WallJump))]
+    [HarmonyPostfix]
+    public static void StopOnWallJump()
+    {
+        if (curOne != null && LoaderArmCollisionHandler.Instance != null)
+        {
+            LoaderArmCollisionHandler.Instance.MidCharge = false;
+            curOne.anim.SetBool("Midflight", false);
+        }
+    }
+
+    [HarmonyPatch(typeof(HookArm), nameof(HookArm.Update))]
+    [HarmonyPostfix]
+    public static void StopOnHook(HookArm __instance)
+    {
+        if (curOne != null && LoaderArmCollisionHandler.Instance != null && __instance.state == HookState.Caught)
+        {
+            LoaderArmCollisionHandler.Instance.MidCharge = false;
+            curOne.anim.SetBool("Midflight", false);
+        }
+
     }
 }

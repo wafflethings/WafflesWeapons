@@ -6,154 +6,153 @@ using HarmonyLib;
 using UnityEngine;
 using WafflesWeapons.Assets;
 
-namespace WafflesWeapons.Weapons.FerryOar
+namespace WafflesWeapons.Weapons.FerryOar;
+
+[PatchThis($"{Plugin.GUID}.FerryOar")]
+public class FerryOar : Weapon
 {
-    [PatchThis($"{Plugin.GUID}.FerryOar")]
-    public class FerryOar : Weapon
+    public static WeaponAssets Assets;
+    public static GameObject LightningIndicator;
+    public static GameObject LightningExplosion;
+    public static GameObject ThrowableOar;
+
+    static FerryOar()
     {
-        public static WeaponAssets Assets;
-        public static GameObject LightningIndicator;
-        public static GameObject LightningExplosion;
-        public static GameObject ThrowableOar;
+        Assets = AddressableManager.Load<WeaponAssets>("Assets/ExtraAlts/Ferryman/Ferry Oar Assets.asset");
+        LightningIndicator = AddressableManager.Load<GameObject>("Assets/ExtraAlts/Ferryman/Assets/Ferry Expose Indicator.prefab");
+        LightningExplosion = AddressableManager.Load<GameObject>("Assets/ExtraAlts/Ferryman/Assets/Ferry Lightning Explosion.prefab");
+        ThrowableOar = AddressableManager.Load<GameObject>("Assets/ExtraAlts/Ferryman/Assets/Ferry Throw Oar.prefab");
+    }
 
-        static FerryOar()
-        {
-            Assets = AddressableManager.Load<WeaponAssets>("Assets/ExtraAlts/Ferryman/Ferry Oar Assets.asset");
-            LightningIndicator = AddressableManager.Load<GameObject>("Assets/ExtraAlts/Ferryman/Assets/Ferry Expose Indicator.prefab");
-            LightningExplosion = AddressableManager.Load<GameObject>("Assets/ExtraAlts/Ferryman/Assets/Ferry Lightning Explosion.prefab");
-            ThrowableOar = AddressableManager.Load<GameObject>("Assets/ExtraAlts/Ferryman/Assets/Ferry Throw Oar.prefab");
-        }
-
-        public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");
+    public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");
         
-        [HarmonyPatch(typeof(FistControl), nameof(FistControl.UpdateFistIcon)), HarmonyPostfix]
-        public static void FixColour(FistControl __instance)
+    [HarmonyPatch(typeof(FistControl), nameof(FistControl.UpdateFistIcon)), HarmonyPostfix]
+    public static void FixColour(FistControl __instance)
+    {
+        try
         {
-            try
+            if (__instance.currentArmObject?.GetComponent<FerryOarBehaviour>() != null)
             {
-                if (__instance.currentArmObject?.GetComponent<FerryOarBehaviour>() != null)
-                {
-                    __instance.fistIcon.color = ColorBlindSettings.Instance.variationColors[4];
-                }
-            }
-            catch
-            {
-                Debug.LogError($"whar? {ColorBlindSettings.Instance.variationColors.Length}");
+                __instance.fistIcon.color = ColorBlindSettings.Instance.variationColors[4];
             }
         }
-
-        [HarmonyPatch(typeof(Punch), nameof(Punch.PunchStart)), HarmonyPrefix]
-        public static bool DoRealPunch(Punch __instance)
+        catch
         {
-            if (__instance.TryGetComponent(out FerryOarBehaviour fo))
+            Debug.LogError($"whar? {ColorBlindSettings.Instance.variationColors.Length}");
+        }
+    }
+
+    [HarmonyPatch(typeof(Punch), nameof(Punch.PunchStart)), HarmonyPrefix]
+    public static bool DoRealPunch(Punch __instance)
+    {
+        if (__instance.TryGetComponent(out FerryOarBehaviour fo))
+        {
+            if (!fo.HasSpear)
             {
-                if (!fo.HasSpear)
-                {
-                    return false;
-                }
+                return false;
+            }
                 
-                if (__instance.ready)
-                {
-                    fo.Punch();
-                }
+            if (__instance.ready)
+            {
+                fo.Punch();
             }
-
-            return true;
         }
 
-        [HarmonyPatch(typeof(Punch), nameof(Punch.PunchSuccess)), HarmonyPrefix]
-        public static void ExposePunchedEnemy(Punch __instance, ref string __state, Transform target)
-        {
-            if (__instance.TryGetComponent(out FerryOarBehaviour fo))
-            {
-                if (fo.ExposeThisHit && (target.gameObject.tag == "Enemy" || target.gameObject.tag == "Armor" || target.gameObject.tag == "Head" || target.gameObject.tag == "Body" || target.gameObject.tag == "Limb" || target.gameObject.tag == "EndLimb"))
-                {
-                    if (target.TryGetComponent(out EnemyIdentifierIdentifier eidid))
-                    {
-                        if (eidid.eid.gameObject.GetComponent<ExposeTag>() == null)
-                        {
-                            eidid.eid.gameObject.AddComponent<ExposeTag>();
-                        }
+        return true;
+    }
 
-                        if (eidid.eid.enemyType != EnemyType.Idol)
-                        {
-                            __state = __instance.hitter;
-                            __instance.hitter = "exposalpunch"; //dont want to break idols
-                        }
+    [HarmonyPatch(typeof(Punch), nameof(Punch.PunchSuccess)), HarmonyPrefix]
+    public static void ExposePunchedEnemy(Punch __instance, ref string __state, Transform target)
+    {
+        if (__instance.TryGetComponent(out FerryOarBehaviour fo))
+        {
+            if (fo.ExposeThisHit && (target.gameObject.tag == "Enemy" || target.gameObject.tag == "Armor" || target.gameObject.tag == "Head" || target.gameObject.tag == "Body" || target.gameObject.tag == "Limb" || target.gameObject.tag == "EndLimb"))
+            {
+                if (target.TryGetComponent(out EnemyIdentifierIdentifier eidid))
+                {
+                    if (eidid.eid.gameObject.GetComponent<ExposeTag>() == null)
+                    {
+                        eidid.eid.gameObject.AddComponent<ExposeTag>();
+                    }
+
+                    if (eidid.eid.enemyType != EnemyType.Idol)
+                    {
+                        __state = __instance.hitter;
+                        __instance.hitter = "exposalpunch"; //dont want to break idols
                     }
                 }
             }
         }
+    }
 
-        [HarmonyPatch(typeof(Punch), nameof(Punch.AltHit)), HarmonyPatch(typeof(Punch), nameof(Punch.PunchSuccess)), HarmonyPrefix]
-        public static void SwingReflect(Punch __instance, Transform target)
+    [HarmonyPatch(typeof(Punch), nameof(Punch.AltHit)), HarmonyPatch(typeof(Punch), nameof(Punch.PunchSuccess)), HarmonyPrefix]
+    public static void SwingReflect(Punch __instance, Transform target)
+    {
+        if (__instance.TryGetComponent(out FerryOarBehaviour fo))
         {
-            if (__instance.TryGetComponent(out FerryOarBehaviour fo))
+            NewMovement nm = NewMovement.Instance;
+
+            if (__instance.hitSomething)
             {
-                NewMovement nm = NewMovement.Instance;
-
-                if (__instance.hitSomething)
-                {
-                    return;
-                }
-
-                __instance.hitSomething = true;
-
-                Debug.Log("checking: " + target.gameObject.layer);
-                if (LayerMaskDefaults.Get(LMD.Environment).Contains(target.gameObject.layer) || (!nm.gc.touchingGround && LayerMaskDefaults.Get(LMD.Enemies).Contains(target.gameObject.layer)))
-                {
-                    nm.jumpPower /= 8;
-                    nm.Jump();
-                    nm.jumpPower *= 8;
-                    Debug.Log("jump");
-                    nm.rb.AddForce(-CameraController.Instance.transform.forward * 2500, ForceMode.Impulse);
-                }
-            }
-        }
-
-        [HarmonyPatch(typeof(Punch), nameof(Punch.PunchSuccess)), HarmonyPostfix]
-        public static void ResetHitter(Punch __instance, string __state)
-        {
-            if (__instance.hitter == "exposalpunch")
-            {
-                __instance.hitter = __state;
-            }
-        }
-
-        public static List<EnemyIdentifier> HitRecently = new List<EnemyIdentifier>();
-        public static IEnumerator Ensure(EnemyIdentifier eid)
-        {
-            HitRecently.Add(eid);
-            yield return new WaitForSeconds(0.01f);
-            HitRecently.Remove(eid);
-        }
-
-        [HarmonyPatch(typeof(EnemyIdentifier), nameof(EnemyIdentifier.DeliverDamage)), HarmonyPrefix]
-        public static void ExplodeExposed(EnemyIdentifier __instance)
-        {
-            if (!__instance.dead && !HitRecently.Contains(__instance) && __instance.TryGetComponent(out ExposeTag et) && !et.Done)
-            {
-                if (__instance.hitter == "exposalpunch") 
-                {
-                    return;
-                }
-
-                et.Done = true;
-                Object.Instantiate(LightningExplosion, __instance.transform.position, __instance.transform.rotation);
-                Object.Destroy(et);
+                return;
             }
 
-            __instance.StartCoroutine(Ensure(__instance)); //TODO fix this it sucks
+            __instance.hitSomething = true;
+
+            Debug.Log("checking: " + target.gameObject.layer);
+            if (LayerMaskDefaults.Get(LMD.Environment).Contains(target.gameObject.layer) || (!nm.gc.touchingGround && LayerMaskDefaults.Get(LMD.Enemies).Contains(target.gameObject.layer)))
+            {
+                nm.jumpPower /= 8;
+                nm.Jump();
+                nm.jumpPower *= 8;
+                Debug.Log("jump");
+                nm.rb.AddForce(-CameraController.Instance.transform.forward * 2500, ForceMode.Impulse);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(Punch), nameof(Punch.PunchSuccess)), HarmonyPostfix]
+    public static void ResetHitter(Punch __instance, string __state)
+    {
+        if (__instance.hitter == "exposalpunch")
+        {
+            __instance.hitter = __state;
+        }
+    }
+
+    public static List<EnemyIdentifier> HitRecently = new List<EnemyIdentifier>();
+    public static IEnumerator Ensure(EnemyIdentifier eid)
+    {
+        HitRecently.Add(eid);
+        yield return new WaitForSeconds(0.01f);
+        HitRecently.Remove(eid);
+    }
+
+    [HarmonyPatch(typeof(EnemyIdentifier), nameof(EnemyIdentifier.DeliverDamage)), HarmonyPrefix]
+    public static void ExplodeExposed(EnemyIdentifier __instance)
+    {
+        if (!__instance.dead && !HitRecently.Contains(__instance) && __instance.TryGetComponent(out ExposeTag et) && !et.Done)
+        {
+            if (__instance.hitter == "exposalpunch") 
+            {
+                return;
+            }
+
+            et.Done = true;
+            Object.Instantiate(LightningExplosion, __instance.transform.position, __instance.transform.rotation);
+            Object.Destroy(et);
         }
 
-        [HarmonyPatch(typeof(EnemyIdentifier), nameof(EnemyIdentifier.DeliverDamage)), HarmonyPostfix]
-        public static void UnexposeIfDead(EnemyIdentifier __instance)
+        __instance.StartCoroutine(Ensure(__instance)); //TODO fix this it sucks
+    }
+
+    [HarmonyPatch(typeof(EnemyIdentifier), nameof(EnemyIdentifier.DeliverDamage)), HarmonyPostfix]
+    public static void UnexposeIfDead(EnemyIdentifier __instance)
+    {
+        if (__instance.TryGetComponent(out ExposeTag et) && !et.Done && __instance.dead)
         {
-            if (__instance.TryGetComponent(out ExposeTag et) && !et.Done && __instance.dead)
-            {
-                et.Done = true;
-                Object.Destroy(et);
-            }
+            et.Done = true;
+            Object.Destroy(et);
         }
     }
 }

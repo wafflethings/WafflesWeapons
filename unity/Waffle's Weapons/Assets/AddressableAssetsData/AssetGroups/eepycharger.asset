@@ -15,38 +15,8 @@ MonoBehaviour:
   m_GroupName: eepycharger
   m_Data:
     m_SerializedData: []
-  m_GUID: cd6835daf2c98de43b59f445960c22b6
+  m_GUID: 2ae0a42b9d1df034fac6b53833d0a84f
   m_SerializeEntries:
-  - m_GUID: 3ec1a04e944050b4eb445a00ebbf6c84
-    m_Address: Assets/ExtraAlts/Drill Rocket/Assets/Drill Rocket.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 49bfbc9c26a63dc40b41f325a5fce720
-    m_Address: Assets/ExtraAlts/Drill Rocket/Assets/Drill Wood.mat
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e58f9538d72974f48960617fe925b7e9
-    m_Address: Assets/ExtraAlts/Drill Rocket/Assets/Gravity Drill.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5113d5e8e8cd3d94dbda5283eedb9bd4
-    m_Address: Assets/ExtraAlts/Drill Rocket/Drill Info.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3afcae019bcac0343b38091d220e29e8
-    m_Address: Assets/ExtraAlts/Drill Rocket/Rocket Launcher Drill.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bec1b4e72e3ba8a4aa9feebf383ae7c6
-    m_Address: Assets/ExtraAlts/Drill Rocket/Weapon Descriptors/Drill Rocket Launcher.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9daea8f0f55fa5d47a85ada016051666
     m_Address: Assets/ExtraAlts/E.P. Charger/Assets/Eepy Click.prefab
     m_ReadOnly: 0

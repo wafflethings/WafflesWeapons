@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
-namespace WafflesWeapons.Weapons.Conductor.StunProjectiles
+namespace WafflesWeapons.Weapons.Conductor.StunProjectiles;
+
+public interface IStunProjectile
 {
-    public interface IStunProjectile
-    {
-        public void Initialize(ConductorBehaviour source, float chargeLength);
-    }
+    public void Initialize(ConductorBehaviour source, float chargeLength);
 }

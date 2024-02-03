@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: malevolent
   m_Data:
     m_SerializedData: []
-  m_GUID: a963ac53c6595224ea317f213b9f9a73
+  m_GUID: f97eb819cf57c3d4f9a02b3f12692c09
   m_SerializeEntries:
   - m_GUID: 0fd014bdf2b3a46418c6e6bee7fc5472
     m_Address: Assets/ExtraAlts/Malevolent/Alternative Revolver Malevolent.prefab

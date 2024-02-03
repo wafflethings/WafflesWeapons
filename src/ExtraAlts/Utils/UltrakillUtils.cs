@@ -1,65 +1,81 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using AtlasLib.Utils;
+using HarmonyLib;
+using UnityEngine;
 
-namespace WafflesWeapons.Utils
+namespace WafflesWeapons.Utils;
+
+[PatchThis($"{Plugin.GUID}.UltrakillUtils")]
+public class UltrakillUtils
 {
-    public class UltrakillUtils
+    public static GameObject NearestEnemy(Vector3 point, float maxDistance, EnemyIdentifier exclude = null)
     {
-        public static GameObject NearestEnemy(Vector3 point, float maxDistance, EnemyIdentifier exclude = null)
+        float max = maxDistance * maxDistance;
+        GameObject nearestEnemy = null;
+
+        foreach (EnemyIdentifier enemy in AllEnemies)
         {
-            float max = maxDistance;
-            GameObject nearestEnemy = null;
-
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-            foreach (GameObject enemy in enemies)
+            if (!enemy.dead && enemy != exclude && Vector3.SqrMagnitude(enemy.transform.position - point) < max)
             {
-                if (enemy.GetComponent<EnemyIdentifier>() != null && !enemy.GetComponent<EnemyIdentifier>().dead && 
-                    enemy.GetComponent<EnemyIdentifier>() != exclude && Vector3.Distance(point, enemy.transform.position) < max)
-                {
-                    max = Vector3.Distance(point, enemy.transform.position);
-                    nearestEnemy = enemy;
-                }
+                max = Vector3.SqrMagnitude(enemy.transform.position - point);
+                nearestEnemy = enemy.gameObject;
             }
-
-            return nearestEnemy;
         }
 
-        public static Vector3 NearestEnemyPoint(Vector3 point, float maxDistance, EnemyIdentifier exclude = null)
+        return nearestEnemy;
+    }
+
+    public static Vector3 NearestEnemyPoint(Vector3 point, float maxDistance, EnemyIdentifier exclude = null)
+    {
+        float max = maxDistance * maxDistance;
+        Transform enemyFinal = null;
+
+        foreach (EnemyIdentifier enemy in AllEnemies)
         {
-            float max = maxDistance;
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            Transform enemyFinal = null;
+            Transform enemyTransform = null;
 
-            foreach (GameObject enemy in enemies)
+            if (!enemy.dead && enemy != exclude && Vector3.SqrMagnitude(enemy.transform.position - point) < max)
             {
-                EnemyIdentifier eid = enemy.GetComponent<EnemyIdentifier>();
-                Transform enemyTransform = null;
-
-                if (eid != null && !eid.dead && eid != exclude && Vector3.Distance(point, enemy.transform.position) < max)
+                if (enemy.weakPoint != null && enemy.weakPoint.activeInHierarchy)
                 {
-                    if (eid.weakPoint != null && eid.weakPoint.activeInHierarchy)
+                    enemyTransform = enemy.weakPoint.transform;
+                }
+                else
+                {
+                    EnemyIdentifierIdentifier eidid = enemy.GetComponentInChildren<EnemyIdentifierIdentifier>();
+                    if (eidid != null)
                     {
-                        enemyTransform = eid.weakPoint.transform;
+                        enemyTransform = eidid.transform;
                     }
                     else
                     {
-                        EnemyIdentifierIdentifier eidid = eid.GetComponentInChildren<EnemyIdentifierIdentifier>();
-                        if (eidid != null)
-                        {
-                            enemyTransform = eidid.transform;
-                        }
-                        else
-                        {
-                            enemyTransform = enemy.transform;
-                        }
+                        enemyTransform = enemy.transform;
                     }
-
-                    max = Vector3.Distance(point, enemyTransform.position);
-                    enemyFinal = enemyTransform;
                 }
-            }
 
-            return (enemyFinal != null ? enemyFinal.position : point);
+                max = Vector3.SqrMagnitude(enemyTransform.position - point);
+                enemyFinal = enemyTransform;
+            }
         }
+
+        return (enemyFinal != null ? enemyFinal.position : point);
+    }
+
+    public static List<EnemyIdentifier> AllEnemies
+    {
+        get
+        {
+            _allEnemies.RemoveAll(eid => !(bool)eid);
+            return _allEnemies;
+        }
+    }
+
+    private static List<EnemyIdentifier> _allEnemies = new();
+
+    [HarmonyPatch(typeof(EnemyIdentifier), nameof(EnemyIdentifier.Awake)), HarmonyPostfix]
+    private static void AddEnemy(EnemyIdentifier __instance)
+    {
+        _allEnemies.Add(__instance);
+        __instance.onDeath.AddListener(() => _allEnemies.Remove(__instance));
     }
 }

@@ -5,60 +5,59 @@ using HarmonyLib;
 using UnityEngine;
 using WafflesWeapons.Assets;
 
-namespace WafflesWeapons.Weapons.Malevolent
+namespace WafflesWeapons.Weapons.Malevolent;
+
+[PatchThis($"{Plugin.GUID}.Malevolent")]
+public class Malevolent : Weapon
 {
-    [PatchThis($"{Plugin.GUID}.Malevolent")]
-    public class Malevolent : Weapon
-    {
-        public static WeaponAssets Assets;
+    public static WeaponAssets Assets;
         
-        static Malevolent()
-        {
-            Assets = AddressableManager.Load<WeaponAssets>("Assets/ExtraAlts/Malevolent/Malevolent Assets.asset");
-        }
+    static Malevolent()
+    {
+        Assets = AddressableManager.Load<WeaponAssets>("Assets/ExtraAlts/Malevolent/Malevolent Assets.asset");
+    }
 
-        public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");
+    public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");
 
-        [HarmonyPatch(typeof(StyleHUD), nameof(StyleHUD.DecayFreshness))]
-        [HarmonyPostfix]
-        public static void StyleMult(StyleHUD __instance, GameObject sourceWeapon, string pointID, bool boss)
+    [HarmonyPatch(typeof(StyleHUD), nameof(StyleHUD.DecayFreshness))]
+    [HarmonyPostfix]
+    public static void StyleMult(StyleHUD __instance, GameObject sourceWeapon, string pointID, bool boss)
+    {
+        if (sourceWeapon.GetComponent<MalevolentBehaviour>() != null)
         {
-            if (sourceWeapon.GetComponent<MalevolentBehaviour>() != null)
+            var dict = __instance.weaponFreshness;
+            if (!dict.ContainsKey(sourceWeapon))
             {
-                var dict = __instance.weaponFreshness;
-                if (!dict.ContainsKey(sourceWeapon))
-                {
-                    return;
-                }
-                float num = __instance.freshnessDecayPerMove;
-                if (__instance.freshnessDecayMultiplierDict.ContainsKey(pointID))
-                {
-                    num *= __instance.freshnessDecayMultiplierDict[pointID];
-                }
-                if (boss)
-                {
-                    num *= __instance.bossFreshnessDecayMultiplier;
-                }
-
-                if(pointID == "ultrakill.explosionhit")
-                {
-                    num *= 0.33f;
-                } else
-                {
-                    num *= 0.5f;
-                }
-
-                __instance.AddFreshness(sourceWeapon, num);
+                return;
             }
-        }
+            float num = __instance.freshnessDecayPerMove;
+            if (__instance.freshnessDecayMultiplierDict.ContainsKey(pointID))
+            {
+                num *= __instance.freshnessDecayMultiplierDict[pointID];
+            }
+            if (boss)
+            {
+                num *= __instance.bossFreshnessDecayMultiplier;
+            }
 
-        public static List<MalevolentBehaviour> Guns = new List<MalevolentBehaviour>();
+            if(pointID == "ultrakill.explosionhit")
+            {
+                num *= 0.33f;
+            } else
+            {
+                num *= 0.5f;
+            }
 
-        [HarmonyPatch(typeof(Revolver), nameof(Revolver.Update))]
-        [HarmonyPrefix] // i blame hakita
-        public static bool AAAAAAAAAAAAAAAA(Revolver __instance)
-        {
-            return __instance.gunVariation != 5;
+            __instance.AddFreshness(sourceWeapon, num);
         }
+    }
+
+    public static List<MalevolentBehaviour> Guns = new List<MalevolentBehaviour>();
+
+    [HarmonyPatch(typeof(Revolver), nameof(Revolver.Update))]
+    [HarmonyPrefix] // i blame hakita
+    public static bool AAAAAAAAAAAAAAAA(Revolver __instance)
+    {
+        return __instance.gunVariation != 5;
     }
 }

@@ -1,26 +1,25 @@
 ﻿using UnityEngine;
 
-namespace WafflesWeapons.Weapons.Conductor
+namespace WafflesWeapons.Weapons.Conductor;
+
+public class StunRocket : MonoBehaviour
 {
-    public class StunRocket : MonoBehaviour
+    private void Start()
     {
-        private void Start()
-        {
-            Grenade grenade = GetComponent<Grenade>();
+        Grenade grenade = GetComponent<Grenade>();
             
-            GameObject effect = Instantiate(Conductor.MagnetZapEffect, transform);
-            effect.transform.localScale *= 1.5f;
-            ParticleSystem.EmissionModule emit = effect.GetComponent<ParticleSystem>().emission;
-            emit.rateOverTimeMultiplier *= 2;
+        GameObject effect = Instantiate(Conductor.MagnetZapEffect, transform);
+        effect.transform.localScale *= 1.5f;
+        ParticleSystem.EmissionModule emit = effect.GetComponent<ParticleSystem>().emission;
+        emit.rateOverTimeMultiplier *= 2;
 
-            if (grenade.rocket)
-            {
-                grenade.rocketSpeed *= 2f;
-            }
-
-            grenade.harmlessExplosion = Conductor.RocketExplosion;
-            grenade.explosion = Conductor.RocketExplosion;
-            grenade.superExplosion = Conductor.RocketExplosion;
+        if (grenade.rocket)
+        {
+            grenade.rocketSpeed *= 2f;
         }
+
+        grenade.harmlessExplosion = Conductor.RocketExplosion;
+        grenade.explosion = Conductor.RocketExplosion;
+        grenade.superExplosion = Conductor.RocketExplosion;
     }
 }

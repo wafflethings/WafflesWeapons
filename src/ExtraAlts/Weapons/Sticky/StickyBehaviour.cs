@@ -3,115 +3,114 @@ using UnityEngine;
 using UnityEngine.UI;
 using WafflesWeapons.Components;
 
-namespace WafflesWeapons.Weapons.Sticky
+namespace WafflesWeapons.Weapons.Sticky;
+
+public class StickyBehaviour : GunBehaviour<StickyBehaviour>
 {
-    public class StickyBehaviour : GunBehaviour<StickyBehaviour>
+    private GameObject og;
+    private Shotgun sho;
+    [HideInInspector] public bool fromGreed;
+    private float cooldown = 0;
+    private float detonateTime = 0;
+    [HideInInspector] public static int Charges = 0;
+    private const float DETONATE_AT = 0.35f;
+    public GameObject StickyBomb;
+    public Slider slider;
+    public Slider detonateSlider;
+
+    public void Start()
     {
-        private GameObject og;
-        private Shotgun sho;
-        [HideInInspector] public bool fromGreed;
-        private float cooldown = 0;
-        private float detonateTime = 0;
-        [HideInInspector] public static int Charges = 0;
-        private const float DETONATE_AT = 0.35f;
-        public GameObject StickyBomb;
-        public Slider slider;
-        public Slider detonateSlider;
+        sho = GetComponent<Shotgun>();
+        fromGreed = GetComponent<WeaponIdentifier>().delay != 0;
 
-        public void Start()
+        if (GetComponent<WeaponIdentifier>().delay == 0)
         {
-            sho = GetComponent<Shotgun>();
-            fromGreed = GetComponent<WeaponIdentifier>().delay != 0;
+            og = gameObject;
+        }
 
-            if (GetComponent<WeaponIdentifier>().delay == 0)
+        detonateSlider.maxValue = DETONATE_AT;
+    }
+
+    public void OnEnable()
+    {
+        cooldown = WaffleWeaponCharges.Instance.DemoShoCooldown;
+    }
+
+    public void OnDisable()
+    {
+        WaffleWeaponCharges.Instance.DemoShoCooldown = cooldown;
+    }
+
+    public void FireSticky()
+    {
+        GameObject silly = Instantiate(StickyBomb, sho.cc.transform.position + (sho.cc.transform.forward * 0.5f), Quaternion.identity);
+        Physics.IgnoreCollision(silly.GetComponent<Collider>(), NewMovement.Instance.GetComponent<Collider>());
+        StickyBombBehaviour sbb = silly.GetComponent<StickyBombBehaviour>();
+        sbb.myBehaviour = this;
+        sho.anim.SetTrigger("PumpFire");
+
+        silly.GetComponent<Projectile>().explosionEffect.GetComponentInChildren<Explosion>().sourceWeapon = og;
+        silly.GetComponent<Projectile>().sourceWeapon = gameObject;
+    }
+
+    public void Update()
+    {
+        if (sho.gc.activated)
+        {
+            if (ULTRAKILL.Cheats.NoWeaponCooldown.NoCooldown)
             {
-                og = gameObject;
+                Charges = 0;
             }
 
-            detonateSlider.maxValue = DETONATE_AT;
-        }
+            cooldown = Mathf.MoveTowards(cooldown, 0, Time.deltaTime);
 
-        public void OnEnable()
-        {
-            cooldown = WaffleWeaponCharges.Instance.DemoShoCooldown;
-        }
-
-        public void OnDisable()
-        {
-            WaffleWeaponCharges.Instance.DemoShoCooldown = cooldown;
-        }
-
-        public void FireSticky()
-        {
-            GameObject silly = Instantiate(StickyBomb, sho.cc.transform.position + (sho.cc.transform.forward * 0.5f), Quaternion.identity);
-            Physics.IgnoreCollision(silly.GetComponent<Collider>(), NewMovement.Instance.GetComponent<Collider>());
-            StickyBombBehaviour sbb = silly.GetComponent<StickyBombBehaviour>();
-            sbb.myBehaviour = this;
-            sho.anim.SetTrigger("PumpFire");
-
-            silly.GetComponent<Projectile>().explosionEffect.GetComponentInChildren<Explosion>().sourceWeapon = og;
-            silly.GetComponent<Projectile>().sourceWeapon = gameObject;
-        }
-
-        public void Update()
-        {
-            if (sho.gc.activated)
+            if (Inputs.AltFireReleased && detonateTime >= DETONATE_AT)
             {
-                if (ULTRAKILL.Cheats.NoWeaponCooldown.NoCooldown)
+                detonateTime = 0;
+
+                if (GetComponent<WeaponIdentifier>().delay == 0)
                 {
-                    Charges = 0;
-                }
-
-                cooldown = Mathf.MoveTowards(cooldown, 0, Time.deltaTime);
-
-                if (Inputs.AltFireReleased && detonateTime >= DETONATE_AT)
-                {
-                    detonateTime = 0;
-
-                    if (GetComponent<WeaponIdentifier>().delay == 0)
+                    sho.anim.SetTrigger("Fire");
+                    cooldown = 1.35f;
+                    foreach (StickyBombBehaviour sbb in FindObjectsOfType<StickyBombBehaviour>())
                     {
-                        sho.anim.SetTrigger("Fire");
-                        cooldown = 1.35f;
-                        foreach (StickyBombBehaviour sbb in FindObjectsOfType<StickyBombBehaviour>())
+                        sbb.GetComponent<Projectile>().CreateExplosionEffect();
+                        GameObject.Destroy(sbb.gameObject);
+                    }
+                }
+            }
+
+            if (Inputs.AltFireHeld && Charges != 0)
+            {
+                detonateTime += Time.deltaTime * (Charges == 4 ? 2 : 1);
+            } 
+            else
+            {
+                detonateTime -= Time.deltaTime * 2;
+            }
+
+            detonateSlider.value = detonateTime;
+            detonateTime = Mathf.Clamp(detonateTime, 0, DETONATE_AT);
+
+            if (Inputs.AltFirePressed)
+            {
+                if (Charges < 4)
+                {
+                    if (cooldown == 0)
+                    {
+                        float Delay = GetComponent<WeaponIdentifier>().delay;
+                        cooldown = 0.25f;
+                        Invoke("FireSticky", Delay);
+
+                        if (Delay == 0)
                         {
-                            sbb.GetComponent<Projectile>().CreateExplosionEffect();
-                            GameObject.Destroy(sbb.gameObject);
+                            Charges++;
                         }
                     }
                 }
-
-                if (Inputs.AltFireHeld && Charges != 0)
-                {
-                    detonateTime += Time.deltaTime * (Charges == 4 ? 2 : 1);
-                } 
-                else
-                {
-                    detonateTime -= Time.deltaTime * 2;
-                }
-
-                detonateSlider.value = detonateTime;
-                detonateTime = Mathf.Clamp(detonateTime, 0, DETONATE_AT);
-
-                if (Inputs.AltFirePressed)
-                {
-                    if (Charges < 4)
-                    {
-                        if (cooldown == 0)
-                        {
-                            float Delay = GetComponent<WeaponIdentifier>().delay;
-                            cooldown = 0.25f;
-                            Invoke("FireSticky", Delay);
-
-                            if (Delay == 0)
-                            {
-                                Charges++;
-                            }
-                        }
-                    }
-                }
-
-                slider.value = (4 - (Charges));
             }
+
+            slider.value = (4 - (Charges));
         }
     }
 }

@@ -3,34 +3,33 @@ using System.Collections;
 using AtlasLib.Utils;
 using UnityEngine;
 
-namespace WafflesWeapons.Components
+namespace WafflesWeapons.Components;
+
+public class CopyActiveState : MonoBehaviour
 {
-    public class CopyActiveState : MonoBehaviour
+    public GameObject Target;
+    private Coroutine _currentCoroutine;
+
+    public void Start()
     {
-        public GameObject Target;
-        private Coroutine _currentCoroutine;
+        _currentCoroutine = CoroutineRunner.Instance.StartCoroutine(SetEnabled());
+    }
 
-        public void Start()
-        {
-            _currentCoroutine = CoroutineRunner.Instance.StartCoroutine(SetEnabled());
-        }
+    public void OnDestroy()
+    {
+        CoroutineRunner.Instance.StopCoroutine(_currentCoroutine);
+    }
 
-        public void OnDestroy()
+    public IEnumerator SetEnabled()
+    {
+        while (true)
         {
-            CoroutineRunner.Instance.StopCoroutine(_currentCoroutine);
-        }
-
-        public IEnumerator SetEnabled()
-        {
-            while (true)
+            if (Target != null)
             {
-                if (Target != null)
-                {
-                    gameObject.SetActive(Target.activeInHierarchy);
-                }
-
-                yield return null;
+                gameObject.SetActive(Target.activeInHierarchy);
             }
+
+            yield return null;
         }
     }
 }

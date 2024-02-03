@@ -37,6 +37,7 @@
     <Compile Include="Assets\WeaponAssets.cs" />
     <Compile Include="Components\CopyActiveState.cs" />
     <Compile Include="Components\EnemyHitTracker.cs" />
+    <Compile Include="Components\RevolverBeamDetector.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Components\CustomColour.cs" />
     <Compile Include="Components\GunBehaviour.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="Weapons\Desperado\DesperadoBehaviour.cs" />
     <Compile Include="Weapons\DrillRocket\Behaviours\DrillPrimary.cs" />
     <Compile Include="Weapons\DrillRocket\Behaviours\UndergroundDrill.cs" />
+    <Compile Include="Weapons\DrillRocket\Behaviours\UndergroundDrillState.cs" />
     <Compile Include="Weapons\DrillRocket\DrillRocketBehaviour.cs" />
     <Compile Include="Weapons\EepyCharger\EepyCharger.cs" />
     <Compile Include="Weapons\EepyCharger\EepyChargerBehaviour.cs" />

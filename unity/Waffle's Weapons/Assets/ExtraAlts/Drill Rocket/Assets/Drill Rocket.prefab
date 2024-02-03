@@ -599,6 +599,7 @@ GameObject:
   - component: {fileID: 4644468028844422731}
   - component: {fileID: 4946735587040615252}
   - component: {fileID: 4025084158776288642}
+  - component: {fileID: 5319567461341236179}
   m_Layer: 10
   m_Name: InterruptSphere
   m_TagString: Breakable
@@ -696,6 +697,38 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5319567461341236179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328597301399002919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -482728102, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHit:
+    toActivateObjects: []
+    toDisActivateObjects: []
+    onActivate:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4051159187951989477}
+          m_MethodName: ExplosionWithFlash
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onDisActivate:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &1999260355032759412
 GameObject:
   m_ObjectHideFlags: 0
@@ -822,7 +855,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47c702fae161a0848b79b4d4fabaddf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideTarget: {fileID: 0}
+  preferCameraOverHead: 0
   faceScreenInsteadOfCamera: 0
+  dontRotateIfBlind: 0
   speed: 0
   easeIn: 0
   maxAngle: 0
@@ -833,6 +869,8 @@ MonoBehaviour:
   maxXAxisFromParent: 0
   maxYAxisFromParent: 0
   maxZAxisFromParent: 0
+  eid: {fileID: 0}
+  difficultyVariance: 0
 --- !u!114 &6237577313475418801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6043,6 +6081,8 @@ MonoBehaviour:
   gradual: 0
   gradualSpeed: 0
   off: 0
+  eid: {fileID: 0}
+  difficultyVariance: 0
 --- !u!1 &6283525417167608502
 GameObject:
   m_ObjectHideFlags: 0
@@ -6138,7 +6178,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47c702fae161a0848b79b4d4fabaddf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideTarget: {fileID: 0}
+  preferCameraOverHead: 0
   faceScreenInsteadOfCamera: 0
+  dontRotateIfBlind: 0
   speed: 0
   easeIn: 0
   maxAngle: 0
@@ -6149,6 +6192,8 @@ MonoBehaviour:
   maxXAxisFromParent: 0
   maxYAxisFromParent: 0
   maxZAxisFromParent: 0
+  eid: {fileID: 0}
+  difficultyVariance: 0
 --- !u!114 &8362737687581695200
 MonoBehaviour:
   m_ObjectHideFlags: 0

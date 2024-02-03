@@ -4,24 +4,24 @@ using HarmonyLib;
 using UnityEngine;
 using WafflesWeapons.Assets;
 
-namespace WafflesWeapons.Weapons.Virtuous
-{
-    [PatchThis($"{Plugin.GUID}.Virtuous")]
-    public class Virtuous : Weapon
-    {
-        public static WeaponAssets Assets;
+namespace WafflesWeapons.Weapons.Virtuous;
 
-        static Virtuous()
-        {
+[PatchThis($"{Plugin.GUID}.Virtuous")]
+public class Virtuous : Weapon
+{
+    public static WeaponAssets Assets;
+
+    static Virtuous()
+    {
             Assets = AddressableManager.Load<WeaponAssets>("Assets/ExtraAlts/Virtuous/Virtuous Assets.asset");
         }
 
-        public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");
+    public override WeaponInfo Info => Assets.GetAsset<WeaponInfo>("Info");
 
-        [HarmonyPatch(typeof(RevolverBeam), nameof(RevolverBeam.ExecuteHits))]
-        [HarmonyPrefix]
-        public static void Patch_ExecuteHits(RevolverBeam __instance, RaycastHit currentHit)
-        {
+    [HarmonyPatch(typeof(RevolverBeam), nameof(RevolverBeam.ExecuteHits))]
+    [HarmonyPrefix]
+    public static void Patch_ExecuteHits(RevolverBeam __instance, RaycastHit currentHit)
+    {
             // something causes this to error, and i cant be fucking bothered to fix it
             // fuck it, we ball.
             try
@@ -50,10 +50,10 @@ namespace WafflesWeapons.Weapons.Virtuous
             catch { }
         }
 
-        [HarmonyPatch(typeof(StyleHUD), nameof(StyleHUD.DecayFreshness))]
-        [HarmonyPostfix]
-        public static void StyleMult(StyleHUD __instance, GameObject sourceWeapon, string pointID, bool boss)
-        {
+    [HarmonyPatch(typeof(StyleHUD), nameof(StyleHUD.DecayFreshness))]
+    [HarmonyPostfix]
+    public static void StyleMult(StyleHUD __instance, GameObject sourceWeapon, string pointID, bool boss)
+    {
             if (sourceWeapon.GetComponent<VirtuousBehaviour>() != null)
             {
                 var dict = __instance.weaponFreshness;
@@ -74,5 +74,4 @@ namespace WafflesWeapons.Weapons.Virtuous
                 __instance.AddFreshness(sourceWeapon, num * 1f);
             }
         }
-    }
 }

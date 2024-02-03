@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: drill
+  m_EditorClassIdentifier: 
+  m_GroupName: drill
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 9fc7aec88edfb7346b4ceaa838c8a2ee
+  m_SerializeEntries:
+  - m_GUID: 5d31e44801735d54b852608ead0801b8
+    m_Address: Assets/ExtraAlts/Drill Rocket/Assets/Additive 1.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3ec1a04e944050b4eb445a00ebbf6c84
+    m_Address: Assets/ExtraAlts/Drill Rocket/Assets/Drill Rocket.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 49bfbc9c26a63dc40b41f325a5fce720
+    m_Address: Assets/ExtraAlts/Drill Rocket/Assets/Drill Wood.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2459e1b00af66be43a74af0a69657db6
+    m_Address: Assets/ExtraAlts/Drill Rocket/Assets/firewall.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e58f9538d72974f48960617fe925b7e9
+    m_Address: Assets/ExtraAlts/Drill Rocket/Assets/Gravity Drill.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 69de6aa34c2b8bd468bb5fadbccbba63
+    m_Address: Assets/ExtraAlts/Drill Rocket/Assets/Rubble 1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5113d5e8e8cd3d94dbda5283eedb9bd4
+    m_Address: Assets/ExtraAlts/Drill Rocket/Drill Info.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3afcae019bcac0343b38091d220e29e8
+    m_Address: Assets/ExtraAlts/Drill Rocket/Rocket Launcher Drill.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bec1b4e72e3ba8a4aa9feebf383ae7c6
+    m_Address: Assets/ExtraAlts/Drill Rocket/Weapon Descriptors/Drill Rocket Launcher.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2a337ff27534e164b86034852d6c1576, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 59b60ed1a422603499370da4929ce744, type: 2}

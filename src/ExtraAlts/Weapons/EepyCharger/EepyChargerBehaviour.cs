@@ -3,107 +3,106 @@ using AtlasLib.Utils;
 using UnityEngine;
 using WafflesWeapons.Components;
 
-namespace WafflesWeapons.Weapons.EepyCharger
+namespace WafflesWeapons.Weapons.EepyCharger;
+
+public class EepyChargerBehaviour : GunBehaviour<EepyChargerBehaviour>
 {
-    public class EepyChargerBehaviour : GunBehaviour<EepyChargerBehaviour>
+    public static float PreviousHeldTime;
+    public static float ChargeDivide = 4;
+    [HideInInspector] public float WindUp = 0;
+    public GameObject HugeRocket;
+    public AudioSource ChargeUp;
+    public GameObject Click;
+    private GunControl gc;
+    private RocketLauncher rock;
+    private float HeldTime;
+    private WeaponPos wpos;
+
+    public void Start()
     {
-        public static float PreviousHeldTime;
-        public static float ChargeDivide = 4;
-        [HideInInspector] public float WindUp = 0;
-        public GameObject HugeRocket;
-        public AudioSource ChargeUp;
-        public GameObject Click;
-        private GunControl gc;
-        private RocketLauncher rock;
-        private float HeldTime;
-        private WeaponPos wpos;
+        gc = GunControl.Instance;
+        rock = GetComponent<RocketLauncher>();
+        wpos = GetComponent<WeaponPos>();
+    }
 
-        public void Start()
+    public void Update()
+    {
+        if (ULTRAKILL.Cheats.NoWeaponCooldown.NoCooldown)
         {
-            gc = GunControl.Instance;
-            rock = GetComponent<RocketLauncher>();
-            wpos = GetComponent<WeaponPos>();
+            WindUp = 1;
         }
 
-        public void Update()
+        WindUp = Mathf.Clamp(WindUp, 0, 1);
+
+        rock.timerMeter.fillAmount = WindUp - HeldTime;
+        rock.timerArm.localRotation = Quaternion.Euler(0f, 0f, 360 * (WindUp - HeldTime));
+
+        if (gc.activated)
         {
-            if (ULTRAKILL.Cheats.NoWeaponCooldown.NoCooldown)
+            transform.localPosition = new Vector3(
+                wpos.currentDefault.x + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f),
+                wpos.currentDefault.y + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f),
+                wpos.currentDefault.z + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f));
+
+            if (Inputs.AltFireReleased && HeldTime > 0.125f)
             {
-                WindUp = 1;
+                StartCoroutine(Shoot(HeldTime, rock.wid.delay));
+                CameraController.Instance.CameraShake(2f);
+                WindUp -= HeldTime;
             }
 
-            WindUp = Mathf.Clamp(WindUp, 0, 1);
-
-            rock.timerMeter.fillAmount = WindUp - HeldTime;
-            rock.timerArm.localRotation = Quaternion.Euler(0f, 0f, 360 * (WindUp - HeldTime));
-
-            if (gc.activated)
+            if (Inputs.AltFireHeld && WindUp > 0.125f)
             {
-                transform.localPosition = new Vector3(
-                    wpos.currentDefault.x + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f),
-                    wpos.currentDefault.y + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f),
-                    wpos.currentDefault.z + HeldTime * UnityEngine.Random.Range(-0.01f, 0.01f));
+                float oldValue = HeldTime;
+                HeldTime = Mathf.MoveTowards(HeldTime, WindUp, Time.deltaTime);
+                ChargeUp.pitch = 1 + HeldTime;
 
-                if (Inputs.AltFireReleased && HeldTime > 0.125f)
+                if (!ChargeUp.isPlaying)
                 {
-                    StartCoroutine(Shoot(HeldTime, rock.wid.delay));
-                    CameraController.Instance.CameraShake(2f);
-                    WindUp -= HeldTime;
+                    ChargeUp.Play();
                 }
 
-                if (Inputs.AltFireHeld && WindUp > 0.125f)
+                if (oldValue < 1 && HeldTime == 1)
                 {
-                    float oldValue = HeldTime;
-                    HeldTime = Mathf.MoveTowards(HeldTime, WindUp, Time.deltaTime);
-                    ChargeUp.pitch = 1 + HeldTime;
-
-                    if (!ChargeUp.isPlaying)
-                    {
-                        ChargeUp.Play();
-                    }
-
-                    if (oldValue < 1 && HeldTime == 1)
-                    {
-                        Instantiate(Click, NewMovement.Instance.transform.position, Quaternion.identity);
-                    }
+                    Instantiate(Click, NewMovement.Instance.transform.position, Quaternion.identity);
                 }
-                else
-                {
-                    HeldTime = Mathf.MoveTowards(HeldTime, 0, Time.deltaTime * 2);
+            }
+            else
+            {
+                HeldTime = Mathf.MoveTowards(HeldTime, 0, Time.deltaTime * 2);
 
-                    if (ChargeUp.isPlaying)
-                    {
-                        ChargeUp.Stop();
-                    }
+                if (ChargeUp.isPlaying)
+                {
+                    ChargeUp.Stop();
                 }
             }
         }
+    }
 
-        public void OnEnable()
-        {
-            WindUp = WaffleWeaponCharges.Instance.EepyCharge;
-        }
+    public void OnEnable()
+    {
+        WindUp = WaffleWeaponCharges.Instance.EepyCharge;
+    }
 
-        public void OnDisable()
-        {
-            WaffleWeaponCharges.Instance.EepyCharge = WindUp;
-        }
+    public void OnDisable()
+    {
+        WaffleWeaponCharges.Instance.EepyCharge = WindUp;
+    }
 
-        public IEnumerator Shoot(float heldTime, float time)
-        {
-            yield return new WaitForSeconds(time);
+    public IEnumerator Shoot(float heldTime, float time)
+    {
+        yield return new WaitForSeconds(time);
 
-            Grenade hugeGrenade = HugeRocket.GetComponent<Grenade>();
-            float startSpeed = hugeGrenade.rocketSpeed;
-            GameObject old = rock.rocket;
+        Grenade hugeGrenade = HugeRocket.GetComponent<Grenade>();
+        float startSpeed = hugeGrenade.rocketSpeed;
+        GameObject old = rock.rocket;
 
-            rock.rocket = HugeRocket;
-            //hugeGrenade.rocketSpeed = 25f + heldTime * (hugeGrenade.rocketSpeed);
-            PreviousHeldTime = heldTime;
-            rock.Shoot();
+        rock.rocket = HugeRocket;
+        //hugeGrenade.rocketSpeed = 25f + heldTime * (hugeGrenade.rocketSpeed);
+        PreviousHeldTime = heldTime;
+        rock.Shoot();
 
-            hugeGrenade.rocketSpeed = startSpeed;
-            rock.rocket = old;
-        }
+        hugeGrenade.rocketSpeed = startSpeed;
+        rock.rocket = old;
     }
 }

@@ -1,131 +1,130 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace WafflesWeapons.Weapons.LoaderGauntlet
+namespace WafflesWeapons.Weapons.LoaderGauntlet;
+
+public class LoaderArmCollisionHandler : MonoSingleton<LoaderArmCollisionHandler>
 {
-    public class LoaderArmCollisionHandler : MonoSingleton<LoaderArmCollisionHandler>
+    public static GameObject NotifyGrounded;
+
+    public bool CanCharge = true;
+    public bool MidCharge = false;
+    public GroundCheck gc;
+    public float Charge;
+    public List<GameObject> AlrHit = new List<GameObject>();
+    public List<Coin> BadCoins = new List<Coin>();
+    public int Dashes = 0;
+
+    private void Start()
     {
-        public static GameObject NotifyGrounded;
+        gc = FindObjectOfType<GroundCheck>();
+    }
 
-        public bool CanCharge = true;
-        public bool MidCharge = false;
-        public GroundCheck gc;
-        public float Charge;
-        public List<GameObject> AlrHit = new List<GameObject>();
-        public List<Coin> BadCoins = new List<Coin>();
-        public int Dashes = 0;
+    //FromGround = the reset came from touching ground (not from coin)
+    public void ResetDash(bool FromGround)
+    {
+        //LoaderGauntlet.curOne.anim.SetBool("Midflight", false);
 
-        private void Start()
+        if (FromGround)
         {
-            gc = FindObjectOfType<GroundCheck>();
+            Dashes = 0;
+            MidCharge = false;
+        }
+        else
+        {
+            Dashes += 1;
         }
 
-        //FromGround = the reset came from touching ground (not from coin)
-        public void ResetDash(bool FromGround)
+        Instantiate(NotifyGrounded);
+        CanCharge = true;
+        AlrHit.Clear();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (MidCharge)
         {
-            //LoaderGauntlet.curOne.anim.SetBool("Midflight", false);
-
-            if (FromGround)
+            Breakable br;
+            if (other.TryGetComponent(out br))
             {
-                Dashes = 0;
-                MidCharge = false;
-            }
-            else
-            {
-                Dashes += 1;
+                br.Break();
+                return;
             }
 
-            Instantiate(NotifyGrounded);
-            CanCharge = true;
-            AlrHit.Clear();
+            Glass gl;
+            if (other.TryGetComponent(out gl))
+            {
+                gl.Shatter();
+                return;
+            }
         }
 
-        private void OnTriggerEnter(Collider other)
+
+        if (other.gameObject.layer == 8 || other.gameObject.layer == 24)
         {
-            if (MidCharge)
+            if (other.CompareTag("Floor") || other.CompareTag("Moving"))
             {
-                Breakable br;
-                if (other.TryGetComponent(out br))
+                if (CanCharge)
                 {
-                    br.Break();
-                    return;
+                    MidCharge = false;
                 }
-
-                Glass gl;
-                if (other.TryGetComponent(out gl))
+                if (!CanCharge)
                 {
-                    gl.Shatter();
-                    return;
+                    var nm = NewMovement.Instance;
+                    if (nm.rb.velocity.y < -40)
+                    {
+                        GameObject wave = Instantiate(nm.gc.shockwave, nm.gc.transform.position, Quaternion.identity);
+                        wave.GetComponent<PhysicalShockwave>().force *= Charge * 0.75f;
+                        wave.GetComponent<PhysicalShockwave>().maxSize *= (Charge / 2);
+                        wave.transform.localScale = new Vector3(wave.transform.localScale.x, wave.transform.localScale.y, wave.transform.localScale.z);
+                    }
+                    ResetDash(true);
+                }
+            }
+        }
+
+        if (MidCharge)
+        {
+            if (other.GetComponent<Coin>() != null)
+            {
+                var coin = other.GetComponent<Coin>();
+                if (!BadCoins.Contains(coin))
+                {
+                    ResetDash(false);
+                    coin.Punchflection();
+                    TimeController.Instance.ParryFlash();
                 }
             }
 
-
-            if (other.gameObject.layer == 8 || other.gameObject.layer == 24)
+            if (other.GetComponent<EnemyIdentifierIdentifier>() != null || other.GetComponent<EnemyIdentifier>() != null)
             {
-                if (other.CompareTag("Floor") || other.CompareTag("Moving"))
+                EnemyIdentifier eid;
+                if (!other.GetComponent<EnemyIdentifier>())
                 {
-                    if (CanCharge)
-                    {
-                        MidCharge = false;
-                    }
-                    if (!CanCharge)
-                    {
-                        var nm = NewMovement.Instance;
-                        if (nm.rb.velocity.y < -40)
-                        {
-                            GameObject wave = Instantiate(nm.gc.shockwave, nm.gc.transform.position, Quaternion.identity);
-                            wave.GetComponent<PhysicalShockwave>().force *= Charge * 0.75f;
-                            wave.GetComponent<PhysicalShockwave>().maxSize *= (Charge / 2);
-                            wave.transform.localScale = new Vector3(wave.transform.localScale.x, wave.transform.localScale.y, wave.transform.localScale.z);
-                        }
-                        ResetDash(true);
-                    }
+                    eid = other.GetComponent<EnemyIdentifierIdentifier>().eid;
                 }
-            }
-
-            if (MidCharge)
-            {
-                if (other.GetComponent<Coin>() != null)
+                else
                 {
-                    var coin = other.GetComponent<Coin>();
-                    if (!BadCoins.Contains(coin))
+                    eid = other.GetComponent<EnemyIdentifier>();
+                }
+
+                if (!eid.dead && !AlrHit.Contains(eid.gameObject))
+                {
+                    Debug.Log($"{NewMovement.Instance.rb.velocity.magnitude} from charge {Charge}: damage {NewMovement.Instance.rb.velocity.magnitude * 0.075f}");
+                    eid.hitter = "heavypunch";
+                    eid.DeliverDamage(eid.gameObject, NewMovement.Instance.rb.velocity, other.gameObject.transform.position, NewMovement.Instance.rb.velocity.magnitude * 0.075f, false, 0, gameObject);
+                    if (eid.dead)
                     {
+                        eid.gameObject.AddComponent<Bleeder>().GetHit(eid.gameObject.transform.position, GoreType.Head);
                         ResetDash(false);
-                        coin.Punchflection();
-                        TimeController.Instance.ParryFlash();
                     }
-                }
-
-                if (other.GetComponent<EnemyIdentifierIdentifier>() != null || other.GetComponent<EnemyIdentifier>() != null)
-                {
-                    EnemyIdentifier eid;
-                    if (!other.GetComponent<EnemyIdentifier>())
+                    else 
                     {
-                        eid = other.GetComponent<EnemyIdentifierIdentifier>().eid;
+                        NewMovement.Instance.ForceAddAntiHP((int)(NewMovement.Instance.rb.velocity.magnitude * 0.5f), false, true);
                     }
-                    else
-                    {
-                        eid = other.GetComponent<EnemyIdentifier>();
-                    }
-
-                    if (!eid.dead && !AlrHit.Contains(eid.gameObject))
-                    {
-                        Debug.Log($"{NewMovement.Instance.rb.velocity.magnitude} from charge {Charge}: damage {NewMovement.Instance.rb.velocity.magnitude * 0.075f}");
-                        eid.hitter = "heavypunch";
-                        eid.DeliverDamage(eid.gameObject, NewMovement.Instance.rb.velocity, other.gameObject.transform.position, NewMovement.Instance.rb.velocity.magnitude * 0.075f, false, 0, gameObject);
-                        if (eid.dead)
-                        {
-                            eid.gameObject.AddComponent<Bleeder>().GetHit(eid.gameObject.transform.position, GoreType.Head);
-                            ResetDash(false);
-                        }
-                        else 
-                        {
-                            NewMovement.Instance.ForceAddAntiHP((int)(NewMovement.Instance.rb.velocity.magnitude * 0.5f), false, true);
-                        }
-                        CameraController.Instance.CameraShake(0.5f);
-                        TimeController.Instance.HitStop(0.05f);
-                        AlrHit.Add(eid.gameObject);
-                    }
+                    CameraController.Instance.CameraShake(0.5f);
+                    TimeController.Instance.HitStop(0.05f);
+                    AlrHit.Add(eid.gameObject);
                 }
             }
         }
