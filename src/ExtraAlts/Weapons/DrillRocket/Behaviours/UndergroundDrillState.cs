@@ -4,5 +4,6 @@ public enum UndergroundDrillState
 {
     InAir,
     InGround,
-    Jumping
+    Jumping,
+    Parried
 }

@@ -17,8 +17,7 @@ public class UndergroundDrill : MonoBehaviour
     private Rigidbody _rb;
     private UndergroundDrillState _state;
     private float _floorEnterYAngle;
-    private float _offset;
-    private float _digEffectTimer;
+    private float _digDistanceTravelled;
     private float _timeJumping;
 
     private void Start()
@@ -34,10 +33,10 @@ public class UndergroundDrill : MonoBehaviour
         
         if (Physics.Raycast(transform.position + (_state == UndergroundDrillState.InGround ? transform.up : Vector3.zero), 
                 _state == UndergroundDrillState.InGround ? -transform.up : Vector3.down, out RaycastHit hit, 
-                _state == UndergroundDrillState.InGround ? 100 : 1.5f, LayerMaskDefaults.Get(LMD.Environment)))
+                _state == UndergroundDrillState.InGround ? 3 : 1.5f, LayerMaskDefaults.Get(LMD.Environment)))
         {
             
-            if (_state == UndergroundDrillState.InAir)
+            if (_state == UndergroundDrillState.InAir || _state == UndergroundDrillState.Parried)
             {
                 _state = UndergroundDrillState.InGround;
                 //_offset = Vector3.Distance(transform.position, hit.point - hit.normal);
@@ -53,17 +52,28 @@ public class UndergroundDrill : MonoBehaviour
             //Quaternion newRotation = transform.rotation;
             //transform.rotation = Quaternion.RotateTowards(oldRotation, newRotation, 720 * Time.deltaTime);
         }
+        else
+        {
+            if (_state == UndergroundDrillState.InGround)
+            {
+                Jump();
+            }
+        }
 
+        if (_state == UndergroundDrillState.Parried)
+        {
+            transform.position += Time.deltaTime * 50 * transform.forward;
+        }
+        
         if (_state == UndergroundDrillState.InGround)
         {
             _rb.isKinematic = true;
             transform.position += Time.deltaTime * _speed * transform.forward;
+            _digDistanceTravelled += Time.deltaTime * _speed;
 
-            _digEffectTimer += Time.deltaTime;
-
-            if (_digEffectTimer > DigInterval)
+            if (_digDistanceTravelled > DigInterval)
             {
-                _digEffectTimer = 0;
+                _digDistanceTravelled = 0;
                 CreateDigEffect(hit.point, hit.normal);
             }
             
@@ -94,6 +104,7 @@ public class UndergroundDrill : MonoBehaviour
         Debug.Log("Jumping!!");
         GetComponent<CapsuleCollider>().enabled = false;
         _state = UndergroundDrillState.Jumping;
+        _timeJumping = 0;
         _rb.isKinematic = false;
         _rb.AddForce((transform.up * 3500) + (transform.forward * 725));
         _rb.mass *= 2;
@@ -116,6 +127,14 @@ public class UndergroundDrill : MonoBehaviour
     {
         Instantiate(Explosion, transform.position, Quaternion.identity);
         Destroy(gameObject);
+    }
+
+    public void Parry()
+    {
+        _state = UndergroundDrillState.Parried;
+        _speed = 50;
+        transform.forward = CameraController.Instance.transform.forward;
+        transform.position = CameraController.Instance.transform.position + transform.forward;
     }
 
     private void OnTriggerEnter(Collider other)
