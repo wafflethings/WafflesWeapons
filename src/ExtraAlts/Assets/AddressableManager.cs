@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 
 namespace WafflesWeapons.Assets;
 
-[PatchThis($"{Plugin.GUID}.AddressableManager")]
+[HarmonyPatch]
 public static class AddressableManager
 {
     public static string AssetPathLocation => "{" + $"{typeof(AddressableManager).FullName}.{nameof(AssetPath)}" + "}"; //should eval to "{EndlessDelivery.Assets.AddressableManager.AssetPath}"

@@ -7,7 +7,7 @@ using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons.Mindrender;
 
-[PatchThis($"{Plugin.GUID}.Mindrender")]
+[HarmonyPatch]
 public class Mindrender : Weapon
 {
     public static WeaponAssets Assets;

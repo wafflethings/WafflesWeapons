@@ -11,10 +11,10 @@ using WafflesWeapons.Weapons.Singularity;
 
 namespace WafflesWeapons.Weapons.Conductor.StunProjectiles;
 
-[PatchThis($"{Plugin.GUID}.StunBeam")]
+[HarmonyPatch]
 public class StunBeam : MonoBehaviour, IStunProjectile
 {
-    public AssetReferenceGameObject FullyChargedExplosion;
+    public GameObject FullyChargedExplosion;
     [HideInInspector] public GameObject Source;
     [HideInInspector] public float ChargeLength;
         
@@ -28,9 +28,8 @@ public class StunBeam : MonoBehaviour, IStunProjectile
         if (chargeLength == 1)
         {
             beam.hitParticle = FullyChargedExplosion;
-            foreach (Explosion explosion in (beam.hitParticle.Asset as GameObject ?? beam.hitParticle.ToAsset()).GetComponentsInChildren<Explosion>(true))
+            foreach (Explosion explosion in beam.hitParticle.GetComponentsInChildren<Explosion>(true))
             {
-                Debug.Log("setting to " + source);
                 explosion.sourceWeapon = source.gameObject;
             }
         }
@@ -49,11 +48,6 @@ public class StunBeam : MonoBehaviour, IStunProjectile
             Debug.Log(lr);
             lr.startWidth *= 2 * chargeLength;
         }
-    }
-
-    private GameObject GetExplosionObject()
-    {
-        return FullyChargedExplosion.Asset != null ? FullyChargedExplosion.Asset as GameObject : FullyChargedExplosion.LoadAssetAsync().Result;
     }
 
     public void HitEnemy(EnemyIdentifier enemy)
@@ -212,7 +206,7 @@ public class StunBeam : MonoBehaviour, IStunProjectile
         }
     }
 
-    public static void ExplodeReplacement(Grenade grenade, bool big, bool harmless, bool super, float sizeMultiplier, bool ultrabooster, GameObject exploderWeapon, RevolverBeam revolverBeam)
+    public static void ExplodeReplacement(Grenade grenade, bool big, bool harmless, bool super, float sizeMultiplier, bool ultrabooster, GameObject exploderWeapon, bool fup, RevolverBeam revolverBeam)
     {
         Debug.Log($"ExplodeReplacement called! Grenade {grenade}, RevolverBeam {revolverBeam}.");
 
@@ -225,7 +219,7 @@ public class StunBeam : MonoBehaviour, IStunProjectile
         }
         else
         {
-            grenade.Explode(big, harmless, super, sizeMultiplier, ultrabooster, exploderWeapon);
+            grenade.Explode(big, harmless, super, sizeMultiplier, ultrabooster, exploderWeapon, fup);
         }
     }
         

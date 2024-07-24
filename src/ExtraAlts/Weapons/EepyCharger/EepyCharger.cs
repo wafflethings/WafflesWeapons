@@ -13,7 +13,7 @@ using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons.EepyCharger;
 
-[PatchThis($"{Plugin.GUID}.EepyCharger")]
+[HarmonyPatch]
 public class EepyCharger : Weapon
 {
     public static WeaponAssets Assets;

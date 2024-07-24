@@ -185,15 +185,13 @@ MonoBehaviour:
   alternateStartPoint: {x: 0, y: 0, z: 0}
   sourceWeapon: {fileID: 0}
   cc: {fileID: 0}
-  hitParticle:
-    m_AssetGUID: 78cb663656016c84eadf7f8cdd069399
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  hitParticle: {fileID: 1159615047014080, guid: 78cb663656016c84eadf7f8cdd069399,
+    type: 3}
   bulletForce: 500
   quickDraw: 0
   gunVariation: 0
   damage: 5
+  enemyDamageOverride: 0
   critDamageOverride: 0
   screenshakeMultiplier: 1
   hitAmount: 9999
@@ -299,11 +297,8 @@ MonoBehaviour:
   m_Script: {fileID: -1934354749, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FullyChargedExplosion:
-    m_AssetGUID: b1b07f2ad5bdc4842af52f6d03ffc699
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  FullyChargedExplosion: {fileID: 166480979879108960, guid: b1b07f2ad5bdc4842af52f6d03ffc699,
+    type: 3}
   Source: {fileID: 0}
   ChargeLength: 0
 --- !u!1 &1683785630827436

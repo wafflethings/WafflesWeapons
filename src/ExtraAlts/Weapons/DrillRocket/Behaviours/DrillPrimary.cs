@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace WafflesWeapons.Weapons.DrillRocket.Behaviours;
 
-[PatchThis($"{Plugin.GUID}.DrillPrimary")]
+[HarmonyPatch]
 public class DrillPrimary : MonoBehaviour
 {
     public float Speed;

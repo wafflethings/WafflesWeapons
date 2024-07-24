@@ -6,7 +6,7 @@ using WafflesWeapons.Assets;
 
 namespace WafflesWeapons.Weapons.LoaderGauntlet;
 
-[PatchThis($"{Plugin.GUID}.LoaderGauntlet")]
+[HarmonyPatch]
 public class LoaderGauntlet : Weapon
 {
     public static WeaponAssets Assets;

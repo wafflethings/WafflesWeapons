@@ -7,7 +7,7 @@ using WafflesWeapons.Assets;
 
 namespace WafflesWeapons.Weapons.Malevolent;
 
-[PatchThis($"{Plugin.GUID}.Malevolent")]
+[HarmonyPatch]
 public class Malevolent : Weapon
 {
     public static WeaponAssets Assets;

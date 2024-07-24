@@ -8,7 +8,7 @@ using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons.Singularity;
 
-[PatchThis($"{Plugin.GUID}.Singularity")]
+[HarmonyPatch]
 public class Singularity : Weapon
 {
     public static WeaponAssets Assets;
@@ -75,7 +75,6 @@ public class Singularity : Weapon
             {
                 LineRenderer beam = GameObject.Instantiate<GameObject>(__instance.refBeam, __instance.transform.position, Quaternion.identity).GetComponent<LineRenderer>();
                 beam.gameObject.GetComponent<RevolverBeam>().sourceWeapon = __instance.sourceWeapon;
-
 
                 if (__instance.hitPoint == Vector3.zero)
                 {

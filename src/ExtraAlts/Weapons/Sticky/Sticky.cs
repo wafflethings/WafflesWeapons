@@ -6,7 +6,7 @@ using WafflesWeapons.Assets;
 
 namespace WafflesWeapons.Weapons.Sticky;
 
-[PatchThis($"{Plugin.GUID}.Sticky")]
+[HarmonyPatch]
 public class Sticky : Weapon
 {
     public static WeaponAssets Assets;

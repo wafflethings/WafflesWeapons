@@ -181,15 +181,13 @@ MonoBehaviour:
   alternateStartPoint: {x: 0, y: 0, z: 0}
   sourceWeapon: {fileID: 0}
   cc: {fileID: 0}
-  hitParticle:
-    m_AssetGUID: 7a45271c883b2ea40bb04606615c00d3
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  hitParticle: {fileID: 166480979879108960, guid: 7a45271c883b2ea40bb04606615c00d3,
+    type: 3}
   bulletForce: 50000
   quickDraw: 0
   gunVariation: 0
   damage: 2
+  enemyDamageOverride: 0
   critDamageOverride: 0
   screenshakeMultiplier: 1
   hitAmount: 999

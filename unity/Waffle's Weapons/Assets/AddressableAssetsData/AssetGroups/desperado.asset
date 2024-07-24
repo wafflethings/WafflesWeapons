@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: desperado
   m_Data:
     m_SerializedData: []
-  m_GUID: c7f9ee3509d253445898d2c575985c66
+  m_GUID: 889ea0add45f25d47a7ff5555da661ef
   m_SerializeEntries:
   - m_GUID: f43e7879ebb11a04397f9281537b61b1
     m_Address: Assets/ExtraAlts/Desperado/Alternative Revolver Desperado.prefab

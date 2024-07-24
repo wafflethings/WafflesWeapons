@@ -5,7 +5,7 @@ using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons.Conductor.StunProjectiles;
 
-[PatchThis($"{Plugin.GUID}.StunSaw")]
+[HarmonyPatch]
 public class StunSaw : MonoBehaviour, IStunProjectile
 {
     [HideInInspector] public float ChargeLength;

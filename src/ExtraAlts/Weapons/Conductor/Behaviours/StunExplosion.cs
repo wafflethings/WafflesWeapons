@@ -5,7 +5,7 @@ using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons.Conductor;
 
-[PatchThis($"{Plugin.GUID}.StunExplosion")]
+[HarmonyPatch]
 public class StunExplosion : MonoBehaviour
 {
     public void HitEnemy(EnemyIdentifier enemy)

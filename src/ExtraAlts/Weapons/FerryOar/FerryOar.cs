@@ -8,7 +8,7 @@ using WafflesWeapons.Assets;
 
 namespace WafflesWeapons.Weapons.FerryOar;
 
-[PatchThis($"{Plugin.GUID}.FerryOar")]
+[HarmonyPatch]
 public class FerryOar : Weapon
 {
     public static WeaponAssets Assets;

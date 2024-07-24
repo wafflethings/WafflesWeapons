@@ -6,7 +6,7 @@ using WafflesWeapons.Assets;
 
 namespace WafflesWeapons.Weapons.Virtuous;
 
-[PatchThis($"{Plugin.GUID}.Virtuous")]
+[HarmonyPatch]
 public class Virtuous : Weapon
 {
     public static WeaponAssets Assets;

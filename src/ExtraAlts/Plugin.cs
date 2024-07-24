@@ -1,6 +1,12 @@
-﻿using BepInEx;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using BepInEx;
 using HarmonyLib;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
 using UnityEngine;
 using AtlasLib.Pages;
 using AtlasLib.Utils;
@@ -13,7 +19,7 @@ namespace WafflesWeapons;
 
 [BepInPlugin(GUID, Name, Version)]
 [BepInDependency(AtlasLib.Plugin.GUID)]
-[PatchThis($"{GUID}.Plugin")]
+[HarmonyPatch]
 public class Plugin : BaseUnityPlugin
 {
     public const string Name = "Waffle's Weapons";
@@ -29,7 +35,7 @@ public class Plugin : BaseUnityPlugin
 
     public void Start()
     {
-        PatchThis.AddPatches();
+        new Harmony(GUID).PatchAll();
         AddressableManager.Setup();
         PageRegistry.Register(new CustomsPage());
         //PageRegistry.Register(typeof(ExtrasPage));
@@ -44,7 +50,7 @@ public class Plugin : BaseUnityPlugin
         {
             if (weapon.Selection != WeaponSelection.Disabled)
             {
-                Debug.Log("A weapon has been detected, disable CG ‼️");
+                UnityEngine.Debug.Log("A weapon has been detected, disable CG ‼️");
                 return false;
             }
         }
@@ -105,4 +111,33 @@ public class Plugin : BaseUnityPlugin
             
         return true;
     }
+    
+    [HarmonyPatch(typeof(Shotgun), nameof(Shotgun.Update)), HarmonyTranspiler]
+    private static IEnumerable<CodeInstruction> FixShotgun(IEnumerable<CodeInstruction> instructions) //this sucks but rewrite is soon so i cba
+    {
+        FieldInfo variation = AccessTools.Field(typeof(Shotgun), nameof(Shotgun.variation));
+        MethodInfo shouldBranch = AccessTools.Method(typeof(Plugin), nameof(ShouldBranch));
+        CodeInstruction[] instructionArray = instructions.ToArray();
+        int index = 0;
+        
+        foreach (CodeInstruction instruction in instructions)
+        {
+            yield return instruction;
+
+            if (index > 3 && instruction.opcode == OpCodes.Beq && instructionArray[index - 1].opcode == OpCodes.Ldc_I4_1 && instructionArray[index - 2].opcode == OpCodes.Ldfld && instructionArray[index - 2].operand != null && instructionArray[index - 2].OperandIs(variation))
+            {
+                yield return new CodeInstruction(OpCodes.Ldarg_0);
+                yield return new CodeInstruction(OpCodes.Ldfld, variation);
+                yield return new CodeInstruction(OpCodes.Call, shouldBranch);
+                yield return new CodeInstruction(OpCodes.Brtrue, instruction.operand);
+            } 
+            
+            index++;
+        }
+    }
+
+    [HarmonyPatch(typeof(Shotgun), nameof(Shotgun.UpdateMeter)), HarmonyPrefix]
+    public static bool UpdateMeter(Shotgun __instance) => !ShouldBranch(__instance.variation);
+
+    public static bool ShouldBranch(int variation) => variation >= 3;
 }

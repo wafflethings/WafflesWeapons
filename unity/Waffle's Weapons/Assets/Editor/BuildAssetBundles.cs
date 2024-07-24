@@ -240,7 +240,7 @@ namespace Assets.Editor
 				groupSchema.UseAssetBundleCrcForCachedBundles = false;
 				groupSchema.UseAssetBundleCrc = false;
 
-				group.Settings.profileSettings.SetValue(group.Settings.activeProfileId, "RemoteBuildPath", "Built Bundles");
+				group.Settings.profileSettings.SetValue(group.Settings.activeProfileId, "RemoteBuildPath", RESULT_PATH);
 				group.Settings.profileSettings.SetValue(group.Settings.activeProfileId, "RemoteLoadPath", AddressableManager.AssetPathLocation);
 
 				foreach (string path in AssetDatabase.GetAssetPathsFromAssetBundle(bundle))

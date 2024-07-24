@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: ferryoar
   m_Data:
     m_SerializedData: []
-  m_GUID: df681057ecdf386438958ccfd138c1e7
+  m_GUID: 0660237368846fe4cb47dc5dd3d620c3
   m_SerializeEntries:
   - m_GUID: 959ddefc96d1fa34cb69c957659dba0f
     m_Address: Assets/ExtraAlts/Ferryman/Arm Ferry OLD.prefab
@@ -29,6 +29,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a2995ec46106a144f872823b89e26e9e
     m_Address: Assets/ExtraAlts/Ferryman/Assets/BarrelHeat Blue Ferry.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 212dd137d2781cb4bab04672d9f76f3b
+    m_Address: Assets/ExtraAlts/Ferryman/Assets/concept.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

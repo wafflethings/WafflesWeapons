@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace WafflesWeapons.Utils;
 
-[PatchThis($"{Plugin.GUID}.UltrakillUtils")]
+[HarmonyPatch]
 public class UltrakillUtils
 {
     public static GameObject NearestEnemy(Vector3 point, float maxDistance, EnemyIdentifier exclude = null)

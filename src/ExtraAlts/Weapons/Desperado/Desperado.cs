@@ -10,7 +10,7 @@ using WafflesWeapons.Utils;
 
 namespace WafflesWeapons.Weapons.Desperado;
 
-[PatchThis($"{Plugin.GUID}.Desperado")]
+[HarmonyPatch]
 public class Desperado : Weapon
 {
     public static WeaponAssets Assets;

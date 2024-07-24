@@ -7,7 +7,7 @@ using WafflesWeapons.Components;
 
 namespace WafflesWeapons.Weapons.FanFire;
 
-[PatchThis($"{Plugin.GUID}.FanFire")]
+[HarmonyPatch]
 public class FanFire : Weapon
 {
     public static WeaponAssets Assets;

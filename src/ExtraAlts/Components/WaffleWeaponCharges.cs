@@ -12,7 +12,7 @@ using WafflesWeapons.Weapons.Singularity;
 
 namespace WafflesWeapons.Components;
 
-[PatchThis($"{Plugin.GUID}.WaffleWeaponCharges")]
+[HarmonyPatch]
 public class WaffleWeaponCharges : MonoSingleton<WaffleWeaponCharges>
 {
     public float FanRevCharge = 0;
