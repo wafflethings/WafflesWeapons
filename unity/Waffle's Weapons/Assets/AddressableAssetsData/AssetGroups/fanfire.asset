@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: fanfire
   m_Data:
     m_SerializedData: []
-  m_GUID: 3c2fd7a0a4411e84aa564a38243ddb45
+  m_GUID: 1c4d406641a89f94eac757548df825a4
   m_SerializeEntries:
   - m_GUID: 4387f738fd23a8e49b6ec2b9d853c9c1
     m_Address: Assets/ExtraAlts/Fan Fire/Alternative Revolver Fan.prefab

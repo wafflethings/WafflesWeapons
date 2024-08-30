@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: sticky
   m_Data:
     m_SerializedData: []
-  m_GUID: 14dc3e0d7767c2a4bb3caed04c7a395e
+  m_GUID: 27adf2c507d5f0e4b91871a5eda7001f
   m_SerializeEntries:
   - m_GUID: ae76b6d3a41728b408d62aa69d036558
     m_Address: Assets/ExtraAlts/Sticky/Assets/Altar.mat

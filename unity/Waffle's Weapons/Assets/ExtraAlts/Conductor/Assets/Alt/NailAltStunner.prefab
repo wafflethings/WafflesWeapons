@@ -335,8 +335,8 @@ MonoBehaviour:
   m_Script: {fileID: 443812989, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChargeLength: 0
-  ThisNail: {fileID: 0}
+  _fullChargeExplosion: {fileID: 166480979879108960, guid: 11cf868db3d147c46a8f0b1fce76347e,
+    type: 3}
 --- !u!1 &2345142373005913360
 GameObject:
   m_ObjectHideFlags: 0
@@ -1662,3 +1662,5 @@ MonoBehaviour:
   gradual: 0
   gradualSpeed: 0
   off: 0
+  eid: {fileID: 0}
+  difficultyVariance: 0

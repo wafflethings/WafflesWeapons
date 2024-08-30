@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: virtuous
   m_Data:
     m_SerializedData: []
-  m_GUID: 921873be37ad4c942bead318c7b56a10
+  m_GUID: 1453c94ab39589b4db75fa552ac6e2ad
   m_SerializeEntries:
   - m_GUID: 5a314fe6f18a4664ea113d79a1355f83
     m_Address: Assets/ExtraAlts/Virtuous/Assets/FullEffect.mat

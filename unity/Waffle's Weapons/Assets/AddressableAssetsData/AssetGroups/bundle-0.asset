@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: bundle-0
   m_Data:
     m_SerializedData: []
-  m_GUID: 71c8387bc6407d34da396c9a1f8bfe05
+  m_GUID: 3f066a1e692ba6841bd941936dd1ba9e
   m_SerializeEntries:
   - m_GUID: c01469d4bf19884419a191aa57ef15c4
     m_Address: Assets/Common/Models/Weapons/Revolver/Revolver Heavy.FBX

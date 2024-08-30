@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: singularity
   m_Data:
     m_SerializedData: []
-  m_GUID: 0d0676ff2c6eeb24993f1b1d64fd3618
+  m_GUID: fe10f0cbab4af0846a15e48ddaec78d6
   m_SerializeEntries:
   - m_GUID: 6ededdebb7aa645498875ff178142b56
     m_Address: Assets/ExtraAlts/Singularity/Assets/circle.png

@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: eepycharger
   m_Data:
     m_SerializedData: []
-  m_GUID: 8d93cd9b4f6bc7c46875afa56ef25cd7
+  m_GUID: 9d70bed3f2b3f5c43831e4da9bab7032
   m_SerializeEntries:
   - m_GUID: 9daea8f0f55fa5d47a85ada016051666
     m_Address: Assets/ExtraAlts/E.P. Charger/Assets/Eepy Click.prefab

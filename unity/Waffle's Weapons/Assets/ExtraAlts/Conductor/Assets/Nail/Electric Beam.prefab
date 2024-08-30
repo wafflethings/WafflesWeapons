@@ -297,10 +297,16 @@ MonoBehaviour:
   m_Script: {fileID: -1934354749, guid: 2b12999dce672a64888349f9edb0f70b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FullyChargedExplosion: {fileID: 166480979879108960, guid: b1b07f2ad5bdc4842af52f6d03ffc699,
+  MagnetZapLine: {fileID: 1097443410688590, guid: 7875583d18806c242832fba471f38159,
     type: 3}
-  Source: {fileID: 0}
-  ChargeLength: 0
+  _shotProjectileExplosion: {fileID: 166480979879108960, guid: 49b2d951f96560d48b95a1ee95eee20f,
+    type: 3}
+  _fullyChargedExplosion: {fileID: 166480979879108960, guid: b1b07f2ad5bdc4842af52f6d03ffc699,
+    type: 3}
+  _rocketStunExplosion: {fileID: 166480979879108960, guid: 4657a88d06e539b4295ff5d0cd075971,
+    type: 3}
+  _magnetZapBall: {fileID: 2002165282214329594, guid: 1217126661a3b024ca62ff4a956de575,
+    type: 3}
 --- !u!1 &1683785630827436
 GameObject:
   m_ObjectHideFlags: 0

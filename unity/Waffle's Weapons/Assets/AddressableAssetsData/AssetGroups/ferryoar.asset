@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: ferryoar
   m_Data:
     m_SerializedData: []
-  m_GUID: 0660237368846fe4cb47dc5dd3d620c3
+  m_GUID: 33f6b13c78174ea42995ee6225269a9a
   m_SerializeEntries:
   - m_GUID: 959ddefc96d1fa34cb69c957659dba0f
     m_Address: Assets/ExtraAlts/Ferryman/Arm Ferry OLD.prefab

@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: mindrender
   m_Data:
     m_SerializedData: []
-  m_GUID: 49440d5cdec6d4d4aa9345abcad11dc1
+  m_GUID: 05abeb7ac7e389c4c940d212786cc263
   m_SerializeEntries:
   - m_GUID: 22a57de58042d924e8407fad7734bc10
     m_Address: Assets/ExtraAlts/Mindrender/Assets/BarrelHeat MR.mat

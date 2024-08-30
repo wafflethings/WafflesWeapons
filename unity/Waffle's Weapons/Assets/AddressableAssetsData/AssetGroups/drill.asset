@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: drill
   m_Data:
     m_SerializedData: []
-  m_GUID: 554519526484bd3479935343efa6852a
+  m_GUID: d651899eb50c66f449553d1b1914fc05
   m_SerializeEntries:
   - m_GUID: 5d31e44801735d54b852608ead0801b8
     m_Address: Assets/ExtraAlts/Drill Rocket/Assets/Additive 1.mat
