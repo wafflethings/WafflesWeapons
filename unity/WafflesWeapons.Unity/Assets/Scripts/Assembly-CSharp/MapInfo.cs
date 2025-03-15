@@ -1,0 +1,25 @@
+using UnityEngine;
+
+[DefaultExecutionOrder(-300)]
+public class MapInfo : MapInfoBase
+{
+	public new static MapInfo Instance;
+
+	public string uniqueId;
+
+	public string mapName;
+
+	public string description;
+
+	public string author;
+
+	[Header("Has to be 640x480")]
+	public Texture2D thumbnail;
+
+	[Header("Map Configuration")]
+	public bool renderSkybox;
+
+	internal override void Awake()
+	{
+	}
+}

@@ -1,0 +1,7 @@
+{
+  "name": "NewBlood.LegacyInput",
+  "references": [
+    "Unity.InputSystem"
+  ],
+  "allowUnsafeCode": true
+}
