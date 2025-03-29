@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 1f030eec9030ec340b4f2711660b15a7
   m_currentHash:
     serializedVersion: 2
-    Hash: d1d03f95861e0835f6cfbff2efe128e4
+    Hash: 4a40f4f6f230e36b9ded6432c83b1c96
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 1
   m_BundleLocalCatalog: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   m_ShaderBundleCustomNaming: shader
   m_MonoScriptBundleNaming: 3
   m_CheckForContentUpdateRestrictionsOption: 0
-  m_MonoScriptBundleCustomNaming: templatemod
+  m_MonoScriptBundleCustomNaming: weapons
   m_RemoteCatalogBuildPath:
     m_Id: 2ab2ee0a7d4b9714ebf672b3efc51882
   m_RemoteCatalogLoadPath:
@@ -50,6 +50,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a8c15722c2e5f1547bd424db168e8efb, type: 2}
   - {fileID: 11400000, guid: 8671f40e80161434c821c2d115981ef3, type: 2}
   - {fileID: 11400000, guid: 83d576d9a04e4444daf2178e8b399b04, type: 2}
+  - {fileID: 11400000, guid: 08b0e564b2bb7cd47b3aa29333991209, type: 2}
+  - {fileID: 11400000, guid: 848d4543a6e1ca0479d89b6402762c41, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -74,7 +76,7 @@ MonoBehaviour:
       - m_Id: 2ab2ee0a7d4b9714ebf672b3efc51882
         m_Value: Built Bundles
       - m_Id: c4d06c1952ec8f24e8f8551b324e3b2d
-        m_Value: '{TemplateMod.Assets.AssetManager.AssetPath}'
+        m_Value: '{WafflesWeapons.Assets.AssetManager.AssetPath}'
     m_ProfileEntryNames:
     - m_Id: 87be92261c3caeb4da9e05afc8c0be38
       m_Name: BuildTarget

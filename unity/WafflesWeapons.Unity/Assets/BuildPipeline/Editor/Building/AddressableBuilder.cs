@@ -13,8 +13,8 @@ namespace BuildPipeline.Editor.Building
 	public static class AddressableBuilder
 	{
 		//AssetPathLocation needs to lead to a getter that returns the path where you store all your bundles in the mod.
-		public const string AssetPathLocation = "{TemplateMod.Assets.AssetManager.AssetPath}";
-		private const string MonoscriptBundleNaming = "templatemod";
+		public const string AssetPathLocation = "{WafflesWeapons.Assets.AssetManager.AssetPath}";
+		private const string MonoscriptBundleNaming = "weapons";
 		private const string WbpTemplateName = "WBP Assets";
 		private const string CatalogPostfix = "wbp";
 		private const string EmptyGroupName = "Empty Dont Delete";

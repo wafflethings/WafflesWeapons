@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -324612391, guid: aecd1a9b11382c047bd2dedbb54a9360, type: 3}
+  m_Name: Fanfire Weapon Info
+  m_EditorClassIdentifier: 
+  WeaponObjects:
+  - {fileID: 3050202252899990067, guid: b0d694257af322545b3eebd85acf268b, type: 3}
+  - {fileID: -4910016159466476300, guid: a503bf61e3f6ab94686fe8463cb8cdd1, type: 3}
+  WeaponType: 0
+  Id: rev4
+  Slot: 0
+  OrderInSlot: 0
+  UseFreshness: 1

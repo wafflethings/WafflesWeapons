@@ -22,11 +22,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a13021a61efdb094cbb41c5c09bb7272
-    m_Address: Assets/Fonts
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0739591347967cc4aa5010d4c767436e
     m_Address: Assets/Materials
     m_ReadOnly: 0

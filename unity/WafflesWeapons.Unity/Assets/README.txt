@@ -1,0 +1,1 @@
+untick the fonts folder so its not addressable - otherwise goes to fallback, i think its bugged
