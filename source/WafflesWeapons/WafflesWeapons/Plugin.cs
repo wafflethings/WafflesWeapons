@@ -1,4 +1,5 @@
-﻿using BepInEx;
+﻿using System.Collections.Generic;
+using BepInEx;
 using HarmonyLib;
 using UnityEngine;
 using AtlasLib.Pages;
@@ -15,10 +16,11 @@ namespace WafflesWeapons;
 public class Plugin : BaseUnityPlugin
 {
     public const string Guid = "waffle.ultrakill.extraalts";
-    private const string Name = "Waffle's Weapons";
+    public const string Name = "Waffle's Weapons";
     private const string Version = "2.0.0";
 
     public static ManualLogSource Log;
+    public static List<Weapon> Weapons = new();
 
     private void Awake()
     {
@@ -26,9 +28,11 @@ public class Plugin : BaseUnityPlugin
         new Harmony(Guid).PatchAll();
         AssetManager.LoadCatalog();
         PageRegistry.RegisterPage(new BasicPage(Addressables.LoadAssetAsync<GameObject>("Assets/WafflesWeapons/Pages/WW Page.prefab").WaitForCompletion(), "Weapons Panel/Buttons"));
-        WeaponRegistry.RegisterWeapons([
-            new BasicWeapon(Addressables.LoadAssetAsync<WeaponInfo>("Assets/WafflesWeapons/Weapons/Revolvers/Fanfire/Fanfire Weapon Info.asset").WaitForCompletion())
+        Weapons.AddRange([
+            new BasicWeapon(Addressables.LoadAssetAsync<WeaponInfo>("Assets/WafflesWeapons/Weapons/Revolvers/Fanfire/Fanfire Weapon Info.asset").WaitForCompletion()),
+            new BasicWeapon(Addressables.LoadAssetAsync<WeaponInfo>("Assets/WafflesWeapons/Weapons/Revolvers/Malevolent/Malevolent Weapon Info.asset").WaitForCompletion()),
         ]);
+        WeaponRegistry.RegisterWeapons(Weapons);
     }
 
     [HarmonyPatch(typeof(LeaderboardController), nameof(LeaderboardController.SubmitCyberGrindScore))]
