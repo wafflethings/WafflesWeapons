@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Empty Dont Delete
+  m_Name: Malevolent
   m_EditorClassIdentifier: 
-  m_GroupName: Empty Dont Delete
+  m_GroupName: Malevolent
   m_Data:
     m_SerializedData: []
-  m_GUID: 9dae37a6f2182ff4a872ed45839b2800
+  m_GUID: 4e154decc47b67347afdb06abc35a1cf
   m_SerializeEntries:
-  - m_GUID: 0ebfc1e2652a7e1469e5a3f532e6e812
-    m_Address: Assets/BuildPipeline/Assets/Empty.png
+  - m_GUID: 84a2d5162cc973a449d534b8239ba97a
+    m_Address: Assets/WafflesWeapons/Weapons/Revolvers/Malevolent/Malevolent Weapon
+      Info.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -26,4 +27,4 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 81d9593b9c962094d86f7498ca6cf1ad, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 7f0bcffea08e9964e9484cb0987326db, type: 2}
+    - {fileID: 11400000, guid: cd44c28dfe353bc45823830be05951a0, type: 2}

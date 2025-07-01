@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BuildPipeline.Editor.Config;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Build;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEditor.AddressableAssets.Settings.GroupSchemas;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace BuildPipeline.Editor.Building
 {
@@ -17,8 +19,7 @@ namespace BuildPipeline.Editor.Building
 		private const string MonoscriptBundleNaming = "weapons";
 		private const string WbpTemplateName = "WBP Assets";
 		private const string CatalogPostfix = "wbp";
-		private const string EmptyGroupName = "Empty Dont Delete";
-		private const string EmptyAssetPath = "Assets/BuildPipeline/Assets/Empty.png";
+		public const string DefaultGroup = "Default Local Group";
 		
 		private static AddressableAssetSettings Settings => AddressableAssetSettingsDefaultObject.Settings;
 		
@@ -30,7 +31,6 @@ namespace BuildPipeline.Editor.Building
 		{
 			ValidateAddressables();
 			SetCorrectValuesForSettings();
-			CreateEmptyGroup();
 			SetDefaultValuesForSchemas();
 
 			if (!Directory.Exists(s_buildPath))
@@ -40,14 +40,18 @@ namespace BuildPipeline.Editor.Building
 
 			buildMode.PreBuild(s_buildPath, Settings);
 			AddressableAssetSettings.BuildPlayerContent(out AddressablesPlayerBuildResult result);
+			FixMonoscripts();
 			buildMode.PostBuild(s_buildPath, Settings);
 			
 			if (!string.IsNullOrEmpty(result.Error))
 			{
 				throw new System.Exception(result.Error);
 			}
-			
-			ReplaceBuiltInWithEmpty();
+
+			if (PipelineSettings.Instance.DoCopy)
+			{
+				CopyBundles();
+			}
 		}
 		
 		public static void RefreshGroups()
@@ -59,6 +63,27 @@ namespace BuildPipeline.Editor.Building
 			AssetDatabase.ImportAsset(assetPath, ImportAssetOptions.ForceUpdate);
 			AddressableAssetSettingsDefaultObject.Settings = AssetDatabase.LoadAssetAtPath<AddressableAssetSettings>(assetPath);
 		}
+
+		private static void CopyBundles()
+		{
+			foreach (string file in Directory.GetFiles(s_buildPath))
+			{
+				File.Copy(file, Path.Combine(PipelineSettings.Instance.BuildCopyPath, file.Split(Path.DirectorySeparatorChar)[^1]), true);
+			}
+		}
+
+		private static void FixMonoscripts()
+		{
+			string fileName = MonoscriptBundleNaming + "_monoscripts.bundle";
+			File.Copy(Path.Combine(Addressables.RuntimePath, EditorUserBuildSettings.activeBuildTarget.ToString(), fileName), Path.Combine(s_buildPath, fileName), true);
+
+			string catalogName = $"catalog_{CatalogPostfix}.json";
+			string catalogContent = File.ReadAllText(Path.Combine(s_buildPath, catalogName));
+			string oldMonoscriptPath = @"{UnityEngine.AddressableAssets.Addressables.RuntimePath}\\" + EditorUserBuildSettings.activeBuildTarget + @"\\" + fileName;
+			string newMonoscriptPath = $@"{AssetPathLocation}\\{fileName}";
+			File.WriteAllText(Path.Combine(s_buildPath, catalogName), catalogContent.Replace(oldMonoscriptPath, newMonoscriptPath));
+		}
+
 
 		[InitializeOnLoadMethod]
         private static void CreateCustomTemplateOnLoad()
@@ -142,14 +167,6 @@ namespace BuildPipeline.Editor.Building
             Settings.ShaderBundleNaming = ShaderBundleNaming.Custom;
             Settings.ShaderBundleCustomNaming = "shader";
         }
-        
-        private static void ReplaceBuiltInWithEmpty()
-        {
-            string emptyPath = Path.Combine(s_buildPath, $"{EmptyGroupName.Replace(" ", "").ToLower()}_assets_all.bundle");
-            string shaderPath = Path.Combine(s_buildPath, $"{Settings.ShaderBundleCustomNaming}_unitybuiltinshaders.bundle");
-            File.Delete(shaderPath);
-            File.Move(emptyPath, shaderPath);
-        }
 
         private static void SetDefaultValuesForSchemas()
         {
@@ -158,6 +175,11 @@ namespace BuildPipeline.Editor.Building
 		        BundledAssetGroupSchema schema = group.GetSchema<BundledAssetGroupSchema>();
 
 		        if (schema == null)
+		        {
+			        continue;
+		        }
+
+		        if (group.name.Contains(DefaultGroup))
 		        {
 			        continue;
 		        }
@@ -195,24 +217,6 @@ namespace BuildPipeline.Editor.Building
 			groupSchema.IncludeLabelsInCatalog = true;
 			groupSchema.IncludeGUIDInCatalog = true;
 			EditorUtility.SetDirty(groupSchema.Group);
-		}
-
-		private static void CreateEmptyGroup()
-		{
-			if (Settings.groups.Any(x => x.name == EmptyGroupName))
-			{
-				return;
-			}
-
-			AddressableAssetGroup group = Settings.CreateGroup(EmptyGroupName, false, false, false, null, typeof(BundledAssetGroupSchema));
-			SetDefaultWbpValuesForSchema(group.GetSchema<BundledAssetGroupSchema>());
-			List<AddressableAssetEntry> entries = new List<AddressableAssetEntry>
-			{
-				Settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(EmptyAssetPath), group, false, false)
-			};
-
-			group.SetDirty(AddressableAssetSettings.ModificationEvent.EntryAdded, entries, false, true);
-			Settings.SetDirty(AddressableAssetSettings.ModificationEvent.EntryAdded, entries, true, false);
 		}
 	}
 }

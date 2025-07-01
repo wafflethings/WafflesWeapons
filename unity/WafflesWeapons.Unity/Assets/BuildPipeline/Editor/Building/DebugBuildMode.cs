@@ -21,7 +21,7 @@ namespace BuildPipeline.Editor.Building
         {
             foreach (AddressableAssetGroup group in settings.groups)
             {
-                if (!AddressableBuilder.CommonGroupNames.Contains(group.name))
+                if (!AddressableBuilder.CommonGroupNames.Contains(group.name) || AddressableBuilder.DefaultGroup.Contains(group.name))
                 {
                     continue;
                 }
@@ -46,6 +46,7 @@ namespace BuildPipeline.Editor.Building
                 settings.MoveEntries(_removedEntries[group], group);
             }
             
+            _removedEntries.Clear();
             AddressableBuilder.RefreshGroups();
         }
     }

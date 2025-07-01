@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Alternative Revolver Fan
   m_EditorClassIdentifier: 
   weaponName: Alternate Revolver Fanfire
-  icon: {fileID: 21300000, guid: fbf005bb8ee1daf46ae8d1244888e6d6, type: 3}
-  glowIcon: {fileID: 21300000, guid: 5aadfcf87c207ab4e9230e3d1b120929, type: 3}
+  icon: {fileID: 21300000, guid: d43590a45e803df40aeda7b587317aa0, type: 3}
+  glowIcon: {fileID: 21300000, guid: 9e17487b19aa0d4419f0789693c1e762, type: 3}
   variationColor: 0
