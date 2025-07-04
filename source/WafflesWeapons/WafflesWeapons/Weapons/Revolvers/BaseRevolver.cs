@@ -85,7 +85,7 @@ public class BaseRevolver : MonoBehaviour
         {
             CodeInstruction instruction = instructionArray[i];
 
-            if (i > 3 && instructionArray[i - 3].OperandIs(getChildCanvasMethod)) // if its the place it should branch to (3 after get child canvas). should be ldarg.0 then chargeeffect
+            if (i > 3 && instructionArray[i - 3].OperandIs(getChildCanvasMethod)) // if it's the place it should branch to (3 after get child canvas). should be ldarg.0 then chargeeffect
             { 
                 Label jumpOverPopLabel = transpiler.DefineLabel();
                 instruction.WithLabels().labels.Add(jumpOverPopLabel);

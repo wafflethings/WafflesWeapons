@@ -10,11 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -6086413240556257454, guid: afa02a0cb29fea440928e76ccb4ff113, type: 3}
       propertyPath: damage
-      value: 15
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: -6086413240556257454, guid: afa02a0cb29fea440928e76ccb4ff113, type: 3}
       propertyPath: maxSize
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -6086413240556257454, guid: afa02a0cb29fea440928e76ccb4ff113, type: 3}
       propertyPath: enemyDamageMultiplier

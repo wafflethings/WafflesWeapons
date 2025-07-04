@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Desperado
+  m_EditorClassIdentifier: 
+  m_GroupName: Desperado
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 125334b7672542247aa9363a0a57c1b8
+  m_SerializeEntries:
+  - m_GUID: e482fd19329329446ae84a33de52d076
+    m_Address: Assets/WafflesWeapons/Weapons/Revolvers/Desperado/Desperado Weapon
+      Info.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 81d9593b9c962094d86f7498ca6cf1ad, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 93efa479005b75440ba4ba53dc991eda, type: 2}

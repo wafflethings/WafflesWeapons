@@ -7,8 +7,8 @@ using HarmonyLib;
 
 namespace WafflesWeapons.Weapons;
 
-//[HarmonyPatch]
-public class WeaponOrderExtender
+[HarmonyPatch]
+public class WeaponOrderExtension
 {
     public static SaveFile<Dictionary<string, string>> PrefToExtendedOrder = SaveFile.RegisterFile(new SaveFile<Dictionary<string, string>>("order.json", Path.Combine("wafflethings", Plugin.Name), new()));
 
@@ -22,10 +22,10 @@ public class WeaponOrderExtender
             return true;
         }
 
-        if (!PrefToExtendedOrder.Data.ContainsKey(key) || PrefToExtendedOrder.Data[key] == null)
+        if (!PrefToExtendedOrder.Data.ContainsKey(key) || PrefToExtendedOrder.Data[key] == null || PrefToExtendedOrder.Data[key].Length != 8)
         {
             s_disablePatches = true;
-            PrefToExtendedOrder.Data[key] = PrefsManager.Instance.GetString(key) ?? "1234";
+            PrefToExtendedOrder.Data[key] = (PrefsManager.Instance.GetString(key) ?? "1234") + "5678";
             s_disablePatches = false;
         }
 
@@ -51,7 +51,7 @@ public class WeaponOrderExtender
     {
         foreach (CodeInstruction instruction in instructions)
         {
-            if (instruction.opcode == OpCodes.Beq_S)
+            if (instruction.opcode == OpCodes.Beq)
             {
                 yield return new CodeInstruction(OpCodes.Pop); // pops 4
                 yield return new CodeInstruction(OpCodes.Pop); // pops length
@@ -84,7 +84,7 @@ public class WeaponOrderExtender
         foreach (Weapon weapon in Plugin.Weapons)
         {
             string prefString = $"weapon.{weapon.Info.Id.Substring(0, weapon.Info.Id.Length - 1)}.order";
-            weapon.Info.IndexInSlot = PrefsManager.Instance.GetString(prefString).IndexOf((char)(weapon.Info.Id[weapon.Info.Id.Length - 1] + 1)); //offset by 1 since the game doesnt count from 0 here for SOME reason
+            weapon.Info.IndexInSlot = PrefsManager.Instance.GetString(prefString).IndexOf((char)(weapon.Info.Id[weapon.Info.Id.Length - 1]));
         }
     }
 }
