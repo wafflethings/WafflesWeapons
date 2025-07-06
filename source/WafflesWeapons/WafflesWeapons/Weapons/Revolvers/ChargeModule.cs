@@ -96,6 +96,56 @@ public class ChargeModule
         }
     }
 
+    private static bool ShouldSkipWeaponChargesSet(Revolver revolver) => revolver.gunVariation is not 0 and not 1 and not 2;
+    
+    [HarmonyPatch(typeof(Revolver), nameof(Revolver.OnEnable)), HarmonyTranspiler]
+    private static IEnumerable<CodeInstruction> SkipWeaponChargesSet(IEnumerable<CodeInstruction> instructions)
+    {
+        CodeInstruction[] instructionArray = instructions.ToArray();
+        FieldInfo rev0ChargeField = AccessTools.Field(typeof(WeaponCharges), nameof(WeaponCharges.rev0charge));
+        MethodInfo shouldSkipMethod = AccessTools.Method(typeof(ChargeModule), nameof(ShouldSkipWeaponChargesSet));
+        
+        for (int i = 0; i < instructionArray.Length; i++)
+        {
+            CodeInstruction instruction = instructionArray[i];
+            
+            if (instruction.opcode == OpCodes.Ldarg_0 && i > 3 && instructionArray[i - 3].OperandIs(rev0ChargeField)) //target of the jump when gunvariation is not 0
+            {
+                yield return instruction; // another ldarg0 but with the label that it jumps to if gunvariation not 0
+                yield return new CodeInstruction(OpCodes.Call, shouldSkipMethod);
+                yield return new CodeInstruction(OpCodes.Brtrue, instructionArray[i - 1].operand); //should be a label to jump to if (gunvariation == 2)
+                yield return new CodeInstruction(OpCodes.Ldarg_0); // create another ldarg0 for the one thats been stolen
+                continue;
+            }
+            
+            yield return instruction;
+        }
+    }
+    
+    [HarmonyPatch(typeof(Revolver), nameof(Revolver.Shoot)), HarmonyTranspiler]
+    private static IEnumerable<CodeInstruction> SkipRev2Set(IEnumerable<CodeInstruction> instructions)
+    {
+        CodeInstruction[] instructionArray = instructions.ToArray();
+        FieldInfo rev2ChargeField = AccessTools.Field(typeof(WeaponCharges), nameof(WeaponCharges.rev2charge));
+        MethodInfo shouldSkipMethod = AccessTools.Method(typeof(ChargeModule), nameof(ShouldSkipWeaponChargesSet));
+        
+        for (int i = 0; i < instructionArray.Length; i++)
+        {
+            CodeInstruction instruction = instructionArray[i];
+            
+            if (instruction.opcode == OpCodes.Ldarg_0 && i < instructionArray.Length - 3 && instructionArray[i + 3].OperandIs(rev2ChargeField))
+            {
+                yield return instruction; // another ldarg0 but with the label that it jumps to if gunvariation not 0
+                yield return new CodeInstruction(OpCodes.Call, shouldSkipMethod);
+                yield return new CodeInstruction(OpCodes.Brtrue, instructionArray[i - 1].operand); //should be a label to jump to if wid.delay is not 0f, if((bool)supergunsound)
+                yield return new CodeInstruction(OpCodes.Ldarg_0); // create another ldarg0 for the one thats been stolen
+                continue;
+            }
+            
+            yield return instruction;
+        }
+    }
+
     private static bool ShouldUseTextureScreen(Revolver revolver) => BaseRevolver.VanillaToModded.TryGetValue(revolver, out BaseRevolver moddedRevolver) ? ((moddedRevolver.ChargeModule?.Enabled ?? false) && (moddedRevolver.ChargeModule.UseTextureScreen)) : revolver.gunVariation == 0;
 
     [HarmonyPatch(typeof(Revolver), nameof(Revolver.Start)), HarmonyTranspiler]

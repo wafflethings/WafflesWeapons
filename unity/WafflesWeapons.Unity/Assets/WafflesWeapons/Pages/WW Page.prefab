@@ -2724,12 +2724,7 @@ MonoBehaviour:
   failSound: {fileID: 0}
   toActivate:
   - {fileID: 8762538458954256817}
-  toDeactivate:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  toDeactivate: []
   variationInfo: {fileID: 0}
 --- !u!114 &8150099671499425571
 MonoBehaviour:

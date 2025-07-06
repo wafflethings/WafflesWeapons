@@ -431,7 +431,7 @@ Animator:
   m_GameObject: {fileID: -3902134509878433402}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: a8fc182097d23d7fb4e8b1e330e71cd2, type: 2}
-  m_Controller: {fileID: 9100000, guid: 4541b7bf46e51cf42bfa5949a794bdaf, type: 2}
+  m_Controller: {fileID: 9100000, guid: 544dee9f409ab2940b9e7de35d950464, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1234,7 +1234,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2524187625483461696}
-  - component: {fileID: -8850247633361493429}
   - component: {fileID: 1405480610512545704}
   - component: {fileID: -6145586960238965573}
   - component: {fileID: -8468788716280592943}
@@ -1242,7 +1241,7 @@ GameObject:
   - component: {fileID: -1861223009208240024}
   - component: {fileID: -5881720756750903659}
   m_Layer: 13
-  m_Name: Revolver Fan
+  m_Name: Revolver Desperado
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1264,37 +1263,6 @@ Transform:
   - {fileID: 7530491850079121041}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: -70, z: -90}
---- !u!114 &-8850247633361493429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3050202252899990067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1166030680, guid: 1deaceb748ebaee44ae478ab266d83d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ChargeModule:
-    Enabled: 0
-    PierceChargeRate: 1.75
-    RechargeRate: 0.4
-    RechargeColours:
-    - {r: 1, g: 0, b: 0, a: 1}
-    - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-    UseTextureScreen: 1
-  _spinSfx: {fileID: 8300000, guid: 9a5a96f503ae3384ab7c9da152edd7ff, type: 3}
-  _chargeSprites:
-  - {fileID: 2800000, guid: 46e854f5a17bc8a43b496ae7b4c0c2b7, type: 3}
-  - {fileID: 2800000, guid: 379fbaa8a4e32a0488e325e0ae97b130, type: 3}
-  - {fileID: 2800000, guid: a045022f35b5d49459fd4ffa7ccec3fd, type: 3}
-  - {fileID: 2800000, guid: 1babd542aba54b144b2105699ed81473, type: 3}
-  - {fileID: 2800000, guid: 0f2fc0a7fd60ce3469bee018eec3ae09, type: 3}
-  - {fileID: 2800000, guid: d532c24e5354e044eaa1b57d2d0fa4cf, type: 3}
-  - {fileID: 2800000, guid: 9db71e4f8c43e69408b5d505b0df8976, type: 3}
-  _startDelay: 0.25
-  _shotInterval: 0.15
 --- !u!114 &1405480610512545704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1307,7 +1275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59acf5ec27edbf20fc7b4ab202d8d775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunVariation: 4
+  gunVariation: 6
   altVersion: 0
   gunShots:
   - {fileID: 8300000, guid: 2b2ff028c7e576b4cb1a03b1533287be, type: 3}
@@ -1470,7 +1438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b62fb5dc40417232d808b36f7efac336, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponDescriptor: {fileID: 11400000, guid: 09e3878bfa6ef514d8cc47defa4a71f8, type: 2}
+  weaponDescriptor: {fileID: 11400000, guid: ee52d506564fd9d498e06a7fdbbe7fa6, type: 2}
   variationColoredRenderers:
   - {fileID: -7396992062965235538}
   variationColoredImages: []
@@ -1502,7 +1470,7 @@ MonoBehaviour:
   m_Script: {fileID: 1856441048, guid: 1deaceb748ebaee44ae478ab266d83d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ExtendedColour: 4
+  ExtendedColour: 6
 --- !u!1 &5195265605506714094
 GameObject:
   m_ObjectHideFlags: 0

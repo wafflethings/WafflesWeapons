@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3661175774983124231, guid: a7dac1d6c9837254da8d47dae140c0e5, type: 3}
       propertyPath: beamType
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3661175774983124231, guid: a7dac1d6c9837254da8d47dae140c0e5, type: 3}
       propertyPath: hitParticle

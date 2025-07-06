@@ -721,7 +721,7 @@ MonoBehaviour:
     - {r: 1, g: 0, b: 0, a: 1}
     - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
     UseTextureScreen: 1
-  _spinSfx: {fileID: 0}
+  _spinSfx: {fileID: 8300000, guid: 48f2cbe8ce3c8fd4bbb268854634c2d1, type: 3}
   _chargeSprites:
   - {fileID: 2800000, guid: 46e854f5a17bc8a43b496ae7b4c0c2b7, type: 3}
   - {fileID: 2800000, guid: 379fbaa8a4e32a0488e325e0ae97b130, type: 3}
@@ -730,8 +730,8 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 0f2fc0a7fd60ce3469bee018eec3ae09, type: 3}
   - {fileID: 2800000, guid: d532c24e5354e044eaa1b57d2d0fa4cf, type: 3}
   - {fileID: 2800000, guid: 9db71e4f8c43e69408b5d505b0df8976, type: 3}
-  _startDelay: 0.25
-  _shotInterval: 0.15
+  _startDelay: 0.375
+  _shotInterval: 0.75
 --- !u!114 &1254522596621826822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -754,8 +754,8 @@ MonoBehaviour:
   pierceShotCharge: 0
   shotHitPoint: {x: 0, y: 0, z: 0}
   revolverBeam: {fileID: -287366139123086457, guid: d12803dcf5a53d74c971e7ed30cebc37, type: 3}
-  revolverBeamSuper: {fileID: -8438842995883106504, guid: 4a0362ff8aede6442945d38e1b95081a, type: 3}
-  superGunSound: {fileID: 0}
+  revolverBeamSuper: {fileID: -287366139123086457, guid: e33f93dc593d00946ba140ec1535234f, type: 3}
+  superGunSound: {fileID: 3462159009245843827, guid: 4a0362ff8aede6442945d38e1b95081a, type: 3}
   recoilFOV: 100
   chargeEffect: {fileID: -4729922437471805277}
   beamReflectPos: {x: 0, y: 0, z: 0}
@@ -3832,7 +3832,7 @@ Animator:
   m_GameObject: {fileID: -1047477390548264543}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: cad84c812f8d9a0394f99be61c2989ba, type: 2}
-  m_Controller: {fileID: 9100000, guid: 2ecce0d03a47990499dd744eb24228ee, type: 2}
+  m_Controller: {fileID: 9100000, guid: a5f7e3e94c1be784892c128c57cff879, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

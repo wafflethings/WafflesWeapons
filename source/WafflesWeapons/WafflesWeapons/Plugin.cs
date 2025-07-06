@@ -31,6 +31,7 @@ public class Plugin : BaseUnityPlugin
         Weapons.AddRange([
             new BasicWeapon(Addressables.LoadAssetAsync<WeaponInfo>("Assets/WafflesWeapons/Weapons/Revolvers/Fanfire/Fanfire Weapon Info.asset").WaitForCompletion()),
             new BasicWeapon(Addressables.LoadAssetAsync<WeaponInfo>("Assets/WafflesWeapons/Weapons/Revolvers/Malevolent/Malevolent Weapon Info.asset").WaitForCompletion()),
+            new BasicWeapon(Addressables.LoadAssetAsync<WeaponInfo>("Assets/WafflesWeapons/Weapons/Revolvers/Desperado/Desperado Weapon Info.asset").WaitForCompletion()),
         ]);
         WeaponRegistry.RegisterWeapons(Weapons);
     }

@@ -162,7 +162,7 @@ MonoBehaviour:
   bulletForce: 10000
   quickDraw: 0
   gunVariation: 0
-  damage: 1.25
+  damage: 1.5
   addedDamage: 0
   enemyDamageOverride: 0
   critDamageOverride: 0.5
