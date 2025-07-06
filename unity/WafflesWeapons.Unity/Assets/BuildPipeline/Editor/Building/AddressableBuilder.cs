@@ -75,12 +75,14 @@ namespace BuildPipeline.Editor.Building
 		private static void FixMonoscripts()
 		{
 			string fileName = MonoscriptBundleNaming + "_monoscripts.bundle";
-			File.Copy(Path.Combine(Addressables.RuntimePath, EditorUserBuildSettings.activeBuildTarget.ToString(), fileName), Path.Combine(s_buildPath, fileName), true);
+			string currentBuildTarget = "StandaloneWindows64"; //TODO investigate why this is the same on linux??
+			File.Copy(Path.Combine(Addressables.RuntimePath, currentBuildTarget, fileName), Path.Combine(s_buildPath, fileName), true);
 
 			string catalogName = $"catalog_{CatalogPostfix}.json";
 			string catalogContent = File.ReadAllText(Path.Combine(s_buildPath, catalogName));
-			string oldMonoscriptPath = @"{UnityEngine.AddressableAssets.Addressables.RuntimePath}\\" + EditorUserBuildSettings.activeBuildTarget + @"\\" + fileName;
+			string oldMonoscriptPath = @"{UnityEngine.AddressableAssets.Addressables.RuntimePath}\\" + currentBuildTarget + @"\\" + fileName;
 			string newMonoscriptPath = $@"{AssetPathLocation}\\{fileName}";
+			Debug.Log($"Replacing {oldMonoscriptPath} with {newMonoscriptPath}");
 			File.WriteAllText(Path.Combine(s_buildPath, catalogName), catalogContent.Replace(oldMonoscriptPath, newMonoscriptPath));
 		}
 

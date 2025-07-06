@@ -16,32 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: bf2809dc76649a94d8402927325c7fcb
-  m_SerializeEntries:
-  - m_GUID: 822df8dc4092fe2418c2b4ea9a12c446
-    m_Address: AllAudio
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 161b21e52f4d9ce4a89d7492b431a6e6
-    m_Address: DoorAudio
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: de1a7104454c38d4698485ae4e0ca225
-    m_Address: GoreAudio
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d3c40ef12635c3c4eac334becc93c313
-    m_Address: MusicAudio
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7442a0473bb46a54d8a6ec55c07ce489
-    m_Address: UnfreezeableAudio
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 81d9593b9c962094d86f7498ca6cf1ad, type: 2}
   m_SchemaSet:

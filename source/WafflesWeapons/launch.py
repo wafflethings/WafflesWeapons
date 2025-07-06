@@ -20,5 +20,7 @@ for path in sys.argv:
     shutil.copyfile(oldPath, newPath)
     print(f"Copied to {newPath}!")
 
-
-subprocess.run("cmd /c start steam://launch/1229490")
+if os.name == "nt":
+    subprocess.run("cmd /c start steam://launch/1229490")
+elif os.name == "posix":
+    subprocess.run(["steam", "steam://run/1229490"])
