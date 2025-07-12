@@ -17,7 +17,8 @@ public class DesperadoBehaviour : BaseRevolver
 
     [SerializeField] private Slider _barSlider;
     [SerializeField] private RectTransform _perfectZone;
-    private BarState _state = BarState.Still;
+    private bool _moving = false;
+    private BarState _state = BarState.Left;
     private float _barPosition = 0;
     private float _currentSpeed = 1f;
 
@@ -27,14 +28,27 @@ public class DesperadoBehaviour : BaseRevolver
         {
             return;
         }
+	
+	_barSlider.value = _barPosition;
         
-        if (_state == BarState.Still)
+        if (!_moving)
         {
-            return;
+            if (!InputManager.Instance.InputSource.Fire2.WasPerformedThisFrame)
+            {
+                return;
+            }
+            
+            _moving = true;
         }
         
         _rev.gunReady = false;
         _barPosition = Mathf.MoveTowards(_barPosition, _state == BarState.Left ? 0 : 1, _currentSpeed * Time.deltaTime);
-        _barSlider.value = _barPosition;
+
+        if (_barPosition is 0 or 1)
+        {
+            _state = (_state == BarState.Left ? BarState.Right : BarState.Left);
+            _moving = false;
+	    _rev.gunReady = true;
+        }
     }
 }

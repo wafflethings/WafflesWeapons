@@ -3,6 +3,5 @@
 public enum BarState
 {
     Left,
-    Right,
-    Still
+    Right
 }

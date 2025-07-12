@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Desperado Weapon Info
   m_EditorClassIdentifier: 
   WeaponObjects:
-  - {fileID: 3050202252899990067, guid: 0888210230ce3e14e836e7554ad041a9, type: 3}
-  - {fileID: -4910016159466476300, guid: 1193e6951e0b0064aa7a7ec5ebbb2b5b, type: 3}
+  - {fileID: 4127820275915660387, guid: 9ddc7a7704de0eb79b8f2860c27d0735, type: 3}
+  - {fileID: 6672247091271412575, guid: f3a7bcc5235b30cbdaec02a0ead227f3, type: 3}
   WeaponType: 0
   Id: rev6
   Slot: 0
