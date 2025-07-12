@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Settings
   m_EditorClassIdentifier: 
   DoCopy: 1
-  BuildCopyPath: /home/waffle/.local/share/Steam/steamapps/common/ULTRAKILL/BepInEx/plugins/WafflesWeapons/Assets
+  BuildCopyPath: A:\SteamLibrary\steamapps\common\ULTRAKILL\BepInEx\plugins\WafflesWeapons\Assets

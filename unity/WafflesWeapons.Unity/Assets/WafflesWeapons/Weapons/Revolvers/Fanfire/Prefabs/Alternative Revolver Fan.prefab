@@ -1,0 +1,143 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3800949293130772597
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -4910016159466476300, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      propertyPath: m_Name
+      value: Alternative Revolver Fan
+      objectReference: {fileID: 0}
+    - target: {fileID: -896855656594498046, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -896855656594498046, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -896855656594498046, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -896855656594498046, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.684105
+      objectReference: {fileID: 0}
+    - target: {fileID: -896855656594498046, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.12491203
+      objectReference: {fileID: 0}
+    - target: {fileID: -896855656594498046, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.70841146
+      objectReference: {fileID: 0}
+    - target: {fileID: -896855656594498046, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.12062616
+      objectReference: {fileID: 0}
+    - target: {fileID: -896855656594498046, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 95.82978
+      objectReference: {fileID: 0}
+    - target: {fileID: -896855656594498046, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -69.90433
+      objectReference: {fileID: 0}
+    - target: {fileID: -896855656594498046, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -95.4771
+      objectReference: {fileID: 0}
+    - target: {fileID: 1254522596621826822, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      propertyPath: screenMR
+      value: 
+      objectReference: {fileID: 4332490900749702452, guid: a503bf61e3f6ab94686fe8463cb8cdd1, type: 3}
+    - target: {fileID: 1254522596621826822, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      propertyPath: gunBarrel
+      value: 
+      objectReference: {fileID: 320566077421085280, guid: a503bf61e3f6ab94686fe8463cb8cdd1, type: 3}
+    - target: {fileID: 1254522596621826822, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      propertyPath: chargeEffect
+      value: 
+      objectReference: {fileID: -4729922437471805277, guid: a503bf61e3f6ab94686fe8463cb8cdd1, type: 3}
+    - target: {fileID: 1254522596621826822, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      propertyPath: gunVariation
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1254522596621826822, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      propertyPath: superGunSound
+      value: 
+      objectReference: {fileID: 3462159009245843827, guid: 4a0362ff8aede6442945d38e1b95081a, type: 3}
+    - target: {fileID: 1254522596621826822, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      propertyPath: revolverBeamSuper
+      value: 
+      objectReference: {fileID: -287366139123086457, guid: e33f93dc593d00946ba140ec1535234f, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -4910016159466476300, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 9048342359525532261}
+    - targetCorrespondingSourceObject: {fileID: -4230530352174292818, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7909907987896781322}
+  m_SourcePrefab: {fileID: 100100000, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+--- !u!1 &1108925025035377793 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -4910016159466476300, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+  m_PrefabInstance: {fileID: 3800949293130772597}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9048342359525532261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108925025035377793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1166030680, guid: 1deaceb748ebaee44ae478ab266d83d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChargeModule:
+    Enabled: 0
+    PierceChargeRate: 1.75
+    RechargeRate: 0.4
+    RechargeColours:
+    - {r: 1, g: 0, b: 0, a: 1}
+    - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    UseTextureScreen: 1
+  _spinSfx: {fileID: 8300000, guid: 48f2cbe8ce3c8fd4bbb268854634c2d1, type: 3}
+  _chargeSprites:
+  - {fileID: 2800000, guid: 46e854f5a17bc8a43b496ae7b4c0c2b7, type: 3}
+  - {fileID: 2800000, guid: 379fbaa8a4e32a0488e325e0ae97b130, type: 3}
+  - {fileID: 2800000, guid: a045022f35b5d49459fd4ffa7ccec3fd, type: 3}
+  - {fileID: 2800000, guid: 1babd542aba54b144b2105699ed81473, type: 3}
+  - {fileID: 2800000, guid: 0f2fc0a7fd60ce3469bee018eec3ae09, type: 3}
+  - {fileID: 2800000, guid: d532c24e5354e044eaa1b57d2d0fa4cf, type: 3}
+  - {fileID: 2800000, guid: 9db71e4f8c43e69408b5d505b0df8976, type: 3}
+  _startDelay: 0.375
+  _shotInterval: 0.75
+--- !u!1 &8211623639564439771 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -4230530352174292818, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+  m_PrefabInstance: {fileID: 3800949293130772597}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7909907987896781322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8211623639564439771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1345073561, guid: 1deaceb748ebaee44ae478ab266d83d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _variationNumber: 4

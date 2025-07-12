@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Fanfire Weapon Info
   m_EditorClassIdentifier: 
   WeaponObjects:
-  - {fileID: 3050202252899990067, guid: b0d694257af322545b3eebd85acf268b, type: 3}
-  - {fileID: -4910016159466476300, guid: a503bf61e3f6ab94686fe8463cb8cdd1, type: 3}
+  - {fileID: 4722327685356819830, guid: ef4f1d88ee1eae14980d20bfa6a380c9, type: 3}
+  - {fileID: 1108925025035377793, guid: 916a7b810cc815d41a3e6b3183b0380c, type: 3}
   WeaponType: 0
   Id: rev4
   Slot: 0

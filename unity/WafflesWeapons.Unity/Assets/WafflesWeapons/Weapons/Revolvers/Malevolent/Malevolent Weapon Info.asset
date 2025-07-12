@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Malevolent Weapon Info
   m_EditorClassIdentifier: 
   WeaponObjects:
-  - {fileID: 3050202252899990067, guid: bfc68db2940a150409f4025fd17ebfec, type: 3}
-  - {fileID: -4910016159466476300, guid: bb3400bc00e73dc428280359c0935c0e, type: 3}
+  - {fileID: 6681817886946319365, guid: 046769d0001e0f54087dc5ff0c785cf3, type: 3}
+  - {fileID: 5072768333327603738, guid: 69d762f98b221394098c85e46d4894a5, type: 3}
   WeaponType: 0
   Id: rev5
   Slot: 0
