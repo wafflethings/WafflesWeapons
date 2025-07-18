@@ -13,6 +13,14 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -3861431170518561489, guid: 42ac0e50ebede964988ffe9405249fc3, type: 3}
+      propertyPath: superGunSound
+      value: 
+      objectReference: {fileID: 3462159009245843827, guid: 6274b1b446e457047b3c9ad1019173a4, type: 3}
+    - target: {fileID: -3861431170518561489, guid: 42ac0e50ebede964988ffe9405249fc3, type: 3}
+      propertyPath: revolverBeamSuper
+      value: 
+      objectReference: {fileID: 6586206744904451115, guid: aa7bf04589a202845a3089b37a45d5b7, type: 3}
+    - target: {fileID: -3861431170518561489, guid: 42ac0e50ebede964988ffe9405249fc3, type: 3}
       propertyPath: coinPanels.Array.data[0]
       value: 
       objectReference: {fileID: 0}
@@ -135,6 +143,12 @@ MonoBehaviour:
     UseTextureScreen: 1
   _barSlider: {fileID: 6627297788287211583}
   _perfectZone: {fileID: 7264594448956858083}
+  _maxSize: 0.3
+  _minSize: 0.05
+  _sizeDecreaseForShot: 0.1
+  _sizeRegenRate: 0.05
+  _pingSound: {fileID: 5678651843797369744}
+  _humSound: {fileID: 8459721162566351929}
 --- !u!114 &-2420138056418346071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,6 +300,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9193284136205949853, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
   m_PrefabInstance: {fileID: 5420663380166823497}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &5678651843797369744 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 429125490702749145, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
+  m_PrefabInstance: {fileID: 5420663380166823497}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6627297788287211583 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1207796645741762166, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
@@ -300,5 +319,10 @@ MonoBehaviour:
 --- !u!224 &7264594448956858083 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3452878513379922090, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
+  m_PrefabInstance: {fileID: 5420663380166823497}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &8459721162566351929 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4493720570093957744, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
   m_PrefabInstance: {fileID: 5420663380166823497}
   m_PrefabAsset: {fileID: 0}

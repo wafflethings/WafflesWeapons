@@ -8,37 +8,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8951340549487739855, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2e04f1360f3fa8344a9b7b5feaaf8206, type: 3}
     - target: {fileID: -4910016159466476300, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
       propertyPath: m_Name
       value: Alternative Revolver Malevolent
-      objectReference: {fileID: 0}
-    - target: {fileID: -896855656594498046, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -896855656594498046, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -896855656594498046, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -896855656594498046, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.684105
-      objectReference: {fileID: 0}
-    - target: {fileID: -896855656594498046, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.12491203
-      objectReference: {fileID: 0}
-    - target: {fileID: -896855656594498046, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.70841146
-      objectReference: {fileID: 0}
-    - target: {fileID: -896855656594498046, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.12062616
       objectReference: {fileID: 0}
     - target: {fileID: -896855656594498046, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -115,6 +91,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -4910016159466476300, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
       insertIndex: 1
       addedObject: {fileID: -7842120441237149057}
+    - targetCorrespondingSourceObject: {fileID: -4910016159466476300, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1922318596330603753}
   m_SourcePrefab: {fileID: 100100000, guid: 657822b5ba1c7524681587aa2563c27c, type: 3}
 --- !u!1 &5072768333327603738 stripped
 GameObject:
@@ -142,3 +121,16 @@ MonoBehaviour:
     - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
     UseTextureScreen: 1
   _shotDelay: 0.25
+--- !u!114 &-1922318596330603753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5072768333327603738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1856441048, guid: 1deaceb748ebaee44ae478ab266d83d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ExtendedColour: 5

@@ -2,6 +2,6 @@
 
 public enum BarState
 {
-    Left,
-    Right
+    GoingLeft,
+    GoingRight
 }

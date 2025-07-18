@@ -8,18 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1405480610512545704, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: screenMR
+    - target: {fileID: -2824697841879198372, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
+      propertyPath: weaponDescriptor
       value: 
-      objectReference: {fileID: 773315821151163068, guid: b0d694257af322545b3eebd85acf268b, type: 3}
-    - target: {fileID: 1405480610512545704, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: gunBarrel
+      objectReference: {fileID: 11400000, guid: 09e3878bfa6ef514d8cc47defa4a71f8, type: 2}
+    - target: {fileID: 237729747273103318, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
+      propertyPath: m_Controller
       value: 
-      objectReference: {fileID: -2666796809847757516, guid: b0d694257af322545b3eebd85acf268b, type: 3}
-    - target: {fileID: 1405480610512545704, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: chargeEffect
-      value: 
-      objectReference: {fileID: 8703074881075091273, guid: b0d694257af322545b3eebd85acf268b, type: 3}
+      objectReference: {fileID: 9100000, guid: 4541b7bf46e51cf42bfa5949a794bdaf, type: 2}
     - target: {fileID: 1405480610512545704, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
       propertyPath: gunVariation
       value: 4
@@ -32,34 +28,6 @@ PrefabInstance:
       propertyPath: revolverBeamSuper
       value: 
       objectReference: {fileID: -287366139123086457, guid: e33f93dc593d00946ba140ec1535234f, type: 3}
-    - target: {fileID: 2524187625483461696, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2524187625483461696, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2524187625483461696, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2524187625483461696, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.6963643
-      objectReference: {fileID: 0}
-    - target: {fileID: 2524187625483461696, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.12278779
-      objectReference: {fileID: 0}
-    - target: {fileID: 2524187625483461696, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.6963643
-      objectReference: {fileID: 0}
-    - target: {fileID: 2524187625483461696, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.12278779
-      objectReference: {fileID: 0}
     - target: {fileID: 2524187625483461696, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 90
@@ -76,6 +44,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Revolver Fan
       objectReference: {fileID: 0}
+    - target: {fileID: 8703074881075091273, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -83,6 +55,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3050202252899990067, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
       insertIndex: 1
       addedObject: {fileID: -8517934653736128186}
+    - targetCorrespondingSourceObject: {fileID: 3050202252899990067, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8586220479831755901}
     - targetCorrespondingSourceObject: {fileID: 2195606425661728765, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2210956321697829988}
@@ -123,6 +98,19 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 9db71e4f8c43e69408b5d505b0df8976, type: 3}
   _startDelay: 0.25
   _shotInterval: 0.15
+--- !u!114 &8586220479831755901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4722327685356819830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1856441048, guid: 1deaceb748ebaee44ae478ab266d83d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ExtendedColour: 4
 --- !u!1 &8477241943472818360 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2195606425661728765, guid: e8475623d04e65547b623a43f5ae366d, type: 3}

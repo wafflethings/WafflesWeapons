@@ -6,7 +6,9 @@ using AtlasLib.Pages;
 using AtlasLib.Weapons;
 using BepInEx.Logging;
 using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 using WafflesWeapons.Assets;
+using WafflesWeapons.Weapons.Revolvers.Fanfire;
 
 namespace WafflesWeapons;
 
@@ -25,16 +27,40 @@ public class Plugin : BaseUnityPlugin
     private void Awake()
     {
         Log = Logger;
+        
         new Harmony(Guid).PatchAll();
         AssetManager.LoadCatalog();
-        PageRegistry.RegisterPage(new BasicPage(Addressables.LoadAssetAsync<GameObject>("Assets/WafflesWeapons/Pages/WW Page.prefab").WaitForCompletion(), "Weapons Panel/Buttons"));
+
         Weapons.AddRange([
             new BasicWeapon(Addressables.LoadAssetAsync<WeaponInfo>("Assets/WafflesWeapons/Weapons/Revolvers/Fanfire/Fanfire Weapon Info.asset").WaitForCompletion()),
             new BasicWeapon(Addressables.LoadAssetAsync<WeaponInfo>("Assets/WafflesWeapons/Weapons/Revolvers/Malevolent/Malevolent Weapon Info.asset").WaitForCompletion()),
             new BasicWeapon(Addressables.LoadAssetAsync<WeaponInfo>("Assets/WafflesWeapons/Weapons/Revolvers/Desperado/Desperado Weapon Info.asset").WaitForCompletion()),
+            
+            new BasicWeapon(Addressables.LoadAssetAsync<WeaponInfo>("Assets/WafflesWeapons/Weapons/Railcannons/Virtuous/Virtuous Weapon Info.asset").WaitForCompletion()),
         ]);
+        
+        if (!PatcherCheck())
+        {
+            SceneManager.sceneLoaded += ShowError;
+            return;
+        }
+        
         WeaponRegistry.RegisterWeapons(Weapons);
+        PageRegistry.RegisterPage(new BasicPage(Addressables.LoadAssetAsync<GameObject>("Assets/WafflesWeapons/Pages/WW Page.prefab").WaitForCompletion(), "Weapons Panel/Buttons"));
     }
+
+    private void ShowError(Scene scene, LoadSceneMode mode)
+    {
+        if (SceneHelper.CurrentScene != "Main Menu")
+        {
+            return;
+        }
+        
+        HudMessageReceiver.Instance.SendHudMessage($"{Name} will not load. Ensure all dependencies are installed correctly.");
+        SceneManager.sceneLoaded -= ShowError;
+    }
+    
+    private bool PatcherCheck() => Weapons[0].Info.WeaponObjects[0].GetComponent<FanfireBehaviour>().ChargeModule != null; // serialization will fail and itll be null if missing FPTS
 
     [HarmonyPatch(typeof(LeaderboardController), nameof(LeaderboardController.SubmitCyberGrindScore))]
     [HarmonyPatch(typeof(LeaderboardController), nameof(LeaderboardController.SubmitLevelScore))]

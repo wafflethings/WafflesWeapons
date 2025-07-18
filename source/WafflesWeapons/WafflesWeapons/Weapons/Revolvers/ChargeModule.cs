@@ -194,7 +194,6 @@ public class ChargeModule
 
     [HarmonyPatch(typeof(Revolver), nameof(Revolver.Update)), HarmonyTranspiler]
     private static IEnumerable<CodeInstruction> FixUpdate(IEnumerable<CodeInstruction> instructions, ILGenerator transpiler)
-
     {
         CodeInstruction[] instructionArray = instructions.ToArray();
         FieldInfo gunVariationField = AccessTools.Field(typeof(Revolver), nameof(Revolver.gunVariation));
@@ -252,6 +251,18 @@ public class ChargeModule
                 }
             }
 
+            // if (gunVariation != 1) at the end of update where it sets ceaud.volume
+            bool shouldSkipCeAud = instruction.opcode == OpCodes.Beq && i < instructionArray.Length - 2 && instructionArray[i - 2].OperandIs(gunVariationField) && i > 5 && instructionArray[i + 5].OperandIs(chargeEffectField);
+
+            if (shouldSkipCeAud)
+            {
+                yield return new CodeInstruction(OpCodes.Pop); // pop i4 1
+                yield return new CodeInstruction(OpCodes.Pop); // pop gunVariation
+                yield return new CodeInstruction(OpCodes.Ldarg_0);
+                yield return new CodeInstruction(OpCodes.Call, shouldChargeMethod);
+                instruction.opcode = OpCodes.Brfalse;
+            }
+            
             yield return instruction;
 
             // the part where it checks [else if (gunReady && !inman.PerformingCheatMenuCombo() && inman.InputSource.Fire1.IsPressed && shootReady)] for the coin revolver

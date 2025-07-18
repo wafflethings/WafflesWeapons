@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Virtuous
+  m_EditorClassIdentifier: 
+  m_GroupName: Virtuous
+  m_Data:
+    m_SerializedData: []
+  m_GUID: a9acbb8d38ee396469a833a196742e2d
+  m_SerializeEntries:
+  - m_GUID: bd2bff82c3c063b499449417a38193e4
+    m_Address: Assets/WafflesWeapons/Weapons/Railcannons/Virtuous/Virtuous Weapon
+      Info.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 81d9593b9c962094d86f7498ca6cf1ad, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: dc02f08412db056408e8c26e2aad76a0, type: 2}

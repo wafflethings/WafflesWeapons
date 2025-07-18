@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
+using UnityEngine;
 
 namespace WafflesWeapons.Weapons;
 
@@ -9,8 +10,10 @@ namespace WafflesWeapons.Weapons;
 public static class RevolverBeamExtension
 {
     public delegate void BeamHitEnemy(RevolverBeam beam, EnemyIdentifier enemy);
+    public delegate void BeamHitAny(RevolverBeam beam, GameObject gameObject);
     
     private static Dictionary<RevolverBeam?, List<BeamHitEnemy>> s_enemyHitCallbacks = new();
+    private static Dictionary<RevolverBeam?, List<BeamHitAny>> s_AnyHitCallbacks = new();
 
     public static void AddOnEnemyHit(this RevolverBeam beam, BeamHitEnemy callback)
     {
@@ -36,6 +39,58 @@ public static class RevolverBeamExtension
         foreach (BeamHitEnemy callback in callbacks)
         {
             callback.Invoke(beam, enemy);
+        }
+    }
+    
+    public static void AddOnAnyHit(this RevolverBeam beam, BeamHitAny callback)
+    {
+        if (s_AnyHitCallbacks.ContainsKey(beam))
+        {
+            s_AnyHitCallbacks[beam].Add(callback);
+            return;
+        }
+
+        s_AnyHitCallbacks.Add(beam, [callback]);
+    } 
+    
+    public static void RemoveOnAnyHit(this RevolverBeam beam, BeamHitAny callback) => s_AnyHitCallbacks[beam].Remove(callback);
+    
+    [HarmonyPatch(typeof(RevolverBeam), nameof(RevolverBeam.HitSomething)), HarmonyPostfix]
+    private static void RunAnyHitCallbackSingleHit(RevolverBeam __instance, RaycastHit hit)
+    {
+        if (!s_AnyHitCallbacks.TryGetValue(__instance, out List<BeamHitAny> callbacks))
+        {
+            return;
+        }
+        
+        ClearDestroyed(ref s_enemyHitCallbacks);
+        
+        foreach (BeamHitAny callback in callbacks)
+        {
+            callback.Invoke(__instance, hit.collider.gameObject);
+        }
+    }
+    
+    [HarmonyPatch(typeof(RevolverBeam), nameof(RevolverBeam.PiercingShotCheck)), HarmonyPostfix]
+    private static void RunAnyHitCallbackMultiHit(RevolverBeam __instance)
+    {
+        if (!s_AnyHitCallbacks.TryGetValue(__instance, out List<BeamHitAny> callbacks))
+        {
+            return;
+        }
+        
+        ClearDestroyed(ref s_enemyHitCallbacks);
+
+        if (__instance.hitList.Count == 0)
+        {
+            return;
+        }
+        RaycastHit currentHit = __instance.hitList[__instance.enemiesPierced].rrhit;
+        Plugin.Log.LogMessage($"Hit {__instance.enemiesPierced} of {__instance.hitList.Count} {currentHit.collider.gameObject}");
+        
+        foreach (BeamHitAny callback in callbacks)
+        {
+            callback.Invoke(__instance, currentHit.collider.gameObject);
         }
     }
 

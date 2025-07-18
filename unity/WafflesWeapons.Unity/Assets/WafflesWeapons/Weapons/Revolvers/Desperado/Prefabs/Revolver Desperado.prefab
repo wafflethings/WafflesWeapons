@@ -12,6 +12,14 @@ PrefabInstance:
       propertyPath: gunVariation
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: -6201242016833811312, guid: 10862a80f55310c4d9faf154fdf155b5, type: 3}
+      propertyPath: superGunSound
+      value: 
+      objectReference: {fileID: 3462159009245843827, guid: 6274b1b446e457047b3c9ad1019173a4, type: 3}
+    - target: {fileID: -6201242016833811312, guid: 10862a80f55310c4d9faf154fdf155b5, type: 3}
+      propertyPath: revolverBeamSuper
+      value: 
+      objectReference: {fileID: -287366139123086457, guid: 852fdb9864ba97a4abd6b290337681fe, type: 3}
     - target: {fileID: 210189801292924156, guid: 10862a80f55310c4d9faf154fdf155b5, type: 3}
       propertyPath: m_Name
       value: Revolver Desperado
@@ -109,6 +117,12 @@ MonoBehaviour:
     UseTextureScreen: 1
   _barSlider: {fileID: 3230523470283931662}
   _perfectZone: {fileID: 1440305163257005778}
+  _maxSize: 0.5
+  _minSize: 0.1
+  _sizeDecreaseForShot: 0.1
+  _sizeRegenRate: 0.075
+  _pingSound: {fileID: 4171287634123529121}
+  _humSound: {fileID: 165239350120834056}
 --- !u!114 &-7141189547110326970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,7 +151,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2023319203073349380, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.608
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2023319203073349380, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -145,15 +159,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2023319203073349380, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.608
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2739467884489397890, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.608
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2739467884489397890, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437076167316803882, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -70
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437076167316803882, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6614926689653566325, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
       propertyPath: m_Name
@@ -256,6 +278,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
+--- !u!82 &165239350120834056 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4493720570093957744, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
+  m_PrefabInstance: {fileID: 4330188349299922552}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1440305163257005778 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3452878513379922090, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
@@ -272,6 +299,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &4171287634123529121 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 429125490702749145, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}
+  m_PrefabInstance: {fileID: 4330188349299922552}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4864714886565105125 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9193284136205949853, guid: b9695ea8fec32c641825aa09df97bf6b, type: 3}

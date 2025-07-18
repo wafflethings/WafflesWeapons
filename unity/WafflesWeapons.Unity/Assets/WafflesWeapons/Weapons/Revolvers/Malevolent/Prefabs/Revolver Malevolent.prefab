@@ -12,14 +12,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 2ba80378e78bce94981d1bd7be5d1b97, type: 2}
-    - target: {fileID: 1405480610512545704, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: screenMR
+    - target: {fileID: -2824697841879198372, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
+      propertyPath: weaponDescriptor
       value: 
-      objectReference: {fileID: 773315821151163068, guid: bfc68db2940a150409f4025fd17ebfec, type: 3}
-    - target: {fileID: 1405480610512545704, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: gunBarrel
-      value: 
-      objectReference: {fileID: -2666796809847757516, guid: bfc68db2940a150409f4025fd17ebfec, type: 3}
+      objectReference: {fileID: 11400000, guid: f798ae43b44ceea46962100ce4c6c80b, type: 2}
     - target: {fileID: 1405480610512545704, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
       propertyPath: batteryLow
       value: 
@@ -32,10 +28,6 @@ PrefabInstance:
       propertyPath: batteryFull
       value: 
       objectReference: {fileID: 2800000, guid: 75c0c7284df38e54193534ff35a4d2df, type: 3}
-    - target: {fileID: 1405480610512545704, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: chargeEffect
-      value: 
-      objectReference: {fileID: 8703074881075091273, guid: bfc68db2940a150409f4025fd17ebfec, type: 3}
     - target: {fileID: 1405480610512545704, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
       propertyPath: gunVariation
       value: 5
@@ -61,34 +53,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2800000, guid: 54d7c6106b7d1934780c2ec08025546b, type: 3}
     - target: {fileID: 2524187625483461696, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2524187625483461696, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2524187625483461696, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2524187625483461696, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.6963643
-      objectReference: {fileID: 0}
-    - target: {fileID: 2524187625483461696, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.12278779
-      objectReference: {fileID: 0}
-    - target: {fileID: 2524187625483461696, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.6963643
-      objectReference: {fileID: 0}
-    - target: {fileID: 2524187625483461696, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.12278779
-      objectReference: {fileID: 0}
-    - target: {fileID: 2524187625483461696, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 90
       objectReference: {fileID: 0}
@@ -100,6 +64,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 2731265036536201173, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2e04f1360f3fa8344a9b7b5feaaf8206, type: 3}
     - target: {fileID: 3050202252899990067, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
       propertyPath: m_Name
       value: Revolver Malevolent
@@ -127,6 +95,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3050202252899990067, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
       insertIndex: 1
       addedObject: {fileID: 6360049509456791094}
+    - targetCorrespondingSourceObject: {fileID: 3050202252899990067, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1338609806236611408}
   m_SourcePrefab: {fileID: 100100000, guid: e8475623d04e65547b623a43f5ae366d, type: 3}
 --- !u!1 &6681817886946319365 stripped
 GameObject:
@@ -154,3 +125,16 @@ MonoBehaviour:
     - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
     UseTextureScreen: 1
   _shotDelay: 0.1
+--- !u!114 &1338609806236611408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6681817886946319365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1856441048, guid: 1deaceb748ebaee44ae478ab266d83d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ExtendedColour: 5
