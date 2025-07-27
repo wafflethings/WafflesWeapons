@@ -36,6 +36,8 @@ public class Plugin : BaseUnityPlugin
             new BasicWeapon(Addressables.LoadAssetAsync<WeaponInfo>("Assets/WafflesWeapons/Weapons/Revolvers/Malevolent/Malevolent Weapon Info.asset").WaitForCompletion()),
             new BasicWeapon(Addressables.LoadAssetAsync<WeaponInfo>("Assets/WafflesWeapons/Weapons/Revolvers/Desperado/Desperado Weapon Info.asset").WaitForCompletion()),
             
+            new BasicWeapon(Addressables.LoadAssetAsync<WeaponInfo>("Assets/WafflesWeapons/Weapons/Shotguns/Singularity/Singularity Weapon Info.asset").WaitForCompletion()),
+            
             new BasicWeapon(Addressables.LoadAssetAsync<WeaponInfo>("Assets/WafflesWeapons/Weapons/Railcannons/Virtuous/Virtuous Weapon Info.asset").WaitForCompletion()),
         ]);
         
@@ -60,7 +62,7 @@ public class Plugin : BaseUnityPlugin
         SceneManager.sceneLoaded -= ShowError;
     }
     
-    private bool PatcherCheck() => Weapons[0].Info.WeaponObjects[0].GetComponent<FanfireBehaviour>().ChargeModule != null; // serialization will fail and itll be null if missing FPTS
+    private bool PatcherCheck() => Weapons[0].Info.WeaponObjects[0].GetComponent<FanfireBehaviour>().ChargeShotModule != null; // serialization will fail and itll be null if missing FPTS
 
     [HarmonyPatch(typeof(LeaderboardController), nameof(LeaderboardController.SubmitCyberGrindScore))]
     [HarmonyPatch(typeof(LeaderboardController), nameof(LeaderboardController.SubmitLevelScore))]

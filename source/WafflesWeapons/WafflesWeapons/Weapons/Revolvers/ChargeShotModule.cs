@@ -11,7 +11,7 @@ namespace WafflesWeapons.Weapons.Revolvers;
 
 [HarmonyPatch]
 [Serializable]
-public class ChargeModule
+public class ChargeShotModule
 {
     /// <summary>
     /// Whether this revolver retains the Piercer charge behaviour
@@ -47,20 +47,20 @@ public class ChargeModule
     
     private const int DefaultPierceChargeRate = 175;     // default is 175*dt out of 100 for piercer only, not ss
     
-    private static float GetRechargeRate(Revolver revolver) => BaseRevolver.VanillaToModded.TryGetValue(revolver, out BaseRevolver moddedRevolver) ? moddedRevolver.ChargeModule?.RechargeRate * 100 ?? throw new Exception() : DefaultRechargeRate;
+    private static float GetRechargeRate(Revolver revolver) => BaseRevolver.VanillaToModded.TryGetValue(revolver, out BaseRevolver moddedRevolver) ? moddedRevolver.ChargeShotModule?.RechargeRate * 100 ?? throw new Exception() : DefaultRechargeRate;
     
-    private static int GetPierceChargeRate(Revolver revolver) => BaseRevolver.VanillaToModded.TryGetValue(revolver, out BaseRevolver moddedRevolver) ? (int)(moddedRevolver.ChargeModule?.PierceChargeRate * 100 ?? throw new Exception()) : DefaultPierceChargeRate;
+    private static int GetPierceChargeRate(Revolver revolver) => BaseRevolver.VanillaToModded.TryGetValue(revolver, out BaseRevolver moddedRevolver) ? (int)(moddedRevolver.ChargeShotModule?.PierceChargeRate * 100 ?? throw new Exception()) : DefaultPierceChargeRate;
 
-    private static bool ShouldCharge(Revolver revolver) => BaseRevolver.VanillaToModded.TryGetValue(revolver, out BaseRevolver moddedRevolver) ? moddedRevolver.ChargeModule?.Enabled ?? false : revolver.gunVariation == 0;
+    private static bool ShouldCharge(Revolver revolver) => BaseRevolver.VanillaToModded.TryGetValue(revolver, out BaseRevolver moddedRevolver) ? moddedRevolver.ChargeShotModule?.Enabled ?? false : revolver.gunVariation == 0;
     
-    private static bool ChargeDisabled(Revolver revolver) =>  BaseRevolver.VanillaToModded.TryGetValue(revolver, out BaseRevolver moddedRevolver) ? !moddedRevolver.ChargeModule?.Enabled ?? true : revolver.gunVariation == 1;
+    private static bool ChargeDisabled(Revolver revolver) =>  BaseRevolver.VanillaToModded.TryGetValue(revolver, out BaseRevolver moddedRevolver) ? !moddedRevolver.ChargeShotModule?.Enabled ?? true : revolver.gunVariation == 1;
 
     [HarmonyPatch(typeof(Revolver), nameof(Revolver.Update)), HarmonyTranspiler]
     private static IEnumerable<CodeInstruction> ChangeRechargeRate(IEnumerable<CodeInstruction> instructions)
     {
         CodeInstruction? previous = null;
         FieldInfo pierceChargeField = AccessTools.Field(typeof(Revolver), nameof(Revolver.pierceCharge));
-        MethodInfo rateMethod = AccessTools.Method(typeof(ChargeModule), nameof(GetRechargeRate));
+        MethodInfo rateMethod = AccessTools.Method(typeof(ChargeShotModule), nameof(GetRechargeRate));
         
         foreach (CodeInstruction instruction in instructions)
         {
@@ -79,7 +79,7 @@ public class ChargeModule
     [HarmonyPatch(typeof(Revolver), nameof(Revolver.Update)), HarmonyTranspiler]
     private static IEnumerable<CodeInstruction> ChangePierceChargeRate(IEnumerable<CodeInstruction> instructions)
     {
-        MethodInfo rateMethod = AccessTools.Method(typeof(ChargeModule), nameof(GetPierceChargeRate));
+        MethodInfo rateMethod = AccessTools.Method(typeof(ChargeShotModule), nameof(GetPierceChargeRate));
         
         foreach (CodeInstruction instruction in instructions)
         {
@@ -103,7 +103,7 @@ public class ChargeModule
     {
         CodeInstruction[] instructionArray = instructions.ToArray();
         FieldInfo rev0ChargeField = AccessTools.Field(typeof(WeaponCharges), nameof(WeaponCharges.rev0charge));
-        MethodInfo shouldSkipMethod = AccessTools.Method(typeof(ChargeModule), nameof(ShouldSkipWeaponChargesSet));
+        MethodInfo shouldSkipMethod = AccessTools.Method(typeof(ChargeShotModule), nameof(ShouldSkipWeaponChargesSet));
         
         for (int i = 0; i < instructionArray.Length; i++)
         {
@@ -127,7 +127,7 @@ public class ChargeModule
     {
         CodeInstruction[] instructionArray = instructions.ToArray();
         FieldInfo rev2ChargeField = AccessTools.Field(typeof(WeaponCharges), nameof(WeaponCharges.rev2charge));
-        MethodInfo shouldSkipMethod = AccessTools.Method(typeof(ChargeModule), nameof(ShouldSkipWeaponChargesSet));
+        MethodInfo shouldSkipMethod = AccessTools.Method(typeof(ChargeShotModule), nameof(ShouldSkipWeaponChargesSet));
         
         for (int i = 0; i < instructionArray.Length; i++)
         {
@@ -146,7 +146,7 @@ public class ChargeModule
         }
     }
 
-    private static bool ShouldUseTextureScreen(Revolver revolver) => BaseRevolver.VanillaToModded.TryGetValue(revolver, out BaseRevolver moddedRevolver) ? ((moddedRevolver.ChargeModule?.Enabled ?? false) && (moddedRevolver.ChargeModule.UseTextureScreen)) : revolver.gunVariation == 0;
+    private static bool ShouldUseTextureScreen(Revolver revolver) => BaseRevolver.VanillaToModded.TryGetValue(revolver, out BaseRevolver moddedRevolver) ? ((moddedRevolver.ChargeShotModule?.Enabled ?? false) && (moddedRevolver.ChargeShotModule.UseTextureScreen)) : revolver.gunVariation == 0;
 
     [HarmonyPatch(typeof(Revolver), nameof(Revolver.Start)), HarmonyTranspiler]
     private static IEnumerable<CodeInstruction> FixStart(IEnumerable<CodeInstruction> instructions)
@@ -156,8 +156,8 @@ public class ChargeModule
         FieldInfo screenMrField = AccessTools.Field(typeof(Revolver), nameof(Revolver.screenMR));
         FieldInfo screenAudField = AccessTools.Field(typeof(Revolver), nameof(Revolver.screenAud));
         
-        MethodInfo shouldTexMethod = AccessTools.Method(typeof(ChargeModule), nameof(ShouldUseTextureScreen));
-        MethodInfo shouldChargeMethod = AccessTools.Method(typeof(ChargeModule), nameof(ShouldCharge));
+        MethodInfo shouldTexMethod = AccessTools.Method(typeof(ChargeShotModule), nameof(ShouldUseTextureScreen));
+        MethodInfo shouldChargeMethod = AccessTools.Method(typeof(ChargeShotModule), nameof(ShouldCharge));
         
         for (int i = 0; i < instructionArray.Length; i++)
         {
@@ -206,9 +206,9 @@ public class ChargeModule
         MethodInfo noCooldownGetter = AccessTools.PropertyGetter(typeof(NoWeaponCooldown), nameof(NoWeaponCooldown.NoCooldown));
         MethodInfo checkCoinChargesMethod = AccessTools.Method(typeof(Revolver), nameof(Revolver.CheckCoinCharges));
 
-        MethodInfo shouldTexMethod = AccessTools.Method(typeof(ChargeModule), nameof(ShouldUseTextureScreen));
-        MethodInfo shouldChargeMethod = AccessTools.Method(typeof(ChargeModule), nameof(ShouldCharge));
-        MethodInfo chargeDisabledMethod = AccessTools.Method(typeof(ChargeModule), nameof(ChargeDisabled));
+        MethodInfo shouldTexMethod = AccessTools.Method(typeof(ChargeShotModule), nameof(ShouldUseTextureScreen));
+        MethodInfo shouldChargeMethod = AccessTools.Method(typeof(ChargeShotModule), nameof(ShouldCharge));
+        MethodInfo chargeDisabledMethod = AccessTools.Method(typeof(ChargeShotModule), nameof(ChargeDisabled));
 
         CodeInstruction? disableChargeJumpInstruction = null;
 

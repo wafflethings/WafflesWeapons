@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace WafflesWeapons.Weapons.Revolvers;
 
@@ -16,7 +16,7 @@ public class BaseRevolver : MonoBehaviour
     public delegate void Shoot(RevolverBeam beam);
     public event Shoot? Shot;
     
-    public ChargeModule? ChargeModule;
+    [FormerlySerializedAs("ChargeModule")] public ChargeShotModule? ChargeShotModule;
     
     protected Revolver _rev;
 
@@ -53,7 +53,7 @@ public class BaseRevolver : MonoBehaviour
     [HarmonyPatch(typeof(GunSetter), nameof(GunSetter.Start)), HarmonyPrefix]
     private static void FixCharges()
     {
-        WeaponCharges.Instance.revaltpickupcharges = new float[7];
+        WeaponCharges.Instance.revaltpickupcharges = new float[8];
     }
 
     [HarmonyPatch(typeof(Revolver), nameof(Revolver.Shoot)), HarmonyTranspiler]

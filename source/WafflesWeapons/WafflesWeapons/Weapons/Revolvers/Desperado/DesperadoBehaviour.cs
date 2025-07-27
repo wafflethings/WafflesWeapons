@@ -106,7 +106,6 @@ public class DesperadoBehaviour : BaseRevolver, IChargeable
 
         float leftProximity = Mathf.Abs(_perfectStart - _barPosition);
         float rightProximity = Mathf.Abs(_perfectEnd - _barPosition);
-        Plugin.Log.LogMessage($"{leftProximity} {rightProximity} -> {Mathf.Min(leftProximity, rightProximity)}");
         return Mathf.Min(leftProximity, rightProximity);
     }
 
@@ -163,6 +162,7 @@ public class DesperadoBehaviour : BaseRevolver, IChargeable
 
     public void ResetCharge()
     {
+        _size = _maxSize;
         s_globalSize = _maxSize;
     }
 
@@ -173,6 +173,7 @@ public class DesperadoBehaviour : BaseRevolver, IChargeable
 
     public void MaxCharges()
     {
+        _size = _maxSize;
         s_globalSize = _maxSize;
     }
 }

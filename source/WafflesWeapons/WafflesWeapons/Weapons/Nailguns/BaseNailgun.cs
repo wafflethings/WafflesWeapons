@@ -18,7 +18,7 @@ public class BaseNailgun : MonoBehaviour
             "nailgun4",
             "nailgun5",
             "nailgun6",
-            "nailgun8"
+            "nailgun7"
         };
     }
 }

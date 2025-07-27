@@ -583,7 +583,7 @@ Transform:
   m_GameObject: {fileID: 1929600498773563179}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 23}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 5221221009344956158}
   m_Father: {fileID: 4667033109717184}
@@ -651,10 +651,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47c702fae161a0848b79b4d4fabaddf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideTarget: {fileID: 0}
+  preferCameraOverHead: 0
   faceScreenInsteadOfCamera: 0
+  dontRotateIfBlind: 0
   speed: 0
   easeIn: 0
-  overrideTarget: {fileID: 0}
   maxAngle: 0
   useXAxis: 1
   useYAxis: 1
@@ -663,6 +665,8 @@ MonoBehaviour:
   maxXAxisFromParent: 0
   maxYAxisFromParent: 0
   maxZAxisFromParent: 0
+  eid: {fileID: 0}
+  difficultyVariance: 0
 --- !u!1 &4776836848929482129
 GameObject:
   m_ObjectHideFlags: 0

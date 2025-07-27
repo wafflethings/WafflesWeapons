@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using WafflesWeapons.Weapons.Charging;
 
@@ -61,7 +60,7 @@ public class MalevolentBehaviour : BaseRevolver, IChargeable
 
     public void ChargeOverTime(float amount)
     {
-        s_globalCharge = Mathf.MoveTowards(s_globalCharge, 100, ChargeModule.RechargeRate * 100 * 0.5f * amount);
+        s_globalCharge = Mathf.MoveTowards(s_globalCharge, 100, ChargeShotModule.RechargeRate * 100 * 0.5f * amount);
     }
 
     public void MaxCharges()

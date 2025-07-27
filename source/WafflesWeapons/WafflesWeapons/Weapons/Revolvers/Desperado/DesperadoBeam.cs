@@ -13,15 +13,22 @@ public class DesperadoBeam : MonoBehaviour
     [SerializeField] private RevolverBeam _rb;
     private int _bounces = 0;
     private List<EnemyIdentifier> _ignoreEnemies = new();
+    private bool _wasDead = false;
 
     private void Awake()
     {
+        _rb.AddBeforeEnemyHit(BeforeBeamHitEnemy);
         _rb.AddOnEnemyHit(OnBeamHitEnemy);
     }
 
-    private void OnBeamHitEnemy(RevolverBeam beam, EnemyIdentifier enemy)
+    private void BeforeBeamHitEnemy(RevolverBeam beam, EnemyIdentifier enemy, float damage)
     {
-        if (_maxBounces < ++_bounces || _ignoreEnemies.Contains(enemy) || enemy.dead)
+        _wasDead = enemy.dead;
+    }
+
+    private void OnBeamHitEnemy(RevolverBeam beam, EnemyIdentifier enemy, float damage)
+    {
+        if (_maxBounces < ++_bounces || _ignoreEnemies.Contains(enemy) || (enemy.dead && _wasDead))
         {
             return;
         }
@@ -47,7 +54,7 @@ public class DesperadoBeam : MonoBehaviour
         
         RevolverBeam childBeam = newBeam.GetComponent<RevolverBeam>();
         childBeam.sourceWeapon = _rb.sourceWeapon;
-        childBeam.damage = _rb.damage - _damageStep;
+        childBeam.damage = _rb.damage + _damageStep;
         childBeam.alternateStartPoint = childBeam.transform.position;
 
         DesperadoBeam childDespBeam = newBeam.GetComponent<DesperadoBeam>();

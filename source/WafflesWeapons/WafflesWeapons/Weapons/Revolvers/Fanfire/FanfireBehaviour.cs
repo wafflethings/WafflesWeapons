@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using HarmonyLib;
 using UnityEngine;
 using WafflesWeapons.Weapons.Charging;
@@ -135,7 +134,7 @@ public class FanfireBehaviour : BaseRevolver, IChargeable
         }
     }
     
-    private static void OnBeamEnemyHit(RevolverBeam beam, EnemyIdentifier enemy)
+    private static void OnBeamEnemyHit(RevolverBeam beam, EnemyIdentifier enemy, float damage)
     {
         if (beam.beamType != BeamType.Revolver || enemy.dead)
         {

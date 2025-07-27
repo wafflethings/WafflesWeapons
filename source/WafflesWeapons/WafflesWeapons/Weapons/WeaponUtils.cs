@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace WafflesWeapons.Weapons;
@@ -34,5 +32,29 @@ public static class WeaponUtils
         }
 
         return current;
+    }
+    
+    public static IEnumerable<EnemyIdentifier> EnemiesInRange(Vector3 point, float cutoffDistance = float.MaxValue, List<EnemyIdentifier> ignore = null!)
+    {
+        ignore ??= [];
+        float cutoffSqrMagnitude = cutoffDistance * cutoffDistance;
+        
+        foreach (EnemyIdentifier enemy in EnemyTracker.Instance.enemies)
+        {
+            if (enemy == null || enemy.dead)
+            {
+                continue;
+            }
+            
+            Vector3 enemyPoint = (enemy.weakPoint?.transform.position ?? enemy.transform.position);
+            float enemyDistance = (enemyPoint - point).sqrMagnitude;
+            
+            if (enemyDistance > cutoffSqrMagnitude || ignore.Contains(enemy))
+            {
+                continue;
+            }
+
+            yield return enemy;
+        }
     }
 }

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Singularity Weapon Info
   m_EditorClassIdentifier: 
   WeaponObjects:
-  - {fileID: 3895914379231912010, guid: acc2a145c7413cf48ae3d1fdce0ab437, type: 3}
+  - {fileID: 5239182111179352971, guid: 68aa29f53d020ab4ba58349499b2970d, type: 3}
+  - {fileID: 7244997883874794920, guid: c4273de277fe28647a08b3048993b105, type: 3}
   WeaponType: 0
   Id: sho6
-  Slot: 2
+  Slot: 1
   OrderInSlot: 0
   UseFreshness: 1

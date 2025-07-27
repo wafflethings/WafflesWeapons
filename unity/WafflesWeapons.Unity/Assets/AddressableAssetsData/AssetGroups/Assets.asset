@@ -17,38 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: fdea4cbefbd4c3d48ac221324f842cc2
   m_SerializeEntries:
-  - m_GUID: e5e0c008a60ce8a4cbed33b74d48f126
-    m_Address: Assets/Videos
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6bb716761e4407047a71e183e8020da6
-    m_Address: Assets/Textures
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0368ccf24b49e544b9ed8118614b66f0
-    m_Address: Assets/Sounds
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 78324a23d97c85e46aa8f8a3ce8f346f
-    m_Address: Assets/Shaders
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 67199171916c45e49902bf05fe575e9b
-    m_Address: Assets/Render Textures
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fd81360a6f81c27468a737f026d4c2a3
-    m_Address: Assets/Physics Materials
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b2bf9dc8c1754f242ad21a0535dacb76
-    m_Address: Assets/Models
+  - m_GUID: 6336198967274724d93a91353f14eab5
+    m_Address: Assets/Animations
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -57,8 +27,38 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6336198967274724d93a91353f14eab5
-    m_Address: Assets/Animations
+  - m_GUID: b2bf9dc8c1754f242ad21a0535dacb76
+    m_Address: Assets/Models
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd81360a6f81c27468a737f026d4c2a3
+    m_Address: Assets/Physics Materials
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67199171916c45e49902bf05fe575e9b
+    m_Address: Assets/Render Textures
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 78324a23d97c85e46aa8f8a3ce8f346f
+    m_Address: Assets/Shaders
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0368ccf24b49e544b9ed8118614b66f0
+    m_Address: Assets/Sounds
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6bb716761e4407047a71e183e8020da6
+    m_Address: Assets/Textures
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e5e0c008a60ce8a4cbed33b74d48f126
+    m_Address: Assets/Videos
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

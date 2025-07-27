@@ -29,7 +29,7 @@ public class VirtuousBeam : MonoBehaviour
         virtueBeam.transform.position += virtueBeam.transform.up * _offset;
     }
 
-    private void OnBeamHitEnemy(RevolverBeam beam, EnemyIdentifier enemy)
+    private void OnBeamHitEnemy(RevolverBeam beam, EnemyIdentifier enemy, float damage)
     {
         if (enemy.dead)
         {
